@@ -11,8 +11,8 @@ public class testscreen extends Application   {
 			try {
 				BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("Settings.fxml"));
 
-				Scene scene = new Scene(root,400,400);
-				scene.getStylesheets().add(getClass().getResource("backGroundAll.css").toExternalForm());
+				Scene scene = new Scene(root);
+//				scene.getStylesheets().add(getClass().getResource("backGroundAll.css").toExternalForm());
 				primaryStage.setScene(scene);
 				primaryStage.show();
 			} catch(Exception e) {
