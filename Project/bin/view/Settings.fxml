@@ -8,7 +8,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="771.0" prefWidth="901.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.Settings">
    <children>
-      <VBox layoutX="6.0" prefHeight="771.0" prefWidth="901.0" stylesheets="@backGroundAll.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="0.0" />
+      <VBox layoutX="6.0" prefHeight="771.0" prefWidth="901.0" styleClass="bodybg" stylesheets="@backGroundAll.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="0.0" />
       <Text layoutX="270.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings:">
          <font>
             <Font name="Baoli TC Regular" size="95.0" />
