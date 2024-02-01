@@ -1,6 +1,28 @@
 .bodybg{
 	-fx-background-image: url("/images/BackGround/2.png");
 	-fx-background-size: 100% 100%;
-	-fx-font-family: jejuhallasan;
-	
+	-fx-font-family: Baoli TC Regular;
+}
+
+.button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #7EFF5E;
+    -fx-font-size: 30px;
+    -fx-font-family: Baoli TC Regular;
+}
+
+.button:hover {
+    -fx-effect: dropshadow(two-pass-box, #0f4d00, 10, 10, 0, 0);
+}
+
+.tile {
+	-fx-background-color: #7EFF5E;
+    -fx-effect: innershadow(gaussian, #0F4D00, 5, 0.5, 0, 0);
+}
+
+.statuspane {
+    -fx-background-color: linear-gradient(to bottom, #7EFF5E 50%, transparent);
+    -fx-border-radius: 10 10 0 0;
+ 	-fx-background-radius: 10 10 0 0;
 }
