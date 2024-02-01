@@ -1,34 +1,36 @@
 package view;
-
+ 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
+ 
 public class MenuScreen extends Application {
-	@Override
-	public void start(Stage stage) throws Exception {
-		// TODO Auto-generated method stub
-		Parent root = FXMLLoader.load(getClass().getResource("MenuScreen.fxml"));
-		Scene scene = new Scene(root);
+    @Override
+    public void start(Stage stage) throws Exception {
+        // TODO Auto-generated method stub
 
-		BorderPane outerPane = (BorderPane) root;
-		AnchorPane innerAnchorPane = (AnchorPane) outerPane.getCenter(); // Access the inner AnchorPane
-		
-		outerPane.setCenter(innerAnchorPane);
-		BorderPane.setAlignment(innerAnchorPane, Pos.CENTER);
-
-		// Set constraints to center the AnchorPane in the Scene
-
-		stage.setScene(scene);
-		stage.show();
-	}
-
-	public static void main(String[] args) {
-		launch(args);
-	}
+    	Group root = new Group();
+    	AnchorPane innerPane = FXMLLoader.load(getClass().getResource("MenuScreen.fxml"));
+    	
+    	root.getChildren().add(innerPane);
+    	Scene scene = new Scene(root);
+    	innerPane.prefWidthProperty().bind(scene.widthProperty());
+    	innerPane.prefHeightProperty().bind(scene.heightProperty());
+    	
+    	stage.setWidth(901);
+    	stage.setHeight(771);
+        
+    	stage.setScene(scene);
+        stage.show();
+    }
+ 
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
