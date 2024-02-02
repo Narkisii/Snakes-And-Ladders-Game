@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="771.0" prefWidth="901.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="771.0" prefWidth="901.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.MenuScreen">
    <children>
       <VBox alignment="CENTER" prefHeight="771.0" prefWidth="901.0" spacing="25" styleClass="bodybg" stylesheets="@backGroundAll.css" AnchorPane.bottomAnchor="0.7999999999999545" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -15,22 +15,22 @@
                   <Font name="Berlin Sans FB Demi Bold" size="95.0" />
                </font>
             </Text>
-            <Button id="1" fx:id="button1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="37.0" prefWidth="326.0" style="-fx-background-color: #FDE767;" text="Start" VBox.vgrow="ALWAYS">
+            <Button id="1" fx:id="button_start" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="37.0" prefWidth="326.0" style="-fx-background-color: #FDE767;" text="Start" VBox.vgrow="ALWAYS">
                <font>
                   <Font name="Berlin Sans FB" size="36.0" />
                </font>
             </Button>
-            <Button id="1" fx:id="button11" mnemonicParsing="false" prefHeight="68.0" prefWidth="326.0" style="-fx-background-color: #AAD9BB;" styleClass="menu-button" text="Question Wizard" VBox.vgrow="ALWAYS">
+            <Button id="1" fx:id="button_questionWizard" mnemonicParsing="false" prefHeight="68.0" prefWidth="326.0" style="-fx-background-color: #AAD9BB;" styleClass="menu-button" text="Question Wizard" VBox.vgrow="ALWAYS">
                <font>
                   <Font name="Berlin Sans FB" size="36.0" />
                </font>
             </Button>
-            <Button id="1" fx:id="button111" mnemonicParsing="false" prefHeight="37.0" prefWidth="326.0" style="-fx-background-color: AAD9BB;" text="History" VBox.vgrow="ALWAYS">
+            <Button id="1" fx:id="button_History" mnemonicParsing="false" prefHeight="37.0" prefWidth="326.0" style="-fx-background-color: AAD9BB;" text="History" VBox.vgrow="ALWAYS">
                <font>
                   <Font name="Berlin Sans FB" size="36.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" text="Quit" VBox.vgrow="ALWAYS">
+            <Button fx:id="quit" mnemonicParsing="false" text="Quit" VBox.vgrow="ALWAYS">
                <font>
                   <Font name="Berlin Sans FB" size="36.0" />
                </font>
