@@ -1,20 +1,36 @@
+@font-face {
+    src: url('resources/Fonts/JejuHallasan-Regular.ttf');
+}
+
 .bodybg{
 	-fx-background-image: url("/images/BackGround/2.png");
 	-fx-background-size: 100% 100%;
-	-fx-font-family: Baoli TC Regular;
+	-fx-font-family: 'JejuHallasan';
 }
 
 .tile {
-	-fx-background-color: #7EFF5E;
-    -fx-effect: innershadow(gaussian, #0F4D00, 5, 0.5, 0, 0);
+	-fx-background-color: #29AD1E;
+    -fx-effect: innershadow(gaussian, #0F4D00, 0.5, 0.5, 0, 0);
+    -fx-border-width: 2 ; 
+    -fx-border-color: black ;
 }
 
 .statuspane {
-    -fx-background-color: linear-gradient(to bottom, #7EFF5E 50%, transparent);
-    -fx-border-radius: 10 10 0 0;
- 	-fx-background-radius: 10 10 0 0;
+    -fx-background-color: linear-gradient(to bottom, #29AD1E 50%, transparent);
+    -fx-border-radius: 10 10 70 70;
+ 	-fx-background-radius: 10 10 70 70;
 }
 
 .normal_Font{
-	-fx-font-size: 30px;
+	-fx-text-fill: #7EFF5E;
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, black, 3, 3, 0, 0);
+}
+
+.tile_Font{
+	-fx-text-fill: #FFFFFF;
+    -fx-font-size: 5px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, black, 3, 3, 0, 0);
 }
