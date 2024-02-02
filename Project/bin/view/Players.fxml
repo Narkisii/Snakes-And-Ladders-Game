@@ -14,7 +14,7 @@
 <!-- <Button fx:id="button1" id="1" mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
             <Button fx:id="button2" id="2" mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" /> -->
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="771.0" prefWidth="901.0" styleClass="bodybg" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="771.0" prefWidth="901.0" styleClass="bodybg" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.Players">
    <children>
       <VBox alignment="BASELINE_CENTER" prefHeight="771.0" prefWidth="901.0" styleClass="bodybg" stylesheets="@Buttons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -57,11 +57,11 @@
                   <Insets bottom="20.0" left="50.0" top="20.0" />
                </VBox.margin>
             </HBox>
-            <HBox alignment="TOP_CENTER" prefHeight="323.0" prefWidth="637.0" VBox.vgrow="ALWAYS">
+            <HBox alignment="TOP_CENTER" prefHeight="367.0" prefWidth="801.0" VBox.vgrow="ALWAYS">
                <children>
                   <VBox prefHeight="288.0" prefWidth="43.0" styleClass="normal_Font" stylesheets="@backGroundAll.css">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1">
+                        <Text id="num1" fx:id="num1" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
                            <font>
                               <Font name="Baoli TC Regular" size="39.0" />
                            </font>
@@ -69,7 +69,7 @@
                               <Insets />
                            </VBox.margin>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="2">
+                        <Text id="num2" fx:id="num2" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
                            <font>
                               <Font name="Baoli TC Regular" size="39.0" />
                            </font>
@@ -77,7 +77,7 @@
                               <Insets />
                            </VBox.margin>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3">
+                        <Text id="num3" fx:id="num3" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
                            <font>
                               <Font name="Baoli TC Regular" size="39.0" />
                            </font>
@@ -85,7 +85,7 @@
                               <Insets />
                            </VBox.margin>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4" wrappingWidth="23.520000457763672">
+                        <Text id="num4" fx:id="num4" strokeType="OUTSIDE" strokeWidth="0.0" text="4" wrappingWidth="23.520000457763672">
                            <font>
                               <Font name="Baoli TC Regular" size="39.0" />
                            </font>
@@ -93,7 +93,7 @@
                               <Insets />
                            </VBox.margin>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="5">
+                        <Text id="num5" fx:id="num5" strokeType="OUTSIDE" strokeWidth="0.0" text="5">
                            <font>
                               <Font name="Baoli TC Regular" size="39.0" />
                            </font>
@@ -108,23 +108,23 @@
                   </VBox>
                   <VBox prefHeight="229.0" prefWidth="160.0">
                      <children>
-                        <TextField fx:id="name1" />
-                        <TextField fx:id="name2">
+                        <TextField id="name1" fx:id="name1" />
+                        <TextField id="name2" fx:id="name2">
                            <VBox.margin>
                               <Insets top="31.0" />
                            </VBox.margin>
                         </TextField>
-                        <TextField fx:id="name3">
+                        <TextField id="name3" fx:id="name3">
                            <VBox.margin>
                               <Insets top="31.0" />
                            </VBox.margin>
                         </TextField>
-                        <TextField fx:id="name4">
+                        <TextField id="name4" fx:id="name4">
                            <VBox.margin>
                               <Insets top="31.0" />
                            </VBox.margin>
                         </TextField>
-                        <TextField fx:id="name5">
+                        <TextField id="name5" fx:id="name5">
                            <VBox.margin>
                               <Insets top="31.0" />
                            </VBox.margin>
@@ -136,27 +136,27 @@
                   </VBox>
                   <VBox prefHeight="250.0" prefWidth="160.0">
                      <children>
-                        <ComboBox fx:id="token1" prefWidth="150.0">
+                        <ComboBox id="color1" fx:id="color1" prefWidth="150.0">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                         </ComboBox>
-                        <ComboBox fx:id="token2" prefWidth="150.0">
+                        <ComboBox id="color2" fx:id="color2" prefWidth="150.0">
                            <VBox.margin>
                               <Insets top="31.0" />
                            </VBox.margin>
                         </ComboBox>
-                        <ComboBox fx:id="token3" prefWidth="150.0">
+                        <ComboBox id="color3" fx:id="color3" prefWidth="150.0">
                            <VBox.margin>
                               <Insets top="31.0" />
                            </VBox.margin>
                         </ComboBox>
-                        <ComboBox fx:id="token4" prefWidth="150.0">
+                        <ComboBox id="color4" fx:id="color4" prefWidth="150.0">
                            <VBox.margin>
                               <Insets top="31.0" />
                            </VBox.margin>
                         </ComboBox>
-                        <ComboBox fx:id="token5" prefWidth="150.0">
+                        <ComboBox id="color5" fx:id="color5" prefWidth="150.0">
                            <VBox.margin>
                               <Insets top="31.0" />
                            </VBox.margin>
@@ -167,29 +167,30 @@
                      </HBox.margin>
                   </VBox>
                   <VBox prefHeight="250.0" prefWidth="160.0">
-                     <children>
-                        <ComboBox prefWidth="150.0" />
-                        <ComboBox prefWidth="150.0">
-                           <VBox.margin>
-                              <Insets top="31.0" />
-                           </VBox.margin>
-                        </ComboBox>
-                        <ComboBox prefWidth="150.0">
-                           <VBox.margin>
-                              <Insets top="31.0" />
-                           </VBox.margin>
-                        </ComboBox>
-                        <ComboBox prefWidth="150.0">
-                           <VBox.margin>
-                              <Insets top="31.0" />
-                           </VBox.margin>
-                        </ComboBox>
-                        <ComboBox prefWidth="150.0">
-                           <VBox.margin>
-                              <Insets top="31.0" />
-                           </VBox.margin>
-                        </ComboBox>
-                     </children>
+		                     <children>
+							    <ComboBox id="token1" fx:id="token1" prefWidth="150.0" />
+							    <ComboBox id="token2" fx:id="token2" prefWidth="150.0">
+							        <VBox.margin>
+							            <Insets top="31.0" />
+							        </VBox.margin>
+							    </ComboBox>
+							    <ComboBox id="token3" fx:id="token3" prefWidth="150.0">
+							        <VBox.margin>
+							            <Insets top="31.0" />
+							        </VBox.margin>
+							    </ComboBox>
+							    <ComboBox id="token4" fx:id="token4" prefWidth="150.0">
+							        <VBox.margin>
+							            <Insets top="31.0" />
+							        </VBox.margin>
+							    </ComboBox>
+							    <ComboBox id="token5" fx:id="token5" prefWidth="150.0">
+							        <VBox.margin>
+							            <Insets top="31.0" />
+							        </VBox.margin>
+							    </ComboBox>
+							</children>
+
                      <HBox.margin>
                         <Insets right="60.0" top="45.0" />
                      </HBox.margin>
@@ -201,19 +202,7 @@
                               <Font name="Baoli TC Regular" size="14.0" />
                            </font>
                            <VBox.margin>
-                              <Insets bottom="21.0" />
-                           </VBox.margin>
-                           <stylesheets>
-                              <URL value="@backGroundAll.css" />
-                              <URL value="@Buttons.css" />
-                           </stylesheets>
-                        </Button>
-                        <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="112.0" styleClass="Normal_button" text="Add CPU">
-                           <font>
-                              <Font name="Baoli TC Regular" size="14.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets bottom="21.0" />
+                              <Insets bottom="21.0" top="60.0" />
                            </VBox.margin>
                            <stylesheets>
                               <URL value="@backGroundAll.css" />
@@ -265,6 +254,23 @@
                <VBox.margin>
                   <Insets left="100.0" />
                </VBox.margin>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="104.0" prefWidth="232.0" styleClass="Normal_button" stylesheets="@Buttons.css" text="Return">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="104.0" prefWidth="232.0" styleClass="Normal_button" stylesheets="@Buttons.css" text="start Game">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="100.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
             </HBox>
          </children></VBox>
    </children>
