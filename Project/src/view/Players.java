@@ -9,13 +9,13 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class Board extends Application {
+public class Players extends Application {
 
 
 	@Override
 	public void start(Stage stage) throws Exception {
 		// TODO Auto-generated method stub
-		Parent root = FXMLLoader.load(getClass().getResource("Board_Dif1.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("Players.fxml"));
 		Scene scene = new Scene (root);
 		stage.setScene(scene);
 		stage.show();
