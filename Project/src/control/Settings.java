@@ -1,30 +1,25 @@
 package control;
-
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ComboBox;
+import javafx.collections.FXCollections;
 
 public class Settings {
 
     @FXML
-    private Button button1;
+    private ComboBox<String> difficulty;
 
     @FXML
-    private Button button2;
+    private ComboBox<Integer> number_of_players;
 
     @FXML
     public void initialize() {
-        button1.setOnAction(event -> showAlert("This is a test"));
-        button2.setOnAction(event -> showAlert("Fuck my life !!!!!!"));
-    }
+        // Initialize the difficulty ComboBox
+        difficulty.setItems(FXCollections.observableArrayList("Easy", "Medium", "Hard"));
+        difficulty.getSelectionModel().select("Easy"); // Set default value
 
-    private void showAlert(String message) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Information Dialog");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+        // Initialize the number_of_players ComboBox
+        number_of_players.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5));
+        number_of_players.getSelectionModel().select(Integer.valueOf(1)); // Set default value
     }
-    
 }
+
