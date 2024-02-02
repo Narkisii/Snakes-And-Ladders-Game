@@ -16,234 +16,257 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="771.0" prefWidth="901.0" styleClass="bodybg" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox layoutX="27.0" layoutY="-28.0" prefHeight="771.0" prefWidth="901.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Text layoutX="209.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headline_Font" text="Players:" AnchorPane.leftAnchor="209.0" AnchorPane.rightAnchor="251.36001586914062" AnchorPane.topAnchor="38.80000305175781">
-         <font>
-            <Font name="Baoli TC Regular" size="95.0" />
-         </font>
-      </Text>
-      <HBox layoutX="44.0" layoutY="288.0" prefHeight="471.0" prefWidth="830.0">
+      <VBox alignment="BASELINE_CENTER" prefHeight="771.0" prefWidth="901.0" styleClass="bodybg" stylesheets="@Buttons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox prefHeight="288.0" prefWidth="43.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1">
-                     <font>
-                        <Font name="Baoli TC Regular" size="41.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="2">
-                     <font>
-                        <Font name="Baoli TC Regular" size="41.0" />
-                     </font>
-                  </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3">
-                     <font>
-                        <Font name="Baoli TC Regular" size="41.0" />
-                     </font>
-                  </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4" wrappingWidth="23.520000457763672">
-                     <font>
-                        <Font name="Baoli TC Regular" size="41.0" />
-                     </font>
-                  </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="5">
-                     <font>
-                        <Font name="Baoli TC Regular" size="41.0" />
-                     </font>
-                  </Text>
-               </children>
-               <HBox.margin>
-                  <Insets right="60.0" top="25.0" />
-               </HBox.margin>
-            </VBox>
-            <VBox prefHeight="229.0" prefWidth="160.0">
-               <children>
-                  <TextField fx:id="name1" />
-                  <TextField fx:id="name2">
-                     <VBox.margin>
-                        <Insets top="31.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="name3">
-                     <VBox.margin>
-                        <Insets top="31.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="name4">
-                     <VBox.margin>
-                        <Insets top="31.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="name5">
-                     <VBox.margin>
-                        <Insets top="31.0" />
-                     </VBox.margin>
-                  </TextField>
-               </children>
-               <HBox.margin>
-                  <Insets right="60.0" top="45.0" />
-               </HBox.margin>
-            </VBox>
-            <VBox prefHeight="250.0" prefWidth="160.0">
-               <children>
-                  <ComboBox fx:id="token1" prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </ComboBox>
-                  <ComboBox fx:id="token2" prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets top="31.0" />
-                     </VBox.margin>
-                  </ComboBox>
-                  <ComboBox fx:id="token3" prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets top="31.0" />
-                     </VBox.margin>
-                  </ComboBox>
-                  <ComboBox fx:id="token4" prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets top="31.0" />
-                     </VBox.margin>
-                  </ComboBox>
-                  <ComboBox fx:id="token5" prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets top="31.0" />
-                     </VBox.margin>
-                  </ComboBox>
-               </children>
-               <HBox.margin>
-                  <Insets right="60.0" top="45.0" />
-               </HBox.margin>
-            </VBox>
-            <VBox prefHeight="250.0" prefWidth="160.0">
-               <children>
-                  <ComboBox prefWidth="150.0" />
-                  <ComboBox prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets top="31.0" />
-                     </VBox.margin>
-                  </ComboBox>
-                  <ComboBox prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets top="31.0" />
-                     </VBox.margin>
-                  </ComboBox>
-                  <ComboBox prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets top="31.0" />
-                     </VBox.margin>
-                  </ComboBox>
-                  <ComboBox prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets top="31.0" />
-                     </VBox.margin>
-                  </ComboBox>
-               </children>
-               <HBox.margin>
-                  <Insets right="60.0" top="45.0" />
-               </HBox.margin>
-            </VBox>
-            <VBox prefHeight="254.0" prefWidth="150.0">
-               <children>
-                  <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="112.0" styleClass="CPU_button" text="Add CPU">
-                     <font>
-                        <Font name="Baoli TC Regular" size="14.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <stylesheets>
-                        <URL value="@backGroundAll.css" />
-                        <URL value="@Buttons.css" />
-                     </stylesheets>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="112.0" styleClass="CPU_button" text="Add CPU">
-                     <font>
-                        <Font name="Baoli TC Regular" size="14.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="24.5" />
-                     </VBox.margin>
-                     <stylesheets>
-                        <URL value="@backGroundAll.css" />
-                        <URL value="@Buttons.css" />
-                     </stylesheets>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="112.0" styleClass="CPU_button" text="Add CPU">
-                     <font>
-                        <Font name="Baoli TC Regular" size="14.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="24.5" />
-                     </VBox.margin>
-                     <stylesheets>
-                        <URL value="@backGroundAll.css" />
-                        <URL value="@Buttons.css" />
-                     </stylesheets>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="112.0" styleClass="CPU_button" text="Add CPU">
-                     <font>
-                        <Font name="Baoli TC Regular" size="14.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="24.5" />
-                     </VBox.margin>
-                     <stylesheets>
-                        <URL value="@backGroundAll.css" />
-                        <URL value="@Buttons.css" />
-                     </stylesheets>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="112.0" styleClass="CPU_button" text="Add CPU">
-                     <font>
-                        <Font name="Baoli TC Regular" size="14.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="24.5" />
-                     </VBox.margin>
-                     <stylesheets>
-                        <URL value="@backGroundAll.css" />
-                        <URL value="@Buttons.css" />
-                     </stylesheets>
-                  </Button>
-               </children>
-               <HBox.margin>
-                  <Insets right="60.0" top="45.0" />
-               </HBox.margin>
-            </VBox>
-         </children>
-      </HBox>
-      <HBox layoutX="143.0" layoutY="241.0" prefHeight="94.0" prefWidth="503.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headline_Font" text="Players:">
                <font>
-                  <Font name="Baoli TC Regular" size="42.0" />
+                  <Font name="Baoli TC Regular" size="95.0" />
                </font>
-               <HBox.margin>
-                  <Insets right="87.0" />
-               </HBox.margin>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Color">
-               <font>
-                  <Font name="Baoli TC Regular" size="42.0" />
-               </font>
-               <HBox.margin>
-                  <Insets right="87.0" />
-               </HBox.margin>
-            </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Token">
-               <font>
-                  <Font name="Baoli TC Regular" size="42.0" />
-               </font>
-               <HBox.margin>
-                  <Insets right="87.0" />
-               </HBox.margin>
-            </Text>
-         </children>
-      </HBox>
+            <HBox alignment="BOTTOM_CENTER" prefHeight="94.0" prefWidth="503.0" styleClass="normal_Font" stylesheets="@backGroundAll.css">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+                     <font>
+                        <Font name="Baoli TC Regular" size="42.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="87.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Color">
+                     <font>
+                        <Font name="Baoli TC Regular" size="42.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="87.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Token">
+                     <font>
+                        <Font name="Baoli TC Regular" size="42.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="87.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="50.0" top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="TOP_CENTER" prefHeight="323.0" prefWidth="637.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox prefHeight="288.0" prefWidth="43.0" styleClass="normal_Font" stylesheets="@backGroundAll.css">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1">
+                           <font>
+                              <Font name="Baoli TC Regular" size="39.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="2">
+                           <font>
+                              <Font name="Baoli TC Regular" size="39.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3">
+                           <font>
+                              <Font name="Baoli TC Regular" size="39.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4" wrappingWidth="23.520000457763672">
+                           <font>
+                              <Font name="Baoli TC Regular" size="39.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="5">
+                           <font>
+                              <Font name="Baoli TC Regular" size="39.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Text>
+                     </children>
+                     <HBox.margin>
+                        <Insets right="60.0" top="25.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="229.0" prefWidth="160.0">
+                     <children>
+                        <TextField fx:id="name1" />
+                        <TextField fx:id="name2">
+                           <VBox.margin>
+                              <Insets top="31.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="name3">
+                           <VBox.margin>
+                              <Insets top="31.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="name4">
+                           <VBox.margin>
+                              <Insets top="31.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="name5">
+                           <VBox.margin>
+                              <Insets top="31.0" />
+                           </VBox.margin>
+                        </TextField>
+                     </children>
+                     <HBox.margin>
+                        <Insets right="60.0" top="45.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="250.0" prefWidth="160.0">
+                     <children>
+                        <ComboBox fx:id="token1" prefWidth="150.0">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </ComboBox>
+                        <ComboBox fx:id="token2" prefWidth="150.0">
+                           <VBox.margin>
+                              <Insets top="31.0" />
+                           </VBox.margin>
+                        </ComboBox>
+                        <ComboBox fx:id="token3" prefWidth="150.0">
+                           <VBox.margin>
+                              <Insets top="31.0" />
+                           </VBox.margin>
+                        </ComboBox>
+                        <ComboBox fx:id="token4" prefWidth="150.0">
+                           <VBox.margin>
+                              <Insets top="31.0" />
+                           </VBox.margin>
+                        </ComboBox>
+                        <ComboBox fx:id="token5" prefWidth="150.0">
+                           <VBox.margin>
+                              <Insets top="31.0" />
+                           </VBox.margin>
+                        </ComboBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets right="60.0" top="45.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="250.0" prefWidth="160.0">
+                     <children>
+                        <ComboBox prefWidth="150.0" />
+                        <ComboBox prefWidth="150.0">
+                           <VBox.margin>
+                              <Insets top="31.0" />
+                           </VBox.margin>
+                        </ComboBox>
+                        <ComboBox prefWidth="150.0">
+                           <VBox.margin>
+                              <Insets top="31.0" />
+                           </VBox.margin>
+                        </ComboBox>
+                        <ComboBox prefWidth="150.0">
+                           <VBox.margin>
+                              <Insets top="31.0" />
+                           </VBox.margin>
+                        </ComboBox>
+                        <ComboBox prefWidth="150.0">
+                           <VBox.margin>
+                              <Insets top="31.0" />
+                           </VBox.margin>
+                        </ComboBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets right="60.0" top="45.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="254.0" prefWidth="150.0">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="112.0" styleClass="Normal_button" text="Add CPU">
+                           <font>
+                              <Font name="Baoli TC Regular" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="21.0" />
+                           </VBox.margin>
+                           <stylesheets>
+                              <URL value="@backGroundAll.css" />
+                              <URL value="@Buttons.css" />
+                           </stylesheets>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="112.0" styleClass="Normal_button" text="Add CPU">
+                           <font>
+                              <Font name="Baoli TC Regular" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="21.0" />
+                           </VBox.margin>
+                           <stylesheets>
+                              <URL value="@backGroundAll.css" />
+                              <URL value="@Buttons.css" />
+                           </stylesheets>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="112.0" styleClass="Normal_button" text="Add CPU">
+                           <font>
+                              <Font name="Baoli TC Regular" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="21.0" />
+                           </VBox.margin>
+                           <stylesheets>
+                              <URL value="@backGroundAll.css" />
+                              <URL value="@Buttons.css" />
+                           </stylesheets>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="112.0" styleClass="Normal_button" text="Add CPU">
+                           <font>
+                              <Font name="Baoli TC Regular" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="21.0" />
+                           </VBox.margin>
+                           <stylesheets>
+                              <URL value="@backGroundAll.css" />
+                              <URL value="@Buttons.css" />
+                           </stylesheets>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="112.0" styleClass="Normal_button" text="Add CPU">
+                           <font>
+                              <Font name="Baoli TC Regular" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="21.0" />
+                           </VBox.margin>
+                           <stylesheets>
+                              <URL value="@backGroundAll.css" />
+                              <URL value="@Buttons.css" />
+                           </stylesheets>
+                        </Button>
+                     </children>
+                     <HBox.margin>
+                        <Insets right="60.0" top="45.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets left="100.0" />
+               </VBox.margin>
+            </HBox>
+         </children></VBox>
    </children>
    <stylesheets>
       <URL value="@backGroundAll.css" />
