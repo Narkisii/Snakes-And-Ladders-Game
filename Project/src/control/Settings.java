@@ -1,4 +1,5 @@
 package control;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.collections.FXCollections;
@@ -20,6 +21,14 @@ public class Settings {
         // Initialize the number_of_players ComboBox
         number_of_players.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5));
         number_of_players.getSelectionModel().select(Integer.valueOf(1)); // Set default value
+
+        // Update the number of players in GameData when it changes
+        number_of_players.valueProperty().addListener((obs, oldVal, newVal) -> {
+            GameData.setNumberOfPlayers(newVal);
+        });
+    }
+
+    public int getNumberOfPlayers() {
+        return number_of_players.getSelectionModel().getSelectedItem();
     }
 }
-
