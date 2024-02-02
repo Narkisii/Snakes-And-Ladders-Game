@@ -32,6 +32,7 @@ public class MenuScreen {
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
+            
         }
     }
 }
