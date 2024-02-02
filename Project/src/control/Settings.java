@@ -26,4 +26,5 @@ public class Settings {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    
 }
