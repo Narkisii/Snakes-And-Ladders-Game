@@ -21,7 +21,7 @@
          <children>
             <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="157.0" styleClass="Normal_button" stylesheets="@Buttons.css" text="Return">
                <font>
-                  <Font size="53.0" />
+                  <Font size="32.0" />
                </font>
             </Button>
          </children></Pane>
