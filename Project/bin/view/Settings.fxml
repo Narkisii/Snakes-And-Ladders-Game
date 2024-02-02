@@ -18,12 +18,12 @@
             <Font name="Baoli TC Regular" size="42.0" />
          </font>
       </Text>
-      <ComboBox id="Difficulty:" layoutX="585.0" layoutY="301.0" prefHeight="43.0" prefWidth="220.0" />
+      <ComboBox fx:id="difficulty" layoutX="585.0" layoutY="301.0" prefHeight="43.0" prefWidth="220.0" />
       <Text layoutX="105.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of players:">
          <font>
             <Font name="Baoli TC Regular" size="42.0" />
          </font>
       </Text>
-      <ComboBox id="number_of_players" layoutX="585.0" layoutY="398.0" prefHeight="43.0" prefWidth="220.0" />
+      <ComboBox fx:id="number_of_players" layoutX="585.0" layoutY="398.0" prefHeight="43.0" prefWidth="220.0" />
    </children>
 </AnchorPane>
