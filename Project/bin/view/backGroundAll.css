@@ -30,7 +30,14 @@
 
 .tile_Font{
 	-fx-text-fill: #FFFFFF;
-    -fx-font-size: 5px;
+    -fx-font-size: 15px;
     -fx-font-weight: bold;
     -fx-effect: dropshadow(three-pass-box, black, 3, 3, 0, 0);
+}
+
+.header_font {
+	-fx-text-fill: #7EFF5E;
+    -fx-font-size: 80;
+    -fx-font-weight: bold;
+    -fx-effect: innershadow(gaussian, #0F4D00, 0.5, 0.5, 0, 0);
 }

@@ -14,12 +14,11 @@ public class MenuScreen extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // TODO Auto-generated method stub
-    	// trying to change something 
-    	Group root = new Group();
+    	//Group root = new Group();
     	AnchorPane innerPane = FXMLLoader.load(getClass().getResource("MenuScreen.fxml"));
     	
-    	root.getChildren().add(innerPane);
-    	Scene scene = new Scene(root);
+    	//root.getChildren().add(innerPane);
+    	Scene scene = new Scene(innerPane);
     	innerPane.prefWidthProperty().bind(scene.widthProperty());
     	innerPane.prefHeightProperty().bind(scene.heightProperty());
     	
