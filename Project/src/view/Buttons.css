@@ -4,22 +4,33 @@
     -fx-text-fill: #7EFF5E;
     -fx-font-weight: bold;
     -fx-effect: dropshadow(three-pass-box, black, 5.0, 5.0, 0.0, 0.0);
+    -fx-font-size: 50px;
 
 }
 
 .Normal_button:hover {
     -fx-effect: dropshadow(three-pass-box, #0f4d00, 5.0, 5.0, 0.0, 0.0);
-    -fx-font-size: 30px;
 }
 
 .menu_button {
-    -fx-text-fill: #000000;
+	-fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #7EFF5E;
+    -fx-font-size: 50px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, black, 5.0, 5.0, 0.0, 0.0);
+}
+
+
+.TEST {
+	  -fx-text-fill: #000000;
     -fx-font-size: 36.0px;
     -fx-font-family: 'Arial Narrow';
+	
 }
 
 .menu_button:hover {
-	-fx-rotate: 5.0;
+	-fx-rotate: 4.0;
 	-fx-font-weight: bold;
 }
 
@@ -37,4 +48,10 @@
 	 -fx-text-fill: #F58B00;
 	 -fx-background-color: #E00000;
 	 -fx-effect: dropshadow(three-pass-box,#A30000, 5.0, 5.0, 0.0, 0.0);
+}
+
+
+
+.comboBox_Nornal{
+	    -fx-font-size: 30.0px;
 }

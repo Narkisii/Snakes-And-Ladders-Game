@@ -36,7 +36,7 @@ public class BoardControllerTest {
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         GridPane grid = new GridPane();
-        int numTiles = 7;
+        int numTiles = 13;
         
         for (int i = 0; i < numTiles; i++) {
             ColumnConstraints colConst = new ColumnConstraints();

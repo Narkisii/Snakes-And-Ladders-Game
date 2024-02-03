@@ -23,9 +23,10 @@
 
 .normal_Font{
 	-fx-text-fill: #7EFF5E;
-    -fx-font-size: 30px;
+    -fx-font-size: 50px;
     -fx-font-weight: bold;
     -fx-effect: dropshadow(three-pass-box, black, 3, 3, 0, 0);
+	-fx-font-family: 'JejuHallasan';
 }
 
 .tile_Font{
@@ -40,4 +41,13 @@
     -fx-font-size: 80;
     -fx-font-weight: bold;
     -fx-effect: innershadow(gaussian, #0F4D00, 0.5, 0.5, 0, 0);
+    -fx-font-family: 'JejuHallasan';
+}
+
+.GameName_font {
+	-fx-text-fill: linear-gradient(to bottom, #7EFF5E 50%, transparent);
+    -fx-font-size: 120px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, black, 7, 7, 0, 0);
+    
 }
