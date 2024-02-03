@@ -11,36 +11,36 @@ import java.util.Random;
  */
 public class Dice {
 
-	private int type; // 0 if game difficulty is easy, 1 if mid, 2 if hard
+	private int Difficulty; // 0 if game difficulty is easy, 1 if mid, 2 if hard
 
 	/**
-	 * @param type
+	 * @param Difficulty
 	 */
-	public Dice(int type) {
+	public Dice(int Difficulty) {
 		super();
-		this.type = type;
+		this.Difficulty = Difficulty;
 	}
 
 	/**
-	 * @return the type
+	 * @return the Difficulty
 	 */
-	public int getType() {
-		return type;
+	public int getDifficulty() {
+		return Difficulty;
 	}
 
 	/**
-	 * @param type the type to set
+	 * @param Difficulty the Difficulty to set
 	 */
-	public void setType(int type) {
-		this.type = type;
+	public void setDifficulty(int Difficulty) {
+		this.Difficulty = Difficulty;
 	}
 
 	public int getResult() {
 		Random rand = new Random();
 		int randomNumber;
-		if (this.type == 0) // if game mode is easy
+		if (this.Difficulty == 0) // if game mode is easy
 			return rand.nextInt(8);
-		if (this.type == 1) { // if game mode is mid
+		if (this.Difficulty == 1) { // if game mode is mid
 			randomNumber = rand.nextInt(13);
 			switch (randomNumber) {
 			case 7:

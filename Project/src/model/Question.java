@@ -5,6 +5,10 @@ package model;
  * 
  * @author ItayOlivcovitz
  */
+//	[1] -> [1.2]-> [1.3]-> [1.3]-> [1.4]-> [1.5]
+//	[2]	-> [2.2]-> [2.3]-> [2.3]-> [2.4]-> [2.5]
+//	[3]	-> [3.2]-> [3.3]-> [3.3]-> [3.4]-> [3.5]	
+			
 public class Question {
     private static int nextId = 0; // Static variable to keep track of the next available ID
     private int id; // question ID
@@ -16,6 +20,7 @@ public class Question {
     // Additional parameters
     private String questionText;
     private int correctAnswer; // Change the type to int
+    private int difficulty; // Change the type to int
 
     /**
      * Constructor for the Question class.
@@ -171,7 +176,7 @@ public class Question {
     @Override
     public String toString() {
         return "Question{" +
-                "id=" + id +
+                //"id=" + id +
                 ", ans1='" + ans1 + '\'' +
                 ", ans2='" + ans2 + '\'' +
                 ", ans3='" + ans3 + '\'' +
@@ -180,4 +185,12 @@ public class Question {
                 ", correctAnswer=" + correctAnswer +
                 '}';
     }
+
+	public int getDifficulty() {
+		return difficulty;
+	}
+
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
+	}
 }

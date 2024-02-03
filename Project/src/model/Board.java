@@ -9,7 +9,7 @@ package model;
  */
 public class Board {
 	private int type; // 0 easy game, 1 mid game, 2 hard game
-	private int[][] gameboard;
+	private Tile[][] gameboard;
 
 	/**
 	 * @param type
@@ -17,13 +17,13 @@ public class Board {
 	public Board(int type) {
 		switch (type) {
 		case 0:
-			setGameboard(new int[7][7]);
+			setGameboard(new Tile[7][7]);
 			break;
 		case 1:
-			setGameboard(new int[10][10]);
+			setGameboard(new Tile[10][10]);
 			break;
 		case 2:
-			setGameboard(new int[13][13]);
+			setGameboard(new Tile[13][13]);
 			break;
 		}
 	}
@@ -31,17 +31,17 @@ public class Board {
 	/**
 	 * @return the gameboard
 	 */
-	public int[][] getGameboard() {
+	public Tile[][] getGameboard() {
 		return gameboard;
 	}
 
 	/**
 	 * @param gameboard the gameboard to set
 	 */
-	public void setGameboard(int[][] gameboard) {
+	public void setGameboard(Tile[][] gameboard) {
 		for (int i = 0; i < gameboard.length; i++) {
 			for (int j = 0; j < gameboard[i].length; j++) {
-				this.gameboard[i][j] = 0;
+				this.gameboard[i][j] = new Tile();
 			}
 		}
 	}

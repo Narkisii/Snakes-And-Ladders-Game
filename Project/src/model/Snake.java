@@ -17,7 +17,7 @@ public class Snake extends TransferObj {
 	 * @param startP
 	 * @param endP
 	 */
-	public Snake(int[] startP, int[] endP, Colors color) {
+	public Snake(int[][] startP, int[][] endP, Colors color) {
 		super(startP, endP);
 		setColor(color);
 	}

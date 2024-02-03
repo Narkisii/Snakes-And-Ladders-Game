@@ -15,7 +15,7 @@ public class Ladder extends TransferObj {
 	 * @param startP
 	 * @param endP
 	 */
-	public Ladder(int[] startP, int[] endP, int length) {
+	public Ladder(int[][] startP, int[][] endP, int length) {
 		super(startP, endP);
 		setLength(length);
 	}

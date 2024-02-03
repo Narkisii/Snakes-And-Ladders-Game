@@ -13,8 +13,8 @@ public class Player {
 
 	private Colors color; // the color of the player's token
 	private String name; // the name of the player
-	private int[] currentP = { 0, 0 }; // Current position of the player, will always start in [0][0]
-	private Object token; // **Object type is a temp type** the token of the player
+	private int[][] currentP; // Current position of the player, will always start in [0][0]
+	private String token; // **Object type is a temp type** the token of the player
 							// (i.e a circle, square, etc...)
 
 	/**
@@ -22,7 +22,7 @@ public class Player {
 	 * @param name
 	 * @param token
 	 */
-	public Player(Colors color, String name, Object token) {
+	public Player(Colors color, String name, String token) {
 		super();
 		this.color = color;
 		this.name = name;
@@ -67,21 +67,21 @@ public class Player {
 	/**
 	 * @param token the token to set
 	 */
-	public void setToken(Object token) {
+	public void setToken(String token) {
 		this.token = token;
 	}
 
 	/**
 	 * @return the currentP
 	 */
-	public int[] getCurrentP() {
+	public int[][] getCurrentP() {
 		return currentP;
 	}
 
 	/**
 	 * @param currentP the currentP to set
 	 */
-	public void setCurrentP(int[] currentP) {
+	public void setCurrentP(int[][] currentP) {
 		this.currentP = currentP;
 	}
 
