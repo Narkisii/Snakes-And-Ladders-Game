@@ -9,12 +9,15 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 public class Board {
 
@@ -24,14 +27,28 @@ public class Board {
     
     @FXML // fx:id="boardpane"
     private AnchorPane boardpane; // Value injected by FXMLLoader
-
+    
+    @FXML
+    private Button return_btn;
 
     private GridPane grid;
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         grid = new GridPane();
-        int numTiles = 13;
-        
+        int numTiles = 0;
+        String diff = GameData.getDifficulty();
+        switch (diff.toLowerCase()) {
+        case "easy":
+        	numTiles = 7;
+            break;
+        case "medium":
+        	numTiles = 10;
+            break;
+        case "hard":
+        	numTiles = 13;
+            break;
+        default:        
+        }
         for (int i = 0; i < numTiles; i++) {
             ColumnConstraints colConst = new ColumnConstraints();
             colConst.setPercentWidth(100.0 / numTiles);
@@ -77,9 +94,22 @@ public class Board {
         // Add the StackPane to the boardpane
         boardpane.getChildren().add(stackPane);
 //        boardpane.getChildren().add(grid);
-    }
+        
+    
+        return_btn.setOnAction(event -> navigateTo("/view/MenuScreen.fxml"));
+}
     
     private void updateGameDate(){
     	
+    }
+    
+    private void navigateTo(String fxmlFile) {
+        try {
+            Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)));
+            Stage stage = (Stage) return_btn.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

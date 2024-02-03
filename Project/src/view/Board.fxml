@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="bodybg" stylesheets="@backGroundAll.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.Board">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@backGroundAll.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.Board">
    <top>
       <Pane prefHeight="30.0" prefWidth="791.0" BorderPane.alignment="CENTER" />
    </top>
@@ -19,7 +19,7 @@
    <bottom>
       <Pane BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="157.0" styleClass="Normal_button" stylesheets="@Buttons.css" text="Return">
+            <Button fx:id="return_btn" mnemonicParsing="false" prefHeight="88.0" prefWidth="235.0" styleClass="Normal_button" stylesheets="@Buttons.css" text="Return">
                <font>
                   <Font size="32.0" />
                </font>
@@ -34,12 +34,12 @@
          <children>
             <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="490.0" prefWidth="262.0" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label id="Turn _abel" alignment="CENTER" contentDisplay="TOP" prefHeight="55.0" prefWidth="251.0" styleClass="normal_Font" stylesheets="@backGroundAll.css" text="Narkis's Turn" textOverrun="CLIP" wrapText="true">
+                  <Label id="Turn _abel" alignment="CENTER" contentDisplay="TOP" prefHeight="147.0" prefWidth="242.0" styleClass="normal_Font" stylesheets="@backGroundAll.css" text="Narkis's Turn" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
                      <font>
                         <Font name="Arial Narrow" size="12.0" />
                      </font>
                   </Label>
-                  <Label id="Time_Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="105.0" prefWidth="246.0" styleClass="normal_Font" stylesheets="@backGroundAll.css" text="Timer:  00:34:00" textOverrun="CLIP" wrapText="true">
+                  <Label id="Time_Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="105.0" prefWidth="246.0" styleClass="normal_Font" stylesheets="@backGroundAll.css" text="Timer:  00:34:00" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
                      <font>
                         <Font name="Arial Narrow" size="12.0" />
                      </font>
