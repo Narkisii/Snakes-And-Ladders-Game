@@ -1,7 +1,14 @@
 package control;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+
+import java.io.IOException;
+
 import javafx.collections.FXCollections;
 
 public class Settings {
@@ -11,6 +18,12 @@ public class Settings {
 
     @FXML
     private ComboBox<Integer> number_of_players;
+
+    @FXML
+    private Button set_players_btn;
+
+    @FXML
+    private Button return_Btn;
 
     @FXML
     public void initialize() {
@@ -26,9 +39,30 @@ public class Settings {
         number_of_players.valueProperty().addListener((obs, oldVal, newVal) -> {
             GameData.setNumberOfPlayers(newVal);
         });
+
+        // Update the difficulty in GameData when it changes
+        difficulty.valueProperty().addListener((obs, oldVal, newVal) -> {
+            GameData.setDifficulty(newVal);
+        });
+
+        // Add actions for your buttons here
+        set_players_btn.setOnAction(event -> navigateTo("/view/Players.fxml"));
+        return_Btn.setOnAction(event -> navigateTo("/view/MenuScreen.fxml"));
     }
+
 
     public int getNumberOfPlayers() {
         return number_of_players.getSelectionModel().getSelectedItem();
+    }
+    
+    private void navigateTo(String fxmlFile) {
+        try {
+            Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)));
+            Stage stage = (Stage) set_players_btn.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+            
+        }
     }
 }

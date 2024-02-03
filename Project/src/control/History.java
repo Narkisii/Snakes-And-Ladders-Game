@@ -7,9 +7,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 
-public class HistoryControl {
-	@FXML
+import java.io.IOException;
+
+public class History {
+
+    @FXML
     private Pane bottomPane;
 
     @FXML
@@ -48,4 +54,22 @@ public class HistoryControl {
     @FXML
     private TableColumn<?, ?> winnerCol;
 
+    @FXML
+    private Button returnBtn; // Add this line
+
+    @FXML
+    public void initialize() {
+        // Add action for your button here
+        returnBtn.setOnAction(event -> navigateTo("/view/MenuScreen.fxml"));
+    }
+
+    private void navigateTo(String fxmlFile) {
+        try {
+            Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)));
+            Stage stage = (Stage) returnBtn.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

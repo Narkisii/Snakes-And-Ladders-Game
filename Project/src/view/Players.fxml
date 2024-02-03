@@ -14,7 +14,7 @@
 <!-- <Button fx:id="button1" id="1" mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
             <Button fx:id="button2" id="2" mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" /> -->
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="771.0" prefWidth="901.0" styleClass="bodybg" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.Players">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="771.0" prefWidth="901.0" styleClass="bodybg" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.Players">
    <children>
       <VBox alignment="BASELINE_CENTER" prefHeight="771.0" prefWidth="901.0" styleClass="bodybg" stylesheets="@Buttons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -257,12 +257,12 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="104.0" prefWidth="232.0" styleClass="Normal_button" stylesheets="@Buttons.css" text="Return">
+                  <Button id="return_Btn" fx:id="return_Btn"  mnemonicParsing="false" prefHeight="104.0" prefWidth="232.0" styleClass="Normal_button" stylesheets="@Buttons.css" text="Return">
                      <font>
                         <Font size="34.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="104.0" prefWidth="232.0" styleClass="Normal_button" stylesheets="@Buttons.css" text="start Game">
+                  <Button id="start_game_Btn"  fx:id="start_game_Btn" mnemonicParsing="false" prefHeight="104.0" prefWidth="232.0" styleClass="Normal_button" stylesheets="@Buttons.css" text="start Game">
                      <font>
                         <Font size="34.0" />
                      </font>

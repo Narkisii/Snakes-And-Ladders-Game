@@ -1,9 +1,16 @@
 package control;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+
+import java.io.IOException;
+
 import javafx.collections.FXCollections;
 
 public class Players {
@@ -21,7 +28,14 @@ public class Players {
     private Text num1, num2, num3, num4, num5;
 
     @FXML
+    private Button return_Btn; // Add this line
+
+    @FXML
+    private Button start_game_Btn; // Add this line
+
+    @FXML
     public void initialize() {
+        int numberOfPlayers = GameData.getNumberOfPlayers();
         // Initialize the color ComboBoxes
         color1.setItems(FXCollections.observableArrayList("Yellow", "Pink", "Green"));
         color2.setItems(FXCollections.observableArrayList("Yellow", "Pink", "Green"));
@@ -37,7 +51,6 @@ public class Players {
         token5.setItems(FXCollections.observableArrayList("Hat", "Car", "Flower"));
 
         // Hide or show the color and token combo boxes based on the number of players
-        int numberOfPlayers = GameData.getNumberOfPlayers();; // replace this with the actual number of players
         color3.setVisible(numberOfPlayers >= 3);
         color4.setVisible(numberOfPlayers >= 4);
         color5.setVisible(numberOfPlayers >= 5);
@@ -54,5 +67,19 @@ public class Players {
         num3.setVisible(numberOfPlayers >= 3);
         num4.setVisible(numberOfPlayers >= 4);
         num5.setVisible(numberOfPlayers >= 5);
+
+        // Add actions for your buttons here
+        return_Btn.setOnAction(event -> navigateTo("/view/Settings.fxml"));
+        start_game_Btn.setOnAction(event -> navigateTo("/view/Board.fxml"));
+    }
+
+    private void navigateTo(String fxmlFile) {
+        try {
+            Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)));
+            Stage stage = (Stage) return_Btn.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
