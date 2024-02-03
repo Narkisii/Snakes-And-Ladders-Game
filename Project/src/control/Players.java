@@ -46,6 +46,7 @@ public class Players {
     @FXML
     public void initialize() {
         int numberOfPlayers = GameData.getNumberOfPlayers();
+        PlayerRowController[] rowControlles = new PlayerRowController[5];//holds controll for each row we can take the info from here
         gridPane = new GridPane(); // Initialize the GridPane
         try {
         	
@@ -54,6 +55,7 @@ public class Players {
                 Pane pane = loader.load();
                 PlayerRowController controller = loader.getController();
                 controller.initialize(i+1);
+                rowControlles[i] = controller;
                 gridPane.add(pane, 0, i);
             }
             playerContainer.getChildren().add(gridPane);
