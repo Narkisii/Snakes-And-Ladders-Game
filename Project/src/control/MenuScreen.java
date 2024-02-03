@@ -20,8 +20,8 @@ public class MenuScreen {
     public void initialize() {
     	
         button_start.setOnAction(event -> navigateTo("/view/Settings.fxml"));
-        button_questionWizard.setOnAction(event -> navigateTo("QuestionWiz.fxml"));
-        button_History.setOnAction(event -> navigateTo("QuestionWiz.fxml"));
+        button_questionWizard.setOnAction(event -> navigateTo("/view/QuestionWiz.fxml"));
+        button_History.setOnAction(event -> navigateTo("/view/History.fxml"));
         quit.setOnAction(event -> ((Stage) quit.getScene().getWindow()).close());
     }
 
