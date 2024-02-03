@@ -4,6 +4,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -32,42 +36,64 @@ public class Players {
 
     @FXML
     private Button start_game_Btn; // Add this line
+    
+    @FXML
+    private AnchorPane playerContainer;
+    
+    private GridPane gridPane;
 
     private Players[] players;
     @FXML
     public void initialize() {
         int numberOfPlayers = GameData.getNumberOfPlayers();
-        // Initialize the color ComboBoxes
-        color1.setItems(FXCollections.observableArrayList("Yellow", "Pink", "Green"));
-        color2.setItems(FXCollections.observableArrayList("Yellow", "Pink", "Green"));
-        color3.setItems(FXCollections.observableArrayList("Yellow", "Pink", "Green"));
-        color4.setItems(FXCollections.observableArrayList("Yellow", "Pink", "Green"));
-        color5.setItems(FXCollections.observableArrayList("Yellow", "Pink", "Green"));
-
-        // Initialize the token ComboBoxes
-        token1.setItems(FXCollections.observableArrayList("Hat", "Car", "Flower"));
-        token2.setItems(FXCollections.observableArrayList("Hat", "Car", "Flower"));
-        token3.setItems(FXCollections.observableArrayList("Hat", "Car", "Flower"));
-        token4.setItems(FXCollections.observableArrayList("Hat", "Car", "Flower"));
-        token5.setItems(FXCollections.observableArrayList("Hat", "Car", "Flower"));
-
-        // Hide or show the color and token combo boxes based on the number of players
-        color3.setVisible(numberOfPlayers >= 3);
-        color4.setVisible(numberOfPlayers >= 4);
-        color5.setVisible(numberOfPlayers >= 5);
-        token3.setVisible(numberOfPlayers >= 3);
-        token4.setVisible(numberOfPlayers >= 4);
-        token5.setVisible(numberOfPlayers >= 5);
-
-        // Hide or show the name text fields based on the number of players
-        name3.setVisible(numberOfPlayers >= 3);
-        name4.setVisible(numberOfPlayers >= 4);
-        name5.setVisible(numberOfPlayers >= 5);
-
-        // Hide or show the number text fields based on the number of players
-        num3.setVisible(numberOfPlayers >= 3);
-        num4.setVisible(numberOfPlayers >= 4);
-        num5.setVisible(numberOfPlayers >= 5);
+        gridPane = new GridPane(); // Initialize the GridPane
+        try {
+        	
+            for (int i = 0; i < numberOfPlayers; i++) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Add_player_row.fxml"));
+                Pane pane = loader.load();
+                PlayerRowController controller = loader.getController();
+                controller.initialize(i+1);
+                gridPane.add(pane, 0, i);
+            }
+            playerContainer.getChildren().add(gridPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+   	  
+                
+        
+// Initialize the color ComboBoxes
+//        color1.setItems(FXCollections.observableArrayList("Yellow", "Pink", "Green"));
+//        color2.setItems(FXCollections.observableArrayList("Yellow", "Pink", "Green"));
+//        color3.setItems(FXCollections.observableArrayList("Yellow", "Pink", "Green"));
+//        color4.setItems(FXCollections.observableArrayList("Yellow", "Pink", "Green"));
+//        color5.setItems(FXCollections.observableArrayList("Yellow", "Pink", "Green"));
+//
+//        // Initialize the token ComboBoxes
+//        token1.setItems(FXCollections.observableArrayList("Hat", "Car", "Flower"));
+//        token2.setItems(FXCollections.observableArrayList("Hat", "Car", "Flower"));
+//        token3.setItems(FXCollections.observableArrayList("Hat", "Car", "Flower"));
+//        token4.setItems(FXCollections.observableArrayList("Hat", "Car", "Flower"));
+//        token5.setItems(FXCollections.observableArrayList("Hat", "Car", "Flower"));
+//
+//        // Hide or show the color and token combo boxes based on the number of players
+//        color3.setVisible(numberOfPlayers >= 3);
+//        color4.setVisible(numberOfPlayers >= 4);
+//        color5.setVisible(numberOfPlayers >= 5);
+//        token3.setVisible(numberOfPlayers >= 3);
+//        token4.setVisible(numberOfPlayers >= 4);
+//        token5.setVisible(numberOfPlayers >= 5);
+//
+//        // Hide or show the name text fields based on the number of players
+//        name3.setVisible(numberOfPlayers >= 3);
+//        name4.setVisible(numberOfPlayers >= 4);
+//        name5.setVisible(numberOfPlayers >= 5);
+//
+//        // Hide or show the number text fields based on the number of players
+//        num3.setVisible(numberOfPlayers >= 3);
+//        num4.setVisible(numberOfPlayers >= 4);
+//        num5.setVisible(numberOfPlayers >= 5);
 
         // Add actions for your buttons here
         return_Btn.setOnAction(event -> navigateTo("/view/Settings.fxml"));

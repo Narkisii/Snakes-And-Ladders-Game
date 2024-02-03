@@ -29,6 +29,13 @@
 	-fx-font-family: 'JejuHallasan';
 }
 
+.cpu_Font{
+	-fx-text-fill: #7EFF5E;
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, black, 3, 3, 0, 0);
+	-fx-font-family: 'JejuHallasan';
+}
 .tile_Font{
 	-fx-text-fill: #FFFFFF;
     -fx-font-size: 15px;
@@ -49,5 +56,10 @@
     -fx-font-size: 120px;
     -fx-font-weight: bold;
     -fx-effect: dropshadow(three-pass-box, black, 7, 7, 0, 0);
-    
 }
+
+.scrolPane_bg {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
