@@ -15,7 +15,7 @@ public class Board extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		// TODO Auto-generated method stub
-		Parent root = FXMLLoader.load(getClass().getResource("Board_Dif2.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("Board.fxml"));
 		Scene scene = new Scene (root);
 		stage.setScene(scene);
 		stage.show();

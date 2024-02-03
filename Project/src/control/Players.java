@@ -33,6 +33,7 @@ public class Players {
     @FXML
     private Button start_game_Btn; // Add this line
 
+    private Players[] players;
     @FXML
     public void initialize() {
         int numberOfPlayers = GameData.getNumberOfPlayers();
@@ -81,5 +82,13 @@ public class Players {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    private Players[] create_players() {
+		return null;
+    }
+
+    private void updateGameData_Players(){
+    	
     }
 }

@@ -41,7 +41,7 @@ public class Settings {
         });
 
         // Update the difficulty in GameData when it changes
-        difficulty.valueProperty().addListener((obs, oldVal, newVal) -> {
+        difficulty.valueProperty().addListener((obs, oldVal, newVal) -> {//Fix to translate to string
             GameData.setDifficulty(newVal);
         });
 
@@ -65,4 +65,10 @@ public class Settings {
             
         }
     }
+    
+    private void updateGameData_Settings(){
+    	
+    }
+    
+    
 }

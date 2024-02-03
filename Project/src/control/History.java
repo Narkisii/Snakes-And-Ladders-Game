@@ -15,48 +15,49 @@ import java.io.IOException;
 
 public class History {
 
-    @FXML
-    private Pane bottomPane;
-
-    @FXML
-    private TableColumn<?, ?> dateCol;
-
-    @FXML
-    private TableColumn<?, ?> difficultyCol;
-
-    @FXML
-    private Label historyHeader;
-
-    @FXML
-    private TableView<?> historyTable;
-
-    @FXML
-    private Pane leftPane;
-
-    @FXML
-    private TableColumn<?, ?> playersCol;
-
-    @FXML
-    private Button returnButton;
-
-    @FXML
-    private Pane rightPane;
-
-    @FXML
-    private TableColumn<?, ?> timeCol;
-
-    @FXML
-    private Pane topPane;
-
-    @FXML
-    private VBox vBoxHistory;
-
-    @FXML
-    private TableColumn<?, ?> winnerCol;
-
+//    @FXML
+//    private Pane bottomPane;
+//
+//    @FXML
+//    private TableColumn<?, ?> dateCol;
+//
+//    @FXML
+//    private TableColumn<?, ?> difficultyCol;
+//
+//    @FXML
+//    private Label historyHeader;
+//
+//    @FXML
+//    private TableView<?> historyTable;
+//
+//    @FXML
+//    private Pane leftPane;
+//
+//    @FXML
+//    private TableColumn<?, ?> playersCol;
+//
+//    @FXML
+//    private Button returnButton;
+//
+//    @FXML
+//    private Pane rightPane;
+//
+//    @FXML
+//    private TableColumn<?, ?> timeCol;
+//
+//    @FXML
+//    private Pane topPane;
+//
+//    @FXML
+//    private VBox vBoxHistory;
+//
+//    @FXML
+//    private TableColumn<?, ?> winnerCol;
+//
     @FXML
     private Button returnBtn; // Add this line
-
+    private History[] history;
+    
     @FXML
     public void initialize() {
         // Add action for your button here
