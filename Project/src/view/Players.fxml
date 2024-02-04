@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.VBox?> <!-- Import VBox -->
 
 <!-- <Button fx:id="button1" id="1" mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
             <Button fx:id="button2" id="2" mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" /> -->
@@ -33,16 +34,17 @@
          </children>
       </HBox>
    </bottom>
-   <center>
+     <center>
       <ScrollPane fx:id="PlayersPane" styleClass="scrolPane_bg" stylesheets="@backGroundAll.css" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
          </BorderPane.margin>
          <content>
-            <AnchorPane fx:id="playerContainer" prefHeight="200.0" />
+            <VBox fx:id="playerContainer" prefHeight="200.0" /> <!-- Change AnchorPane to VBox -->
          </content>
       </ScrollPane>
    </center>
+
    <top>
       <Pane BorderPane.alignment="CENTER">
          <children>
