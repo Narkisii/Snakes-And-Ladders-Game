@@ -2,6 +2,6 @@ package model;
 
 import java.util.HashMap;
 
-public class Questions {
+public class QuestionsFromJson {
 private HashMap<Integer,Question> Questions;
 }
