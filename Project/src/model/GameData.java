@@ -1,5 +1,7 @@
 package model;
 
+import java.util.HashMap;
+
 import control.Board;
 import control.History;
 import control.Players;
@@ -7,7 +9,7 @@ import control.Players;
 public class GameData {
     private static int numberOfPlayers = 1;
     private static String difficulty = "Easy"; // Need to be int
-    private static Question[] questions;
+    private HashMap<Integer,Question> questions;
     private static Players[] players;
     private static Snake[] sankes;
     private static Ladder[] Ladders;
@@ -59,25 +61,26 @@ public class GameData {
 //		GameData.difficulty = difficulty;
 //	}
 
-	/**
-	 * @return the questions
-	 */
-	public static Question[] getQuestions() {
-		return questions;
-	}
-
-	/**
-	 * @param questions the questions to set
-	 */
-	public static void setQuestions(Question[] questions) {
-		GameData.questions = questions;
-	}
 
 	/**
 	 * @return the players
 	 */
 	public static Players[] getPlayers() {
 		return players;
+	}
+
+	/**
+	 * @return the questions
+	 */
+	public HashMap<Integer, Question> getQuestions() {
+		return questions;
+	}
+
+	/**
+	 * @param questions the questions to set
+	 */
+	public void setQuestions(HashMap<Integer, Question> questions) {
+		this.questions = questions;
 	}
 
 	/**
@@ -175,4 +178,9 @@ public class GameData {
     public static void to_json() {
     }
 
+    public static Question getRandQuestion(int diff) {
+		return null;
+    	
+    }
+    
 }
