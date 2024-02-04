@@ -7,8 +7,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class QuestionWiz {
@@ -30,13 +33,27 @@ public class QuestionWiz {
 
     @FXML
     private AnchorPane hardTab;
-
+    
+    @FXML
+    private ScrollPane easyScroll;
+    @FXML
+    private VBox vBox;
     @FXML
     void initialize() {
-//        assert EasyTab != null : "fx:id=\"EasyTab\" was not injected: check your FXML file 'QuestionWiz.fxml'.";
-//        assert MediumTab != null : "fx:id=\"MediumTab\" was not injected: check your FXML file 'QuestionWiz.fxml'.";
-//        assert Return_Btn != null : "fx:id=\"Return_Btn\" was not injected: check your FXML file 'QuestionWiz.fxml'.";
-//        assert hardTab != null : "fx:id=\"hardTab\" was not injected: check your FXML file 'QuestionWiz.fxml'.";
+    	easyScroll.setFitToWidth(true);
+    	easyScroll.setFitToHeight(true);
+    	
+    	 for (int i = 1; i <= 5; i++) {
+             Button button = new Button("Button " + i);
+             button.setOnAction(event -> {
+                 // Handle the button click here
+                 System.out.println("Button clicked: " + button.getText());
+             });
+
+             HBox questionRow = new HBox(button); // Create a new HBox for each button
+             vBox.getChildren().add(questionRow); // Add the HBox to the VBox
+         }
+
     	Return_Btn.setOnAction(event -> navigateTo("/view/MenuScreen.fxml"));
 
     }
