@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
+import model.GameData;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 

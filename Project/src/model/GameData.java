@@ -1,10 +1,8 @@
-package control;
+package model;
 
-import model.Dice;
-import model.Ladder;
-import model.Question;
-import model.Snake;
-import model.Tile;
+import control.Board;
+import control.History;
+import control.Players;
 
 public class GameData {
     private static int numberOfPlayers = 1;
@@ -173,13 +171,6 @@ public class GameData {
 		GameData.dice = dice;
 	}
 
-	void gameloop(){
-    	
-    }
-    
-    void enable_action(int x, int y) {
-    	
-    }
     
     public static void to_json() {
     }

@@ -34,7 +34,7 @@
       </HBox>
    </bottom>
    <center>
-      <ScrollPane styleClass="scrolPane_bg" stylesheets="@backGroundAll.css" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="PlayersPane" styleClass="scrolPane_bg" stylesheets="@backGroundAll.css" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
          </BorderPane.margin>
