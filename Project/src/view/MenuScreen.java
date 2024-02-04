@@ -21,9 +21,7 @@ public class MenuScreen extends Application {
     	Scene scene = new Scene(innerPane);
     	innerPane.prefWidthProperty().bind(scene.widthProperty());
     	innerPane.prefHeightProperty().bind(scene.heightProperty());
-    	
-    	stage.setWidth(901);
-    	stage.setHeight(771);
+
         
     	stage.setScene(scene);
         stage.show();

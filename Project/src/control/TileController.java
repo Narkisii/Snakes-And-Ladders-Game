@@ -25,7 +25,6 @@ public class TileController {
     	tile.setMaxHeight(Double.MAX_VALUE);
     	tile.setMinWidth(0);
     	tile.setMinHeight(0);
-
     }
 
     public void bindSize(ReadOnlyDoubleProperty  widthProperty, ReadOnlyDoubleProperty  heightProperty, int numTiles) {
