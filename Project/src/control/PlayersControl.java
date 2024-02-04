@@ -23,7 +23,7 @@ import java.io.IOException;
 
 import javafx.collections.FXCollections;
 
-public class Players {
+public class PlayersControl {
 
     @FXML
     private Button return_Btn; // Add this line
@@ -99,8 +99,8 @@ public class Players {
             playerContainer.getChildren().add(playerRow); // Add the playerRow HBox to your playerContainer VBox
             VBox.setVgrow(playerRow, Priority.ALWAYS); // Make 'playerRow' expand to fill available vertical space
         }
-        return_Btn.setOnAction(event -> navigateTo("/view/Settings.fxml"));
-        start_game_Btn.setOnAction(event -> navigateTo("/view/Board.fxml"));
+        return_Btn.setOnAction(event -> navigateTo("/view/SettingsView.fxml"));
+        start_game_Btn.setOnAction(event -> navigateTo("/view/BoardView.fxml"));
     }
 
     private void navigateTo(String fxmlFile) {
@@ -113,7 +113,7 @@ public class Players {
         }
     }
     
-    private Players[] create_players() {
+    private PlayersControl[] create_players() {
 		return null;
     }
 

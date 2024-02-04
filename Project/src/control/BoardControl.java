@@ -13,7 +13,7 @@ import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import model.GameData;
 
-public class Board {
+public class BoardControl {
 
     @FXML
     private ResourceBundle resources; // Resource bundle for localization
@@ -30,16 +30,16 @@ public class Board {
     void initialize() {
         grid = new GridPane(); // Initialize the grid
         int numTiles = getNumOfTiles(); // Get the number of tiles based on the difficulty
-        TileController[][] tiles = new TileController[numTiles][numTiles]; // Array to hold the tile controllers
+        TileControl[][] tiles = new TileControl[numTiles][numTiles]; // Array to hold the tile controllers
 
         // Loop to create the tiles
         for (int i = 0; i < numTiles; i++) {
             for (int j = 0; j < numTiles; j++) {
                 try {
                     // Load the tile from the FXML file
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/tile.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/tileView.fxml"));
                     Pane pane = loader.load();
-                    TileController controller = loader.getController(); // Get the controller for the tile
+                    TileControl controller = loader.getController(); // Get the controller for the tile
                     controller.bindSize(grid.widthProperty(), grid.heightProperty(), numTiles); // Bind the size of the tile to the size of the grid
                     pane.setUserData(controller); // Store the controller in the user data of the pane
                     tiles[i][j] = controller; // Add the controller to the array
@@ -68,7 +68,7 @@ public class Board {
         AnchorPane.setRightAnchor(grid, 0.0);
 
         // Set the action for the return button
-        return_btn.setOnAction(event -> navigateTo("/view/MenuScreen.fxml"));
+        return_btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
     }
 
     // Method to get the number of tiles based on the difficulty

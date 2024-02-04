@@ -13,65 +13,67 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.Question;
 
-public class QuestionWiz {
+public class QuestionWizControl {
 
-    @FXML
-    private ResourceBundle resources;
+	@FXML
+	private ResourceBundle resources;
 
-    @FXML
-    private URL location;
+	@FXML
+	private URL location;
 
-    @FXML
-    private Tab EasyTab;
+	@FXML
+	private Tab EasyTab;
 
-    @FXML
-    private Tab MediumTab;
+	@FXML
+	private Tab MediumTab;
 
-    @FXML
-    private Button Return_Btn;
+	@FXML
+	private Button Return_Btn;
 
-    @FXML
-    private AnchorPane hardTab;
-    
-    @FXML
-    private ScrollPane easyScroll;
-    @FXML
-    private VBox vBox;
-    @FXML
-    void initialize() {
-    	easyScroll.setFitToWidth(true);
-    	easyScroll.setFitToHeight(true);
-    	
-    	 for (int i = 1; i <= 5; i++) {
-             Button button = new Button("Button " + i);
-             button.setOnAction(event -> {
-                 // Handle the button click here
-                 System.out.println("Button clicked: " + button.getText());
-             });
+	@FXML
+	private AnchorPane hardTab;
 
-             HBox questionRow = new HBox(button); // Create a new HBox for each button
-             vBox.getChildren().add(questionRow); // Add the HBox to the VBox
-         }
+	@FXML
+	private ScrollPane easyScroll;
+	@FXML
+	private VBox vBox;
 
-    	Return_Btn.setOnAction(event -> navigateTo("/view/MenuScreen.fxml"));
+	@FXML
+	void initialize() {
+		easyScroll.setFitToWidth(true);
+		easyScroll.setFitToHeight(true);
 
-    }
-    private void navigateTo(String fxmlFile) {
-        try {
-            Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)));
-            Stage stage = (Stage) Return_Btn.getScene().getWindow();
-            stage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+		for (int i = 1; i <= 5; i++) {
+			Button button = new Button("Button " + i);
+			button.setOnAction(event -> {
+				// Handle the button click here
+				System.out.println("Button clicked: " + button.getText());
+			});
+
+			HBox questionRow = new HBox(button); // Create a new HBox for each button
+			vBox.getChildren().add(questionRow); // Add the HBox to the VBox
+		}
+
+		Return_Btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
+
+	}
+
+	private void navigateTo(String fxmlFile) {
+		try {
+			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)));
+			Stage stage = (Stage) Return_Btn.getScene().getWindow();
+			stage.setScene(scene);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private boolean delete_Q(Question q) {
+		return true;
+	}
 }
-
-
-
-
-
 
 //package control;
 //import javafx.fxml.FXML;
@@ -121,9 +123,7 @@ public class QuestionWiz {
 //	    	return true;
 //	    }
 //	    
-//	    private boolean delete_Q(Question q) {
-//	    	return true;
-//	    }
+//	    
 //	    
 //	}
 //

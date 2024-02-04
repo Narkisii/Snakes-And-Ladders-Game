@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 
-public class MenuScreen {
+public class MenuScreenControl {
 
     @FXML
     private Text gameTitle;
@@ -19,9 +19,9 @@ public class MenuScreen {
     @FXML
     public void initialize() {
     	
-        button_start.setOnAction(event -> navigateTo("/view/Settings.fxml"));
-        button_questionWizard.setOnAction(event -> navigateTo("/view/QuestionWiz.fxml"));
-        button_History.setOnAction(event -> navigateTo("/view/History.fxml"));
+        button_start.setOnAction(event -> navigateTo("/view/SettingsView.fxml"));
+        button_questionWizard.setOnAction(event -> navigateTo("/view/QuestionWizView.fxml"));
+        button_History.setOnAction(event -> navigateTo("/view/HistoryView.fxml"));
         quit.setOnAction(event -> ((Stage) quit.getScene().getWindow()).close());
     }
 

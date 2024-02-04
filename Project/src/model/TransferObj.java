@@ -8,14 +8,14 @@ package model;
  *
  */
 public abstract class TransferObj {
-	private int[][] startP;
-	private int[][] endP;
+	private Position startP;
+	private Position endP;
 
 	/**
 	 * @param startP
 	 * @param endP
 	 */
-	public TransferObj(int[][] startP, int[][] endP) {
+	public TransferObj(Position startP, Position endP) {
 		super();
 		this.startP = startP;
 		this.endP = endP;
@@ -24,28 +24,28 @@ public abstract class TransferObj {
 	/**
 	 * @return the startP
 	 */
-	public int[][] getStartP() {
+	public Position getStartP() {
 		return startP;
 	}
 
 	/**
 	 * @param startP the startP to set
 	 */
-	public void setStartP(int[][] startP) {
+	public void setStartP(Position startP) {
 		this.startP = startP;
 	}
 
 	/**
 	 * @return the endP
 	 */
-	public int[][] getEndP() {
+	public Position getEndP() {
 		return endP;
 	}
 
 	/**
 	 * @param endP the endP to set
 	 */
-	public void setEndP(int[][] endP) {
+	public void setEndP(Position endP) {
 		this.endP = endP;
 	}
 

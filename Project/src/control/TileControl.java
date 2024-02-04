@@ -7,7 +7,7 @@ import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 
-public class TileController {
+public class TileControl {
 
     @FXML
     private ResourceBundle resources;

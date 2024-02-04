@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane fx:id="tile" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="10.0" minWidth="10.0" styleClass="tile" stylesheets="@backGroundAll.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.TileControl" />

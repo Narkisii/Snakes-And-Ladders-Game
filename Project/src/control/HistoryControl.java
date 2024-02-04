@@ -13,7 +13,7 @@ import javafx.fxml.FXMLLoader;
 
 import java.io.IOException;
 
-public class History {
+public class HistoryControl {
 
 //    @FXML
 //    private Pane bottomPane;
@@ -56,12 +56,17 @@ public class History {
 //
     @FXML
     private Button returnBtn; // Add this line
-    private History[] history;
+    private HistoryControl[] history;
     
     @FXML
     public void initialize() {
         // Add action for your button here
-        returnBtn.setOnAction(event -> navigateTo("/view/MenuScreen.fxml"));
+        returnBtn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
+    }
+    
+    public HistoryControl createHistoryRecord(String players, int difficulty, String playTime, String winner) {
+		return null;
+    	// will create history record to save in JSON file
     }
 
     private void navigateTo(String fxmlFile) {
@@ -73,4 +78,5 @@ public class History {
             e.printStackTrace();
         }
     }
+   
 }

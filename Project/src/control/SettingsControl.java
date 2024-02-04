@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import javafx.collections.FXCollections;
 
-public class Settings {
+public class SettingsControl {
 
     @FXML
     private ComboBox<String> difficulty;
@@ -47,8 +47,8 @@ public class Settings {
         });
 
         // Add actions for your buttons here
-        set_players_btn.setOnAction(event -> navigateTo("/view/Players.fxml"));
-        return_Btn.setOnAction(event -> navigateTo("/view/MenuScreen.fxml"));
+        set_players_btn.setOnAction(event -> navigateTo("/view/PlayersView.fxml"));
+        return_Btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
     }
 
 

@@ -2,20 +2,20 @@ package model;
 
 import java.util.HashMap;
 
-import control.Board;
-import control.History;
-import control.Players;
+import control.BoardControl;
+import control.HistoryControl;
+import control.PlayersControl;
 
 public class GameData {
     private static int numberOfPlayers = 1;
     private static String difficulty = "Easy"; // Need to be int
     private HashMap<Integer,Question> questions;
-    private static Players[] players;
+    private static PlayersControl[] players;
     private static Snake[] sankes;
     private static Ladder[] Ladders;
     private static Tile[] specialTiles;
-    private static Board board;
-    private static History History;
+    private static BoardControl board;
+    private static HistoryControl History;
     private static Dice dice;
     
 
@@ -65,7 +65,7 @@ public class GameData {
 	/**
 	 * @return the players
 	 */
-	public static Players[] getPlayers() {
+	public static PlayersControl[] getPlayers() {
 		return players;
 	}
 
@@ -86,7 +86,7 @@ public class GameData {
 	/**
 	 * @param players the players to set
 	 */
-	public static void setPlayers(Players[] players) {
+	public static void setPlayers(PlayersControl[] players) {
 		GameData.players = players;
 	}
 
@@ -135,28 +135,28 @@ public class GameData {
 	/**
 	 * @return the board
 	 */
-	public static Board getBoard() {
+	public static BoardControl getBoard() {
 		return board;
 	}
 
 	/**
 	 * @param board the board to set
 	 */
-	public static void setBoard(Board board) {
+	public static void setBoard(BoardControl board) {
 		GameData.board = board;
 	}
 
 	/**
 	 * @return the history
 	 */
-	public static History getHistory() {
+	public static HistoryControl getHistory() {
 		return History;
 	}
 
 	/**
 	 * @param history the history to set
 	 */
-	public static void setHistory(History history) {
+	public static void setHistory(HistoryControl history) {
 		History = history;
 	}
 

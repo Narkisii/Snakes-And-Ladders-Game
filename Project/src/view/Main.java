@@ -10,7 +10,7 @@ import javafx.fxml.FXMLLoader;
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("MenuScreen.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("MenuScreenView.fxml"));
 		Scene scene = new Scene(root);
 
 		primaryStage.setScene(scene);
