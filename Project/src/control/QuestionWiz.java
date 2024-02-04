@@ -28,7 +28,7 @@ public class QuestionWiz {
 	    private void loadQuestionsIntoVBox() {
 	        try {
 	            for (int i = 0; i < 10; i++) {
-	                FXMLLoader loader = new FXMLLoader(getClass().getResource("question.fxml")); // Ensure this is the correct path to your 'question' FXML file
+	                FXMLLoader loader = new FXMLLoader(getClass().getResource("QuestionWiz.fxml")); // Ensure this is the correct path to your 'question' FXML file
 	                Node question = loader.load();
 	                easyQuestions.getChildren().add(question);
 	            }
