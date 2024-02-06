@@ -4,10 +4,7 @@ package control;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,8 +15,19 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import model.GameData;
+import javafx.animation.KeyFrame;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+
+import javafx.util.Duration;
+
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
+
 
 public class BoardControl {
 
@@ -36,7 +44,15 @@ public class BoardControl {
     private Label turn_Lable;
 
     @FXML
-    private Label time_Label;
+    private Label countDown_Label;
+    
+    @FXML
+    private Label timer_Label;
+    
+    private Integer timeSeconds = 0;
+    private Timeline timeline;
+    
+    
     
     // Initialize the timer properties
     private IntegerProperty counter = new SimpleIntegerProperty(60); // Initial time in seconds
@@ -48,7 +64,7 @@ public class BoardControl {
     
     void initialize() {
         // Bind the time_Label to the counter property
-        time_Label.textProperty().bind(counter.asString());
+        countDown_Label.textProperty().bind(counter.asString());
 
         // Create a timeline for the countdown
         timer = new Timeline(
@@ -62,6 +78,19 @@ public class BoardControl {
         );
         timer.setCycleCount(Timeline.INDEFINITE); // Repeat indefinitely
         startTimer();
+        
+        timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                timeSeconds++;
+                // update timerLabel
+                timer_Label.setText(timeSeconds.toString());
+            }
+        }));
+        timeline.playFromStart();
+        
     	
     	
     	
@@ -108,6 +137,8 @@ public class BoardControl {
         // Set the action for the return button
         return_btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
     }
+    
+    
 
     
 	 // Method to start the timer
@@ -160,5 +191,6 @@ public class BoardControl {
     	
     }
 }
+
 
 
