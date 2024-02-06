@@ -4,7 +4,10 @@ package control;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,15 +18,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
-import model.GameData;
-
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.util.Duration;
+import model.GameData;
 
 public class BoardControl {
 

@@ -1,16 +1,15 @@
 package control;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ComboBox;
-import javafx.stage.Stage;
-import model.GameData;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-
 import java.io.IOException;
 
 import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.stage.Stage;
+import model.GameData;
 
 public class SettingsControl {
 
