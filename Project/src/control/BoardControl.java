@@ -1,17 +1,29 @@
 package control;
 
+
 import java.io.IOException;
 import java.util.ResourceBundle;
+
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import model.GameData;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.util.Duration;
 
 public class BoardControl {
 
@@ -23,11 +35,41 @@ public class BoardControl {
     
     @FXML
     private Button return_btn; // Button to return to the previous screen
+    
+    @FXML
+    private Label turn_Lable;
+
+    @FXML
+    private Label time_Label;
+    
+    // Initialize the timer properties
+    private IntegerProperty counter = new SimpleIntegerProperty(60); // Initial time in seconds
+    private Timeline timer;
 
     private GridPane grid; // The grid that will contain the tiles
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
+    
     void initialize() {
+        // Bind the time_Label to the counter property
+        time_Label.textProperty().bind(counter.asString());
+
+        // Create a timeline for the countdown
+        timer = new Timeline(
+            new KeyFrame(Duration.seconds(1), e -> {
+                counter.set(counter.get() - 1);
+                if (counter.get() == 0) {
+                    // Timer completed, stop the timer
+                    timer.stop();
+                }
+            })
+        );
+        timer.setCycleCount(Timeline.INDEFINITE); // Repeat indefinitely
+        startTimer();
+    	
+    	
+    	
+    	turn_Lable.setText("Bree");
         grid = new GridPane(); // Initialize the grid
         int numTiles = getNumOfTiles(); // Get the number of tiles based on the difficulty
         TileControl[][] tiles = new TileControl[numTiles][numTiles]; // Array to hold the tile controllers
@@ -71,6 +113,18 @@ public class BoardControl {
         return_btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
     }
 
+    
+	 // Method to start the timer
+	    @FXML
+	    private void startTimer() {
+	        timer.play();
+	    }
+	
+	    // Method to stop the timer
+	    @FXML
+	    private void stopTimer() {
+	        timer.stop();
+	    }
     // Method to get the number of tiles based on the difficulty
     private int getNumOfTiles() {
         int numTiles = 0;
@@ -110,3 +164,5 @@ public class BoardControl {
     	
     }
 }
+
+
