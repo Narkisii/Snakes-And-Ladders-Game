@@ -28,6 +28,13 @@
     -fx-effect: dropshadow(three-pass-box, black, 3, 3, 0, 0);
 	-fx-font-family: 'JejuHallasan';
 }
+.instruction_Font{
+	-fx-text-fill: #7EFF5E;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, black, 3, 3, 0, 0);
+	-fx-font-family: 'JejuHallasan';
+}
 
 .cpu_Font{
 	-fx-text-fill: #7EFF5E;
