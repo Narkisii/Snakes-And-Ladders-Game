@@ -55,6 +55,10 @@ public class SettingsControl {
         return number_of_players.getSelectionModel().getSelectedItem();
     }
     
+    public String getGameDifficulty() {
+        return difficulty.getSelectionModel().getSelectedItem();
+    }
+    
     private void navigateTo(String fxmlFile) {
         try {
             Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)));

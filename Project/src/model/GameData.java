@@ -14,7 +14,6 @@ public class GameData {
     private static Snake[] sankes;
     private static Ladder[] Ladders;
     private static Tile[] specialTiles;
-    private static BoardControl board;
     private static HistoryControl History;
     private static Dice dice;
     
@@ -25,6 +24,23 @@ public class GameData {
 	public static String getDifficulty() {
 		return difficulty;
 	}
+	
+	 /**
+		 * @return the difficulty
+		 */
+	public static int getNumOfTiles() {
+	    switch (difficulty) {
+	        case "Easy":
+	            return 7;
+	        case "Medium":
+	            return 10;
+	        case "Hard":
+	            return 13;
+	        default:
+	            return 7;
+	    }
+	}
+
 
 	/**
 	 * @param difficulty the difficulty to set
@@ -132,20 +148,9 @@ public class GameData {
 		GameData.specialTiles = specialTiles;
 	}
 
-	/**
-	 * @return the board
-	 */
-	public static BoardControl getBoard() {
-		return board;
-	}
 
-	/**
-	 * @param board the board to set
-	 */
-	public static void setBoard(BoardControl board) {
-		GameData.board = board;
-	}
 
+	
 	/**
 	 * @return the history
 	 */
