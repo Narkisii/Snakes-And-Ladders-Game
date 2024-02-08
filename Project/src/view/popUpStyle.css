@@ -1,0 +1,49 @@
+@font-face {
+    src: url('resources/Fonts/JejuHallasan-Regular.ttf');
+}
+
+.bodybg{
+	-fx-background-image: url("/view/Images/popUpScreen.png");
+	-fx-background-size: 100% 100%;
+	-fx-font-family: 'JejuHallasan';
+}
+
+
+.statuspane {
+    -fx-background-color: linear-gradient(to bottom, #29AD1E 50%, transparent);
+    -fx-border-radius: 10 10 70 70;
+ 	-fx-background-radius: 10 10 70 70;
+}
+
+.normal_Font{
+	-fx-text-fill: #7EFF5E;
+    -fx-font-size: 50px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, black, 3, 3, 0, 0);
+	-fx-font-family: 'JejuHallasan';
+}
+.instruction_Font{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, black, 3, 3, 0, 0);
+	-fx-font-family: 'JejuHallasan';
+}
+
+
+
+.header_font {
+	-fx-text-fill: #7EFF5E;
+    -fx-font-size: 80;
+    -fx-font-weight: bold;
+    -fx-effect: innershadow(gaussian, #0F4D00, 0.5, 0.5, 0, 0);
+    -fx-font-family: 'JejuHallasan';
+}
+
+
+.scrolPane_bg {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+
+

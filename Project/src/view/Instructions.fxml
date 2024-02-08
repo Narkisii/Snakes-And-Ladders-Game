@@ -77,7 +77,10 @@
                                 <Image url="@Images/arrow1%20(1).png" />
                             </image>
                         </ImageView>
-                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="Move forward the indicated number of steps on the board." wrapText="true" />
+                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="Move forward the indicated number of steps on the board." wrapText="true">
+                     <HBox.margin>
+                        <Insets left="12.0" />
+                     </HBox.margin></Label>
                     </HBox>
                     <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
                         <ImageView fitHeight="92.0" fitWidth="102.0">
@@ -88,7 +91,10 @@
                                 <Insets right="10.0" />
                             </HBox.margin>
                         </ImageView>
-                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="Watch out for snakes that move you back and ladders that help you skip ahead." wrapText="true" />
+                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="Watch out for snakes that move you back and ladders that help you skip ahead." wrapText="true">
+                     <HBox.margin>
+                        <Insets right="22.0" />
+                     </HBox.margin></Label>
                     </HBox>
                     <HBox alignment="CENTER" GridPane.rowIndex="2">
                         <ImageView fitHeight="94.0" fitWidth="109.0">
@@ -96,7 +102,10 @@
                                 <Image url="@Images/question%20(1).png" />
                             </image>
                         </ImageView>
-                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="Answer questions on question squares to proceed." wrapText="true" />
+                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="Answer questions on question squares to proceed." wrapText="true">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin></Label>
                     </HBox>
                     <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
                         <ImageView fitHeight="68.0" fitWidth="69.0">
@@ -104,10 +113,13 @@
                                 <Image url="@Images/gift%20(1).png" />
                             </image>
                             <HBox.margin>
-                                <Insets right="10.0" />
+                                <Insets />
                             </HBox.margin>
                         </ImageView>
-                        <Label prefHeight="75.0" prefWidth="354.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="Surprise slots offer a choice to jump forward or go back 10 steps." wrapText="true" />
+                        <Label prefHeight="86.0" prefWidth="354.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="Surprise slots offer a choice to jump forward or go back 10 steps." wrapText="true">
+                     <HBox.margin>
+                        <Insets left="32.0" />
+                     </HBox.margin></Label>
                     </HBox>
                     <HBox alignment="CENTER" GridPane.rowIndex="3">
                         <ImageView fitHeight="85.0" fitWidth="84.0">
@@ -115,15 +127,24 @@
                                 <Image url="@Images/difficulty%20(1).png" />
                             </image>
                         </ImageView>
-                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="Choose the difficulty level (easy, medium, or hard) before starting." wrapText="true" />
+                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="Choose the difficulty level (easy, medium, or hard) before starting." wrapText="true">
+                     <HBox.margin>
+                        <Insets left="9.0" />
+                     </HBox.margin></Label>
                     </HBox>
                     <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
                         <ImageView fitHeight="84.0" fitWidth="92.0">
                             <image>
                                 <Image url="@Images/winning%20(1).png" />
                             </image>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
                         </ImageView>
-                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="The player who reaches the final slot first wins the game." wrapText="true" />
+                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="The player who reaches the final slot first wins the game." wrapText="true">
+                     <HBox.margin>
+                        <Insets right="24.0" />
+                     </HBox.margin></Label>
                     </HBox>
                 </children>
             </GridPane>

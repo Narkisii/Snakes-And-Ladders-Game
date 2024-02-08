@@ -1,51 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.addQuestionPopControl">
-    <VBox spacing="10.0" styleClass="bodybg" stylesheets="@backGroundAll.css">
+<AnchorPane prefHeight="300.0" prefWidth="650.0" stylesheets="@popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.addQuestionPopControl">
+    <VBox spacing="10.0" styleClass="bodybg" stylesheets="@popUpStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
             <Label styleClass="GameName_font" text="Create question:">
                 <VBox.margin>
-                    <Insets left="10.0" top="10.0" />
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </VBox.margin>
             </Label>
             <TextField promptText="Enter your question here..." styleClass="cpu_Font">
                 <VBox.margin>
-                    <Insets left="10.0" right="10.0" />
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </VBox.margin>
             </TextField>
             <Label styleClass="cpu_Font" text="Correct answer">
                 <VBox.margin>
-                    <Insets left="10.0" />
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </VBox.margin>
             </Label>
             <TextField promptText="Enter the correct answer..." styleClass="cpu_Font">
                 <VBox.margin>
-                    <Insets left="10.0" right="10.0" />
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </VBox.margin>
             </TextField>
             <Label styleClass="cpu_Font" text="Other answers">
                 <VBox.margin>
-                    <Insets left="10.0" />
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </VBox.margin>
             </Label>
             <TextField promptText="Enter answer option 1..." styleClass="cpu_Font">
                 <VBox.margin>
-                    <Insets left="10.0" right="10.0" />
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </VBox.margin>
             </TextField>
             <TextField promptText="Enter answer option 2..." styleClass="cpu_Font">
                 <VBox.margin>
-                    <Insets left="10.0" right="10.0" />
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </VBox.margin>
             </TextField>
             <TextField promptText="Enter answer option 3..." styleClass="cpu_Font">
                 <VBox.margin>
-                    <Insets left="10.0" right="10.0" />
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </VBox.margin>
             </TextField>
             <!-- Add any other buttons or UI elements you need here -->
