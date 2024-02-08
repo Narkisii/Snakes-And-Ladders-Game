@@ -29,7 +29,6 @@
 	-fx-font-family: 'JejuHallasan';
 }
 .instruction_Font{
-	-fx-text-fill: #7EFF5E;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-effect: dropshadow(three-pass-box, black, 3, 3, 0, 0);
@@ -68,5 +67,14 @@
 .scrolPane_bg {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
+}
+
+.rounded-frame {
+    -fx-background-color: #fdfd96; /* pastel yellow color */
+    -fx-background-radius: 10; /* rounded corners */
+    -fx-padding: 10; /* padding inside the frame */
+    -fx-border-color: black; /* border color */
+    -fx-border-radius: 10; /* rounded corners for the border */
+    -fx-border-width: 0.5; /* border width */
 }
 
