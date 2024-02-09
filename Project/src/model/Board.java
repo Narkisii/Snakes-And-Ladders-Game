@@ -14,19 +14,10 @@ public class Board {
 	/**
 	 * @param type
 	 */
-	public Board(int type) {
-		switch (type) {
-		case 0:
-			setGameboard(new Tile[7][7]);
-			break;
-		case 1:
-			setGameboard(new Tile[10][10]);
-			break;
-		case 2:
-			setGameboard(new Tile[13][13]);
-			break;
-		}
+	public Board(int numTiles) {
+	    setGameboard(new Tile[numTiles][numTiles]);
 	}
+
 
 	/**
 	 * @return the gameboard
