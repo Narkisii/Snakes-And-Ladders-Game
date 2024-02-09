@@ -15,7 +15,7 @@ public class MenuScreenControl {
     private Text gameTitle;
 
     @FXML
-    private Button button_start, button_questionWizard, button_History, quit;
+    private Button button_start, button_questionWizard, button_History, quit, button_instructions;
 
     @FXML
     public void initialize() {
@@ -23,6 +23,7 @@ public class MenuScreenControl {
         button_start.setOnAction(event -> navigateTo("/view/SettingsView.fxml"));
         button_questionWizard.setOnAction(event -> navigateTo("/view/QuestionWizView.fxml"));
         button_History.setOnAction(event -> navigateTo("/view/HistoryView.fxml"));
+        button_instructions.setOnAction(event -> navigateTo("/view/Instructions.fxml"));
         quit.setOnAction(event -> ((Stage) quit.getScene().getWindow()).close());
     }
 
