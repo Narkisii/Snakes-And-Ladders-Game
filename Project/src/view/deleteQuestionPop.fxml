@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="150.0" prefWidth="450.0" stylesheets="@popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.RemoveQuestionPopControl">
+    <VBox spacing="20.0" alignment="TOP_CENTER" styleClass="bodybg" stylesheets="@popUpStyle.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+        <children>
+            <Label styleClass="GameName_font" text="You are about to remove a question, are you sure about it?" wrapText="true">
+                <VBox.margin>
+                    <Insets bottom="20.0" />
+                </VBox.margin>
+            </Label>
+            <HBox spacing="20.0" alignment="CENTER">
+                <children>
+                    <Button fx:id="yesButton" text="Yes" styleClass="finish_button">
+                        <!-- Add any additional styling or fx:id if needed -->
+                    </Button>
+                    <Button fx:id="noButton" text="No" styleClass="finish_button">
+                        <!-- Add any additional styling or fx:id if needed -->
+                    </Button>
+                </children>
+            </HBox>
+        </children>
+    </VBox>
+</AnchorPane>

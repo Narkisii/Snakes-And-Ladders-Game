@@ -3,7 +3,7 @@
 }
 
 .bodybg{
-	-fx-background-image: url("/view/Images/popUpScreen.png");
+	-fx-background-image: url("/view/Images/maybeeePop.png");
 	-fx-background-size: 100% 100%;
 	-fx-font-family: 'JejuHallasan';
 }
@@ -44,6 +44,24 @@
     -fx-background-color: transparent;
     -fx-border-color: transparent;
 }
+
+.text-field {
+    -fx-control-inner-background: #ffffe0; 
+}
+
+.finish_button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #AFCBFF;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, black, 5.0, 5.0, 0.0, 0.0);
+    -fx-font-size: 25px;
+}
+
+.finish_button:hover {
+    -fx-effect: dropshadow(three-pass-box, #0f4d00, 5.0, 5.0, 0.0, 0.0);
+}
+
 
 
 
