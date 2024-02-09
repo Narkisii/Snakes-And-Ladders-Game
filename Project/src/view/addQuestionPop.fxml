@@ -1,55 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="300.0" prefWidth="650.0" stylesheets="@popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.addQuestionPopControl">
-    <VBox spacing="10.0" styleClass="bodybg" stylesheets="@popUpStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane prefHeight="300.0" prefWidth="650.0" stylesheets="@popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.questionPopControl">
+    <VBox spacing="10.0" styleClass="bodybg" stylesheets="@popUpStyle.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <children>
-            <Label styleClass="GameName_font" text="Create question:">
+            <Label styleClass="GameName_font" text="Create Question:">
                 <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    <Insets bottom="10.0" />
                 </VBox.margin>
             </Label>
-            <TextField promptText="Enter your question here..." styleClass="cpu_Font">
+            <TextField fx:id="questionTextField" promptText="Write new question here" styleClass="cpu_Font">
                 <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    <Insets bottom="10.0" />
                 </VBox.margin>
             </TextField>
-            <Label styleClass="cpu_Font" text="Correct answer">
+            <Label styleClass="cpu_Font" text="Correct answer:">
                 <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    <Insets bottom="10.0" />
                 </VBox.margin>
             </Label>
-            <TextField promptText="Enter the correct answer..." styleClass="cpu_Font">
+            <TextField fx:id="correctAnswerTextField" promptText="Write the correct answer here" styleClass="cpu_Font">
                 <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    <Insets bottom="10.0" />
                 </VBox.margin>
             </TextField>
-            <Label styleClass="cpu_Font" text="Other answers">
+            <Label styleClass="cpu_Font" text="Other answers:">
                 <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    <Insets bottom="10.0" />
                 </VBox.margin>
             </Label>
-            <TextField promptText="Enter answer option 1..." styleClass="cpu_Font">
+            <TextField fx:id="optionOneTextField" promptText="Write a wrong answer here" styleClass="cpu_Font">
                 <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    <Insets bottom="10.0" />
                 </VBox.margin>
             </TextField>
-            <TextField promptText="Enter answer option 2..." styleClass="cpu_Font">
+            <TextField fx:id="optionTwoTextField" promptText="Write a wrong answer here" styleClass="cpu_Font">
                 <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    <Insets bottom="10.0" />
                 </VBox.margin>
             </TextField>
-            <TextField promptText="Enter answer option 3..." styleClass="cpu_Font">
+            <TextField fx:id="optionThreeTextField" promptText="Write a wrong answer here" styleClass="cpu_Font">
                 <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    <Insets bottom="10.0" />
                 </VBox.margin>
             </TextField>
-            <!-- Add any other buttons or UI elements you need here -->
+            <Button fx:id="finishButton" styleClass="finish_button" stylesheets="@popUpStyle.css" text="Finish">
+                <VBox.margin>
+                    <Insets bottom="10.0" />
+                </VBox.margin>
+            </Button>
         </children>
     </VBox>
 </AnchorPane>
