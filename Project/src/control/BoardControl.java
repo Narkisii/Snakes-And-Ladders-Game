@@ -22,6 +22,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import model.Board;
 import model.GameData;
 import javafx.animation.KeyFrame;
 
@@ -62,6 +63,8 @@ public class BoardControl {
     
     private Player [] players;
     
+    private Board board;
+    
 
  // Create a HashMap to store the rectangles
     HashMap<Integer, Rectangle> rectangleMap = new HashMap<>();
@@ -77,6 +80,10 @@ public class BoardControl {
     @FXML // This method is called by the FXMLLoader when initialization is complete
     
     void initialize() {
+    	
+    	// Create Board - getNumOfTiles() X getNumOfTiles() = Board
+    	// the Board constractor gets  in Row and calculate the size
+    	board = new Board( GameData.getNumOfTiles(),GameData.getPlayers() );
     	
     	//Set Players
     	players = GameData.getPlayers();

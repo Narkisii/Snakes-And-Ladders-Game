@@ -13,7 +13,7 @@ public class Player {
 
 	private String color; // the color of the player's token
 	private String name; // the name of the player
-	private int[][] currentP; // Current position of the player, will always start in [0][0]
+	private int currentP = 1 ; // Current position of the player start from tile num 1 
 	private String token; // **Object type is a temp type** the token of the player
 							// (i.e a circle, square, etc...)
 
@@ -74,14 +74,14 @@ public class Player {
 	/**
 	 * @return the currentP
 	 */
-	public int[][] getCurrentP() {
+	public int getCurrentP() {
 		return currentP;
 	}
 
 	/**
 	 * @param currentP the currentP to set
 	 */
-	public void setCurrentP(int[][] currentP) {
+	public void setCurrentP(int currentP) {
 		this.currentP = currentP;
 	}
 

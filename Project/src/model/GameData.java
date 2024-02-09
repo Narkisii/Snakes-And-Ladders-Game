@@ -28,6 +28,7 @@ public class GameData {
 	 /**
 		 * @return the difficulty
 		 */
+	// NumOfTiles X NumOfTiles = size of Board
 	public static int getNumOfTiles() {
 	    switch (difficulty) {
 	        case "Easy":
