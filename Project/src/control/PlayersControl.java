@@ -16,6 +16,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.GameData;
+import model.Player;
 
 public class PlayersControl {
 
@@ -33,7 +34,7 @@ public class PlayersControl {
     
     //private GridPane gridPane;
 
-   // private Players[] players;
+    private Player[] players;
     
     @FXML
     public void initialize() {
@@ -43,7 +44,11 @@ public class PlayersControl {
     
         int numberOfPlayers = GameData.getNumberOfPlayers();
         System.out.println("The numbers of players is "+ numberOfPlayers);
+         Player[] players = new Player[numberOfPlayers];
+
         for (int i = 0; i < numberOfPlayers; i++) {
+        	
+        	
             HBox playerRow = new HBox(); // Create a new HBox for each player's elements
 
             Label num = new Label(); // Create a new Label for the player's number
@@ -94,7 +99,30 @@ public class PlayersControl {
             VBox.setVgrow(playerRow, Priority.ALWAYS); // Make 'playerRow' expand to fill available vertical space
         }
         return_Btn.setOnAction(event -> navigateTo("/view/SettingsView.fxml"));
-        start_game_Btn.setOnAction(event -> navigateTo("/view/BoardView.fxml"));
+        start_game_Btn.setOnAction(event -> {
+            for (int i = 0; i < numberOfPlayers; i++) {
+                // Get the player's name from the TextField
+                TextField playerNameField = (TextField) playerContainer.lookup("#playerName" + (i+1));
+                String playerName = playerNameField.getText();
+
+                // Get the player's color from the ComboBox
+                ComboBox<String> colorBox = (ComboBox<String>) playerContainer.lookup("#color" + (i+1));
+                String color = colorBox.getValue();
+
+                // Get the player's token from the ComboBox
+                ComboBox<String> tokenBox = (ComboBox<String>) playerContainer.lookup("#token" + (i+1));
+                String token = tokenBox.getValue();
+
+                // Construct the Player object
+                Player p = new Player(color,playerName, token);
+                players[i] = p;
+                GameData.setPlayers(players);
+            }
+
+            // Navigate to the game board
+            navigateTo("/view/BoardView.fxml");
+        });
+
     }
 
     private void navigateTo(String fxmlFile) {
