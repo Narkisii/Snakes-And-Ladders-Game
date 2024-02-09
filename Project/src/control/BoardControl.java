@@ -1,8 +1,9 @@
 package control;
-
+import model.Player;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import javafx.animation.Timeline;
@@ -58,6 +59,9 @@ public class BoardControl {
     private Integer timeSeconds = 0;
     
     private Timeline timeline;
+    
+    private Player [] players;
+    
 
  // Create a HashMap to store the rectangles
     HashMap<Integer, Rectangle> rectangleMap = new HashMap<>();
@@ -73,6 +77,13 @@ public class BoardControl {
     @FXML // This method is called by the FXMLLoader when initialization is complete
     
     void initialize() {
+    	
+    	//Set Players
+    	players = GameData.getPlayers();
+    	for (Player player : players) {
+    		System.out.println("name"+player.getName());
+			
+		}
     	createCountDown();
     	startCountDown();
     	createTimer();
@@ -151,7 +162,7 @@ public class BoardControl {
     
 
      public void makeALine(int start, int end) {
-    	 System.out.println("sad");
+    	
          // get the StackPane for the squares
          StackPane startPane = (StackPane) grid.getChildren().get(start - 1);
          StackPane endPane = (StackPane) grid.getChildren().get(end - 1);

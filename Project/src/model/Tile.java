@@ -13,6 +13,7 @@ public class Tile {
 	private int type; // 0 for no special type, 1 for question, 2 for surprise
 	private Snake snake; // Snake head
 	private Ladder ladder; // Ladder start
+	private Player [] players;
 	
 	
 	public Tile(int type, Snake snake, Ladder ladder) {

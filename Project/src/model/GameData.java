@@ -10,7 +10,7 @@ public class GameData {
     private static int numberOfPlayers = 1;
     private static String difficulty = "Easy"; // Need to be int
     private HashMap<Integer,Question> questions;
-    private static PlayersControl[] players;
+    private static Player[] players;
     private static Snake[] sankes;
     private static Ladder[] Ladders;
     private static Tile[] specialTiles;
@@ -81,7 +81,7 @@ public class GameData {
 	/**
 	 * @return the players
 	 */
-	public static PlayersControl[] getPlayers() {
+	public static Player[] getPlayers() {
 		return players;
 	}
 
@@ -102,7 +102,7 @@ public class GameData {
 	/**
 	 * @param players the players to set
 	 */
-	public static void setPlayers(PlayersControl[] players) {
+	public static void setPlayers(Player[] players) {
 		GameData.players = players;
 	}
 

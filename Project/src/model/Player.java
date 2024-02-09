@@ -11,7 +11,7 @@ import enums.Colors;
  */
 public class Player {
 
-	private Colors color; // the color of the player's token
+	private String color; // the color of the player's token
 	private String name; // the name of the player
 	private int[][] currentP; // Current position of the player, will always start in [0][0]
 	private String token; // **Object type is a temp type** the token of the player
@@ -22,7 +22,7 @@ public class Player {
 	 * @param name
 	 * @param token
 	 */
-	public Player(Colors color, String name, String token) {
+	public Player(String color, String name, String token) {
 		super();
 		this.color = color;
 		this.name = name;
@@ -32,14 +32,14 @@ public class Player {
 	/**
 	 * @return the color
 	 */
-	public Colors getColor() {
+	public String getColor() {
 		return color;
 	}
 
 	/**
 	 * @param color the color to set
 	 */
-	public void setColor(Colors color) {
+	public void setColor(String color) {
 		this.color = color;
 	}
 
