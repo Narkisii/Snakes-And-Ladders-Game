@@ -46,15 +46,17 @@
                   <Insets />
                </VBox.margin>
             </Label>
-            <TableView fx:id="historyTable" prefHeight="440.0" prefWidth="702.0" styleClass="table_font" stylesheets="@application.css">
-              <columns>
-                <TableColumn fx:id="dateCol" minWidth="-1.0" prefWidth="116.0" text="Date" />
-                <TableColumn fx:id="playersCol" minWidth="-1.0" prefWidth="175.2000274658203" text="Players" />
-                  <TableColumn fx:id="difficultyCol" minWidth="-1.0" prefWidth="132.800048828125" text="Difficulty" />
-                  <TableColumn fx:id="timeCol" minWidth="-1.0" prefWidth="129.5999755859375" text="Play Time" />
-                  <TableColumn fx:id="winnerCol" minWidth="-1.0" prefWidth="149.5999755859375" text="Winner" />
-              </columns>
-            </TableView>
+           <TableView fx:id="historyTable" prefHeight="440.0" prefWidth="702.0" styleClass="table_font" stylesheets="@application.css">
+    <columns>
+        <TableColumn fx:id="dateCol" minWidth="-1.0" prefWidth="116.0" text="Date" />
+        <TableColumn fx:id="playersCol" minWidth="-1.0" prefWidth="175.2000274658203" text="Players" />
+        <TableColumn fx:id="difficultyCol" minWidth="-1.0" prefWidth="132.800048828125" text="Difficulty" />
+        <TableColumn fx:id="timeCol" minWidth="-1.0" prefWidth="129.5999755859375" text="Play Time" />
+        <TableColumn fx:id="winnerCol" minWidth="-1.0" prefWidth="149.5999755859375" text="Winner" />
+    </columns>
+</TableView>
+
+
          </children>
       </VBox>
    </center>

@@ -1,11 +1,16 @@
 package model;
 
+import java.util.List;
+
 public class History {
 	private String date;
-	private String players;
-	private int difficulty;
+	private List<String> players;
+	private String difficulty;
 	private String playTime;
 	private String winner;
+	
+	public History() {
+	}
 
 	/**
 	 * @param date
@@ -14,7 +19,7 @@ public class History {
 	 * @param playTime
 	 * @param winner
 	 */
-	public History(String date, String players, int difficulty, String playTime, String winner) {
+	public History(String date, List<String> players, String difficulty, String playTime, String winner) {
 		super();
 		this.date = date;
 		this.players = players;
@@ -40,28 +45,28 @@ public class History {
 	/**
 	 * @return the players
 	 */
-	public String getPlayers() {
+	public List<String> getPlayers() {
 		return players;
 	}
 
 	/**
 	 * @param players the players to set
 	 */
-	public void setPlayers(String players) {
+	public void setPlayers(List<String> players) {
 		this.players = players;
 	}
 
 	/**
 	 * @return the difficulty
 	 */
-	public int getDifficulty() {
+	public String getDifficulty() {
 		return difficulty;
 	}
 
 	/**
 	 * @param difficulty the difficulty to set
 	 */
-	public void setDifficulty(int difficulty) {
+	public void setDifficulty(String difficulty) {
 		this.difficulty = difficulty;
 	}
 
