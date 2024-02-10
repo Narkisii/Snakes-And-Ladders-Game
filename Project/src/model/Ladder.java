@@ -10,6 +10,10 @@ package model;
 public class Ladder extends TransferObj {
 
 	private int length; // the length of the ladder
+	
+
+	private int start;
+	private int end;
 
 	/**
 	 * @param startP
@@ -19,6 +23,23 @@ public class Ladder extends TransferObj {
 		super(startP, endP);
 		setLength(length);
 	}
+	
+	public int getStart() {
+		return start;
+	}
+
+	public void setStart(int start) {
+		this.start = start;
+	}
+
+	public int getEnd() {
+		return end;
+	}
+
+	public void setEnd(int end) {
+		this.end = end;
+	}
+
 
 	/**
 	 * @return the length

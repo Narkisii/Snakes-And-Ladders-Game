@@ -2,6 +2,9 @@
  * 
  */
 package model;
+import model.Snake;
+import model.Ladder;
+
 
 /**
  * @author liorf
@@ -20,23 +23,71 @@ public class Board {
 	 * @param type
 	 */
 	public Board(int numTiles , Player [] players ) {
-		this.players = players ;
-		this.numTiles = numTiles;
-		gameboard =new Tile[numTiles][numTiles];
-	}
+	    this.players = players ;
+	    this.numTiles = numTiles;
+	    gameboard = new Tile[numTiles][numTiles];
 
+	    // Initialize each Tile object
+	    for (int i = 0; i < numTiles; i++) {
+	        for (int j = 0; j < numTiles; j++) {
+	            gameboard[i][j] = new Tile(); 
+	        }
+	    }
+	}
+	private void activateTile(int x, int y ,Player player)
+	{
+		Tile tile = gameboard[x][y];
+		Snake snake = tile.getSnake();
+		Ladder ladder = tile.getLadder();
+		Question question = tile.getQuestion(); 
+		if( snake != null)
+		{
+			player.setCurrentP(snake.getEnd());
+		}
+		
+		if( ladder != null)
+		{
+			player.setCurrentP(ladder.getEnd());
+		}
+		
+		if( question != null)
+		{
+			
+		}
+		
+	}
 	public boolean move(int diceResult, Player player ) {
 	    int newPosition = player.getCurrentP() + diceResult;
 	    
 	    // This if is check if the player as moved so much that he won
-	    if (newPosition >= ( numTiles*numTiles ))
+	    if (newPosition > ( numTiles*numTiles ))
 	    {
-	    	gameEnd = 1 ;
-	    	return false;
+	        gameEnd = 1 ;
+	        player.setCurrentP(numTiles*numTiles);
+	        
+	        return false;
 	    }
+	    
+	    // calculate the new row and column
+	    int y = (newPosition - 1) / gameboard[0].length;
+	    int x = (newPosition - 1) % gameboard[0].length;
+
+	    // Adjust x if y is odd (for zigzag pattern)
+	    if (y % 2 == 1) {
+	        x = gameboard[0].length - 1 - x;
+	    }
+
+	    System.out.println("Player name : " +player.getName()+" + "+diceResult+" and now he is in X " + x + " Y " + y);
+	    System.out.println("Tile number "+ newPosition);
+	    System.out.println("");
+	    
 	    player.setCurrentP(newPosition);  // update player's position
+	    activateTile(x,y,player); // if theres a special object - Snake Ladder or question it will update the location of the player
+	    
 	    return true; // move successful, return true
 	}
+
+
 
 	public int getGameEnd() {
 		return gameEnd;

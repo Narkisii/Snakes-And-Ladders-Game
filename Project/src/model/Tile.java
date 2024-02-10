@@ -13,14 +13,21 @@ public class Tile {
 	private int type; // 0 for no special type, 1 for question, 2 for surprise
 	private Snake snake; // Snake head
 	private Ladder ladder; // Ladder start
+	private Question question ;
 	
-	
-
 	public Tile(int type, Snake snake, Ladder ladder) {
 		super();
-		this.type = type;
-		this.snake = snake;
-		this.ladder = ladder;
+		if(snake == null)
+			this.snake = snake;
+		else snake = null;
+		
+		if(ladder == null)
+			this.ladder = ladder;
+		else ladder = null;
+		
+		if(type != 0)
+			this.type = type;
+		else type = 0;
 	}
 
 	/**
@@ -51,6 +58,14 @@ public class Tile {
 		this.type = type;
 	}
 	
+	public Question getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+
 
 	/**
 	 * @return the type
