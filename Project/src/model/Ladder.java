@@ -7,23 +7,31 @@ package model;
  * @author liorf
  *
  */
-public class Ladder extends TransferObj {
+public class Ladder {
 
 	private int length; // the length of the ladder
 	
 
 	private int start;
 	private int end;
-
-	/**
-	 * @param startP
-	 * @param endP
-	 */
-	public Ladder(Position startP, Position endP, int length) {
-		super(startP, endP);
-		setLength(length);
-	}
+//
+//	/**
+//	 * @param startP
+//	 * @param endP
+//	 */
+//	public Ladder(int startP, Position endP, int length) {
+//		super(startP, endP);
+//		setLength(length);
+//	}
 	
+	public Ladder(int startP, int endP,int length) {
+		// TODO Auto-generated constructor stub
+		this.start = startP;
+		this.end = endP;
+		setLength(length);
+
+	}
+
 	public int getStart() {
 		return start;
 	}
