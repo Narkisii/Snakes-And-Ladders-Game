@@ -1,27 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="150.0" prefWidth="450.0" stylesheets="@popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.RemoveQuestionPopControl">
-    <VBox spacing="20.0" alignment="TOP_CENTER" styleClass="bodybg" stylesheets="@popUpStyle.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+<AnchorPane prefHeight="150.0" prefWidth="450.0" stylesheets="@popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.questionPopControl">
+    <VBox alignment="CENTER" prefHeight="150.0" prefWidth="450.0" spacing="20.0" styleClass="bodybg" stylesheets="@popUpStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
-            <Label styleClass="GameName_font" text="You are about to remove a question, are you sure about it?" wrapText="true">
-                <VBox.margin>
-                    <Insets bottom="20.0" />
-                </VBox.margin>
-            </Label>
-            <HBox spacing="20.0" alignment="CENTER">
+            <HBox alignment="CENTER" spacing="20.0">
                 <children>
-                    <Button fx:id="yesButton" text="Yes" styleClass="finish_button">
+                    <Label alignment="CENTER" prefHeight="42.0" prefWidth="354.0" styleClass="pop_font" stylesheets="@popUpStyle.css" text="You are about to remove a question, are you sure about it?" wrapText="true" HBox.hgrow="ALWAYS">
+                        <VBox.margin>
+                            <Insets bottom="20.0" />
+                        </VBox.margin>
+                    </Label>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="62.0" prefWidth="450.0" spacing="20.0">
+                <children>
+               <ImageView fitHeight="69.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../../../../Downloads/delete.png" />
+                  </image></ImageView>
+                    <Button fx:id="yesButton" styleClass="finish_button" text="Yes">
                         <!-- Add any additional styling or fx:id if needed -->
                     </Button>
-                    <Button fx:id="noButton" text="No" styleClass="finish_button">
+                    <Button fx:id="noButton" styleClass="finish_button" text="No">
                         <!-- Add any additional styling or fx:id if needed -->
                     </Button>
+               <ImageView fitHeight="69.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../../../../Downloads/keep.png" />
+                  </image></ImageView>
                 </children>
             </HBox>
         </children>

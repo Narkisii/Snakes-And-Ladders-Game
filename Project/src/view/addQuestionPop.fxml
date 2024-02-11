@@ -8,19 +8,19 @@
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="300.0" prefWidth="650.0" stylesheets="@popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.questionPopControl">
-    <VBox spacing="10.0" styleClass="bodybg" stylesheets="@popUpStyle.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+    <VBox alignment="CENTER_LEFT" prefHeight="413.0" prefWidth="650.0" spacing="10.0" styleClass="bodybg" stylesheets="@popUpStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
-            <Label styleClass="GameName_font" text="Create Question:">
+            <Label styleClass="pop_font" stylesheets="@popUpStyle.css" text="Create Question:">
                 <VBox.margin>
                     <Insets bottom="10.0" />
                 </VBox.margin>
             </Label>
-            <TextField fx:id="questionTextField" promptText="Write new question here" styleClass="cpu_Font">
+            <TextField fx:id="questionTextField" prefHeight="49.0" prefWidth="630.0" promptText="Write new question here" styleClass="cpu_Font">
                 <VBox.margin>
                     <Insets bottom="10.0" />
                 </VBox.margin>
             </TextField>
-            <Label styleClass="cpu_Font" text="Correct answer:">
+            <Label styleClass="pop_font" stylesheets="@popUpStyle.css" text="Correct answer:">
                 <VBox.margin>
                     <Insets bottom="10.0" />
                 </VBox.margin>
@@ -30,7 +30,7 @@
                     <Insets bottom="10.0" />
                 </VBox.margin>
             </TextField>
-            <Label styleClass="cpu_Font" text="Other answers:">
+            <Label styleClass="pop_font" stylesheets="@popUpStyle.css" text="Other answers:">
                 <VBox.margin>
                     <Insets bottom="10.0" />
                 </VBox.margin>
@@ -56,5 +56,8 @@
                 </VBox.margin>
             </Button>
         </children>
+      <padding>
+         <Insets left="30.0" right="30.0" top="20.0" />
+      </padding>
     </VBox>
 </AnchorPane>
