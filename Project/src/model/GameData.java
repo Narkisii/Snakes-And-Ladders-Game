@@ -15,7 +15,7 @@ public class GameData {
     private static Ladder[] Ladders;
     private static Tile[] specialTiles;
     private static HistoryControl History;
-    private static Dice dice;
+//    private static Dice dice;
     
 
     /**
@@ -166,19 +166,19 @@ public class GameData {
 		History = history;
 	}
 
-	/**
-	 * @return the dice
-	 */
-	public static Dice getDice() {
-		return dice;
-	}
-
-	/**
-	 * @param dice the dice to set
-	 */
-	public static void setDice(Dice dice) {
-		GameData.dice = dice;
-	}
+//	/**
+//	 * @return the dice
+//	 */
+//	public static Dice getDice() {
+//		return dice;
+//	}
+//
+//	/**
+//	 * @param dice the dice to set
+//	 */
+//	public static void setDice(Dice dice) {
+//		GameData.dice = dice;
+//	}
 
     
     public static void to_json() {

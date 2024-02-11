@@ -2,6 +2,7 @@ package test ;
 import org.junit.Test;
 
 import model.Board;
+import model.Ladder;
 import model.Player;
 import model.Snake;
 
@@ -25,7 +26,6 @@ public class BoardTest {
 	        Assert.assertEquals(1, board.getGameEnd());
 	    }
 	 
-
 	 
 	 @Test
 	    public void snakeTest() {
@@ -41,7 +41,28 @@ public class BoardTest {
 	        // Check if the game has ended
 	        Assert.assertEquals(5, player.getCurrentP());
 	    }
-	 
-	
+	 @Test
+	    public void ladderTest() {
+	        int numTilesInARow = 10; // that will create a board 10X10
+	        Player player = new Player("Yellow","ItayIsKing!","Hat");
+	        Player[] Players = new Player[1];
+	        Players[0] = player;
+	        Board board = new Board(numTilesInARow, Players); 
+	        Ladder ladder = new Ladder(43,99,6); 
+	        board.getGameboard()[2][4].setLadder(ladder);
+	        board.move(42, player);
+
+	        // Check if the game has ended
+	        Assert.assertEquals(99, player.getCurrentP());
+	    }
 	    
+//	 test 3  - 	write diceResult if i get number in rolldice player will move the right number
+	 
+//	 test 4  - 	Create question, stand on question tile/rolldice question and answer correctly
+//	 create question
+//	 activate
+	 
+//   create function 
+	 
+	 
 }
