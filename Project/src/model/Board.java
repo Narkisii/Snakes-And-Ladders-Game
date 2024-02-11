@@ -40,6 +40,7 @@ public class Board {
 		Snake snake = tile.getSnake();
 		Ladder ladder = tile.getLadder();
 		Question question = tile.getQuestion(); 
+		int answer;
 		if( snake != null)
 		{
 			player.setCurrentP(snake.getEnd());
