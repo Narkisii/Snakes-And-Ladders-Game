@@ -52,7 +52,7 @@
             </TextField>
             <Button fx:id="saveButton" styleClass="finish_button" stylesheets="@popUpStyle.css" text="Save">
                 <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    <Insets bottom="10.0" left="250.0" right="10.0" top="10.0" />
                 </VBox.margin>
             </Button>
             <!-- Add any other buttons or UI elements you need here -->

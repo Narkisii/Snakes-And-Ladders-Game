@@ -1,9 +1,11 @@
 package control;
 import model.Player;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import javafx.animation.Timeline;
@@ -12,6 +14,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -64,6 +68,40 @@ public class BoardControl {
     private Player [] players;
     
     private Board board;
+    
+    //dice -roll button and image
+    Random random = new Random();
+
+    @FXML
+    private ImageView diceImage;
+
+    @FXML
+    private Button rollButton;
+
+    //rolling dice function
+    @FXML
+    void roll(ActionEvent event) {
+
+        rollButton.setDisable(true);
+
+        Thread thread = new Thread(){
+            public void run(){
+                System.out.println("Thread Running");
+                try {
+                    for (int i = 0; i < 15; i++) {
+                        File file = new File("src/view/dice/dice" + (random.nextInt(6)+1)+".png");
+                        diceImage.setImage(new Image(file.toURI().toString()));
+                        Thread.sleep(80);
+                    }
+                    rollButton.setDisable(false);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        thread.start();
+    }
     
 
  // Create a HashMap to store the rectangles
@@ -273,6 +311,9 @@ public class BoardControl {
     void enable_action(int x, int y) {
     	
     }
+    
+    
+   
 }
 
 
