@@ -15,7 +15,7 @@ public class Board {
 	private Tile[][] gameboard;
 	private Player [] players ;
 	private int numTiles; // This is need to be changed to numTilesInRow
-	
+	private int dice_Roll;
 	// 1 means Game has ended
 	private int gameEnd = 0 ;
 

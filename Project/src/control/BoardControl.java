@@ -89,7 +89,7 @@ public class BoardControl {
                 System.out.println("Thread Running");
                 try {
                     for (int i = 0; i < 15; i++) {
-                        File file = new File("src/view/dice/dice" + (random.nextInt(6)+1)+".png");
+                        File file = new File("src/view/dice/" + (random.nextInt(10))+".png");
                         diceImage.setImage(new Image(file.toURI().toString()));
                         Thread.sleep(80);
                     }
