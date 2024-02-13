@@ -1,4 +1,5 @@
 package control;
+
 import model.Player;
 
 import java.io.File;
@@ -35,290 +36,266 @@ import javafx.event.EventHandler;
 
 import javafx.util.Duration;
 
-
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-
-
 public class BoardControl {
 
-    @FXML
-    private ResourceBundle resources; // Resource bundle for localization
-    
-    @FXML // fx:id="boardpane"
-    private AnchorPane boardpane; // The main pane that contains the grid
-    
-    @FXML
-    private Button return_btn; // Button to return to the previous screen
-    
-    @FXML
-    private Label turn_Lable;
+	@FXML
+	private ResourceBundle resources; // Resource bundle for localization
 
-    @FXML
-    private Label countDown_Label;
-    
-    @FXML
-    private Label timer_Label;
-    
-    private Integer timeSeconds = 0;
-    
-    private Timeline timeline;
-    
-    private Player [] players;
-    
-    private Board board;
-    
-    //dice -roll button and image
-    Random random = new Random();
+	@FXML // fx:id="boardpane"
+	private AnchorPane boardpane; // The main pane that contains the grid
 
-    @FXML
-    private ImageView diceImage;
+	@FXML
+	private Button return_btn; // Button to return to the previous screen
 
-    @FXML
-    private Button rollButton;
+	@FXML
+	private Label turn_Lable;
 
-    //rolling dice function
-    @FXML
-    void roll(ActionEvent event) {
+	@FXML
+	private Label countDown_Label;
 
-        rollButton.setDisable(true);
+	@FXML
+	private Label timer_Label;
 
-        Thread thread = new Thread(){
-            public void run(){
-                System.out.println("Thread Running");
-                try {
-                    for (int i = 0; i < 15; i++) {
-                        File file = new File("src/view/dice/" + (random.nextInt(10))+".png");
-                        diceImage.setImage(new Image(file.toURI().toString()));
-                        Thread.sleep(80);
-                    }
-                    rollButton.setDisable(false);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
+	private Integer timeSeconds = 0;
 
-        thread.start();
-    }
-    
+	private Timeline timeline;
 
- // Create a HashMap to store the rectangles
-    HashMap<Integer, Rectangle> rectangleMap = new HashMap<>();
-    
-    
-    
-    // Initialize the timer properties
-    private IntegerProperty counter = new SimpleIntegerProperty(60); // Initial time in seconds
-    private Timeline timer;
+	private Player[] players;
 
-    private GridPane grid; // The grid that will contain the tiles
+	private Board board;
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    
-    void initialize() {
-    	
-    	// Create Board - getNumOfTiles() X getNumOfTiles() = Board
-    	// the Board constractor gets  in Row and calculate the size
-    	board = new Board( GameData.getNumOfTiles(),GameData.getPlayers() );
-    	
-    	//Set Players
-    	players = GameData.getPlayers();
-    	for (Player player : players) {
-    		System.out.println("name"+player.getName());
-			
+	// dice -roll button and image
+	Random random = new Random();
+
+	@FXML
+	private ImageView diceImage;
+
+	@FXML
+	private Button rollButton;
+
+	// rolling dice function
+	@FXML
+	void roll(ActionEvent event) {
+
+		rollButton.setDisable(true);
+
+		Thread thread = new Thread() {
+			public void run() {
+				System.out.println("Thread Running");
+				try {
+					for (int i = 0; i < 15; i++) {
+						File file = new File("src/view/dice/" + (random.nextInt(10)) + ".png");
+						diceImage.setImage(new Image(file.toURI().toString()));
+						Thread.sleep(80);
+					}
+					rollButton.setDisable(false);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+
+		thread.start();
+	}
+
+	// Create a HashMap to store the rectangles
+	HashMap<Integer, Rectangle> tile_Map = new HashMap<>();
+
+	// Initialize the timer properties
+	private IntegerProperty counter = new SimpleIntegerProperty(60); // Initial time in seconds
+	private Timeline timer;
+
+	private GridPane grid; // The grid that will contain the tiles
+
+	@FXML // This method is called by the FXMLLoader when initialization is complete
+
+	void initialize() {
+
+		// Create Board - getNumOfTiles() X getNumOfTiles() = Board
+		// the Board constractor gets in Row and calculate the size
+		board = new Board(GameData.getNumOfTiles(), GameData.getPlayers());
+
+		// Set Players
+		players = GameData.getPlayers();
+		for (Player player : players) {
+			System.out.println("name" + player.getName());
+
 		}
-    	createCountDown();
-    	startCountDown();
-    	createTimer();
-    	createBoard(GameData.getNumOfTiles());
-    	makeALine(3,12);
-    	
-    	
+		createCountDown();
+		startCountDown();
+		createTimer();
+		createBoard(GameData.getNumOfTiles());
+		makeALine(3, 12);
 
-      	// Set the action for the return button
-     	return_btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
-    	turn_Lable.setText("Bree");
-    	
-    }
-    
-     private void  createBoard(int numTiles) {
-    	 grid = new GridPane(); // Initialize the grid
-     	int count = 1; // Initialize the counter
+		// Set the action for the return button
+		return_btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
+		turn_Lable.setText("Bree");
 
-     // Loop to create the tiles
-     	for (int i = 0; i < numTiles; i++) {
-     	    for (int j = 0; j < numTiles; j++) {
-     	        // Determine the correct column based on the row
-     	        int column = (i % 2 == 0) ? j : (numTiles - 1 - j);
+	}
 
-     	        // Create a new square (Rectangle)
-     	        Rectangle square = new Rectangle();
-     	        square.widthProperty().bind(grid.widthProperty().divide(numTiles));
-     	        square.heightProperty().bind(grid.heightProperty().divide(numTiles));
+	private void createBoard(int numTiles) {
+		grid = new GridPane(); // Initialize the grid
+		int count = 1; // Initialize the counter
 
-     	        // Set the color of the square
-     	        square.setFill(Color.GREEN); // Change this to the color you want
+		// Loop to create the tiles
+		for (int i = 0; i < numTiles; i++) {
+			for (int j = 0; j < numTiles; j++) {
+				// Determine the correct column based on the row
+				int column = (i % 2 == 0) ? j : (numTiles - 1 - j);
 
-     	        // Set the position of the square
-     	        square.setX(column * square.getWidth());
-     	        square.setY((numTiles - 1 - i) * square.getHeight());
+				// Create a new square (Rectangle)
+				Rectangle tile = new Rectangle();
+				tile.widthProperty().bind(grid.widthProperty().divide(numTiles));
+				tile.heightProperty().bind(grid.heightProperty().divide(numTiles));
 
-     	        // Add the square to the HashMap
-     	        rectangleMap.put(count, square);
+				// Set the color of the square
+				tile.setFill(Color.GREEN); // Change this to the color you want
 
-     	        // Create a new label with the current count
-     	        Label label = new Label(String.valueOf(count));
-     	        label.setFont(new Font("Arial", 20)); // Set the font size to 20
+				// Set the position of the square
+				tile.setX(column * tile.getWidth());
+				tile.setY((numTiles - 1 - i) * tile.getHeight());
 
-     	        // Create a new StackPane to hold the square and the label
-     	        StackPane stackPane = new StackPane();
-     	        stackPane.getChildren().addAll(square, label);
+				// Add the square to the HashMap
+				tile_Map.put(count, tile);
 
-     	        // Add the StackPane to the grid
-     	        grid.add(stackPane, column, numTiles - 1 - i);
+				// Create a new label with the current count
+				Label label = new Label(String.valueOf(count));
+				label.setFont(new Font("Arial", 20)); // Set the font size to 20
 
-     	        // Increment the count
-     	        count++;
-     	    }
-     	}
+				// Create a new StackPane to hold the square and the label
+				StackPane stackPane = new StackPane();
+				stackPane.getChildren().addAll(tile, label);
 
-     	// Bind the size of the grid to the size of the boardpane
-     	grid.prefWidthProperty().bind(boardpane.widthProperty());
-     	grid.prefHeightProperty().bind(boardpane.heightProperty());
+				// Add the StackPane to the grid
+				grid.add(stackPane, column, numTiles - 1 - i);
 
-     	// Make the grid always grow to fill available space
-     	GridPane.setVgrow(grid, Priority.ALWAYS);
-     	GridPane.setHgrow(grid, Priority.ALWAYS);
+				// Increment the count
+				count++;
+			}
+		}
 
-     	// Add the grid to the boardpane
-     	boardpane.getChildren().add(grid);
+		// Bind the size of the grid to the size of the boardpane
+		grid.prefWidthProperty().bind(boardpane.widthProperty());
+		grid.prefHeightProperty().bind(boardpane.heightProperty());
 
-     	// Make the grid always fill the boardpane
-     	AnchorPane.setTopAnchor(grid, 0.0);
-     	AnchorPane.setBottomAnchor(grid, 0.0);
-     	AnchorPane.setLeftAnchor(grid, 0.0);
-     	AnchorPane.setRightAnchor(grid, 0.0); 
-     }
-     
-     
+		// Make the grid always grow to fill available space
+		GridPane.setVgrow(grid, Priority.ALWAYS);
+		GridPane.setHgrow(grid, Priority.ALWAYS);
 
-    
+		// Add the grid to the boardpane
+		boardpane.getChildren().add(grid);
 
-     public void makeALine(int start, int end) {
-    	
-         // get the StackPane for the squares
-         StackPane startPane = (StackPane) grid.getChildren().get(start - 1);
-         StackPane endPane = (StackPane) grid.getChildren().get(end - 1);
+		// Make the grid always fill the boardpane
+		AnchorPane.setTopAnchor(grid, 0.0);
+		AnchorPane.setBottomAnchor(grid, 0.0);
+		AnchorPane.setLeftAnchor(grid, 0.0);
+		AnchorPane.setRightAnchor(grid, 0.0);
+		makeALine(1,13);
+	}
 
-         // get the center points of the rectangles
-         double startX = startPane.getLayoutX() + startPane.getWidth() / 2;
-         double startY = startPane.getLayoutY() + startPane.getHeight() / 2;
-         double endX = endPane.getLayoutX() + endPane.getWidth() / 2;
-         double endY = endPane.getLayoutY() + endPane.getHeight() / 2;
+	public void makeALine(int start, int end) {
 
-         // create a new line from start to end
-         Line line = new Line(startX, startY, endX, endY);
+		// get the StackPane for the squares
+		StackPane startPane = (StackPane) grid.getChildren().get(start - 1);
+		StackPane endPane = (StackPane) grid.getChildren().get(end - 1);
 
-         // set the color of the line
-         line.setStroke(Color.RED); // change this to the color you want
+		// get the center points of the rectangles
+		double startX = startPane.getLayoutX() + startPane.getWidth() / 2;
+		double startY = startPane.getLayoutY() + startPane.getHeight() / 2;
+		double endX = endPane.getLayoutX() + endPane.getWidth() / 2;
+		double endY = endPane.getLayoutY() + endPane.getHeight() / 2;
 
-         // add the line to the grid
-         grid.getChildren().add(line);
-     }
+		// create a new line from start to end
+		Line line = new Line(startX, startY, endX, endY);
 
+		// set the color of the line
+		line.setStroke(Color.RED); // change this to the color you want
 
-     private void createCountDown()
-     {
-    	  // Bind the time_Label to the counter property
-         countDown_Label.textProperty().bind(counter.asString());
+		// add the line to the grid
+		grid.getChildren().add(line);
+	}
 
-         // Create a timeline for the countdown
-         timer = new Timeline(
-             new KeyFrame(Duration.seconds(1), e -> {
-                 counter.set(counter.get() - 1);
-                 if (counter.get() == 0) {
-                     // Timer completed, stop the timer
-                     timer.stop();
-                 }
-             })
-         );
-         timer.setCycleCount(Timeline.INDEFINITE); // Repeat indefinitely
-     }
-    
+	private void createCountDown() {
+		// Bind the time_Label to the counter property
+		countDown_Label.textProperty().bind(counter.asString());
 
-    private void createTimer() {
-    	timeline = new Timeline();
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                timeSeconds++;
-                // update timerLabel
-                timer_Label.setText(timeSeconds.toString());
-            }
-        }));
-        timeline.playFromStart();
-    
-    
-    }
-    private void startCountDown() {
-	       timer.play();
-	    }
-	
-	   
-    private void stopTimer() {
-	        timer.stop();
-	    }
-    
-    
-    // Method to get the number of tiles based on the difficulty
-    private int getNumOfTiles() {
-        int numTiles = 0;
-        String diff = GameData.getDifficulty();
-        switch (diff.toLowerCase()) {
-        case "easy":
-            numTiles = 7;
-            break;
-        case "medium":
-            numTiles = 10;
-            break;
-        case "hard":
-            numTiles = 13;
-            break;
-        default:        
-        }
-        return numTiles;
-    }
+		// Create a timeline for the countdown
+		timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+			counter.set(counter.get() - 1);
+			if (counter.get() == 0) {
+				// Timer completed, stop the timer
+				timer.stop();
+			}
+		}));
+		timer.setCycleCount(Timeline.INDEFINITE); // Repeat indefinitely
+	}
 
-    // Method to navigate to another screen
-    private void navigateTo(String fxmlFile) {
-        try {
-            Stage stage = (Stage) return_btn.getScene().getWindow();
-            double width = stage.getScene().getWidth();
-            double height = stage.getScene().getHeight();
-            
-            Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
+	private void createTimer() {
+		timeline = new Timeline();
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				timeSeconds++;
+				// update timerLabel
+				timer_Label.setText(timeSeconds.toString());
+			}
+		}));
+		timeline.playFromStart();
 
-            stage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
+	}
 
-	void gameloop(){
-    	
-    }
-    
-    void enable_action(int x, int y) {
-    	
-    }
-    
-    
-   
+	private void startCountDown() {
+		timer.play();
+	}
+
+	private void stopTimer() {
+		timer.stop();
+	}
+
+	// Method to get the number of tiles based on the difficulty
+	private int getNumOfTiles() {
+		int numTiles = 0;
+		String diff = GameData.getDifficulty();
+		switch (diff.toLowerCase()) {
+		case "easy":
+			numTiles = 7;
+			break;
+		case "medium":
+			numTiles = 10;
+			break;
+		case "hard":
+			numTiles = 13;
+			break;
+		default:
+		}
+		return numTiles;
+	}
+
+	// Method to navigate to another screen
+	private void navigateTo(String fxmlFile) {
+		try {
+			Stage stage = (Stage) return_btn.getScene().getWindow();
+			double width = stage.getScene().getWidth();
+			double height = stage.getScene().getHeight();
+
+			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
+
+			stage.setScene(scene);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	void gameloop() {
+
+	}
+
+	void enable_action(int x, int y) {
+
+	}
+
 }
-
-
-

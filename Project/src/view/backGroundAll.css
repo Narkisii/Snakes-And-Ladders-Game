@@ -65,10 +65,15 @@
 }
 
 .scrolPane_bg {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
+    -fx-background-color: TRANSPARENT;
+    -fx-border-color: TRANSPARENT;
 }
-
+.scroll-pane{
+   -fx-background-color: transparent;
+}
+.scroll-pane .viewport {
+       -fx-background-color: transparent;
+}
 .rounded-frame {
     -fx-background-color: #fdfd96; /* pastel yellow color */
     -fx-background-radius: 10; /* rounded corners */

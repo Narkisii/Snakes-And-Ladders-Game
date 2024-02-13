@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.GameData;
 import model.Player;
@@ -32,71 +33,29 @@ public class PlayersControl {
     @FXML
     private ScrollPane PlayersPane;
     
-    //private GridPane gridPane;
+    @FXML
+    private Button add_CPU;
+
+    @FXML
+    private Button remove_Cpu;
 
     private Player[] players;
     
+    int index = 0;
     @FXML
     public void initialize() {
     	
     	PlayersPane.setFitToWidth(true);
         PlayersPane.setFitToHeight(true);
-    
+        PlayersPane.setStyle("-fx-background-color:rgba(0,0,0,0);");
+        playerContainer.setStyle("-fx-background-color:rgba(0,0,0,0);");
+
         int numberOfPlayers = GameData.getNumberOfPlayers();
         System.out.println("The numbers of players is "+ numberOfPlayers);
          Player[] players = new Player[numberOfPlayers];
 
-        for (int i = 0; i < numberOfPlayers; i++) {
-        	
-        	
-            HBox playerRow = new HBox(); // Create a new HBox for each player's elements
-
-            Label num = new Label(); // Create a new Label for the player's number
-            num.setId("num" + (i+1)); // unique id
-            num.setContentDisplay(ContentDisplay.CENTER);
-            num.setPrefHeight(67.0);
-            num.setPrefWidth(5.0);
-            num.getStyleClass().add("normal_Font");
-            num.getStylesheets().add("@backGroundAll.css");
-            num.setText(Integer.toString(i+1));
-            playerRow.getChildren().add(num); // Add to the playerRow HBox
-            HBox.setHgrow(num, Priority.ALWAYS); // Make 'num' expand to fill available horizontal space
-
-            TextField playerName = new TextField(); // Create a new playerName for the player's name
-            playerName.setId("playerName" + (i+1)); // unique id
-            playerName.setPrefHeight(65.0);
-            playerName.setPrefWidth(191.0);
-            playerName.getStyleClass().add("comboBox_Nornal");
-            playerName.getStylesheets().add("@Buttons.css");
-            playerRow.getChildren().add(playerName); // Add to the playerRow HBox
-            HBox.setHgrow(playerName, Priority.ALWAYS); // Make 'playerName' expand to fill available horizontal space           
-          
-            ComboBox<String> color = new ComboBox<>(); // Create a new color for the player's color
-            color.setId("color" + (i+1)); // unique id
-            color.setPrefHeight(65.0);
-            color.setPrefWidth(240.0);
-            color.getStyleClass().add("comboBox_Nornal");
-            color.getStylesheets().add("@Buttons.css");
-            playerRow.getChildren().add(color); // Add to the playerRow HBox
-            HBox.setHgrow(color, Priority.ALWAYS); // Make 'color' expand to fill available horizontal space
-            
-            ComboBox<String> token = new ComboBox<>(); // Create a new token for the player's token
-            token.setId("token" + (i+1)); // unique id
-            token.setPrefHeight(65.0);
-            token.setPrefWidth(240.0);
-            token.getStyleClass().add("comboBox_Nornal");
-            token.getStylesheets().add("@Buttons.css");
-            playerRow.getChildren().add(token); // Add 'token' to the playerRow HBox
-            HBox.setHgrow(token, Priority.ALWAYS); // Make 'token' expand to fill available horizontal space
-            
-            // Add token options
-            token.getItems().addAll("Horse", "Car", "Plane", "Boat", "Train");
-            
-            // Add color options
-            color.getItems().addAll("Red", "Blue", "Green", "Yellow", "Purple");
-            
-            playerContainer.getChildren().add(playerRow); // Add the playerRow HBox to your playerContainer VBox
-            VBox.setVgrow(playerRow, Priority.ALWAYS); // Make 'playerRow' expand to fill available vertical space
+        for (int index = 0; index < numberOfPlayers; index++) {
+        	innit_PlayerRow();
         }
         return_Btn.setOnAction(event -> navigateTo("/view/SettingsView.fxml"));
         start_game_Btn.setOnAction(event -> {
@@ -122,9 +81,69 @@ public class PlayersControl {
             // Navigate to the game board
             navigateTo("/view/BoardView.fxml");
         });
+        
+        add_CPU.setOnAction(event -> {
+        	innit_PlayerRow();
+        });
+
 
     }
 
+    private HBox innit_PlayerRow() {
+        HBox playerRow = new HBox(); // Create a new HBox for each player's elements
+        Label num = new Label(); // Create a new Label for the player's number
+        num.setId("num" + (index)); // unique id
+        num.setContentDisplay(ContentDisplay.CENTER);
+        num.setPrefHeight(67.0);
+        num.setPrefWidth(5.0);
+//        num.getStyleClass().add("normal_Font");
+//        num.getStylesheets().add("@backGroundAll.css");
+        num.setText(Integer.toString(index+1));
+        playerRow.getChildren().add(num); // Add to the playerRow HBox
+        HBox.setHgrow(num, Priority.ALWAYS); // Make 'num' expand to fill available horizontal space
+
+        TextField playerName = new TextField(); // Create a new playerName for the player's name
+        playerName.setId("playerName" + (index+1)); // unique id
+        playerName.setPromptText("playerName" + (index+1));
+        playerName.setPrefHeight(65.0);
+        playerName.setPrefWidth(191.0);
+        playerName.getStylesheets().add("view/Buttons.css");
+        playerName.getStyleClass().add("comboBox_Nornal");
+        playerRow.getChildren().add(playerName); // Add to the playerRow HBox
+        HBox.setHgrow(playerName, Priority.ALWAYS); // Make 'playerName' expand to fill available horizontal space           
+      
+        ComboBox<String> color = new ComboBox<>(); // Create a new color for the player's color
+        color.setId("color" + (index+1)); // unique id
+        color.setPrefHeight(65.0);
+        color.setPrefWidth(240.0);
+        color.getStylesheets().add("view/Buttons.css");
+        color.getStyleClass().add("comboBox_Nornal");
+        playerRow.getChildren().add(color); // Add to the playerRow HBox
+        HBox.setHgrow(color, Priority.ALWAYS); // Make 'color' expand to fill available horizontal space
+        
+        ComboBox<String> token = new ComboBox<>(); // Create a new token for the player's token
+        token.setId("token" + (index+1)); // unique id
+        token.setPrefHeight(65.0);
+        token.setPrefWidth(240.0);
+        token.getStylesheets().add("view/Buttons.css");
+        token.getStyleClass().add("comboBox_Nornal");
+        playerRow.getChildren().add(token); // Add 'token' to the playerRow HBox
+        HBox.setHgrow(token, Priority.ALWAYS); // Make 'token' expand to fill available horizontal space
+        
+        // Add token options
+        token.getItems().addAll("Horse", "Car", "Plane", "Boat", "Train");
+        
+        // Add color options
+        color.getItems().addAll("Red", "Blue", "Green", "Yellow", "Purple");
+        index++;
+        playerContainer.getChildren().add(playerRow); // Add the playerRow HBox to your playerContainer VBox
+        VBox.setVgrow(playerRow, Priority.ALWAYS); // Make 'playerRow' expand to fill available vertical space
+
+        return playerRow;
+    }
+    
+    
+    
     private void navigateTo(String fxmlFile) {
         try {
             Stage stage = (Stage) return_Btn.getScene().getWindow();
