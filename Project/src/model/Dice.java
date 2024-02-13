@@ -35,46 +35,46 @@ public class Dice {
 		this.Difficulty = Difficulty;
 	}
 
-	public int getResult() {
-		Random rand = new Random();
-		int randomNumber;
-		if (this.Difficulty == "Easy") // if game mode is easy
-			return rand.nextInt(8);
-		if (this.Difficulty == "Medium") { // if game mode is mid
-			randomNumber = rand.nextInt(13);
-			switch (randomNumber) {
-			case 7:
-			case 8:
-				return 7;
-			case 9:
-			case 10:
-				return 8;
-
-			case 11:
-			case 12:
-				return 9;
-			default:
-				return randomNumber;
-			}
-		} else { // if game mode is hard
-			randomNumber = rand.nextInt(15);
-			switch (randomNumber) {
-			case 7:
-			case 8:
-				return 7;
-			case 9:
-			case 10:
-				return 8;
-
-			case 11:
-			case 12:
-			case 13:
-			case 14:
-				return 9;
-			default:
-				return randomNumber;
-			}
-		}
-	}
+//	public int getResult() {
+//		Random rand = new Random();
+//		int randomNumber;
+//		if (this.Difficulty == "Easy") // if game mode is easy
+//			return rand.nextInt(8);
+//		if (this.Difficulty == "Medium") { // if game mode is mid
+//			randomNumber = rand.nextInt(13);
+//			switch (randomNumber) {
+//			case 7:
+//			case 8:
+//				return 7;
+//			case 9:
+//			case 10:
+//				return 8;
+//
+//			case 11:
+//			case 12:
+//				return 9;
+//			default:
+//				return randomNumber;
+//			}
+//		} else { // if game mode is hard
+//			randomNumber = rand.nextInt(15);
+//			switch (randomNumber) {
+//			case 7:
+//			case 8:
+//				return 7;
+//			case 9:
+//			case 10:
+//				return 8;
+//
+//			case 11:
+//			case 12:
+//			case 13:
+//			case 14:
+//				return 9;
+//			default:
+//				return randomNumber;
+//			}
+//		}
+//	}
 
 }

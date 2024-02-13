@@ -1,6 +1,7 @@
 package model;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import control.BoardControl;
 import control.HistoryControl;
@@ -179,7 +180,6 @@ public class GameData {
 //	public static void setDice(Dice dice) {
 //		GameData.dice = dice;
 //	}
-
     
     public static void to_json() {
     }

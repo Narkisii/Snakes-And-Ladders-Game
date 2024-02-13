@@ -1,6 +1,7 @@
 package control;
 
 import model.Player;
+import view.Main;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,12 +13,16 @@ import java.util.ResourceBundle;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -25,10 +30,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.Board;
 import model.GameData;
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 
 import javafx.event.ActionEvent;
@@ -67,6 +72,8 @@ public class BoardControl {
 
 	private Board board;
 
+	@FXML
+	private BorderPane mainPain;
 	// dice -roll button and image
 	Random random = new Random();
 
@@ -78,28 +85,6 @@ public class BoardControl {
 
 	// rolling dice function
 	@FXML
-	void roll(ActionEvent event) {
-
-		rollButton.setDisable(true);
-
-		Thread thread = new Thread() {
-			public void run() {
-				System.out.println("Thread Running");
-				try {
-					for (int i = 0; i < 15; i++) {
-						File file = new File("src/view/dice/" + (random.nextInt(10)) + ".png");
-						diceImage.setImage(new Image(file.toURI().toString()));
-						Thread.sleep(80);
-					}
-					rollButton.setDisable(false);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		};
-
-		thread.start();
-	}
 
 	// Create a HashMap to store the rectangles
 	HashMap<Integer, Rectangle> tile_Map = new HashMap<>();
@@ -120,25 +105,36 @@ public class BoardControl {
 
 		// Set Players
 		players = GameData.getPlayers();
-		for (Player player : players) {
-			System.out.println("name" + player.getName());
-
-		}
+//		for (Player player : players) {
+//			System.out.println("name" + player.getName());
+//		}
 		createCountDown();
 		startCountDown();
 		createTimer();
 		createBoard(GameData.getNumOfTiles());
-		makeALine(3, 12);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		makeALine(3, 12);
 
 		// Set the action for the return button
 		return_btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
 		turn_Lable.setText("Bree");
-
+		rollButton.setOnAction(event -> roll(Board.get_Dice_Result()));
 	}
 
 	private void createBoard(int numTiles) {
 		grid = new GridPane(); // Initialize the grid
 		int count = 1; // Initialize the counter
+		grid.prefWidthProperty().bind(boardpane.widthProperty());
+		grid.prefHeightProperty().bind(boardpane.heightProperty());
+
+		// Make the grid always grow to fill available space
+		GridPane.setVgrow(grid, Priority.ALWAYS);
+		GridPane.setHgrow(grid, Priority.ALWAYS);
 
 		// Loop to create the tiles
 		for (int i = 0; i < numTiles; i++) {
@@ -148,11 +144,19 @@ public class BoardControl {
 
 				// Create a new square (Rectangle)
 				Rectangle tile = new Rectangle();
+				tile.setWidth(grid.widthProperty().divide(numTiles).doubleValue());
+				tile.setHeight(grid.heightProperty().divide(numTiles).doubleValue());
+//				System.out.println(grid.widthProperty().doubleValue());
+//
 				tile.widthProperty().bind(grid.widthProperty().divide(numTiles));
 				tile.heightProperty().bind(grid.heightProperty().divide(numTiles));
-
+				tile.setArcWidth(5);
+				tile.setArcHeight(5);
 				// Set the color of the square
-				tile.setFill(Color.GREEN); // Change this to the color you want
+				if (count % 2 == 0)
+					tile.setFill(Color.web("#C1F2B0")); // Change this to the color you want
+				else
+					tile.setFill(Color.web("#65B741")); // Change this to the color you want
 
 				// Set the position of the square
 				tile.setX(column * tile.getWidth());
@@ -163,7 +167,11 @@ public class BoardControl {
 
 				// Create a new label with the current count
 				Label label = new Label(String.valueOf(count));
-				label.setFont(new Font("Arial", 20)); // Set the font size to 20
+				label.getStylesheets().add("view/backGroundAll.css");
+				label.getStyleClass().add("tile_Font");
+				label.prefWidthProperty().bind(grid.widthProperty().divide(numTiles));
+				label.prefHeightProperty().bind(grid.widthProperty().divide(numTiles));
+				label.setAlignment(Pos.CENTER);
 
 				// Create a new StackPane to hold the square and the label
 				StackPane stackPane = new StackPane();
@@ -171,19 +179,12 @@ public class BoardControl {
 
 				// Add the StackPane to the grid
 				grid.add(stackPane, column, numTiles - 1 - i);
-
 				// Increment the count
 				count++;
 			}
 		}
 
 		// Bind the size of the grid to the size of the boardpane
-		grid.prefWidthProperty().bind(boardpane.widthProperty());
-		grid.prefHeightProperty().bind(boardpane.heightProperty());
-
-		// Make the grid always grow to fill available space
-		GridPane.setVgrow(grid, Priority.ALWAYS);
-		GridPane.setHgrow(grid, Priority.ALWAYS);
 
 		// Add the grid to the boardpane
 		boardpane.getChildren().add(grid);
@@ -193,29 +194,100 @@ public class BoardControl {
 		AnchorPane.setBottomAnchor(grid, 0.0);
 		AnchorPane.setLeftAnchor(grid, 0.0);
 		AnchorPane.setRightAnchor(grid, 0.0);
-		makeALine(1,13);
+
 	}
 
 	public void makeALine(int start, int end) {
-
+		System.out.println("Start:" + start + "End: " + end);
+		Pane canvas = new Pane();
 		// get the StackPane for the squares
-		StackPane startPane = (StackPane) grid.getChildren().get(start - 1);
-		StackPane endPane = (StackPane) grid.getChildren().get(end - 1);
+		Rectangle startTile = tile_Map.get(start);
+		Rectangle endTile = tile_Map.get(end);
+		canvas.setPickOnBounds(false);
+		Point2D tileStart = startTile.localToScene(startTile.getWidth() / 2, startTile.getHeight() / 2);
+		Point2D tileEnd = endTile.localToScene(endTile.getWidth() / 2, endTile.getHeight() / 2);
 
 		// get the center points of the rectangles
-		double startX = startPane.getLayoutX() + startPane.getWidth() / 2;
-		double startY = startPane.getLayoutY() + startPane.getHeight() / 2;
-		double endX = endPane.getLayoutX() + endPane.getWidth() / 2;
-		double endY = endPane.getLayoutY() + endPane.getHeight() / 2;
+		double startX = tileStart.getX();
+		double startY = tileStart.getY();
+		double endX = tileEnd.getX();
+		double endY = tileEnd.getY();
 
+		double distance = tileStart.distance(tileEnd);
+		double angle = Math.toDegrees(Math.atan2(startY - endY, startX - endX));
+		System.out.println(angle);
+
+		Rectangle rectangle = new Rectangle();
+
+		if (angle == 90 || angle == -90) {
+			rectangle.setX(endX);
+			rectangle.setY(endY);
+			rectangle.setWidth(1);
+			rectangle.setHeight(distance); // set the height as you need
+			rectangle.setStroke(Color.BLUE); // change this to the color you want
+			rectangle.setStrokeWidth(10); // change this to the color you want
+
+		} else {
+			if (angle < 90) {
+				System.out.println("angle<90");
+				rectangle.setX(endX - startTile.getWidth() / 2);
+				rectangle.setY((startY + endY) / 2);
+				rectangle.setWidth(distance);
+				rectangle.setHeight(1); // set the height as you need
+				rectangle.setRotate(angle);
+
+			} else {
+				System.out.println("angle>90");
+				rectangle.setX(startX - startTile.getWidth() / 2);
+				rectangle.setY((startY + endY) / 2);
+				rectangle.setWidth(distance);
+				rectangle.setHeight(1); // set the height as you need
+				rectangle.setRotate(angle);
+
+			}
+		}
+		rectangle.setStroke(Color.BLUE); // change this to the color you want
+		rectangle.setStrokeWidth(10); // change this to the color you want
+
+//		canvas.getChildren().add(line);
+		canvas.getChildren().add(rectangle);
+//		canvas.getChildren().add(img);
+
+		mainPain.getChildren().add(canvas);
+		
+//		System.out.println(startX + " " + startY + " " + endX + " " + endY);
 		// create a new line from start to end
-		Line line = new Line(startX, startY, endX, endY);
+//		Line line = new Line(startX, startY, endX, endY);
 
 		// set the color of the line
-		line.setStroke(Color.RED); // change this to the color you want
-
+//		line.setStroke(Color.BLUE); // change this to the color you want
 		// add the line to the grid
-		grid.getChildren().add(line);
+//		ImageView img = new ImageView("images/Ladders/LadderLongyellow.png");
+//		img.setPreserveRatio(false);
+//
+//		if (angle == 90 || angle == -90) {
+//			img.setX(endX);
+//			img.setY(endY);
+//			img.setFitWidth(50);
+//			img.setFitHeight(distance); // set the height as you need
+////			rectangle.setRotate(angle);
+//		} else {
+//			if (angle < 90) {
+//				System.out.println("angle<90");
+//				img.setX((startX-endX)+ startTile.getWidth() / 2);
+//				img.setY(endY);
+//				img.setFitWidth(70);
+//				img.setFitHeight(distance); // set the height as you need
+//				img.setRotate(-angle);
+//
+//			} else {
+//				System.out.println("angle>90");
+//				img.setX(startX - startTile.getWidth() / 2);
+//				img.setY((startY + endY) / 2);
+//				img.setFitWidth(1);
+//				img.setFitHeight(distance); // set the height as you need
+//				img.setRotate(-angle);
+//			}
 	}
 
 	private void createCountDown() {
@@ -273,6 +345,37 @@ public class BoardControl {
 		default:
 		}
 		return numTiles;
+	}
+
+	private void roll(int dice) {
+		rollButton.setDisable(true);
+		final long[] frameCounter = { 0 };
+		final Random random = new Random();
+		makeALine(1, 28);
+	
+		makeALine(26, 49);
+		makeALine(7, 44);
+		makeALine(2, 37);
+
+		AnimationTimer animationTimer = new AnimationTimer() {
+			@Override
+			public void handle(long now) {
+				if (frameCounter[0]++ % 3 == 0) { // adjust the 6 to control the speed of the animation
+					if (frameCounter[0] < 90) { // adjust the 90 to control the duration of the animation
+						File file = new File("src/view/dice/" + (random.nextInt(10)) + ".png");
+						diceImage.setImage(new Image(file.toURI().toString()));
+					} else {
+						File file = new File("src/view/dice/" + dice + ".png");
+						diceImage.setImage(new Image(file.toURI().toString()));
+						rollButton.setDisable(false);
+						this.stop();
+					}
+				}
+			}
+		};
+		makeALine(7, 44);
+
+		animationTimer.start();
 	}
 
 	// Method to navigate to another screen

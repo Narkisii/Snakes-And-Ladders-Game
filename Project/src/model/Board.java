@@ -3,6 +3,9 @@
  */
 package model;
 import model.Snake;
+
+import java.util.Random;
+
 import model.Ladder;
 
 
@@ -11,14 +14,14 @@ import model.Ladder;
  *
  */
 public class Board {
-	private int type; // 0 easy game, 1 mid game, 2 hard game
+	private static String difficulty; // 0 easy game, 1 mid game, 2 hard game
 	private Tile[][] gameboard;
 	private Player [] players ;
 	private int numTiles; // This is need to be changed to numTilesInRow
 	private int dice_Roll;
 	// 1 means Game has ended
 	private int gameEnd = 0 ;
-
+	
 	/**
 	 * @param type
 	 */
@@ -26,7 +29,7 @@ public class Board {
 	    this.players = players ;
 	    this.numTiles = numTiles;
 	    gameboard = new Tile[numTiles][numTiles];
-
+	    difficulty = GameData.getDifficulty();
 	    // Initialize each Tile object
 	    for (int i = 0; i < numTiles; i++) {
 	        for (int j = 0; j < numTiles; j++) {
@@ -115,12 +118,53 @@ public class Board {
 			}
 		}
 	}
+	public static int get_Dice_Result() {
+		Random rand = new Random();
+		int randomNumber;
+		if (difficulty == "Easy") // if game mode is easy
+			return rand.nextInt(8);
+		if (difficulty == "Medium") { // if game mode is mid
+			randomNumber = rand.nextInt(13);
+			switch (randomNumber) {
+			case 7:
+			case 8:
+				return 7;
+			case 9:
+			case 10:
+				return 8;
+
+			case 11:
+			case 12:
+				return 9;
+			default:
+				return randomNumber;
+			}
+		} else { // if game mode is hard
+			randomNumber = rand.nextInt(15);
+			switch (randomNumber) {
+			case 7:
+			case 8:
+				return 7;
+			case 9:
+			case 10:
+				return 8;
+
+			case 11:
+			case 12:
+			case 13:
+			case 14:
+				return 9;
+			default:
+				return randomNumber;
+			}
+		}
+	}
 
 	/**
 	 * @return the type
 	 */
-	public int getType() {
-		return type;
+	public String getDifficulty() {
+		return difficulty;
 	}
 
 }

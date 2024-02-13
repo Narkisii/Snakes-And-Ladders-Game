@@ -47,8 +47,6 @@ public class PlayersControl {
     	
     	PlayersPane.setFitToWidth(true);
         PlayersPane.setFitToHeight(true);
-        PlayersPane.setStyle("-fx-background-color:rgba(0,0,0,0);");
-        playerContainer.setStyle("-fx-background-color:rgba(0,0,0,0);");
 
         int numberOfPlayers = GameData.getNumberOfPlayers();
         System.out.println("The numbers of players is "+ numberOfPlayers);
@@ -77,7 +75,6 @@ public class PlayersControl {
                 players[i] = p;
                 GameData.setPlayers(players);
             }
-
             // Navigate to the game board
             navigateTo("/view/BoardView.fxml");
         });
