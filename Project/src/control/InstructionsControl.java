@@ -38,8 +38,12 @@ public class InstructionsControl {
     
     private void navigateTo(String fxmlFile) {
         try {
-            Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)));
             Stage stage = (Stage) button_back.getScene().getWindow();
+            double width = stage.getScene().getWidth();
+            double height = stage.getScene().getHeight();
+            
+            Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
+
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();

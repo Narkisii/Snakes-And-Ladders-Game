@@ -61,8 +61,12 @@ public class SettingsControl {
     
     private void navigateTo(String fxmlFile) {
         try {
-            Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)));
             Stage stage = (Stage) set_players_btn.getScene().getWindow();
+            double width = stage.getScene().getWidth();
+            double height = stage.getScene().getHeight();
+            
+            Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
+
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
