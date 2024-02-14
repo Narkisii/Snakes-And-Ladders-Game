@@ -3,6 +3,9 @@
  */
 package model;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+
 import enums.Colors;
 
 /**
@@ -11,13 +14,14 @@ import enums.Colors;
  */
 public class Player {
 
-
 	private String color; // the color of the player's token
 	private String name; // the name of the player
-	private int currentP = 1 ; // Current position of the player start from tile num 1 
+	private int currentP; // Current position of the player start from tile num 1
 	private String token; // **Object type is a temp type** the token of the player
 							// (i.e a circle, square, etc...)
 	private int ID;
+
+	private LinkedList<Integer> placment_history;
 
 	/**
 	 * @param color
@@ -29,7 +33,9 @@ public class Player {
 		this.setID(ID);
 		this.color = color;
 		this.name = name;
-		this.token = "/view/Images/tokens/"+token+"2D.png";
+		this.token = "/view/Images/tokens/" + token + "3D.png";
+		this.placment_history = new LinkedList<Integer>();
+		this.currentP = 1;
 	}
 
 	/**
@@ -38,6 +44,15 @@ public class Player {
 	public String getColor() {
 		return color;
 	}
+
+	public void addStep(int placment) {
+		placment_history.add(placment);
+	}
+	public int getPreviousStep() {
+		return placment_history.get(placment_history.size()-2);
+	}
+
+
 
 	/**
 	 * @param color the color to set
@@ -87,10 +102,11 @@ public class Player {
 	public void setCurrentP(int currentP) {
 		this.currentP = currentP;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Player [color=" + color + ", name=" + name + ", currentP=" + currentP + ", token=" + token + "]";
+		return "Player [color=" + color + ", name=" + name + ", currentP=" + currentP + ", token=" + token + ", ID="
+				+ ID + "]";
 	}
 
 	public int getID() {

@@ -50,7 +50,7 @@ public class PlayersControl {
 	@FXML
 	private Button remove_Cpu;
 	private int num_cpu = 0;
-	private LinkedList <Player> players = new LinkedList<Player>();
+//	private LinkedList <Player> players = new LinkedList<Player>();
 	List<String> tokens = Arrays.stream(Tokens.values()).map(Enum::name).collect(Collectors.toList());
 	List<String> colors = Arrays.stream(Colors.values()).map(Enum::name).collect(Collectors.toList());
 	List<CPUNames> cpuNames = Arrays.asList(CPUNames.values());
@@ -451,7 +451,7 @@ public class PlayersControl {
 	}
 
 	private void startGame(int numberOfPlayers) {
-		int counter = 0;
+		int counter = 1;
 		
 	    for (Node node : playerContainer.getChildren()) {
 	        if (node instanceof HBox) {
@@ -463,9 +463,11 @@ public class PlayersControl {
 	            String token = ((ComboBox<String>) row.getChildren().get(3)).getValue(); // Replace 3 with the index of the token ComboBox in your HBox
 
 	            // Create a new Player object and add it to the list
-	            Player p = new Player(players.size() + 1, color, playerName, token);
+	            Player p = new Player(counter, color, playerName, token);
+	            counter++;
 //	            players.add(p);
-	            GameData.getInstance().addPlayers(p);
+	            GameData.getInstance().addPlayer(p);
+	            GameData.getInstance().setNumberOfPlayers(GameData.getInstance().getplayer_list().size());
 	        }
 			
 		}

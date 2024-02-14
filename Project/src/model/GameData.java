@@ -10,8 +10,8 @@ public class GameData {
 	private int numberOfPlayers = 1;
 	private String difficulty;
 	private HashMap<Integer, Question> questions;
-	private LinkedList<Player> players;
-	private LinkedList<Snake> sankes;
+	private LinkedList<Player> player_list;
+	private LinkedList<Snake> snake_list;
 	private LinkedList<Ladder> ladders;
 	private LinkedList<Tile> specialTiles;
 	private HistoryControl History;
@@ -25,8 +25,8 @@ public class GameData {
 	private GameData() {
 		// Initialization code here
 		questions = new HashMap<Integer, Question>();
-		players = new LinkedList<Player>();
-		sankes = new LinkedList<Snake>();
+		player_list = new LinkedList<Player>();
+		snake_list = new LinkedList<Snake>();
 		ladders = new LinkedList<Ladder>();
 		specialTiles = new LinkedList<Tile>();
 		questions = new HashMap<Integer, Question>();
@@ -84,7 +84,6 @@ public class GameData {
 	 * @param difficulty the difficulty to set
 	 */
 	public void setDifficulty(String diff) {
-		System.out.println("setDifficulty " + difficulty);
 		difficulty = diff;
 	}
 
@@ -101,20 +100,6 @@ public class GameData {
 	public void setNumberOfPlayers(int num) {
 		numberOfPlayers = num;
 	}
-
-//	/**
-//	 * @return the difficulty
-//	 */
-//	public static int getDifficulty() {
-//		return difficulty;
-//	}
-//
-//	/**
-//	 * @param difficulty the difficulty to set
-//	 */
-//	public static void setDifficulty(int difficulty) {
-//		GameData.difficulty = difficulty;
-//	}
 
 	/**
 	 * @return the questions
@@ -145,39 +130,67 @@ public class GameData {
 	}
 
 	/**
-	 * @return the players
+	 * @return the player_list
 	 */
-	public LinkedList<Player> getPlayers() {
-		return players;
+	public LinkedList<Player> getplayer_list() {
+		return player_list;
 	}
 
 	/**
-	 * @param players the players to set
+	 * @param player_list the player_list to set
 	 */
-	public void setPlayers(LinkedList<Player> p) {
-		players = p;
+	public void setPlayer_list(LinkedList<Player> p) {
+		player_list = p;
 	}
 
-	public void addPlayers(Player player) {
-		players.add(player);
+	public boolean addPlayer(Player player) {
+		if (player != null) {
+			player_list.add(player);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public Player getPlayer(Player player) {
+		for (Player p : player_list) {
+			if (p.equals(player)) {
+				return p;
+			}
+		}
+		return null;
 	}
 
 	/**
-	 * @return the sankes
+	 * @return the snake_list
 	 */
-	public LinkedList<Snake> getSankes() {
-		return sankes;
+	public LinkedList<Snake> getSnake_list() {
+		return snake_list;
 	}
 
 	/**
-	 * @param sankes the sankes to set
+	 * @param snake_list the snake_list to set
 	 */
-	public void setSankes(LinkedList<Snake> s) {
-		sankes = s;
+	public void setSnake_list(LinkedList<Snake> s) {
+		snake_list = s;
 	}
 
-	public void addSnakes(Snake s) {
-		sankes.add(s);
+	public boolean addSnake(Snake s) {
+		if (s != null) {
+			snake_list.add(s);
+			return true;
+		}
+		return false;
+	}
+
+	public Snake getPlayer(Snake snake) {
+		for (Snake s : snake_list) {
+			if (s.equals(snake)) {
+				return s;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -196,7 +209,7 @@ public class GameData {
 
 	public boolean addLadders(Ladder l) {
 		if (l != null) {
-			System.out.println("Added ladder:" + l.toString());
+//			System.out.println("Added ladder:" + l.toString());
 			ladders.add(l);
 			return true;
 		}

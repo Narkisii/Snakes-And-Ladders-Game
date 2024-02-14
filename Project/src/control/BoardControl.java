@@ -80,8 +80,6 @@ public class BoardControl {
 
 	private Timeline timeline;
 
-	private LinkedList<Player> players = new LinkedList<Player>();
-
 	private Board board;
 
 	private Pane canvas = new Pane();
@@ -99,7 +97,7 @@ public class BoardControl {
 
 	// Create a HashMap to store the rectangles
 	HashMap<Integer, Rectangle> tile_Map = new HashMap<>();
-
+	int test_Move_counter = 0;
 	// Initialize the timer properties
 	private IntegerProperty counter = new SimpleIntegerProperty(60); // Initial time in seconds
 	private Timeline timer;
@@ -111,12 +109,11 @@ public class BoardControl {
 	void initialize() {
 		// Create Board - getNumOfTiles() X getNumOfTiles() = Board
 		// the Board constractor gets in Row and calculate the size
-		board = new Board(GameData.getInstance().getNumOfTiles(), GameData.getInstance().getPlayers());
+		board = new Board();
 		board.generate_snakes_ladders();
 
 		// Set Players
-		players = GameData.getInstance().getPlayers();
-		for (Player player : players) {
+		for (Player player : GameData.getInstance().getplayer_list()) {
 			System.out.println(player.toString());
 		}
 		createCountDown();
@@ -130,28 +127,28 @@ public class BoardControl {
 		// Set the action for the return button
 		return_btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
 		turn_Lable.setText("Bree");
-		rollButton.setOnAction(
-				event -> roll(Board.get_Dice_Result(), players.get(GameData.getInstance().getPlayerTurn())));
+		rollButton.setOnAction(event -> roll(Board.get_Dice_Result(),
+				GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn())));
 
-//		// Add a listener to the width and height properties of the scene
-//		mainPain.widthProperty().addListener((observable, oldValue, newValue) -> {
-//				canvas.getChildren().clear();
-//				mainPain.getChildren().remove(canvas);
-//				drawLinesInSeparateThread();
-//				mainPain.getChildren().add(canvas);
-//			
-//		});
-//
-//		mainPain.heightProperty().addListener((observable, oldValue, newValue) -> {
-//				canvas.getChildren().clear();
-//				mainPain.getChildren().remove(canvas);
-//				drawLinesInSeparateThread();
-//				mainPain.getChildren().add(canvas);
-//			
-//		});
-		for (Player p : players) {
+		// Add a listener to the width and height properties of the scene
+		mainPain.widthProperty().addListener((observable, oldValue, newValue) -> {
+				canvas.getChildren().clear();
+				mainPain.getChildren().remove(canvas);
+				drawLinesInSeparateThread();
+				mainPain.getChildren().add(canvas);
+			
+		});
+
+		mainPain.heightProperty().addListener((observable, oldValue, newValue) -> {
+				canvas.getChildren().clear();
+				mainPain.getChildren().remove(canvas);
+				drawLinesInSeparateThread();
+				mainPain.getChildren().add(canvas);
+			
+		});
+		for (Player p : GameData.getInstance().getplayer_list()) {
 //			System.out.println("Adding:" + p.toString());
-			initiate_Players(p, -1);
+			initiate_Players(p);
 		}
 	}
 
@@ -225,28 +222,29 @@ public class BoardControl {
 
 	}
 
-	private void clean_Tile(Player p, int old_pos) {
-		Pane startTile = (Pane) grid.lookup("#" + old_pos);
-		System.out.println("clean_Tile old_pos: "+ old_pos + "Player: "+ p.getID());
+//	private void clean_Tile(Player p, int old_pos) {
+//		Pane startTile = (Pane) grid.lookup("#" + old_pos);
+//		System.out.println("clean_Tile old_pos: "+ old_pos + "Player: "+ p.getID());
+//
+//		VBox playerbox = (VBox) startTile.lookup("#VBox"+p.getID());
+//		if (playerbox != null) {
+//			startTile.getChildren().remove(playerbox);
+//		}
+//	}
 
-		VBox playerbox = (VBox) startTile.lookup("#VBox"+p.getID());
-		if (playerbox != null) {
-			startTile.getChildren().remove(playerbox);
+	private void move_Player(Player p) {
+		if (p.getCurrentP() == p.getPreviousStep()) {
+			return;
 		}
-	}
-
-	@SuppressWarnings("unused")
-	private void initiate_Players(Player p, int old_pos) {
-		if (old_pos != -1) {
-			clean_Tile(p, old_pos);
-		}
+//		System.out.println(
+//				"initiate_Players - PlayerID: " + p.getID() + " New pos: " + p.getCurrentP() + " Old pos: " + old_pos);
 		Pane startTile = (Pane) grid.lookup("#" + p.getCurrentP());
-		VBox playerbox = (VBox) startTile.lookup("#VBox"+p.getID());
+		VBox playerbox = (VBox) startTile.lookup("#VBox" + p.getID());
 		Label playerName = null;
 		ImageView img = null;
 		if (playerbox == null) {
 			playerbox = new VBox();
-			playerbox.setId("VBox"+p.getID());
+			playerbox.setId("VBox" + p.getID());
 			playerName = new Label(p.getName());
 			playerName.setTextFill(Color.web(p.getColor()));
 			playerName.setId(String.valueOf(p.getID()) + p.getName());
@@ -254,35 +252,93 @@ public class BoardControl {
 			playerName.getStyleClass().add("player_font");
 			Image img_file = new Image(p.getToken());
 			img = new ImageView(img_file);
-			img.setId("Image"+p.getID());
+			img.setId("Image" + p.getID());
 			img.setFitHeight(50);
 			img.setFitWidth(50);
 			img.setPreserveRatio(false);
-		}else {
+		} else {
+			Pane oldParent = (Pane) playerbox.getParent();
+			if (oldParent != null) {
+				oldParent.getChildren().remove(playerbox);
+			}
 			playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
-			img = (ImageView) playerbox.lookup("#Image"+p.getID());
+			img = (ImageView) playerbox.lookup("#Image" + p.getID());
 		}
-		
-		playerbox.getChildren().addAll(playerName,img);
-//		Label playerName = (Label) startTile.lookup("#" + p.getID() + p.getName());
-//		ImageView img = (ImageView) startTile.lookup("Image"+p.getID());
-//		if (playerName == null) {
-//			playerName = new Label(p.getName());
-//			playerName.setTextFill(Color.web(p.getColor()));
-//			playerName.setId(String.valueOf(p.getID()) + p.getName());
-//			playerName.getStylesheets().add("/view/backGroundAll.css");
-//			playerName.getStyleClass().add("player_font");
-//			Image img_file = new Image(p.getToken());
-//			img = new ImageView(img_file);
-//			img.setId("Image"+p.getID());
-//			img.setFitHeight(50);
-//			img.setFitWidth(50);
-//			img.setPreserveRatio(false);
+//		if (old_pos != -1) {
+//			clean_Tile(p, old_pos);
 //		}
+		playerbox.getChildren().addAll(playerName, img);
+
 		startTile.getChildren().addAll(playerbox);
+		System.out.println("END initiate_Players " + test_Move_counter);
 
 	}
 
+	@SuppressWarnings("unused")
+	private void initiate_Players(Player p) {
+//		if(p.getCurrentP() == old_pos) {
+//			return;
+//		}
+		p.addStep(0);
+//		System.out.println(
+//				"initiate_Players - PlayerID: " + p.getID() + " New pos: " + p.getCurrentP() + " Old pos: " + old_pos);
+		Pane new_pos_pane = (Pane) grid.lookup("#" + p.getCurrentP());
+//		Pane old_pos_pane = (Pane) grid.lookup("#" + old_pos);
+		VBox playerbox = (VBox) new_pos_pane.lookup("#VBox" + p.getID());
+//		Pane oldParent = (Pane) playerbox.getParent();
+//		if (oldParent != null) {
+//			oldParent.getChildren().remove(playerbox);
+//
+//		}
+		Label playerName = null;
+		ImageView img = null;
+		if (playerbox == null) {
+			playerbox = new VBox();
+			playerbox.setId("VBox" + p.getID());
+			playerName = new Label(p.getName());
+			playerName.setTextFill(Color.web(p.getColor()));
+			playerName.setId(String.valueOf(p.getID()) + p.getName());
+			playerName.getStylesheets().add("/view/backGroundAll.css");
+			playerName.getStyleClass().add("player_font");
+			Image img_file = new Image(p.getToken());
+			img = new ImageView(img_file);
+			img.setId("Image" + p.getID());
+			img.setFitHeight(50);
+			img.setFitWidth(50);
+			img.setPreserveRatio(false);
+		} else {
+			playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
+			img = (ImageView) playerbox.lookup("#Image" + p.getID());
+		}
+//		if(old_pos_pane != null) {
+//	        Pane oldParent = (Pane) playerbox.getParent();
+//	        if (oldParent != null) {
+//	            oldParent.getChildren().remove(playerbox);
+//	        }
+//		}
+
+		playerbox.getChildren().addAll(playerName, img);
+
+		new_pos_pane.getChildren().addAll(playerbox);
+		System.out.println("END initiate_Players " + test_Move_counter);
+
+	}
+
+//	Label playerName = (Label) startTile.lookup("#" + p.getID() + p.getName());
+//	ImageView img = (ImageView) startTile.lookup("Image"+p.getID());
+//	if (playerName == null) {
+//		playerName = new Label(p.getName());
+//		playerName.setTextFill(Color.web(p.getColor()));
+//		playerName.setId(String.valueOf(p.getID()) + p.getName());
+//		playerName.getStylesheets().add("/view/backGroundAll.css");
+//		playerName.getStyleClass().add("player_font");
+//		Image img_file = new Image(p.getToken());
+//		img = new ImageView(img_file);
+//		img.setId("Image"+p.getID());
+//		img.setFitHeight(50);
+//		img.setFitWidth(50);
+//		img.setPreserveRatio(false);
+//	}
 	public void add_Ladder_Snake(int start, int end) {
 //		System.out.println("Start:" + start + "End: " + end);
 		canvas.setPickOnBounds(false);
@@ -412,12 +468,15 @@ public class BoardControl {
 						diceImage.setImage(new Image(file.toURI().toString()));
 						rollButton.setDisable(false);
 						this.stop();
-						int old_post = player.getCurrentP();
 						Board.move(dice, player);
-						for (Player p : players) {
-							initiate_Players(p, old_post);
-						}
-						if (GameData.getInstance().getPlayerTurn() < players.size() - 1) {
+//						for (Player p : GameData.getInstance().getplayer_list()) {
+//							initiate_Players(p, old_post);
+//						}
+						move_Player(player);
+						test_Move_counter++;
+
+						if (GameData.getInstance().getPlayerTurn() < GameData.getInstance().getplayer_list().size()
+								- 1) {
 							GameData.getInstance().setPlayerTurn(GameData.getInstance().getPlayerTurn() + 1);
 						} else {
 							GameData.getInstance().setPlayerTurn(0);

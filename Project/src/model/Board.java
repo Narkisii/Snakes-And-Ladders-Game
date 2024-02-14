@@ -29,9 +29,9 @@ public class Board {
 	/**
 	 * @param type
 	 */
-	public Board(int numTiles , List <Player> players ) {
-	    this.players = players ;
-	    this.numTiles = numTiles;
+	public Board() {
+	    this.players = GameData.getInstance().getplayer_list() ;
+	    numTiles = GameData.getInstance().getNumOfTiles();
 	    gameboard = new Tile[numTiles][numTiles];
 	    difficulty = GameData.getInstance().getDifficulty();
 	    // Initialize each Tile object
@@ -40,6 +40,11 @@ public class Board {
 	            gameboard[i][j] = new Tile(); 
 	        }
 	    }
+	}
+	public Board(int numTilesInARow, List<Player> players2) {
+		// TODO Auto-generated constructor stub
+		this.numTiles = numTiles;
+		this.players = players2;
 	}
 	private static void activateTile(int x, int y ,Player player)
 	{
@@ -65,6 +70,7 @@ public class Board {
 		
 	}
 	public static boolean move(int diceResult, Player player ) {
+		
 	    int newPosition = player.getCurrentP() + diceResult;
 	    
 	    // This if is check if the player as moved so much that he won
@@ -88,8 +94,10 @@ public class Board {
 //	    System.out.println("Player name : " +player.getName()+" + "+diceResult+" and now he is in X " + x + " Y " + y);
 //	    System.out.println("Tile number "+ newPosition);
 //	    System.out.println("");
-	    
-	    player.setCurrentP(newPosition);  // update player's position
+	    GameData.getInstance().getPlayer(player).setCurrentP(newPosition);
+	    GameData.getInstance().getPlayer(player).addStep(newPosition);
+
+//	    player.setCurrentP(newPosition);  // update player's position
 	    activateTile(x,y,player); // if theres a special object - Snake Ladder or question it will update the location of the player
 	    
 	    return true; // move successful, return true
@@ -171,7 +179,6 @@ public class Board {
 		return difficulty;
 	}
 	public void generate_snakes_ladders() {
-		System.out.println(difficulty);
 		// TODO Auto-generated method stub
 		Random rand = new Random();
 		if (difficulty == "Easy") {
@@ -182,7 +189,7 @@ public class Board {
                 int startRand;
                 int endRand;
                 do {
-                    startRand = rand.nextInt(7 * (7 - i)); // Random tile in the first (7-i) rows
+                    startRand = rand.nextInt(7 * (7 - i))+1; // Random tile in the first (7-i) rows
                     endRand = startRand + (7 * (i)); // Tile in a row that is (i+1) rows down
                 } while (endRand > 49 || usedNumbers.contains(startRand) || usedNumbers.contains(endRand)); // Ensure endRand doesn't exceed 49 and numbers are unique
                 usedNumbers.add(startRand);
