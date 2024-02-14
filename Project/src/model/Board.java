@@ -4,6 +4,7 @@
 package model;
 import model.Snake;
 
+import java.util.List;
 import java.util.Random;
 
 import model.Ladder;
@@ -16,7 +17,7 @@ import model.Ladder;
 public class Board {
 	private static String difficulty; // 0 easy game, 1 mid game, 2 hard game
 	private Tile[][] gameboard;
-	private Player [] players ;
+	private List <Player> players; ;
 	private int numTiles; // This is need to be changed to numTilesInRow
 	private int dice_Roll;
 	// 1 means Game has ended
@@ -25,7 +26,7 @@ public class Board {
 	/**
 	 * @param type
 	 */
-	public Board(int numTiles , Player [] players ) {
+	public Board(int numTiles , List <Player> players ) {
 	    this.players = players ;
 	    this.numTiles = numTiles;
 	    gameboard = new Tile[numTiles][numTiles];

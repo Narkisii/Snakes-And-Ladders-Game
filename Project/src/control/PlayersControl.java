@@ -2,6 +2,7 @@ package control;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -48,7 +49,7 @@ public class PlayersControl {
 	@FXML
 	private Button remove_Cpu;
 	private int num_cpu = 0;
-	private Player[] players;
+	private LinkedList <Player> players = new LinkedList<Player>();
 	List<String> tokens = Arrays.stream(Tokens.values()).map(Enum::name).collect(Collectors.toList());
 	List<String> colors = Arrays.stream(Colors.values()).map(Enum::name).collect(Collectors.toList());
 	List<CPUNames> cpuNames = Arrays.asList(CPUNames.values());
@@ -449,30 +450,63 @@ public class PlayersControl {
 	}
 
 	private void startGame(int numberOfPlayers) {
-		players = new Player[numberOfPlayers];
 		int counter = 0;
-		for (Node node : playerContainer.getChildren()) {
-			if (node instanceof HBox) {
-				HBox row = (HBox) node;
-				// Get the player's name from the TextField
-				TextField playerNameField = (TextField) playerContainer.lookup("#playerName");
-				String playerName = playerNameField.getText();
+		
+//		for (int i = 1; i <numberOfPlayers; i++) {
+//			TextField playerNameField = (TextField) playerContainer.lookup("#playerName");
+//			String playerName = playerNameField.getText();
+//
+//			// Get the player's color from the ComboBox
+//			ComboBox<String> colorBox = (ComboBox<String>) playerContainer.lookup("#color");
+//			String color = colorBox.getValue();
+//
+//			// Get the player's token from the ComboBox
+//			ComboBox<String> tokenBox = (ComboBox<String>) playerContainer.lookup("#token");
+//			String token = tokenBox.getValue();
+//			Player p = new Player(counter,color, playerName, token);
+//			players.add(p);
+//			System.out.println(p.toString());
+//
+//		}
+//		GameData.setPlayers(players);
 
-				// Get the player's color from the ComboBox
-				ComboBox<String> colorBox = (ComboBox<String>) playerContainer.lookup("#color");
-				String color = colorBox.getValue();
+	    for (Node node : playerContainer.getChildren()) {
+	        if (node instanceof HBox) {
+	            HBox row = (HBox) node;
 
-				// Get the player's token from the ComboBox
-				ComboBox<String> tokenBox = (ComboBox<String>) playerContainer.lookup("#token");
-				String token = tokenBox.getValue();
+	            // Get the player name, color, and token from the row
+	            String playerName = ((TextField) row.getChildren().get(1)).getText(); // Replace 1 with the index of the player name TextField in your HBox
+	            String color = ((ComboBox<String>) row.getChildren().get(2)).getValue(); // Replace 2 with the index of the color ComboBox in your HBox
+	            String token = ((ComboBox<String>) row.getChildren().get(3)).getValue(); // Replace 3 with the index of the token ComboBox in your HBox
 
-				// Construct the Player object
-				Player p = new Player(color, playerName, token);
-				players[counter] = p;
-				counter++;
-				GameData.setPlayers(players);
-			}
+	            // Create a new Player object and add it to the list
+	            Player p = new Player(players.size() + 1, color, playerName, token);
+	            players.add(p);
+	        }
+//		for (Node node : playerContainer.getChildren()) {
+//			if (node instanceof HBox) {
+//				HBox row = (HBox) node;
+//				// Get the player's name from the TextField
+//				TextField playerNameField = (TextField) playerContainer.lookup("#playerName");
+//				String playerName = playerNameField.getText();
+//
+//				// Get the player's color from the ComboBox
+//				ComboBox<String> colorBox = (ComboBox<String>) playerContainer.lookup("#color");
+//				String color = colorBox.getValue();
+//
+//				// Get the player's token from the ComboBox
+//				ComboBox<String> tokenBox = (ComboBox<String>) playerContainer.lookup("#token");
+//				String token = tokenBox.getValue();
+//
+//				// Construct the Player object
+//				Player p = new Player(counter,color, playerName, token);
+//				players.add(p);
+//				System.out.println(p.toString());
+//				counter++;
+//			}
+			
 		}
+		GameData.setPlayers(players);
 
 		// Navigate to the game board
 		navigateTo("/view/BoardView.fxml");

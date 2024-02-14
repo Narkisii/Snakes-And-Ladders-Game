@@ -6,6 +6,12 @@ import model.Ladder;
 import model.Player;
 import model.Snake;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+
 import org.junit.Assert;
 
 public class BoardTest {
@@ -14,9 +20,9 @@ public class BoardTest {
 	 @Test
 	    public void endGameTest() {
 	        int numTilesInARow = 10; // that will create a board 10X10
-	        Player player = new Player("Yellow","ItayIsKing!","Hat");
-	        Player[] Players = new Player[1];
-	        Players[0] = player;
+	        Player player = new Player(1,"Yellow","ItayIsKing!","Hat");
+	        List<Player> Players = new LinkedList<Player>();
+	        Players.add(player);
 	        Board board = new Board(numTilesInARow, Players); 
 
 	        // Move the player beyond the last tile
@@ -30,9 +36,9 @@ public class BoardTest {
 	 @Test
 	    public void snakeTest() {
 	        int numTilesInARow = 10; // that will create a board 10X10
-	        Player player = new Player("Yellow","ItayIsKing!","Hat");
-	        Player[] Players = new Player[1];
-	        Players[0] = player;
+	        Player player = new Player(1,"Yellow","ItayIsKing!","Hat");
+	        List<Player> Players = new LinkedList<Player>();
+	        Players.add(player);
 	        Board board = new Board(numTilesInARow, Players); 
 	        Snake snake = new Snake(99,5,"Yellow"); 
 	        board.getGameboard()[1][9].setSnake(snake);
@@ -44,9 +50,9 @@ public class BoardTest {
 	 @Test
 	    public void ladderTest() {
 	        int numTilesInARow = 10; // that will create a board 10X10
-	        Player player = new Player("Yellow","ItayIsKing!","Hat");
-	        Player[] Players = new Player[1];
-	        Players[0] = player;
+	        Player player = new Player(1,"Yellow","ItayIsKing!","Hat");
+	        List<Player> Players = new LinkedList<Player>();
+	        Players.add(player);
 	        Board board = new Board(numTilesInARow, Players); 
 	        Ladder ladder = new Ladder(43,99,6); 
 	        board.getGameboard()[2][4].setLadder(ladder);

@@ -1,20 +1,19 @@
 package model;
 
 import java.util.HashMap;
-import java.util.Random;
+import java.util.LinkedList;
+import java.util.List;
 
-import control.BoardControl;
 import control.HistoryControl;
-import control.PlayersControl;
 
 public class GameData {
     private static int numberOfPlayers = 1;
     private static String difficulty = "Easy"; // Need to be int
     private HashMap<Integer,Question> questions;
-    private static Player[] players;
-    private static Snake[] sankes;
-    private static Ladder[] Ladders;
-    private static Tile[] specialTiles;
+    private static LinkedList <Player> players;
+    private static LinkedList <Snake> sankes;
+    private static LinkedList <Ladder> ladders;
+    private static LinkedList <Tile> specialTiles;
     private static HistoryControl History;
 //    private static Dice dice;
     
@@ -79,14 +78,6 @@ public class GameData {
 //		GameData.difficulty = difficulty;
 //	}
 
-
-	/**
-	 * @return the players
-	 */
-	public static Player[] getPlayers() {
-		return players;
-	}
-
 	/**
 	 * @return the questions
 	 */
@@ -101,54 +92,6 @@ public class GameData {
 		this.questions = questions;
 	}
 
-	/**
-	 * @param players the players to set
-	 */
-	public static void setPlayers(Player[] players) {
-		GameData.players = players;
-	}
-
-	/**
-	 * @return the sankes
-	 */
-	public static Snake[] getSankes() {
-		return sankes;
-	}
-
-	/**
-	 * @param sankes the sankes to set
-	 */
-	public static void setSankes(Snake[] sankes) {
-		GameData.sankes = sankes;
-	}
-
-	/**
-	 * @return the ladders
-	 */
-	public static Ladder[] getLadders() {
-		return Ladders;
-	}
-
-	/**
-	 * @param ladders the ladders to set
-	 */
-	public static void setLadders(Ladder[] ladders) {
-		Ladders = ladders;
-	}
-
-	/**
-	 * @return the specialTiles
-	 */
-	public static Tile[] getSpecialTiles() {
-		return specialTiles;
-	}
-
-	/**
-	 * @param specialTiles the specialTiles to set
-	 */
-	public static void setSpecialTiles(Tile[] specialTiles) {
-		GameData.specialTiles = specialTiles;
-	}
 
 
 
@@ -167,21 +110,66 @@ public class GameData {
 		History = history;
 	}
 
-//	/**
-//	 * @return the dice
-//	 */
-//	public static Dice getDice() {
-//		return dice;
-//	}
-//
-//	/**
-//	 * @param dice the dice to set
-//	 */
-//	public static void setDice(Dice dice) {
-//		GameData.dice = dice;
-//	}
-    
-    public static void to_json() {
+	
+	
+	
+    /**
+	 * @return the players
+	 */
+	public static LinkedList<Player> getPlayers() {
+		return players;
+	}
+
+	/**
+	 * @param players the players to set
+	 */
+	public static void setPlayers(LinkedList<Player> players) {
+		GameData.players = players;
+	}
+
+	/**
+	 * @return the sankes
+	 */
+	public static LinkedList<Snake> getSankes() {
+		return sankes;
+	}
+
+	/**
+	 * @param sankes the sankes to set
+	 */
+	public static void setSankes(LinkedList<Snake> sankes) {
+		GameData.sankes = sankes;
+	}
+
+	/**
+	 * @return the ladders
+	 */
+	public static LinkedList<Ladder> getLadders() {
+		return ladders;
+	}
+
+	/**
+	 * @param ladders the ladders to set
+	 */
+	public static void setLadders(LinkedList<Ladder> ladders) {
+		GameData.ladders = ladders;
+	}
+
+	/**
+	 * @return the specialTiles
+	 */
+	public static LinkedList<Tile> getSpecialTiles() {
+		return specialTiles;
+	}
+
+	/**
+	 * @param specialTiles the specialTiles to set
+	 */
+	public static void setSpecialTiles(LinkedList<Tile> specialTiles) {
+		GameData.specialTiles = specialTiles;
+	}
+
+	public static void to_json() {
     }
 
     public static Question getRandQuestion(int diff) {

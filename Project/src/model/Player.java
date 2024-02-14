@@ -17,14 +17,16 @@ public class Player {
 	private int currentP = 1 ; // Current position of the player start from tile num 1 
 	private String token; // **Object type is a temp type** the token of the player
 							// (i.e a circle, square, etc...)
+	private int ID;
 
 	/**
 	 * @param color
 	 * @param name
 	 * @param token
 	 */
-	public Player(String color, String name, String token) {
+	public Player(int ID, String color, String name, String token) {
 		super();
+		this.ID = ID;
 		this.color = color;
 		this.name = name;
 		this.token = token;

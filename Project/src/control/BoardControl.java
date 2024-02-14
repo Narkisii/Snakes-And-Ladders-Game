@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -34,6 +35,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.Board;
 import model.GameData;
+import model.Ladder;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 
@@ -71,7 +73,7 @@ public class BoardControl {
 
 	private Timeline timeline;
 
-	private Player[] players;
+	private LinkedList<Player> players = new LinkedList<Player>();
 
 	private Board board;
 
@@ -140,7 +142,6 @@ public class BoardControl {
 			mainPain.getChildren().add(canvas);
 
 	    });
-
 	}
 
 	private GridPane createBoard(int numTiles) {
@@ -207,9 +208,24 @@ public class BoardControl {
 		return grid;
 
 	}
+	
+	private void initiate_Players() {
+		Rectangle startTile = tile_Map.get(1);
+		Point2D tileStart = startTile.localToScene(startTile.getWidth() / 2, startTile.getHeight() / 2);
+		double startX = tileStart.getX();
+		double startY = tileStart.getY();
+        Label playerName = new Label(players.getFirst().getName());
+        System.out.println("startX "+startX+" startY "+startY);
+        playerName.setTextFill(Color.web(players.getFirst().getColor()));
+        playerName.setLayoutX(startX);
+        playerName.setLayoutX(startY);
 
-	public void makeALine(int start, int end) {
-		System.out.println("Start:" + start + "End: " + end);
+        canvas.getChildren().add(playerName);
+//        grid.add(playerName,0,0);
+		
+	}
+	public void add_Ladder_Snake(int start, int end) {
+//		System.out.println("Start:" + start + "End: " + end);
 		canvas.setPickOnBounds(false);
 
 		// get the StackPane for the squares
@@ -226,32 +242,32 @@ public class BoardControl {
 
 		double distance = tileStart.distance(tileEnd);
 		double angle = Math.toDegrees(Math.atan2(startY - endY, startX - endX));
-		System.out.println(angle);
+//		System.out.println(angle);
 
 		Rectangle rectangle = new Rectangle();
 		if (angle == 90 || angle == -90) {
 			rectangle.setX(endX);
 			rectangle.setY(endY);
-			rectangle.setWidth(1);
+			rectangle.setWidth(10);
 			rectangle.setHeight(distance); // set the height as you need
 			rectangle.setStroke(Color.BLUE); // change this to the color you want
 			rectangle.setStrokeWidth(10); // change this to the color you want
 
 		} else {
 			if (angle < 90) {
-				System.out.println("angle<90");
+//				System.out.println("angle<90");
 				rectangle.setX(endX - startTile.getWidth() / 2);
 				rectangle.setY((startY + endY) / 2);
 				rectangle.setWidth(distance);
-				rectangle.setHeight(1); // set the height as you need
+				rectangle.setHeight(10); // set the height as you need
 				rectangle.setRotate(angle);
 
 			} else {
-				System.out.println("angle>90");
+//				System.out.println("angle>90");
 				rectangle.setX(startX - startTile.getWidth() / 2);
 				rectangle.setY((startY + endY) / 2);
 				rectangle.setWidth(distance);
-				rectangle.setHeight(1); // set the height as you need
+				rectangle.setHeight(10); // set the height as you need
 				rectangle.setRotate(angle);
 			}
 		}
@@ -265,10 +281,13 @@ public class BoardControl {
 	public void drawLinesInSeparateThread() {
 	    Thread thread = new Thread(() -> {
 	        Platform.runLater(() -> {
-	            makeALine(1, 28);
-	            makeALine(26, 49);
-	            makeALine(7, 44);
-	            makeALine(2, 37);
+	        	initiate_Players();
+//	        	for(Ladder l: GameData.getLadders())
+	        	Ladder l = new Ladder(2, 22, 0);
+	        	add_Ladder_Snake(l.getStart(), l.getEnd());
+//	        	add_Ladder_Snake(26, 49);
+//	        	add_Ladder_Snake(7, 44);
+//	        	add_Ladder_Snake(2, 37);
 	        });
 	    });
 	    thread.start();
@@ -312,24 +331,24 @@ public class BoardControl {
 		timer.stop();
 	}
 
-	// Method to get the number of tiles based on the difficulty
-	private int getNumOfTiles() {
-		int numTiles = 0;
-		String diff = GameData.getDifficulty();
-		switch (diff.toLowerCase()) {
-		case "easy":
-			numTiles = 7;
-			break;
-		case "medium":
-			numTiles = 10;
-			break;
-		case "hard":
-			numTiles = 13;
-			break;
-		default:
-		}
-		return numTiles;
-	}
+//	// Method to get the number of tiles based on the difficulty
+//	private int getNumOfTiles() {
+//		int numTiles = 0;
+//		String diff = GameData.getDifficulty();
+//		switch (diff.toLowerCase()) {
+//		case "easy":
+//			numTiles = 7;
+//			break;
+//		case "medium":
+//			numTiles = 10;
+//			break;
+//		case "hard":
+//			numTiles = 13;
+//			break;
+//		default:
+//		}
+//		return numTiles;
+//	}
 
 	private void roll(int dice) {
 		rollButton.setDisable(true);
