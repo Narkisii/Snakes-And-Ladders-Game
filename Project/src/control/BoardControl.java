@@ -5,9 +5,12 @@ import view.Main;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
+
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -102,12 +105,12 @@ public class BoardControl {
 		// Create Board - getNumOfTiles() X getNumOfTiles() = Board
 		// the Board constractor gets in Row and calculate the size
 		board = new Board(GameData.getNumOfTiles(), GameData.getPlayers());
-
+		
 		// Set Players
 		players = GameData.getPlayers();
-//		for (Player player : players) {
-//			System.out.println("name" + player.getName());
-//		}
+		for (Player player : players) {
+			System.out.println(player.toString());
+		}
 		createCountDown();
 		startCountDown();
 		createTimer();

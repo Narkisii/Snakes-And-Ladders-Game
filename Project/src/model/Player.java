@@ -11,6 +11,7 @@ import enums.Colors;
  */
 public class Player {
 
+
 	private String color; // the color of the player's token
 	private String name; // the name of the player
 	private int currentP = 1 ; // Current position of the player start from tile num 1 
@@ -84,5 +85,9 @@ public class Player {
 	public void setCurrentP(int currentP) {
 		this.currentP = currentP;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "Player [color=" + color + ", name=" + name + ", currentP=" + currentP + ", token=" + token + "]";
+	}
 }
