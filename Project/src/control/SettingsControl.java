@@ -37,12 +37,12 @@ public class SettingsControl {
 
         // Update the number of players in GameData when it changes
         number_of_players.valueProperty().addListener((obs, oldVal, newVal) -> {
-            GameData.setNumberOfPlayers(newVal);
+            GameData.getInstance().setNumberOfPlayers(newVal);
         });
 
         // Update the difficulty in GameData when it changes
         difficulty.valueProperty().addListener((obs, oldVal, newVal) -> {//Fix to translate to string
-            GameData.setDifficulty(newVal);
+            GameData.getInstance().setDifficulty(String.valueOf(newVal));
         });
 
         // Add actions for your buttons here

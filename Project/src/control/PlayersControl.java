@@ -26,6 +26,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.Board;
 import model.GameData;
 import model.Player;
 
@@ -54,7 +55,7 @@ public class PlayersControl {
 	List<String> colors = Arrays.stream(Colors.values()).map(Enum::name).collect(Collectors.toList());
 	List<CPUNames> cpuNames = Arrays.asList(CPUNames.values());
 	int index = 0;
-	int numberOfPlayers = GameData.getNumberOfPlayers();
+	int numberOfPlayers = GameData.getInstance().getNumberOfPlayers();
 
 	@FXML
 	public void initialize() {
@@ -452,24 +453,6 @@ public class PlayersControl {
 	private void startGame(int numberOfPlayers) {
 		int counter = 0;
 		
-//		for (int i = 1; i <numberOfPlayers; i++) {
-//			TextField playerNameField = (TextField) playerContainer.lookup("#playerName");
-//			String playerName = playerNameField.getText();
-//
-//			// Get the player's color from the ComboBox
-//			ComboBox<String> colorBox = (ComboBox<String>) playerContainer.lookup("#color");
-//			String color = colorBox.getValue();
-//
-//			// Get the player's token from the ComboBox
-//			ComboBox<String> tokenBox = (ComboBox<String>) playerContainer.lookup("#token");
-//			String token = tokenBox.getValue();
-//			Player p = new Player(counter,color, playerName, token);
-//			players.add(p);
-//			System.out.println(p.toString());
-//
-//		}
-//		GameData.setPlayers(players);
-
 	    for (Node node : playerContainer.getChildren()) {
 	        if (node instanceof HBox) {
 	            HBox row = (HBox) node;
@@ -481,32 +464,12 @@ public class PlayersControl {
 
 	            // Create a new Player object and add it to the list
 	            Player p = new Player(players.size() + 1, color, playerName, token);
-	            players.add(p);
+//	            players.add(p);
+	            GameData.getInstance().addPlayers(p);
 	        }
-//		for (Node node : playerContainer.getChildren()) {
-//			if (node instanceof HBox) {
-//				HBox row = (HBox) node;
-//				// Get the player's name from the TextField
-//				TextField playerNameField = (TextField) playerContainer.lookup("#playerName");
-//				String playerName = playerNameField.getText();
-//
-//				// Get the player's color from the ComboBox
-//				ComboBox<String> colorBox = (ComboBox<String>) playerContainer.lookup("#color");
-//				String color = colorBox.getValue();
-//
-//				// Get the player's token from the ComboBox
-//				ComboBox<String> tokenBox = (ComboBox<String>) playerContainer.lookup("#token");
-//				String token = tokenBox.getValue();
-//
-//				// Construct the Player object
-//				Player p = new Player(counter,color, playerName, token);
-//				players.add(p);
-//				System.out.println(p.toString());
-//				counter++;
-//			}
 			
 		}
-		GameData.setPlayers(players);
+//		GameData.getInstance().setPlayers(players);
 
 		// Navigate to the game board
 		navigateTo("/view/BoardView.fxml");

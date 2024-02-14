@@ -26,10 +26,10 @@ public class Player {
 	 */
 	public Player(int ID, String color, String name, String token) {
 		super();
-		this.ID = ID;
+		this.setID(ID);
 		this.color = color;
 		this.name = name;
-		this.token = token;
+		this.token = "/view/Images/tokens/"+token+"2D.png";
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class Player {
 	/**
 	 * @return the token
 	 */
-	public Object getToken() {
+	public String getToken() {
 		return token;
 	}
 
@@ -91,5 +91,13 @@ public class Player {
 	@Override
 	public String toString() {
 		return "Player [color=" + color + ", name=" + name + ", currentP=" + currentP + ", token=" + token + "]";
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
 	}
 }

@@ -18,7 +18,7 @@ public class Dice {
 	 */
 	public Dice() {
 		super();
-		this.Difficulty = GameData.getDifficulty();
+		this.Difficulty = GameData.getInstance().getDifficulty();
 	}
 
 	/**

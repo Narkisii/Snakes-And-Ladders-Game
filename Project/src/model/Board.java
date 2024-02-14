@@ -4,8 +4,11 @@
 package model;
 import model.Snake;
 
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import model.Ladder;
 
@@ -16,12 +19,12 @@ import model.Ladder;
  */
 public class Board {
 	private static String difficulty; // 0 easy game, 1 mid game, 2 hard game
-	private Tile[][] gameboard;
+	private static Tile[][] gameboard;
 	private List <Player> players; ;
-	private int numTiles; // This is need to be changed to numTilesInRow
+	private static int numTiles; // This is need to be changed to numTilesInRow
 	private int dice_Roll;
 	// 1 means Game has ended
-	private int gameEnd = 0 ;
+	private static int gameEnd = 0 ;
 	
 	/**
 	 * @param type
@@ -30,7 +33,7 @@ public class Board {
 	    this.players = players ;
 	    this.numTiles = numTiles;
 	    gameboard = new Tile[numTiles][numTiles];
-	    difficulty = GameData.getDifficulty();
+	    difficulty = GameData.getInstance().getDifficulty();
 	    // Initialize each Tile object
 	    for (int i = 0; i < numTiles; i++) {
 	        for (int j = 0; j < numTiles; j++) {
@@ -38,7 +41,7 @@ public class Board {
 	        }
 	    }
 	}
-	private void activateTile(int x, int y ,Player player)
+	private static void activateTile(int x, int y ,Player player)
 	{
 		Tile tile = gameboard[x][y];
 		Snake snake = tile.getSnake();
@@ -61,7 +64,7 @@ public class Board {
 		}
 		
 	}
-	public boolean move(int diceResult, Player player ) {
+	public static boolean move(int diceResult, Player player ) {
 	    int newPosition = player.getCurrentP() + diceResult;
 	    
 	    // This if is check if the player as moved so much that he won
@@ -82,9 +85,9 @@ public class Board {
 	        x = gameboard[0].length - 1 - x;
 	    }
 
-	    System.out.println("Player name : " +player.getName()+" + "+diceResult+" and now he is in X " + x + " Y " + y);
-	    System.out.println("Tile number "+ newPosition);
-	    System.out.println("");
+//	    System.out.println("Player name : " +player.getName()+" + "+diceResult+" and now he is in X " + x + " Y " + y);
+//	    System.out.println("Tile number "+ newPosition);
+//	    System.out.println("");
 	    
 	    player.setCurrentP(newPosition);  // update player's position
 	    activateTile(x,y,player); // if theres a special object - Snake Ladder or question it will update the location of the player
@@ -166,6 +169,30 @@ public class Board {
 	 */
 	public String getDifficulty() {
 		return difficulty;
+	}
+	public void generate_snakes_ladders() {
+		System.out.println(difficulty);
+		// TODO Auto-generated method stub
+		Random rand = new Random();
+		if (difficulty == "Easy") {
+			// if game mode is easy
+			int[] laddersizes = {1,2,3,4};
+            Set<Integer> usedNumbers = new HashSet<>();
+            for(int i: laddersizes) {
+                int startRand;
+                int endRand;
+                do {
+                    startRand = rand.nextInt(7 * (7 - i)); // Random tile in the first (7-i) rows
+                    endRand = startRand + (7 * (i)); // Tile in a row that is (i+1) rows down
+                } while (endRand > 49 || usedNumbers.contains(startRand) || usedNumbers.contains(endRand)); // Ensure endRand doesn't exceed 49 and numbers are unique
+                usedNumbers.add(startRand);
+                usedNumbers.add(endRand);
+
+				Ladder l = new Ladder(startRand,endRand , i);
+				GameData.getInstance().addLadders(l);
+			}
+		}
+
 	}
 
 }

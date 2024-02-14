@@ -9,6 +9,7 @@ package model;
  */
 public class Ladder {
 
+
 	private int length; // the length of the ladder
 	
 
@@ -48,7 +49,6 @@ public class Ladder {
 		this.end = end;
 	}
 
-
 	/**
 	 * @return the length
 	 */
@@ -61,6 +61,10 @@ public class Ladder {
 	 */
 	public void setLength(int length) {
 		this.length = length;
+	}
+	@Override
+	public String toString() {
+		return "Ladder [length=" + length + ", start=" + start + ", end=" + end + "]";
 	}
 
 }

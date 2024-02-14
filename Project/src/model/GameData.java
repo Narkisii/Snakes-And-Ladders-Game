@@ -7,61 +7,99 @@ import java.util.List;
 import control.HistoryControl;
 
 public class GameData {
-    private static int numberOfPlayers = 1;
-    private static String difficulty = "Easy"; // Need to be int
-    private HashMap<Integer,Question> questions;
-    private static LinkedList <Player> players;
-    private static LinkedList <Snake> sankes;
-    private static LinkedList <Ladder> ladders;
-    private static LinkedList <Tile> specialTiles;
-    private static HistoryControl History;
+	private int numberOfPlayers = 1;
+	private String difficulty;
+	private HashMap<Integer, Question> questions;
+	private LinkedList<Player> players;
+	private LinkedList<Snake> sankes;
+	private LinkedList<Ladder> ladders;
+	private LinkedList<Tile> specialTiles;
+	private HistoryControl History;
+	private int playerTurn;
 //    private static Dice dice;
-    
 
-    /**
+	// Singleton instance
+	private static GameData instance = null;
+
+	// Private constructor
+	private GameData() {
+		// Initialization code here
+		questions = new HashMap<Integer, Question>();
+		players = new LinkedList<Player>();
+		sankes = new LinkedList<Snake>();
+		ladders = new LinkedList<Ladder>();
+		specialTiles = new LinkedList<Tile>();
+		questions = new HashMap<Integer, Question>();
+		difficulty = "Easy";
+		playerTurn = 0;
+	}
+
+	// Static method to get the singleton instance
+	public static GameData getInstance() {
+		if (instance == null) {
+			instance = new GameData();
+		}
+		return instance;
+	}
+
+	/**
 	 * @return the difficulty
 	 */
-	public static String getDifficulty() {
+	public String getDifficulty() {
 		return difficulty;
 	}
-	
-	 /**
-		 * @return the difficulty
-		 */
-	// NumOfTiles X NumOfTiles = size of Board
-	public static int getNumOfTiles() {
-	    switch (difficulty) {
-	        case "Easy":
-	            return 7;
-	        case "Medium":
-	            return 10;
-	        case "Hard":
-	            return 13;
-	        default:
-	            return 7;
-	    }
+
+	/**
+	 * @return the playerTurn
+	 */
+	public int getPlayerTurn() {
+		return playerTurn;
 	}
 
+	/**
+	 * @param playerTurn the playerTurn to set
+	 */
+	public void setPlayerTurn(int p_Turn) {
+		playerTurn = p_Turn;
+	}
+
+	/**
+	 * @return the difficulty
+	 */
+	// NumOfTiles X NumOfTiles = size of Board
+	public int getNumOfTiles() {
+		switch (getDifficulty()) {
+		case "Easy":
+			return 7;
+		case "Medium":
+			return 10;
+		case "Hard":
+			return 13;
+		default:
+			return 7;
+		}
+	}
 
 	/**
 	 * @param difficulty the difficulty to set
 	 */
-	public static void setDifficulty(String difficulty) {
-		GameData.difficulty = difficulty;
+	public void setDifficulty(String diff) {
+		System.out.println("setDifficulty " + difficulty);
+		difficulty = diff;
 	}
 
 	/**
 	 * @return the numberOfPlayers
 	 */
-	public static int getNumberOfPlayers() {
+	public int getNumberOfPlayers() {
 		return numberOfPlayers;
 	}
 
 	/**
 	 * @param numberOfPlayers the numberOfPlayers to set
 	 */
-	public static void setNumberOfPlayers(int numberOfPlayers) {
-		GameData.numberOfPlayers = numberOfPlayers;
+	public void setNumberOfPlayers(int num) {
+		numberOfPlayers = num;
 	}
 
 //	/**
@@ -92,89 +130,103 @@ public class GameData {
 		this.questions = questions;
 	}
 
-
-
-
-	
 	/**
 	 * @return the history
 	 */
-	public static HistoryControl getHistory() {
+	public HistoryControl getHistory() {
 		return History;
 	}
 
 	/**
 	 * @param history the history to set
 	 */
-	public static void setHistory(HistoryControl history) {
+	public void setHistory(HistoryControl history) {
 		History = history;
 	}
 
-	
-	
-	
-    /**
+	/**
 	 * @return the players
 	 */
-	public static LinkedList<Player> getPlayers() {
+	public LinkedList<Player> getPlayers() {
 		return players;
 	}
 
 	/**
 	 * @param players the players to set
 	 */
-	public static void setPlayers(LinkedList<Player> players) {
-		GameData.players = players;
+	public void setPlayers(LinkedList<Player> p) {
+		players = p;
+	}
+
+	public void addPlayers(Player player) {
+		players.add(player);
 	}
 
 	/**
 	 * @return the sankes
 	 */
-	public static LinkedList<Snake> getSankes() {
+	public LinkedList<Snake> getSankes() {
 		return sankes;
 	}
 
 	/**
 	 * @param sankes the sankes to set
 	 */
-	public static void setSankes(LinkedList<Snake> sankes) {
-		GameData.sankes = sankes;
+	public void setSankes(LinkedList<Snake> s) {
+		sankes = s;
+	}
+
+	public void addSnakes(Snake s) {
+		sankes.add(s);
 	}
 
 	/**
 	 * @return the ladders
 	 */
-	public static LinkedList<Ladder> getLadders() {
+	public LinkedList<Ladder> getLadders() {
 		return ladders;
 	}
 
 	/**
 	 * @param ladders the ladders to set
 	 */
-	public static void setLadders(LinkedList<Ladder> ladders) {
-		GameData.ladders = ladders;
+	public void setLadders(LinkedList<Ladder> l) {
+		ladders = l;
+	}
+
+	public boolean addLadders(Ladder l) {
+		if (l != null) {
+			System.out.println("Added ladder:" + l.toString());
+			ladders.add(l);
+			return true;
+		}
+		return false;
 	}
 
 	/**
 	 * @return the specialTiles
 	 */
-	public static LinkedList<Tile> getSpecialTiles() {
+	public LinkedList<Tile> getSpecialTiles() {
 		return specialTiles;
 	}
 
 	/**
 	 * @param specialTiles the specialTiles to set
 	 */
-	public static void setSpecialTiles(LinkedList<Tile> specialTiles) {
-		GameData.specialTiles = specialTiles;
+	public void setSpecialTiles(LinkedList<Tile> st) {
+		specialTiles = st;
 	}
 
-	public static void to_json() {
-    }
+	public void addSpecialTiles(Tile st) {
+		specialTiles.add(st);
+	}
 
-    public static Question getRandQuestion(int diff) {
+	public void to_json() {
+	}
+
+	public Question getRandQuestion(int diff) {
 		return null;
-    	
-    }
-    
+
+	}
+
 }
