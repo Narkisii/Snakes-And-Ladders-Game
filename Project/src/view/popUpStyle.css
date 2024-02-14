@@ -3,11 +3,19 @@
 }
 
 .bodybg{
-	-fx-background-image: url("/view/Images/yellow.jpg");
+	/*-fx-background-image: url("/view/Images/yellow.jpg"); */
+	-fx-background-image: url("/view/Images/popBackground.png");
 	-fx-background-size: 100% 100%;
 	-fx-font-family: 'JejuHallasan';
 }
 
+.title {
+	-fx-text-fill: #7EFF5E;
+    -fx-font-size: 35px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, black, 3, 3, 0, 0);
+	-fx-font-family: 'JejuHallasan';
+}
 
 .statuspane {
     -fx-background-color: linear-gradient(to bottom, #29AD1E 50%, transparent);
@@ -30,7 +38,6 @@
 }
 
 .pop_font {
-
     -fx-font-size: 20px;
 }
 
@@ -43,6 +50,9 @@
     -fx-font-family: 'JejuHallasan';
 }
 
+.radioAnswers {
+	-fx-font-size: 18px;
+}
 
 .scrolPane_bg {
     -fx-background-color: transparent;
@@ -64,9 +74,28 @@
 }
 
 .finish_button:hover {
-    -fx-effect: dropshadow(three-pass-box, #0f4d00, 5.0, 5.0, 0.0, 0.0);
+    -fx-effect: dropshadow(three-pass-box, #0F4D00, 4.0, 4.0, 0.0, 0.0);
 }
 
+.checkButton {
+	-fx-background-color: #747264;
+    -fx-border-color: transparent;
+    -fx-text-fill: #EEEDEB;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 60.0 60.0 60.0 60.0;
+ 	-fx-background-radius: 60.0 60.0 60.0 60.0;
+}
+
+.checkButton:hover {
+	 -fx-text-fill: #D6ECD3;
+	 -fx-background-color: #2D9596;
+	 -fx-effect: dropshadow(three-pass-box,#267085, 5.0, 5.0, 0.0, 0.0);
+}
+
+.clearButton:hover {
+	-fx-effect: dropshadow(three-pass-box,#EFECEC, 5.0, 5.0, 0.0, 0.0);
+}
 
 
 

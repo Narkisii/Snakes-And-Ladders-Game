@@ -5,49 +5,67 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="300.0" prefWidth="650.0" stylesheets="@popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.questionPopControl">
-   <children>
-      <VBox alignment="CENTER_LEFT" prefHeight="413.0" prefWidth="650.0" spacing="10.0" styleClass="bodybg" stylesheets="@popUpStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<BorderPane styleClass="bodybg" stylesheets="@popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.questionPopControl">
+   <center>
+      <AnchorPane prefHeight="300.0" prefWidth="650.0" stylesheets="@popUpStyle.css">
          <children>
-            <Label fx:id="QuestionTitle" alignment="CENTER" contentDisplay="CENTER" styleClass="pop_font" stylesheets="@popUpStyle.css" text="Easy Question:">
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-            </Label>
-            <TextFlow fx:id="questionTextBox" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
-               <padding>
-                  <Insets bottom="10.0" top="10.0" />
-               </padding>
-            </TextFlow>
-            <Label fx:id="chooseAnswerTitle" styleClass="pop_font" stylesheets="@popUpStyle.css" text="choose answer:">
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-            </Label>
-            <RadioButton fx:id="answerOne" mnemonicParsing="false" text="Hello I'm number 1" />
-            <RadioButton fx:id="answerTwo" mnemonicParsing="false" text="Hello I'm number 2" />
-            <RadioButton fx:id="answerThree" mnemonicParsing="false" text="Hello I'm number 3" />
-            <RadioButton fx:id="answerFour" mnemonicParsing="false" text="Hello I'm number 4" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <VBox alignment="CENTER_LEFT" prefHeight="413.0" prefWidth="650.0" spacing="15.0" stylesheets="@popUpStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button fx:id="checkAnswerButton" prefHeight="49.0" prefWidth="630.0" styleClass="finish_button" stylesheets="@popUpStyle.css" text="check answer" />
-                  <TextFlow fx:id="answerTextBox" prefHeight="46.0" prefWidth="805.0" style="-fx-background-color: white;" />
+                  <TextFlow fx:id="questionTextBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS" />
+                  <Label fx:id="chooseAnswerTitle" styleClass="pop_font" stylesheets="@popUpStyle.css" text="choose answer:">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <RadioButton fx:id="answerOne" mnemonicParsing="false" styleClass="radioAnswers" text="Hello I'm number 1">
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin></RadioButton>
+                  <RadioButton fx:id="answerTwo" mnemonicParsing="false" styleClass="radioAnswers" text="Hello I'm number 2">
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin></RadioButton>
+                  <RadioButton fx:id="answerThree" mnemonicParsing="false" styleClass="radioAnswers" text="Hello I'm number 3">
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin></RadioButton>
+                  <RadioButton fx:id="answerFour" mnemonicParsing="false" styleClass="radioAnswers" text="Hello I'm number 4">
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin></RadioButton>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <Button fx:id="checkAnswerButton" prefHeight="49.0" prefWidth="630.0" styleClass="checkButton" stylesheets="@Buttons.css" text="check answer" />
+                        <TextFlow fx:id="answerTextBox" prefHeight="46.0" prefWidth="805.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" />
+                     </children>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </HBox>
                </children>
-            </HBox>
-            <Pane prefHeight="200.0" prefWidth="590.0">
-               <padding>
-                  <Insets bottom="15.0" />
-               </padding>
-            </Pane>
+            </VBox>
          </children>
-         <padding>
-            <Insets left="30.0" right="30.0" top="20.0" />
-         </padding>
-      </VBox>
-   </children>
-</AnchorPane>
+      </AnchorPane>
+   </center>
+   <top>
+      <Pane prefHeight="59.0" prefWidth="690.0">
+         <children>
+            <Label fx:id="QuestionTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="220.0" layoutY="12.0" prefWidth="250.0" styleClass="title" stylesheets="@popUpStyle.css" text="Easy Question:" />
+         </children></Pane>
+   </top>
+   <left>
+      <Pane fx:id="leftPane" prefHeight="399.0" prefWidth="19.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Pane prefHeight="200.0" prefWidth="19.0" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <Pane prefHeight="21.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>
