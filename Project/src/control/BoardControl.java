@@ -200,7 +200,7 @@ public class BoardControl {
 
 				// Create a new label with the current count
 				Label label = new Label(String.valueOf(count));
-				label.getStylesheets().add("view/backGroundAll.css");
+				label.getStylesheets().add("/view/resources/Css/all_Style.css");
 				label.getStyleClass().add("tile_Font");
 				label.prefWidthProperty().bind(grid.widthProperty().divide(numTiles));
 				label.prefHeightProperty().bind(grid.widthProperty().divide(numTiles));
@@ -258,7 +258,7 @@ public class BoardControl {
 			playerName = new Label(p.getName());
 			playerName.setTextFill(Color.web(p.getColor()));
 			playerName.setId(String.valueOf(p.getID()) + p.getName());
-			playerName.getStylesheets().add("/view/backGroundAll.css");
+			playerName.getStylesheets().add("/view/resources/Css/all_Style.css");
 			playerName.getStyleClass().add("player_font");
 			Image img_file = new Image(p.getToken());
 			img = new ImageView(img_file);
@@ -308,7 +308,7 @@ public class BoardControl {
 			playerName = new Label(p.getName());
 			playerName.setTextFill(Color.web(p.getColor()));
 			playerName.setId(String.valueOf(p.getID()) + p.getName());
-			playerName.getStylesheets().add("/view/backGroundAll.css");
+			playerName.getStylesheets().add("/view/resources/Css/all_Style.css");
 			playerName.getStyleClass().add("player_font");
 			Image img_file = new Image(p.getToken());
 			img = new ImageView(img_file);
@@ -340,7 +340,7 @@ public class BoardControl {
 //		playerName = new Label(p.getName());
 //		playerName.setTextFill(Color.web(p.getColor()));
 //		playerName.setId(String.valueOf(p.getID()) + p.getName());
-//		playerName.getStylesheets().add("/view/backGroundAll.css");
+//		playerName.getStylesheets().add("/view/resources/Css/all_Style.css");
 //		playerName.getStyleClass().add("player_font");
 //		Image img_file = new Image(p.getToken());
 //		img = new ImageView(img_file);
@@ -470,16 +470,15 @@ public class BoardControl {
 		rollButton.setDisable(true);
 		final long[] frameCounter = { 0 };
 		final Random random = new Random();
-
 		AnimationTimer animationTimer = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
 				if (frameCounter[0]++ % 3 == 0) { // adjust the 6 to control the speed of the animation
 					if (frameCounter[0] < 90) { // adjust the 90 to control the duration of the animation
-						File file = new File("src/view/dice/" + (random.nextInt(10)) + ".png");
+						File file = new File("src/view/Images/dice/" + (random.nextInt(10)) + ".png");
 						diceImage.setImage(new Image(file.toURI().toString()));
 					} else {
-						File file = new File("src/view/dice/" + dice + ".png");
+						File file = new File("src/view/Images/dice/" + dice + ".png");
 						diceImage.setImage(new Image(file.toURI().toString()));
 						rollButton.setDisable(false);
 						this.stop();

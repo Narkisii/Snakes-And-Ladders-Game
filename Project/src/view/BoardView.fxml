@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainPain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@backGroundAll.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.BoardControl">
+<BorderPane fx:id="mainPain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@resources/Css/all_Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.BoardControl">
    <top>
       <Pane prefHeight="30.0" prefWidth="791.0" BorderPane.alignment="CENTER" />
    </top>
@@ -21,7 +21,7 @@
    <bottom>
       <Pane BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="return_btn" mnemonicParsing="false" prefHeight="88.0" prefWidth="235.0" styleClass="Normal_button" stylesheets="@Buttons.css" text="Return">
+            <Button fx:id="return_btn" mnemonicParsing="false" prefHeight="88.0" prefWidth="235.0" styleClass="Normal_button" stylesheets="@resources/Css/Buttons.css" text="Return">
                <font>
                   <Font size="32.0" />
                </font>
@@ -29,19 +29,19 @@
          </children></Pane>
    </bottom>
    <left>
-      <AnchorPane prefWidth="242.0" styleClass="statuspane" stylesheets="@backGroundAll.css">
+      <AnchorPane prefWidth="242.0" styleClass="statuspane" stylesheets="@resources/Css/all_Style.css">
          <BorderPane.margin>
             <Insets left="30.0" right="30.0" />
          </BorderPane.margin>
          <children>
             <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="490.0" prefWidth="262.0" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label id="turn_Lable" fx:id="turn_Lable" alignment="CENTER" contentDisplay="TOP" prefHeight="147.0" prefWidth="242.0" styleClass="normal_Font" stylesheets="@backGroundAll.css" text="Turn" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                  <Label id="turn_Lable" fx:id="turn_Lable" alignment="CENTER" contentDisplay="TOP" prefHeight="147.0" prefWidth="242.0" styleClass="normal_Font" stylesheets="@resources/Css/all_Style.css" text="Turn" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
                      <font>
                         <Font name="Arial Narrow" size="12.0" />
                      </font>
                   </Label>
-                  <Label id="countDown_Label" fx:id="countDown_Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="105.0" prefWidth="237.0" styleClass="normal_Font" stylesheets="@backGroundAll.css" text="countDown_Label" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                  <Label id="countDown_Label" fx:id="countDown_Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="105.0" prefWidth="237.0" styleClass="normal_Font" stylesheets="@resources/Css/all_Style.css" text="countDown_Label" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
                      <font>
                         <Font name="Arial Narrow" size="12.0" />
                      </font>
@@ -50,12 +50,12 @@
                      <children>
                         <Pane layoutY="-2.0" prefHeight="249.0" prefWidth="242.0">
                            <children>
-                              <Label id="turn_Lable" fx:id="turn_Lable1" alignment="CENTER" contentDisplay="TOP" prefHeight="147.0" prefWidth="242.0" styleClass="normal_Font" stylesheets="@backGroundAll.css" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                              <Label id="turn_Lable" fx:id="turn_Lable1" alignment="CENTER" contentDisplay="TOP" prefHeight="147.0" prefWidth="242.0" styleClass="normal_Font" stylesheets="@resources/Css/all_Style.css" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
                                  <font>
                                     <Font name="Arial Narrow" size="12.0" />
                                  </font>
                               </Label>
-                              <Label id="timer_Label" fx:id="timer_Label" alignment="CENTER" contentDisplay="TOP" prefHeight="147.0" prefWidth="242.0" styleClass="normal_Font" stylesheets="@backGroundAll.css" text="timer" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                              <Label id="timer_Label" fx:id="timer_Label" alignment="CENTER" contentDisplay="TOP" prefHeight="147.0" prefWidth="242.0" styleClass="normal_Font" stylesheets="@resources/Css/all_Style.css" text="timer" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
                                  <font>
                                     <Font name="Arial Narrow" size="12.0" />
                                  </font>
@@ -68,7 +68,7 @@
                      </children>
                   </AnchorPane>
                   <AnchorPane />
-                  <Button id="Dice_Botton" fx:id="rollButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" styleClass="rollbutton" stylesheets="@Buttons.css" text="Roll Dice" textAlignment="CENTER">
+                  <Button id="Dice_Botton" fx:id="rollButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" styleClass="rollbutton" stylesheets="@resources/Css/Buttons.css" text="Roll Dice" textAlignment="CENTER">
                      <font>
                         <Font size="38.0" />
                      </font>

@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@backGroundAll.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.QuestionWizControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@resources/Css/all_Style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.QuestionWizControl">
    <bottom>
       <Pane prefHeight="85.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="Return_Btn" layoutY="-1.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="256.0" styleClass="Normal_button" stylesheets="@Buttons.css" text="Return" />
+            <Button fx:id="Return_Btn" layoutY="-1.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="256.0" styleClass="Normal_button" stylesheets="@resources/Css/Buttons.css" text="Return" />
          </children>
       </Pane>
    </bottom>
@@ -55,7 +55,7 @@
                            <children>
                               <Pane prefHeight="58.0" prefWidth="1280.0">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="12.0" styleClass="cpu_Font" stylesheets="@Buttons.css" text="Search" />
+                                    <Label layoutX="14.0" layoutY="12.0" styleClass="cpu_Font" stylesheets="@resources/Css/Buttons.css" text="Search" />
                                     <TextField layoutX="133.0" layoutY="7.0" promptText="Miduim Quetstions" styleClass="cpu_Font" />
                                  </children>
                               </Pane>
@@ -74,7 +74,7 @@
                            <children>
                               <Pane prefHeight="58.0" prefWidth="1280.0">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="12.0" styleClass="cpu_Font" stylesheets="@Buttons.css" text="Search" />
+                                    <Label layoutX="14.0" layoutY="12.0" styleClass="cpu_Font" stylesheets="@resources/Css/Buttons.css" text="Search" />
                                     <TextField layoutX="133.0" layoutY="7.0" promptText="Hard Quetstions" styleClass="cpu_Font" />
                                  </children>
                               </Pane>

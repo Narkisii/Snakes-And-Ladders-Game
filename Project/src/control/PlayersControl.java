@@ -233,7 +233,7 @@ public class PlayersControl {
 		num.setContentDisplay(ContentDisplay.CENTER);
 		num.setPrefHeight(67.0);
 		num.setPrefWidth(5.0);
-		num.getStylesheets().add("view/Buttons.css");
+		num.getStylesheets().add("/view/resources/Css/Buttons.css");
 		num.getStyleClass().add("comboBox_Nornal");
 		num.setText(Integer.toString(index + 1));
 		playerRow.getChildren().add(num); // Add to the playerRow HBox
@@ -245,7 +245,7 @@ public class PlayersControl {
 		playerName.setPromptText("playerName" + (index + 1));
 		playerName.setPrefHeight(65.0);
 		playerName.setPrefWidth(191.0);
-		playerName.getStylesheets().add("view/Buttons.css");
+		playerName.getStylesheets().add("/view/resources/Css/Buttons.css");
 		playerName.getStyleClass().add("comboBox_Nornal");
 		playerRow.getChildren().add(playerName); // Add to the playerRow HBox
 		HBox.setHgrow(playerName, Priority.ALWAYS); // Make 'playerName' expand to fill available horizontal space
@@ -256,7 +256,7 @@ public class PlayersControl {
 
 		color.setPrefHeight(65.0);
 		color.setPrefWidth(240.0);
-		color.getStylesheets().add("view/Buttons.css");
+		color.getStylesheets().add("/view/resources/Css/Buttons.css");
 		color.getStyleClass().add("comboBox_Nornal");
 		playerRow.getChildren().add(color); // Add to the playerRow HBox
 		HBox.setHgrow(color, Priority.ALWAYS); // Make 'color' expand to fill available horizontal space
@@ -315,7 +315,7 @@ public class PlayersControl {
 
 		token.setPrefHeight(65.0);
 		token.setPrefWidth(240.0);
-		token.getStylesheets().add("view/Buttons.css");
+		token.getStylesheets().add("/view/resources/Css/Buttons.css");
 		token.getStyleClass().add("comboBox_Nornal");
 		playerRow.getChildren().add(token); // Add 'token' to the playerRow HBox
 		HBox.setHgrow(token, Priority.ALWAYS); // Make 'token' expand to fill available horizontal space
@@ -391,7 +391,7 @@ public class PlayersControl {
 		num.setContentDisplay(ContentDisplay.CENTER);
 		num.setPrefHeight(67.0);
 		num.setPrefWidth(5.0);
-		num.getStylesheets().add("view/Buttons.css");
+		num.getStylesheets().add("/view/resources/Css/Buttons.css");
 		num.getStyleClass().add("comboBox_Nornal");
 		num.setText(Integer.toString(index + 1));
 		playerRow.getChildren().add(num); // Add to the playerRow HBox
@@ -403,7 +403,7 @@ public class PlayersControl {
 
 		playerName.setPrefHeight(65.0);
 		playerName.setPrefWidth(191.0);
-		playerName.getStylesheets().add("view/Buttons.css");
+		playerName.getStylesheets().add("/view/resources/Css/Buttons.css");
 		playerName.getStyleClass().add("comboBox_Nornal");
 		playerName.setText(nameCpu);
 		playerName.setDisable(true);
@@ -416,7 +416,7 @@ public class PlayersControl {
 
 		color.setPrefHeight(65.0);
 		color.setPrefWidth(240.0);
-		color.getStylesheets().add("view/Buttons.css");
+		color.getStylesheets().add("/view/resources/Css/Buttons.css");
 		color.getStyleClass().add("comboBox_Nornal");
 		color.setValue(colorForNewCPU);
 		color.setDisable(true);
@@ -428,7 +428,7 @@ public class PlayersControl {
 		token.setId("token"); // unique id
 		token.setPrefHeight(65.0);
 		token.setPrefWidth(240.0);
-		token.getStylesheets().add("view/Buttons.css");
+		token.getStylesheets().add("/view/resources/Css/Buttons.css");
 		token.getStyleClass().add("comboBox_Nornal");
 		token.setValue(tokenForNewCPU);
 		token.setDisable(true);

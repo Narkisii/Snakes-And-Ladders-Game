@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.MenuScreenControl">
    <children>
-      <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="35.0" styleClass="bodybg" stylesheets="@backGroundAll.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="35.0" styleClass="bodybg" stylesheets="@resources/Css/all_Style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="255.0" prefWidth="1147.0" styleClass="GameName_font" text="Snakes and ladders">
                <font>
@@ -19,7 +19,7 @@
             </Label>
             <VBox alignment="CENTER" prefHeight="358.0" prefWidth="1280.0">
                <children>
-                  <Button fx:id="button_start" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" stylesheets="@Buttons.css" text="Start">
+                  <Button fx:id="button_start" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" stylesheets="@resources/Css/Buttons.css" text="Start">
                      <font>
                         <Font name="Berlin Sans FB" size="36.0" />
                      </font>
@@ -29,25 +29,25 @@
                      </styleClass>
                   </Button>
                   <Pane prefHeight="17.0" prefWidth="1280.0" />
-                  <Button id="1" fx:id="button_questionWizard" mnemonicParsing="false" style="-fx-text-fill: #AAD9BB;" styleClass="menu_button" stylesheets="@Buttons.css" text="Question Wizard">
+                  <Button id="1" fx:id="button_questionWizard" mnemonicParsing="false" style="-fx-text-fill: #AAD9BB;" styleClass="menu_button" stylesheets="@resources/Css/Buttons.css" text="Question Wizard">
                      <font>
                         <Font name="Berlin Sans FB" size="36.0" />
                      </font>
                   </Button>
                   <Pane prefHeight="17.0" prefWidth="1280.0" />
-                  <Button id="1" fx:id="button_History" mnemonicParsing="false" style="-fx-text-fill: #AAD9BB;" styleClass="menu_button" stylesheets="@Buttons.css" text="History">
+                  <Button id="1" fx:id="button_History" mnemonicParsing="false" style="-fx-text-fill: #AAD9BB;" styleClass="menu_button" stylesheets="@resources/Css/Buttons.css" text="History">
                      <font>
                         <Font name="Berlin Sans FB" size="36.0" />
                      </font>
                   </Button>
                   <Pane prefHeight="17.0" prefWidth="1280.0" />
-                  <Button fx:id="button_instructions" mnemonicParsing="false" style="-fx-text-fill: #AAD9BB;" styleClass="menu_button" stylesheets="@Buttons.css" text="Instructions">
+                  <Button fx:id="button_instructions" mnemonicParsing="false" style="-fx-text-fill: #AAD9BB;" styleClass="menu_button" stylesheets="@resources/Css/Buttons.css" text="Instructions">
                      <font>
                         <Font name="Berlin Sans FB" size="36.0" />
                      </font>
                   </Button>
                   <Pane prefHeight="17.0" prefWidth="1280.0" />
-                  <Button fx:id="quit" mnemonicParsing="false" prefHeight="76.0" prefWidth="177.0" style="-fx-text-fill: #FF6868;" styleClass="menu_button" stylesheets="@Buttons.css" text="Quit">
+                  <Button fx:id="quit" mnemonicParsing="false" prefHeight="76.0" prefWidth="177.0" style="-fx-text-fill: #FF6868;" styleClass="menu_button" stylesheets="@resources/Css/Buttons.css" text="Quit">
                      <font>
                         <Font name="Berlin Sans FB" size="36.0" />
                      </font>

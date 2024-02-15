@@ -18,8 +18,8 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.InstructionsControl">
     <children>
-        <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="35.0" styleClass="bodybg" stylesheets="@backGroundAll.css" AnchorPane.bottomAnchor="0.7999999999999545" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="1147.0" stylesheets="@backGroundAll.css" text="Instructions">
+        <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="35.0" styleClass="bodybg" stylesheets="@resources/Css/all_Style.css" AnchorPane.bottomAnchor="0.7999999999999545" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="1147.0" stylesheets="@resources/Css/all_Style.css" text="Instructions">
                 <font>
                     <Font size="41.0" />
                 </font>
@@ -46,7 +46,7 @@
                                 <Image url="@Images/dice1%20(1).png" />
                             </image>
                         </ImageView>
-                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="Roll the dice to determine your actions in each turn." wrapText="true" />
+                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@resources/Css/all_Style.css" text="Roll the dice to determine your actions in each turn." wrapText="true" />
                     </HBox>
                     <HBox alignment="CENTER">
                         <ImageView fitHeight="86.0" fitWidth="91.0">
@@ -54,7 +54,7 @@
                                 <Image url="@Images/bulb1%20(1).png" />
                             </image>
                         </ImageView>
-                        <Label prefHeight="86.0" prefWidth="336.0" stylesheets="@backGroundAll.css" text="Objective: Be the first player to reach the end of the game board." wrapText="true">
+                        <Label prefHeight="86.0" prefWidth="336.0" stylesheets="@resources/Css/all_Style.css" text="Objective: Be the first player to reach the end of the game board." wrapText="true">
                             <font>
                                 <Font size="40.0" />
                             </font>
@@ -77,7 +77,7 @@
                                 <Image url="@Images/arrow1%20(1).png" />
                             </image>
                         </ImageView>
-                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="Move forward the indicated number of steps on the board." wrapText="true">
+                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@resources/Css/all_Style.css" text="Move forward the indicated number of steps on the board." wrapText="true">
                      <HBox.margin>
                         <Insets left="12.0" />
                      </HBox.margin></Label>
@@ -91,7 +91,7 @@
                                 <Insets right="10.0" />
                             </HBox.margin>
                         </ImageView>
-                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="Watch out for snakes that move you back and ladders that help you skip ahead." wrapText="true">
+                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@resources/Css/all_Style.css" text="Watch out for snakes that move you back and ladders that help you skip ahead." wrapText="true">
                      <HBox.margin>
                         <Insets right="22.0" />
                      </HBox.margin></Label>
@@ -102,7 +102,7 @@
                                 <Image url="@Images/question%20(1).png" />
                             </image>
                         </ImageView>
-                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="Answer questions on question squares to proceed." wrapText="true">
+                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@resources/Css/all_Style.css" text="Answer questions on question squares to proceed." wrapText="true">
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin></Label>
@@ -116,7 +116,7 @@
                                 <Insets />
                             </HBox.margin>
                         </ImageView>
-                        <Label prefHeight="86.0" prefWidth="354.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="Surprise slots offer a choice to jump forward or go back 10 steps." wrapText="true">
+                        <Label prefHeight="86.0" prefWidth="354.0" styleClass="instruction_Font, rounded-frame" stylesheets="@resources/Css/all_Style.css" text="Surprise slots offer a choice to jump forward or go back 10 steps." wrapText="true">
                      <HBox.margin>
                         <Insets left="32.0" />
                      </HBox.margin></Label>
@@ -127,7 +127,7 @@
                                 <Image url="@Images/difficulty%20(1).png" />
                             </image>
                         </ImageView>
-                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="Choose the difficulty level (easy, medium, or hard) before starting." wrapText="true">
+                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@resources/Css/all_Style.css" text="Choose the difficulty level (easy, medium, or hard) before starting." wrapText="true">
                      <HBox.margin>
                         <Insets left="9.0" />
                      </HBox.margin></Label>
@@ -141,7 +141,7 @@
                         <Insets right="15.0" />
                      </HBox.margin>
                         </ImageView>
-                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="The player who reaches the final slot first wins the game." wrapText="true">
+                        <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@resources/Css/all_Style.css" text="The player who reaches the final slot first wins the game." wrapText="true">
                      <HBox.margin>
                         <Insets right="24.0" />
                      </HBox.margin></Label>
@@ -152,7 +152,7 @@
                 <ImageView fitHeight="39.0" fitWidth="49.0">
                     <!-- Placeholder image -->
                 </ImageView>
-                <Label styleClass="instruction_Font, rounded-frame" stylesheets="@backGroundAll.css" text="Enjoy the game!" />
+                <Label styleClass="instruction_Font, rounded-frame" stylesheets="@resources/Css/all_Style.css" text="Enjoy the game!" />
             </HBox>
             <Button fx:id="button_back" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" stylesheets="@Buttons.css" text="Back to Menu">
                 <font>

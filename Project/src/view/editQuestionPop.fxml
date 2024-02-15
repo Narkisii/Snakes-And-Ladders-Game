@@ -13,17 +13,17 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane styleClass="bodybg" stylesheets="@popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.questionPopControl">
+<BorderPane styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.questionPopControl">
    <center>
-      <AnchorPane prefHeight="300.0" prefWidth="650.0" stylesheets="@popUpStyle.css">
-          <VBox spacing="10.0" stylesheets="@popUpStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane prefHeight="300.0" prefWidth="650.0" stylesheets="@resources/Css/popUpStyle.css">
+          <VBox spacing="10.0" stylesheets="@resources/Css/popUpStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <children>
                <Label prefHeight="22.0" prefWidth="102.0" styleClass="pop_font" text="Question:" />
                   <TextField fx:id="questionTextField" prefHeight="65.0" prefWidth="590.0" styleClass="cpu_Font" />
                <Separator prefWidth="590.0" styleClass="seperator" />
-                  <Label prefHeight="22.0" prefWidth="166.0" styleClass="pop_font" stylesheets="@popUpStyle.css" text="Correct answer:" />
+                  <Label prefHeight="22.0" prefWidth="166.0" styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" text="Correct answer:" />
                   <TextField fx:id="correctAnswerTextField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" promptText="Enter the correct answer..." styleClass="cpu_Font" />
-                  <Label styleClass="pop_font" stylesheets="@popUpStyle.css" text="Other answers:">
+                  <Label styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" text="Other answers:">
                       <VBox.margin>
                           <Insets />
                       </VBox.margin>
@@ -77,7 +77,7 @@
    <top>
       <AnchorPane prefHeight="46.0" prefWidth="650.0" BorderPane.alignment="CENTER">
          <children>
-               <Label alignment="CENTER" layoutX="206.0" layoutY="5.0" prefWidth="238.0" styleClass="title" stylesheets="@popUpStyle.css" text="Edit Question">
+               <Label alignment="CENTER" layoutX="206.0" layoutY="5.0" prefWidth="238.0" styleClass="title" stylesheets="@resources/Css/popUpStyle.css" text="Edit Question">
                <padding>
                   <Insets top="10.0" />
                </padding>
@@ -93,7 +93,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="51.0" prefWidth="690.0" spacing="10.0">
                <children>
-                     <Button fx:id="saveButton" styleClass="finish_button" stylesheets="@popUpStyle.css" text="Save" />
+                     <Button fx:id="saveButton" styleClass="finish_button" stylesheets="@resources/Css/popUpStyle.css" text="Save" />
                   <ImageView fitHeight="32.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true" styleClass="clearButton">
                      <image>
                         <Image url="@Images/clearIcon.png" />

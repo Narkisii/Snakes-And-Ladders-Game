@@ -1,9 +1,9 @@
 @font-face {
-    src: url('resources/Fonts/JejuHallasan-Regular.ttf');
+    src: url('/view/resources/Fonts/JejuHallasan-Regular.ttf');
 }
 
 .bodybg{
-	-fx-background-image: url("/images/BackGround/2.png");
+	-fx-background-image: url("/view/Images/BackGround/2.png");
 	-fx-background-size: 100% 100%;
 	-fx-font-family: 'JejuHallasan';
 }

@@ -14,16 +14,16 @@
 <!-- <Button fx:id="button1" id="1" mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
             <Button fx:id="button2" id="2" mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" /> -->
 
-<BorderPane prefHeight="720.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@backGroundAll.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.PlayersControl">
+<BorderPane prefHeight="720.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@resources/Css/all_Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.PlayersControl">
    <bottom>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button id="return_Btn" fx:id="return_Btn" mnemonicParsing="false" styleClass="Normal_button" stylesheets="@Buttons.css" text="Return">
+            <Button id="return_Btn" fx:id="return_Btn" mnemonicParsing="false" styleClass="Normal_button" stylesheets="@resources/Css/Buttons.css" text="Return">
                <font>
                   <Font size="34.0" />
                </font>
             </Button>
-            <Button id="start_game_Btn" fx:id="start_game_Btn" mnemonicParsing="false" styleClass="Normal_button" stylesheets="@Buttons.css" text="Start Game">
+            <Button id="start_game_Btn" fx:id="start_game_Btn" mnemonicParsing="false" styleClass="Normal_button" stylesheets="@resources/Css/Buttons.css" text="Start Game">
                <font>
                   <Font size="34.0" />
                </font>
@@ -35,12 +35,12 @@
       </HBox>
    </bottom>
      <center>
-      <ScrollPane fx:id="PlayersPane" stylesheets="@backGroundAll.css" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="PlayersPane" stylesheets="@resources/Css/all_Style.css" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
          </BorderPane.margin>
          <content>
-            <VBox fx:id="playerContainer" alignment="CENTER" prefHeight="200.0" styleClass="scrolPane_bg" stylesheets="@backGroundAll.css" /> <!-- Change AnchorPane to VBox -->
+            <VBox fx:id="playerContainer" alignment="CENTER" prefHeight="200.0" styleClass="scrolPane_bg" stylesheets="@resources/Css/all_Style.css" /> <!-- Change AnchorPane to VBox -->
          </content>
       </ScrollPane>
    </center>
@@ -48,15 +48,15 @@
    <top>
       <Pane BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="405.0" layoutY="14.0" styleClass="GameName_font" stylesheets="@backGroundAll.css" text="Players:" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="405.0" layoutY="14.0" styleClass="GameName_font" stylesheets="@resources/Css/all_Style.css" text="Players:" />
             <HBox layoutY="167.0" prefHeight="67.0" prefWidth="836.0">
                <children>
                   <Pane prefHeight="67.0" prefWidth="106.0" />
-                  <Label styleClass="normal_Font" stylesheets="@backGroundAll.css" text="Name" />
+                  <Label styleClass="normal_Font" stylesheets="@resources/Css/all_Style.css" text="Name" />
                   <Pane prefHeight="67.0" prefWidth="191.0" />
-                  <Label styleClass="normal_Font" stylesheets="@backGroundAll.css" text="Color" />
+                  <Label styleClass="normal_Font" stylesheets="@resources/Css/all_Style.css" text="Color" />
                   <Pane prefHeight="67.0" prefWidth="139.0" />
-                  <Label styleClass="normal_Font" stylesheets="@backGroundAll.css" text="Token" />
+                  <Label styleClass="normal_Font" stylesheets="@resources/Css/all_Style.css" text="Token" />
                </children>
             </HBox>
          </children>
@@ -65,12 +65,12 @@
    <right>
       <Pane prefHeight="386.0" prefWidth="342.0" BorderPane.alignment="CENTER">
          <children>
-            <Button id="return_Btn" fx:id="add_CPU" mnemonicParsing="false" styleClass="Normal_button" stylesheets="@Buttons.css" text="Add CPU">
+            <Button id="return_Btn" fx:id="add_CPU" mnemonicParsing="false" styleClass="Normal_button" stylesheets="@resources/Css/Buttons.css" text="Add CPU">
                <font>
                   <Font size="34.0" />
                </font>
             </Button>
-            <Button id="return_Btn" fx:id="remove_Cpu" layoutY="88.0" mnemonicParsing="false" styleClass="Normal_button" stylesheets="@Buttons.css" text="Remove CPU">
+            <Button id="return_Btn" fx:id="remove_Cpu" layoutY="88.0" mnemonicParsing="false" styleClass="Normal_button" stylesheets="@resources/Css/Buttons.css" text="Remove CPU">
                <font>
                   <Font size="34.0" />
                </font>
