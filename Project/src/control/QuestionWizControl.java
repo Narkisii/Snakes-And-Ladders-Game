@@ -43,9 +43,10 @@ public class QuestionWizControl {
 
 	@FXML
 	void initialize() {
+		/*
 		easyScroll.setFitToWidth(true);
 		easyScroll.setFitToHeight(true);
-
+		
 		for (int i = 1; i <= 5; i++) {
 			Button button = new Button("Button " + i);
 			button.setOnAction(event -> {
@@ -55,8 +56,7 @@ public class QuestionWizControl {
 
 			HBox questionRow = new HBox(button); // Create a new HBox for each button
 			vBox.getChildren().add(questionRow); // Add the HBox to the VBox
-		}
-
+		} */
 		Return_Btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
 
 	}

@@ -4,7 +4,7 @@
     -fx-text-fill: #7EFF5E;
     -fx-font-weight: bold;
     -fx-effect: dropshadow(three-pass-box, black, 5.0, 5.0, 0.0, 0.0);
-    -fx-font-size: 50px;
+    -fx-font-size: 50.0px;
 }
 
 .Normal_button:hover {
@@ -16,13 +16,13 @@
     -fx-border-color: transparent;
     -fx-text-fill: #7EFF5E;
     -fx-effect: dropshadow(three-pass-box, black, 5.0, 5.0, 0.0, 0.0);
-    -fx-font-size: 30px;
+    -fx-font-size: 30.0px;
 }
 .menu_button {
 	-fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-text-fill: #7EFF5E;
-    -fx-font-size: 50px;
+    -fx-font-size: 50.0px;
     -fx-font-weight: bold;
     -fx-effect: dropshadow(three-pass-box, black, 5.0, 5.0, 0.0, 0.0);
 }
@@ -49,9 +49,27 @@
 	 -fx-effect: dropshadow(three-pass-box,#A30000, 5.0, 5.0, 0.0, 0.0);
 }
 
-
 .comboBox_Nornal{
 	-fx-font-size: 30.0px;
 }
 
+.search_Icon:hover {
+	 -fx-effect: dropshadow(three-pass-box,#c4c2c2, 10.0, 0.0, 0.0, 0.0);
+}
+
+.addQuestion_Button {
+	-fx-background-color: #FDE767;
+    -fx-border-color: transparent;
+    -fx-text-fill: #000000;
+    -fx-font-size: 20.0px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 70.0 70.0 70.0 70.0;
+ 	-fx-background-radius: 70.0 70.0 70.0 70.0;
+}
+
+.addQuestion_Button:hover {
+	 -fx-text-fill: #FFFFFF;
+	 -fx-background-color: #FFA732;
+	 -fx-effect: dropshadow(three-pass-box, #FF8911, 3.0, 3.0, 0.0, 0.0);
+}
 

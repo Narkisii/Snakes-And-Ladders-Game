@@ -8,7 +8,7 @@
     -fx-background-color: transparent;
 }
 .table-view .column-header-background{
-    -fx-background-color: linear-gradient(#32CD32 0%, #1C791D 100%);
+    -fx-background-color: linear-gradient(#75B3B0 0%, #569DAA 100%);
 }
 .table-view .column-header-background .label{
     -fx-background-color: transparent;
@@ -52,7 +52,7 @@
 
 .table_font{
 	-fx-text-fill: #7EFF5E;
-    -fx-font-size: 25px;
+    -fx-font-size: 22px;
     -fx-font-weight: bold;
 }
 /*https://copyprogramming.com/howto/styling-a-tableview-in-css-javafx */
