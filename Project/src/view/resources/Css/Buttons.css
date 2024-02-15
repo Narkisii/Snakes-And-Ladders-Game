@@ -10,7 +10,18 @@
 .Normal_button:hover {
     -fx-effect: dropshadow(three-pass-box, #0f4d00, 5.0, 5.0, 0.0, 0.0);
 }
+.board_Button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #7EFF5E;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, black, 5.0, 5.0, 0.0, 0.0);
+    -fx-font-size: 20.0px;
+}
 
+.board_Button:hover {
+    -fx-effect: dropshadow(three-pass-box, #0f4d00, 5.0, 5.0, 0.0, 0.0);
+}
 .cpu_button {
     -fx-background-color: transparent;
     -fx-border-color: transparent;

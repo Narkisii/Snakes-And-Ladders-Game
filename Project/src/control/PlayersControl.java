@@ -67,7 +67,6 @@ public class PlayersControl {
 		}
 		remove_Cpu.setDisable(true);
 
-
 		innit();
 		return_Btn.setOnAction(event -> navigateTo("/view/SettingsView.fxml"));
 		start_game_Btn.setOnAction(event -> {
@@ -86,10 +85,10 @@ public class PlayersControl {
 		// TODO Auto-generated method stub
 		numberOfPlayers--;
 		num_cpu--;
-		if(num_cpu == 0) {
+		if (num_cpu == 0) {
 			remove_Cpu.setDisable(true);
 		}
-		if(num_cpu+numberOfPlayers ==5) {
+		if (num_cpu + numberOfPlayers == 5) {
 			add_CPU.setDisable(false);
 		}
 		List<String> colors_temp = colors;
@@ -115,17 +114,17 @@ public class PlayersControl {
 					HBox row = (HBox) node;
 					ComboBox<String> rowColorComboBox = (ComboBox<String>) row.getChildren().get(2);
 					ComboBox<String> rowTokenComboBox = (ComboBox<String>) row.getChildren().get(3);
-					
+
 					if (!rowColorComboBox.getItems().contains(color)) {
 						rowColorComboBox.getItems().add(color);
-						if(!colors_temp.contains(color)) {
+						if (!colors_temp.contains(color)) {
 							colors_temp.add(color);
 						}
 					}
 
 					if (!rowTokenComboBox.getItems().contains(token)) {
 						rowTokenComboBox.getItems().add(token);
-						if(!token_temp.contains(token)) {
+						if (!token_temp.contains(token)) {
 							token_temp.add(token);
 						}
 					}
@@ -452,24 +451,30 @@ public class PlayersControl {
 
 	private void startGame(int numberOfPlayers) {
 		int counter = 1;
-		
-	    for (Node node : playerContainer.getChildren()) {
-	        if (node instanceof HBox) {
-	            HBox row = (HBox) node;
 
-	            // Get the player name, color, and token from the row
-	            String playerName = ((TextField) row.getChildren().get(1)).getText(); // Replace 1 with the index of the player name TextField in your HBox
-	            String color = ((ComboBox<String>) row.getChildren().get(2)).getValue(); // Replace 2 with the index of the color ComboBox in your HBox
-	            String token = ((ComboBox<String>) row.getChildren().get(3)).getValue(); // Replace 3 with the index of the token ComboBox in your HBox
+		for (Node node : playerContainer.getChildren()) {
+			if (node instanceof HBox) {
+				HBox row = (HBox) node;
 
-	            // Create a new Player object and add it to the list
-	            Player p = new Player(counter, color, playerName, token);
-	            counter++;
+				// Get the player name, color, and token from the row
+				String playerName = ((TextField) row.getChildren().get(1)).getText(); // Replace 1 with the index of the
+																						// player name TextField in your
+																						// HBox
+				String color = ((ComboBox<String>) row.getChildren().get(2)).getValue(); // Replace 2 with the index of
+																							// the color ComboBox in
+																							// your HBox
+				String token = ((ComboBox<String>) row.getChildren().get(3)).getValue(); // Replace 3 with the index of
+																							// the token ComboBox in
+																							// your HBox
+
+				// Create a new Player object and add it to the list
+				Player p = new Player(counter, color, playerName, token);
+				counter++;
 //	            players.add(p);
-	            GameData.getInstance().addPlayer(p);
-	            GameData.getInstance().setNumberOfPlayers(GameData.getInstance().getplayer_list().size());
-	        }
-			
+				GameData.getInstance().addPlayer(p);
+				GameData.getInstance().setNumberOfPlayers(GameData.getInstance().getplayer_list().size());
+			}
+
 		}
 //		GameData.getInstance().setPlayers(players);
 
