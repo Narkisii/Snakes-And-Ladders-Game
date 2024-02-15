@@ -7,7 +7,7 @@ import java.util.List;
 import control.HistoryControl;
 
 public class GameData {
-	private int numberOfPlayers = 1;
+	private int numberOfPlayers;
 	private String difficulty;
 	private HashMap<Integer, Question> questions;
 	private LinkedList<Player> player_list;
@@ -16,6 +16,7 @@ public class GameData {
 	private LinkedList<Tile> specialTiles;
 	private HistoryControl History;
 	private int playerTurn;
+	private Board board;
 //    private static Dice dice;
 
 	// Singleton instance
@@ -24,14 +25,16 @@ public class GameData {
 	// Private constructor
 	private GameData() {
 		// Initialization code here
-		questions = new HashMap<Integer, Question>();
-		player_list = new LinkedList<Player>();
-		snake_list = new LinkedList<Snake>();
-		ladders = new LinkedList<Ladder>();
-		specialTiles = new LinkedList<Tile>();
-		questions = new HashMap<Integer, Question>();
-		difficulty = "Easy";
-		playerTurn = 0;
+		this.questions = new HashMap<Integer, Question>();
+		this.player_list = new LinkedList<Player>();
+		this.snake_list = new LinkedList<Snake>();
+		this.ladders = new LinkedList<Ladder>();
+		this.specialTiles = new LinkedList<Tile>();
+		this.questions = new HashMap<Integer, Question>();
+		this.difficulty = "Easy";
+		this.playerTurn = 0;
+		this.numberOfPlayers = 1;
+		this.board = new Board(player_list,getNumOfTiles());
 	}
 
 	// Static method to get the singleton instance
@@ -240,6 +243,20 @@ public class GameData {
 	public Question getRandQuestion(int diff) {
 		return null;
 
+	}
+
+	/**
+	 * @return the board
+	 */
+	public Board getBoard() {
+		return board;
+	}
+
+	/**
+	 * @param board the board to set
+	 */
+	public void setBoard(Board board) {
+		this.board = board;
 	}
 
 }

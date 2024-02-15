@@ -1,6 +1,7 @@
 package control;
 
 import model.Player;
+import model.Snake;
 
 import java.io.File;
 import java.io.IOException;
@@ -109,9 +110,6 @@ public class BoardControl {
 	void initialize() {
 		// Create Board - getNumOfTiles() X getNumOfTiles() = Board
 		// the Board constractor gets in Row and calculate the size
-		board = new Board();
-		board.generate_snakes_ladders();
-
 		// Set Players
 		for (Player player : GameData.getInstance().getplayer_list()) {
 			System.out.println(player.toString());
@@ -150,6 +148,11 @@ public class BoardControl {
 //			System.out.println("Adding:" + p.toString());
 			initiate_Players(p);
 		}
+		board = GameData.getInstance().getBoard();
+
+		board.generate_snakes_ladders();
+
+
 	}
 
 	private GridPane createBoard(int numTiles) {
@@ -222,20 +225,27 @@ public class BoardControl {
 
 	}
 
-//	private void clean_Tile(Player p, int old_pos) {
-//		Pane startTile = (Pane) grid.lookup("#" + old_pos);
-//		System.out.println("clean_Tile old_pos: "+ old_pos + "Player: "+ p.getID());
-//
-//		VBox playerbox = (VBox) startTile.lookup("#VBox"+p.getID());
-//		if (playerbox != null) {
-//			startTile.getChildren().remove(playerbox);
-//		}
-//	}
+	private void clean_Tile(Player p) {
+		Pane startTile = (Pane) grid.lookup("#" + p.getPreviousStep());
+
+		VBox playerbox = (VBox) startTile.lookup("#VBox"+p.getID());
+		Label playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
+		ImageView img = (ImageView) playerbox.lookup("#Image" + p.getID());
+
+		if (playerbox != null) {
+			
+			System.out.println("clean_Tile old_pos: "+ p.getPreviousStep() + "Player: "+ p.getID());
+			playerbox.getChildren().removeAll(playerName,img);
+			startTile.getChildren().removeAll(playerbox);
+		}
+	}
 
 	private void move_Player(Player p) {
+		System.out.println("p.getCurrentP() "+p.getCurrentP()+" p.getPreviousStep() "+p.getPreviousStep());
 		if (p.getCurrentP() == p.getPreviousStep()) {
 			return;
 		}
+		clean_Tile(p);
 //		System.out.println(
 //				"initiate_Players - PlayerID: " + p.getID() + " New pos: " + p.getCurrentP() + " Old pos: " + old_pos);
 		Pane startTile = (Pane) grid.lookup("#" + p.getCurrentP());
@@ -279,7 +289,7 @@ public class BoardControl {
 //		if(p.getCurrentP() == old_pos) {
 //			return;
 //		}
-		p.addStep(0);
+		p.addStep(1);
 //		System.out.println(
 //				"initiate_Players - PlayerID: " + p.getID() + " New pos: " + p.getCurrentP() + " Old pos: " + old_pos);
 		Pane new_pos_pane = (Pane) grid.lookup("#" + p.getCurrentP());
@@ -405,10 +415,15 @@ public class BoardControl {
 	public void drawLinesInSeparateThread() {
 		Thread thread = new Thread(() -> {
 			Platform.runLater(() -> {
-				for (Ladder l : GameData.getInstance().getLadders()) {
+//				for (Ladder l : GameData.getInstance().getLadders()) {
+////					System.out.println("l.getStart() " + l.getStart() + " l.getEnd() " + l.getEnd());
+//					add_Ladder_Snake(l.getStart(), l.getEnd());
+//				}
+				for (Snake s : GameData.getInstance().getSnake_list()) {
 //					System.out.println("l.getStart() " + l.getStart() + " l.getEnd() " + l.getEnd());
-					add_Ladder_Snake(l.getStart(), l.getEnd());
+					add_Ladder_Snake(s.getStart(), s.getEnd());
 				}
+
 			});
 		});
 		thread.start();
@@ -468,7 +483,7 @@ public class BoardControl {
 						diceImage.setImage(new Image(file.toURI().toString()));
 						rollButton.setDisable(false);
 						this.stop();
-						Board.move(dice, player);
+						GameData.getInstance().getBoard().move(dice, player);
 //						for (Player p : GameData.getInstance().getplayer_list()) {
 //							initiate_Players(p, old_post);
 //						}
