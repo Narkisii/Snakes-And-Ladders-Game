@@ -80,7 +80,7 @@
 
 .addQuestion_Button:hover {
 	 -fx-text-fill: #FFFFFF;
-	 -fx-background-color: #FFA732;
+	 -fx-background-color: #FFCB67;
 	 -fx-effect: dropshadow(three-pass-box, #FF8911, 3.0, 3.0, 0.0, 0.0);
 }
 
