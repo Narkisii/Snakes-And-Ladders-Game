@@ -81,6 +81,9 @@ public class QuestionWizControl {
 	@FXML
 	private Button rm_med_button;
 	
+	@FXML
+	private Button easy_button,med_button,hard_button;
+	
     private Stage popupStage;
 
 	@FXML
@@ -108,6 +111,22 @@ public class QuestionWizControl {
 	    ObservableList<Question> data = FXCollections.observableArrayList(med_questionList); // Uncomment this line
 	    easy_QTable.setItems(data);
 	    
+	    //Activate buttons easy, med, and hard
+	    easy_button.setOnAction(event -> {
+	        ObservableList<Question> easyData = FXCollections.observableArrayList(easy_questionList);
+	        easy_QTable.setItems(easyData);
+	    });
+
+	    med_button.setOnAction(event -> {
+	        ObservableList<Question> medData = FXCollections.observableArrayList(med_questionList);
+	        easy_QTable.setItems(medData);
+	    });
+
+	    hard_button.setOnAction(event -> {
+	        ObservableList<Question> hardData = FXCollections.observableArrayList(hard_questionList);
+	        easy_QTable.setItems(hardData);
+	    });
+	    
 	 // Add a mouse click event to the rows of the table
 	    easy_QTable.setRowFactory(tv -> {
 	        TableRow<Question> row = new TableRow<>();
@@ -123,13 +142,17 @@ public class QuestionWizControl {
 	                    popupStage = new Stage();
 
 	                    // Load the FXML file for the pop-up
-	                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/editQuestionPop.fxml"));
+	                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/EditQuestionPop.fxml"));
 	                    Parent root = null;
 	                    try {
 	                        root = loader.load();
 	                    } catch (IOException e) {
 	                        e.printStackTrace();
 	                    }
+
+	                    // Get the controller and pass the question object
+	                    EditQuestionPopControl controller = loader.getController();
+	                    controller.setQuestion(row.getItem() );
 
 	                    // Set the scene and show the stage
 	                    Scene scene = new Scene(root);
@@ -144,6 +167,7 @@ public class QuestionWizControl {
 	        });
 	        return row;
 	    });
+
 
 	    
 	    //Configure buttons

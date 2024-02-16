@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Question {
 	private static int nextId = 1; // Static variable to keep track of the next available ID
-    private int id; // question ID
+  //  private int id; // question ID
 
     @JsonProperty("question")
     private String question;
@@ -24,7 +24,7 @@ public class Question {
 
     // Constructor
     public Question() {
-    	this.id = nextId++;
+    	//this.id = nextId++;
     	this.question = "yesyyesyyes";
     	this.answers = new LinkedList<String>();
     	this.correctAnswer = "correctAnswercorrectAnswercorrectAnswer";
@@ -35,12 +35,6 @@ public class Question {
     }
     
 
-    /**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
 
 	/**
 	 * @return the question
@@ -49,13 +43,7 @@ public class Question {
 		return question;
 	}
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
-
+	
 	/**
 	 * @param question the question to set
 	 */
