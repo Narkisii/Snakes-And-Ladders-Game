@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import javafx.scene.paint.Color;
 import model.Ladder;
 
 /**
@@ -18,23 +19,23 @@ import model.Ladder;
  *
  */
 public class Board {
-	private String difficulty; // 0 easy game, 1 mid game, 2 hard game
+//	private String difficulty; // 0 easy game, 1 mid game, 2 hard game
 	private Tile[][] gameboard;
 	private LinkedList<Player> players;
-	private int numTiles; // This is need to be changed to numTilesInRow
-	private int dice_Roll;
+//	private int dice_Roll;
 	// 1 means Game has ended
-	private static int gameEnd = 0;
-
+	private int gameEnd;
+	private Set<Integer> usedNumbers;
 	/**
 	 * @param type
 	 */
-	public Board(LinkedList<Player> players,int numTiles) {
+	public Board(LinkedList<Player> players) {
 		this.players = players;
-		this.numTiles = numTiles;
 		this.gameboard = initGameBoard();
+		this.gameEnd = 0;
 //		this.difficulty = difficulty;
 		// Initialize each Tile object
+		usedNumbers = new HashSet<>();
 	}
 
 //	public Board(int numTilesInARow, LinkedList<Player> players2) {
@@ -64,6 +65,7 @@ public class Board {
 	}
 
 	private  Tile[][] initGameBoard() {
+		int numTiles = GameData.getInstance().getNumOfTiles();
 		Tile[][] gameboard = new Tile[numTiles][numTiles];
 		for (int i = 0; i < numTiles; i++) {
 			for (int j = 0; j < numTiles; j++) {
@@ -74,6 +76,7 @@ public class Board {
 		
 	}
 	public boolean move(int diceResult, Player player) {
+		int numTiles = GameData.getInstance().getNumOfTiles();
 
 		int newPosition = player.getCurrentP() + diceResult;
 
@@ -85,15 +88,9 @@ public class Board {
 			return false;
 		}
 
-		// calculate the new row and column
-		int y = (newPosition - 1) / gameboard[0].length;
-		int x = (newPosition - 1) % gameboard[0].length;
-
-		// Adjust x if y is odd (for zigzag pattern)
-		if (y % 2 == 1) {
-			x = gameboard[0].length - 1 - x;
-		}
-
+		int [] pos = calculatePosition(newPosition);
+		int x = pos[0];
+		int y = pos[1];
 //	    System.out.println("Player name : " +player.getName()+" + "+diceResult+" and now he is in X " + x + " Y " + y);
 //	    System.out.println("Tile number "+ newPosition);
 //	    System.out.println("");
@@ -105,6 +102,21 @@ public class Board {
 									// location of the player
 
 		return true; // move successful, return true
+	}
+	private int[] calculatePosition(int newPosition) {
+	    int[] position = new int[2];
+		int numTiles = GameData.getInstance().getNumOfTiles();
+
+	    // calculate the new row and column
+	    position[1] = (newPosition - 1) / numTiles; // y
+	    position[0] = (newPosition - 1) % numTiles; // x
+
+	    // Adjust x if y is odd (for zigzag pattern)
+	    if (position[1] % 2 == 1) {
+	        position[0] = numTiles - 1 - position[0];
+	    }
+
+	    return position;
 	}
 
 	public int getGameEnd() {
@@ -131,6 +143,39 @@ public class Board {
 				this.gameboard[i][j] = new Tile();
 			}
 		}
+	}
+
+	public void add_LadderToTile(int tile_num,Ladder l) {
+		int [] pos = calculatePosition(tile_num);
+		int x = pos[0];
+		int y = pos[1];		
+		System.out.println("Ladder start "+l.getStart()+" ladder end "+l.getEnd()+" x " + pos[0] + " y "+ pos[1]);
+
+		Tile tile = gameboard[x][y];
+		tile.setLadder(l);
+	}
+	public void add_SnakeToTile(int tile_num,Snake s) {
+		int [] pos = calculatePosition(tile_num);
+		int x = pos[0];
+		int y = pos[1];
+		Tile tile = gameboard[x][y];
+		tile.setSnake(s);;
+
+	}
+	public void add_QuestionToTile(int tile_num,Question q) {
+		int [] pos = calculatePosition(tile_num);
+		int x = pos[0];
+		int y = pos[1];
+		Tile tile = gameboard[x][y];
+		tile.setQuestion(q);
+
+	}
+	public void add_specialToTile(int tile_num,int Type) {//10 = special 10 step forward, -10 - special 10 steps backward, 1 = red snake
+		int [] pos = calculatePosition(tile_num);
+		int x = pos[0];
+		int y = pos[1];
+		Tile tile = gameboard[x][y];
+		tile.setType(Type);
 	}
 
 	public static int get_Dice_Result() {
@@ -183,6 +228,30 @@ public class Board {
 //		return difficulty;
 //	}
 
+	private void generate_RedSnake_and_Surprize() {
+		Random rand = new Random();
+		int num_of_tiles = GameData.getInstance().getNumOfTiles(); 
+		int randNum;
+		do {
+			randNum = rand.nextInt(num_of_tiles * num_of_tiles-12)+1; 
+		} while (usedNumbers.contains(randNum)); // Ensure endRand doesn't exceed 49 and numbers are unique
+		usedNumbers.add(randNum);
+		
+		int typeOfSurprize = rand.nextInt(2) * 2 - 1; // if good surprise or bad surprise
+		add_specialToTile(randNum, 10*typeOfSurprize);//add surprise
+		int [] pos = calculatePosition(randNum);
+		int x = pos[0];
+		int y = pos[1];
+		System.out.println("Surprize: "+gameboard[x][y].getType());
+		
+		do {
+			randNum = rand.nextInt(num_of_tiles * num_of_tiles-12)+1; 
+		} while (usedNumbers.contains(randNum)); // Ensure endRand doesn't exceed 49 and numbers are unique
+		usedNumbers.add(randNum);
+		add_specialToTile(randNum, 1);//add red snake
+
+		
+	}
 	private void generate_Ladders() {
 		Random rand = new Random();
 		String gameDiff = GameData.getInstance().getDifficulty();
@@ -192,11 +261,9 @@ public class Board {
 		if (gameDiff.equals("Medium"))
 			laddersizes = new int[] { 1, 2, 3, 4, 5, 6 };
 		if (gameDiff.equals("Hard"))
-			laddersizes = new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
-		for (int l : laddersizes) {
-			System.out.println(l);
-		}
-		Set<Integer> usedNumbers = new HashSet<>();
+			laddersizes = new int[] { 1, 2, 3, 4, 5, 6, 7, 8};
+
+//		Set<Integer> usedNumbers = new HashSet<>();
 		for (int i : laddersizes) {
 			int num_of_tiles = GameData.getInstance().getNumOfTiles();
 			int startRand;
@@ -208,49 +275,43 @@ public class Board {
 					|| usedNumbers.contains(endRand)); // Ensure endRand doesn't exceed 49 and numbers are unique
 			usedNumbers.add(startRand);
 			usedNumbers.add(endRand);
-
+			System.out.println("ladder start: " + startRand + " ladder end: "+endRand);
 			Ladder l = new Ladder(startRand, endRand, i);
 			GameData.getInstance().addLadders(l);
+			add_LadderToTile(startRand, l);
 		}
 
 	}
-	public void generate_snakes_ladders() {
+	public void generate_board_Objects() {
 		// TODO Auto-generated method stub
+		System.out.println(GameData.getInstance().getDifficulty());
 		generate_Ladders();
 		generate_Snakes();
+		generate_RedSnake_and_Surprize();
 	}
 
 	private void generate_Snakes() {
-		// TODO Auto-generated method stub
-		Random rand = new Random();
-		String gameDiff = GameData.getInstance().getDifficulty();
-		int[] laddersizes = null;
-		if (gameDiff.equals("Easy"))
-			laddersizes = new int[] { 1, 2, 3, 4 };
-		if (gameDiff.equals("Medium"))
-			laddersizes = new int[] { 1, 2, 3, 4, 5, 6 };
-		if (gameDiff.equals("Hard"))
-			laddersizes = new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
-		for (int l : laddersizes) {
-			System.out.println(l);
-		}
-		Set<Integer> usedNumbers = new HashSet<>();
-		for (int i : laddersizes) {
-			int num_of_tiles = GameData.getInstance().getNumOfTiles();
-			int startRand;
-			int endRand;
-			do {
-				startRand = rand.nextInt(num_of_tiles * (num_of_tiles - i)) + 1; // Random tile in the first (7-i) rows
-				endRand = startRand + (num_of_tiles * (i)); // Tile in a row that is (i+1) rows down
-			} while (endRand > (num_of_tiles * num_of_tiles) || usedNumbers.contains(startRand)
-					|| usedNumbers.contains(endRand)); // Ensure endRand doesn't exceed 49 and numbers are unique
-			usedNumbers.add(startRand);
-			usedNumbers.add(endRand);
+	    Random rand = new Random();
+	    int[] snakesizes = { 1, 2, 3 };
+	    Color[] snake_color = { Color.YELLOW, Color.GREEN, Color.BLUE };
 
-			Snake s = new Snake(endRand,startRand ,null);
-			GameData.getInstance().addSnake(s);
-		}
+	    for (int i : snakesizes) {
+	        int num_of_tiles = GameData.getInstance().getNumOfTiles();
+	        int startRand;
+	        int endRand;
+	        do {
+	            endRand = rand.nextInt(num_of_tiles * (num_of_tiles - i)) + 1; // Random tile in the first (7-i) rows
+	            startRand = endRand + (num_of_tiles * (i)); // Tile in a row that is (i+1) rows down
+	        } while (startRand > (num_of_tiles * num_of_tiles) || usedNumbers.contains(startRand)
+	                || usedNumbers.contains(endRand)); // Ensure startRand doesn't exceed 49 and numbers are unique
+	        usedNumbers.add(startRand);
+	        usedNumbers.add(endRand);
 
+	        Snake s = new Snake(startRand, endRand, snake_color[i-1]);
+	        GameData.getInstance().addSnake(s);
+			add_SnakeToTile(startRand, s);
+	    }
 	}
-
+	
 }
+

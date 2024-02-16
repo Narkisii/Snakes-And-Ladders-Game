@@ -42,7 +42,7 @@ public class SettingsControl {
 
         // Update the difficulty in GameData when it changes
         difficulty.valueProperty().addListener((obs, oldVal, newVal) -> {//Fix to translate to string
-            GameData.getInstance().setDifficulty(String.valueOf(newVal));
+            GameData.getInstance().setDifficulty(newVal);
         });
 
         // Add actions for your buttons here

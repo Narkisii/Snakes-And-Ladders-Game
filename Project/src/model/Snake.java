@@ -4,6 +4,7 @@
 package model;
 
 import enums.Colors;
+import javafx.scene.paint.Color;
 
 /**
  * @author liorf
@@ -13,7 +14,7 @@ public class Snake {//extends TransferObj {
 	private int start;
 	private int end ;
 
-	private String color; // Color of the snake will decide the length of it
+	private Color color; // Color of the snake will decide the length of it
 
 	/**
 	 * @param startP
@@ -24,7 +25,7 @@ public class Snake {//extends TransferObj {
 		//this.color = color;
 	//}
 	
-	public Snake(int start, int  end, String color) {
+	public Snake(int start, int  end, Color color) {
 		this.start = start;
 		this.end = end;
 		this.color = color;
@@ -50,14 +51,14 @@ public class Snake {//extends TransferObj {
 	/**
 	 * @return the color
 	 */
-	public String getColor() {
+	public Color getColor() {
 		return color;
 	}
 
 	/**
 	 * @param color the color to set
 	 */
-	public void setColor(String color) {
+	public void setColor(Color color) {
 		this.color = color;
 	}
 

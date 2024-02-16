@@ -23,7 +23,7 @@ public class BoardTest {
 	        Player player = new Player(1,"Yellow","ItayIsKing!","Hat");
 	        LinkedList<Player> Players = new LinkedList<Player>();
 	        Players.add(player);
-	        Board board = new Board(Players, numTilesInARow); 
+	        Board board = new Board(Players); 
 
 	        // Move the player beyond the last tile
 	        board.move(numTilesInARow * numTilesInARow + 1, player);
@@ -36,12 +36,13 @@ public class BoardTest {
 	 @Test
 	    public void snakeTest() {
 	        int numTilesInARow = 10; // that will create a board 10X10
+	        
 	        Player player = new Player(1,"Yellow","ItayIsKing!","Hat");
 	        LinkedList<Player> Players = new LinkedList<Player>();
 	        Players.add(player);
-	        Board board = new Board(Players, numTilesInARow); 
-	        Snake snake = new Snake(99,5,"Yellow"); 
-	        board.getGameboard()[1][9].setSnake(snake);
+	        Board board = new Board(Players); 
+//	        Snake snake = new Snake(99,5,"Yellow"); 
+//	        board.getGameboard()[1][9].setSnake(snake);
 	        board.move(98, player);
 
 	        // Check if the game has ended
@@ -53,7 +54,7 @@ public class BoardTest {
 	        Player player = new Player(1,"Yellow","ItayIsKing!","Hat");
 	        LinkedList<Player> Players = new LinkedList<Player>();
 	        Players.add(player);
-	        Board board = new Board(Players, numTilesInARow); 
+	        Board board = new Board(Players); 
 	        Ladder ladder = new Ladder(43,99,6); 
 	        board.getGameboard()[2][4].setLadder(ladder);
 	        board.move(42, player);

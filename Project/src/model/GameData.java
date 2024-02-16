@@ -17,6 +17,7 @@ public class GameData {
 	private HistoryControl History;
 	private int playerTurn;
 	private Board board;
+	private boolean in_game;
 //    private static Dice dice;
 
 	// Singleton instance
@@ -34,7 +35,8 @@ public class GameData {
 		this.difficulty = "Easy";
 		this.playerTurn = 0;
 		this.numberOfPlayers = 1;
-		this.board = new Board(player_list,getNumOfTiles());
+//		this.board = new Board(player_list);
+		this.in_game = false;
 	}
 
 	// Static method to get the singleton instance
@@ -45,6 +47,9 @@ public class GameData {
 		return instance;
 	}
 
+	public void init_board() {
+		this.board = new Board(player_list);
+	}
 	/**
 	 * @return the difficulty
 	 */
@@ -79,7 +84,7 @@ public class GameData {
 		case "Hard":
 			return 13;
 		default:
-			return 7;
+			return 0;
 		}
 	}
 
@@ -257,6 +262,20 @@ public class GameData {
 	 */
 	public void setBoard(Board board) {
 		this.board = board;
+	}
+
+	/**
+	 * @return the in_game
+	 */
+	public void set_In_game(boolean bool) {
+		this.in_game = bool;
+	}
+
+	/**
+	 * @param in_game the in_game to set
+	 */
+	public boolean get_isIngame() {
+		return in_game;
 	}
 
 }
