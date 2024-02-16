@@ -2,11 +2,13 @@ package control;
 
 import model.Player;
 import model.Snake;
+import model.Tile;
 
 import java.awt.BasicStroke;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -179,11 +181,13 @@ public class BoardControl {
 //			System.out.println("Adding:" + p.toString());
 			initiate_Players(p);
 		}
+
 		GameData.getInstance().set_In_game(true);
 
 		GameData.getInstance().init_board();
 		board = GameData.getInstance().getBoard();
 		board.generate_board_Objects();
+		add_SpecialTiles();
 
 	}
 
@@ -217,6 +221,8 @@ public class BoardControl {
 				tile.heightProperty().bind(grid.heightProperty().divide(numTiles));
 				tile.setArcWidth(5);
 				tile.setArcHeight(5);
+				tile.minHeight(0);
+				tile.minWidth(0);
 				// Set the color of the square
 				if (count % 2 == 0)
 					tile.setFill(Color.web("#C1F2B0")); // Change this to the color you want
@@ -236,8 +242,10 @@ public class BoardControl {
 				label.getStylesheets().add("/view/resources/Css/all_Style.css");
 				label.getStyleClass().add("tile_Font");
 				label.prefWidthProperty().bind(grid.widthProperty().divide(numTiles));
-				label.prefHeightProperty().bind(grid.widthProperty().divide(numTiles));
+				label.prefHeightProperty().bind(grid.heightProperty().divide(numTiles));
 				label.setAlignment(Pos.CENTER);
+				label.minHeight(0);
+				label.minWidth(0);
 
 				// Create a new StackPane to hold the square and the label
 				Pane stackPane = new StackPane();
@@ -246,6 +254,8 @@ public class BoardControl {
 				GridPane.setColumnIndex(stackPane, column);
 				stackPane.setId(String.valueOf(count));
 				// Add the StackPane to the grid
+				stackPane.setMinSize(0, 0);
+
 				grid.add(stackPane, column, numTiles - 1 - i);
 				// Increment the count
 
@@ -258,23 +268,45 @@ public class BoardControl {
 
 	}
 
-	private void clean_Tile(Player p) {
-		Pane startTile = (Pane) grid.lookup("#" + p.getPreviousStep());
+	private void add_SpecialTiles() {
+		LinkedList<Tile> specialTiles = GameData.getInstance().getspecialTiles_list();
+		for (Tile tile : specialTiles) {
+			System.out.println("test");
+			Pane startTile = (Pane) grid.lookup("#" + tile.getId());
+			System.out.println("startTile " + startTile.getId());
+			Image img = new Image(tile.get_Image());
+			ImageView tile_img = new ImageView(img);
+			System.out.println(startTile.getChildren().add(tile_img));
+			tile_img.setFitHeight(90);
+			tile_img.setFitWidth(90);
+//			tile_img.fitHeightProperty().bind(startTile.heightProperty());
+//			tile_img.fitWidthProperty().bind(startTile.widthProperty());
 
-		VBox playerbox = (VBox) startTile.lookup("#VBox" + p.getID());
-		if (playerbox == null) {
-			return;
+			tile_img.setPreserveRatio(false);
+			tile_img.opacityProperty().set(0.8);
 		}
-		Label playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
-		ImageView img = (ImageView) playerbox.lookup("#Image" + p.getID());
+
+	}
+
+	private void clean_Tile(Player p) {
+		LinkedList<Integer> placment = p.getPlacment_history();
+		for (int i = placment.size() - 2; i >= 0; i--) {
+			Pane startTile = (Pane) grid.lookup("#" + p.getPlacment_history().get(i));
+			if (startTile.lookup("#VBox" + p.getID()) != null) {
+			VBox playerbox = (VBox) startTile.lookup("#VBox" + p.getID());
+			Label playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
+			ImageView img = (ImageView) playerbox.lookup("#Image" + p.getID());
 //			System.out.println("clean_Tile old_pos: " + p.getPreviousStep() + "Player: " + p.getID());
-		playerbox.getChildren().removeAll(playerName, img);
-		startTile.getChildren().removeAll(playerbox);
+			playerbox.getChildren().removeAll(playerName, img);
+			startTile.getChildren().removeAll(playerbox);
+			}
+		}
 
 	}
 
 	private void move_Player(Player p) {
-		if (p.getCurrentP() == p.getPreviousStep()) {
+		checkwin(GameData.getInstance().getBoard().getGameEnd());
+		if (p.getCurrentP() == p.getPreviousStep() ) {
 			return;
 		}
 		clean_Tile(p);
@@ -310,6 +342,7 @@ public class BoardControl {
 		curr_Tile.getChildren().addAll(playerbox);
 
 	}
+
 
 	private void initiate_Players(Player p) {
 		p.addStep(1);
@@ -590,6 +623,18 @@ public class BoardControl {
 			stage.setScene(scene);
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	private void checkwin(int gameEnd) {
+		// TODO Auto-generated method stub
+		if(gameEnd ==1) {
+			System.out.println("youwonlol");
+			System.out.println("youwonlol");
+			System.out.println("youwonlol");
+			System.out.println("youwonlol");
+			System.out.println("youwonlol");
+			System.out.println("youwonlol");
+
 		}
 	}
 

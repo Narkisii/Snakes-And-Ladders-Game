@@ -55,6 +55,20 @@ public class Player {
 
 
 	/**
+	 * @return the placment_history
+	 */
+	public LinkedList<Integer> getPlacment_history() {
+		return placment_history;
+	}
+
+	/**
+	 * @param placment_history the placment_history to set
+	 */
+	public void setPlacment_history(LinkedList<Integer> placment_history) {
+		this.placment_history = placment_history;
+	}
+
+	/**
 	 * @param color the color to set
 	 */
 	public void setColor(String color) {

@@ -13,7 +13,7 @@ public class GameData {
 	private LinkedList<Player> player_list;
 	private LinkedList<Snake> snake_list;
 	private LinkedList<Ladder> ladders;
-	private LinkedList<Tile> specialTiles;
+	private LinkedList<Tile> specialTiles_list;
 	private HistoryControl History;
 	private int playerTurn;
 	private Board board;
@@ -30,7 +30,7 @@ public class GameData {
 		this.player_list = new LinkedList<Player>();
 		this.snake_list = new LinkedList<Snake>();
 		this.ladders = new LinkedList<Ladder>();
-		this.specialTiles = new LinkedList<Tile>();
+		this.specialTiles_list = new LinkedList<Tile>();
 		this.questions = new HashMap<Integer, Question>();
 		this.difficulty = "Easy";
 		this.playerTurn = 0;
@@ -225,23 +225,28 @@ public class GameData {
 	}
 
 	/**
-	 * @return the specialTiles
+	 * @return the specialTiles_list
 	 */
-	public LinkedList<Tile> getSpecialTiles() {
-		return specialTiles;
+	public LinkedList<Tile> getspecialTiles_list() {
+		return specialTiles_list;
 	}
 
 	/**
-	 * @param specialTiles the specialTiles to set
+	 * @param specialTiles_list the specialTiles_list to set
 	 */
-	public void setSpecialTiles(LinkedList<Tile> st) {
-		specialTiles = st;
+	public void setspecialTiles_list(LinkedList<Tile> st) {
+		specialTiles_list = st;
 	}
 
-	public void addSpecialTiles(Tile st) {
-		specialTiles.add(st);
+	public void addspecialTiles_list(Tile st) {
+		specialTiles_list.add(st);
 	}
-
+	public boolean addSpecialtile(Tile t) {
+		if(t != null) {
+			return (specialTiles_list.add(t));
+		}
+		return false;
+	}
 	public void to_json() {
 	}
 
@@ -277,5 +282,8 @@ public class GameData {
 	public boolean get_isIngame() {
 		return in_game;
 	}
+	
+	
+
 
 }
