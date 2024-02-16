@@ -154,14 +154,10 @@
                 </ImageView>
                 <Label styleClass="instruction_Font, rounded-frame" stylesheets="@resources/Css/all_Style.css" text="Enjoy the game!" />
             </HBox>
-            <Button fx:id="button_back" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" stylesheets="@Buttons.css" text="Back to Menu">
+            <Button fx:id="button_back" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="Normal_button" stylesheets="@resources/Css/Buttons.css" text="Back to Menu">
                 <font>
                     <Font name="Berlin Sans FB" size="36.0" />
                 </font>
-                <styleClass>
-                    <String fx:value="menu_button" />
-                    <String fx:value="GameName_font" />
-                </styleClass>
             </Button>
         </VBox>
     </children>
