@@ -85,7 +85,7 @@ public class EditQuestionPopControl {
         questionAfterChange.setDifficulty(Integer.parseInt(selectedDifficulty));
 
         // Update the question list
-        questionsFromJson.removeQuestion(question);
+       // questionsFromJson.removeQuestion(question);
         questionsFromJson.addQuestion(questionAfterChange);
         questionsFromJson.writeQuestionsToJson();
         // Close the window after saving

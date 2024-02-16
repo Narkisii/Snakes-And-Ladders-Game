@@ -127,6 +127,69 @@ public class QuestionWizControl {
 	        easy_QTable.setItems(hardData);
 	    });
 	    
+	    //remove
+	    rm_med_button.setOnAction(event -> {
+	        if (popupStage != null && popupStage.isShowing()) {
+	            // If a pop-up is already open, do nothing
+	            return;
+	        }
+
+	        // Create a new Stage for the pop-up
+	        popupStage = new Stage();
+
+	        // Load the FXML file for the pop-up
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/deleteQuestionPop.fxml"));
+	        Parent root = null;
+	        try {
+	            root = loader.load();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+
+	        // Get the controller and pass the question object
+	        DeleteQuestionPopControl controller = loader.getController();
+	        Question selectedQuestion = easy_QTable.getSelectionModel().getSelectedItem();
+	        if (selectedQuestion != null) {
+	            controller.setQuestionToDelete(selectedQuestion);
+	        }
+
+	        // Set the scene and show the stage
+	        Scene scene = new Scene(root);
+	        popupStage.setScene(scene);
+	        popupStage.show();
+	    });
+	    
+	    //Add question
+	    add_easy_button.setOnAction(event -> {
+	        if (popupStage != null && popupStage.isShowing()) {
+	            // If a pop-up is already open, do nothing
+	            return;
+	        }
+
+	        // Create a new Stage for the pop-up
+	        popupStage = new Stage();
+
+	        // Load the FXML file for the pop-up
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/addQuestionPop.fxml"));
+	        Parent root = null;
+	        try {
+	            root = loader.load();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+
+	        // Get the controller and pass the question object
+	        AddQuestionPopControl controller = loader.getController();
+	        // You can pass any necessary data to the controller here
+
+	        // Set the scene and show the stage
+	        Scene scene = new Scene(root);
+	        popupStage.setScene(scene);
+	        popupStage.show();
+	    });
+
+
+	    
 	 // Add a mouse click event to the rows of the table
 	    easy_QTable.setRowFactory(tv -> {
 	        TableRow<Question> row = new TableRow<>();
@@ -172,7 +235,8 @@ public class QuestionWizControl {
 	    
 	    //Configure buttons
 	    Return_Btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
-	    add_easy_button.setOnAction(event -> navigateTo("/view/addQuestionPop.fxml"));
+	   // add_easy_button.setOnAction(event -> navigateTo("/view/addQuestionPop.fxml"));
+	    
 	   
 
 	}
