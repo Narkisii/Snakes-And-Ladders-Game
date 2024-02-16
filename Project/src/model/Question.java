@@ -10,6 +10,22 @@ public class Question {
     @JsonProperty("question")
     private String question;
 
+
+	@JsonProperty("answers")
+    private List<String> answers;
+
+    @JsonProperty("correct_ans")
+    private String correctAnswer;
+
+    @JsonProperty("difficulty")
+    private int difficulty;
+
+    // Constructor
+    public Question() {
+    	this.id = nextId++;
+    }
+    
+
     /**
 	 * @return the id
 	 */
@@ -37,20 +53,6 @@ public class Question {
 	public void setQuestion(String question) {
 		this.question = question;
 	}
-
-	@JsonProperty("answers")
-    private List<String> answers;
-
-    @JsonProperty("correct_ans")
-    private String correctAnswer;
-
-    @JsonProperty("difficulty")
-    private int difficulty;
-
-    // Constructor
-    public Question() {
-    	this.id = nextId++;
-    }
 
     // Getters and setters for the new fields
     public List<String> getAnswers() {
