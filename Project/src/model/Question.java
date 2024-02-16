@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public class Question {
-	private static int nextId = 0; // Static variable to keep track of the next available ID
+	private static int nextId = 1; // Static variable to keep track of the next available ID
     private int id; // question ID
 
     @JsonProperty("question")
@@ -49,7 +49,7 @@ public class Question {
 
     // Constructor
     public Question() {
-    	
+    	this.id = nextId++;
     }
 
     // Getters and setters for the new fields

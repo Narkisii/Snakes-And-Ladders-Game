@@ -59,7 +59,7 @@ public class QuestionWizControl {
 	private VBox vBox;
 	
 	@FXML
-	private TableView<Question> questionTable;
+	private TableView<Question> easy_QTable;
 
 	@FXML
 	private TableColumn<Question, String> id;
@@ -79,14 +79,14 @@ public class QuestionWizControl {
 	        return;
 	    }
 	    questionList = questionData.getQuestions(); // Uncomment this line
-	    //id.setCellValueFactory(new PropertyValueFactory<>("id"));
-	    question.setCellValueFactory(new PropertyValueFactory<>("quest3ion"));
+	    id.setCellValueFactory(new PropertyValueFactory<>("id"));
+	    question.setCellValueFactory(new PropertyValueFactory<>("question"));
 
 	    // Set the table data
 	    ObservableList<Question> data = FXCollections.observableArrayList(questionList); // Uncomment this line
-	    questionTable.setItems(data);
+	    easy_QTable.setItems(data);
 	    Return_Btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
-	    questionTable.setRowFactory(tv -> {
+	    easy_QTable.setRowFactory(tv -> {
 	        TableRow<Question> row = new TableRow<>();
 	        row.setOnMouseClicked(event -> {
 	            if (! row.isEmpty() && event.getButton()==MouseButton.PRIMARY 
