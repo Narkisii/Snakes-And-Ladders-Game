@@ -1,7 +1,9 @@
 package test ;
 import org.junit.Test;
 
+import javafx.scene.paint.Color;
 import model.Board;
+import model.GameData;
 import model.Ladder;
 import model.Player;
 import model.Snake;
@@ -41,26 +43,33 @@ public class BoardTest {
 	        LinkedList<Player> Players = new LinkedList<Player>();
 	        Players.add(player);
 	        Board board = new Board(Players); 
-//	        Snake snake = new Snake(99,5,"Yellow"); 
-//	        board.getGameboard()[1][9].setSnake(snake);
-	        board.move(98, player);
+	        Snake snake = new Snake(11,5,Color.YELLOW); 
+	        GameData.getInstance().getplayer_list().add(player);
+	        GameData.getInstance().setBoard(board);
+	        board.getGameboard()[3][1].setSnake(snake);
+	        player.addStep(1);
+	        board.move(10, player);
 
-	        // Check if the game has ended
+	        // Check if player went down snake
 	        Assert.assertEquals(5, player.getCurrentP());
 	    }
 	 @Test
 	    public void ladderTest() {
 	        int numTilesInARow = 10; // that will create a board 10X10
+	        
 	        Player player = new Player(1,"Yellow","ItayIsKing!","Hat");
 	        LinkedList<Player> Players = new LinkedList<Player>();
 	        Players.add(player);
 	        Board board = new Board(Players); 
-	        Ladder ladder = new Ladder(43,99,6); 
-	        board.getGameboard()[2][4].setLadder(ladder);
-	        board.move(42, player);
+	        Ladder ladder = new Ladder(5,11,1); 
+	        GameData.getInstance().getplayer_list().add(player);
+	        GameData.getInstance().setBoard(board);
+	        board.getGameboard()[4][0].setLadder(ladder);
+	        player.addStep(1);
+	        board.move(4, player);
 
-	        // Check if the game has ended
-	        Assert.assertEquals(99, player.getCurrentP());
+	        // Check if player went down snake
+	        Assert.assertEquals(11, player.getCurrentP());
 	    }
 	    
 //	 test 3  - 	write diceResult if i get number in rolldice player will move the right number
