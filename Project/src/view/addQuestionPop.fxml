@@ -2,7 +2,9 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -13,52 +15,72 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.questionPopControl">
+<BorderPane fx:id="addQ_BorderPane" styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.questionPopControl">
    <center>
-      <AnchorPane prefHeight="300.0" prefWidth="650.0" stylesheets="@resources/Css/popUpStyle.css">
+      <AnchorPane fx:id="center_AnchorPane" prefHeight="300.0" prefWidth="650.0" stylesheets="@resources/Css/popUpStyle.css">
          <children>
-            <VBox spacing="10.0" stylesheets="@resources/Css/popUpStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <VBox fx:id="center_VBox" spacing="10.0" stylesheets="@resources/Css/popUpStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label prefHeight="22.0" prefWidth="198.0" styleClass="pop_font" text="Enter new question:" />
-                  <TextField fx:id="questionTextField" prefHeight="65.0" prefWidth="590.0" promptText="question text..." styleClass="cpu_Font" />
-                  <Separator prefWidth="590.0" styleClass="seperator" />
-                  <Label prefHeight="22.0" prefWidth="166.0" styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" text="Correct answer:" />
-                  <TextField fx:id="correctAnswerTextField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" promptText="Enter the correct answer..." styleClass="cpu_Font" />
-                  <Label styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" text="Other answers:">
+                  <Label fx:id="question_Label" prefHeight="30.0" prefWidth="106.0" styleClass="pop_font" text="Question:" />
+                  <ScrollPane fx:id="qText_ScrollPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="63.0" prefWidth="591.0">
+                     <content>
+                        <AnchorPane fx:id="qText_AnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="576.0">
+                           <children>
+                              <TextField fx:id="questionTextField" prefHeight="49.0" prefWidth="591.0" styleClass="cpu_Font" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+                  <HBox fx:id="qSettings_HBox" prefHeight="37.0" prefWidth="591.0" spacing="10.0">
+                     <children>
+                        <Label fx:id="difficulty_Label" styleClass="pop_font" text="Difficulty" />
+                        <ComboBox fx:id="difficulty_ComBox" prefWidth="150.0" promptText="Question difficulty">
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </ComboBox>
+                        <Label fx:id="correctAns_Label" prefHeight="30.0" prefWidth="170.0" styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" text="Correct answer">
+                           <padding>
+                              <Insets left="30.0" />
+                           </padding>
+                        </Label>
+                        <ComboBox fx:id="correctAns_ComBox" prefWidth="150.0" promptText="Answer number">
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </ComboBox>
+                     </children>
+                  </HBox>
+                  <Separator prefWidth="591.0" styleClass="seperator" />
+                  <Label fx:id="answers_Label" styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" text="Answers options:">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                   </Label>
-                  <AnchorPane prefWidth="590.0">
+                  <HBox fx:id="optionOne_VBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" spacing="10.0">
                      <children>
-                        <HBox prefHeight="49.0" prefWidth="590.0">
-                           <children>
-                              <Label prefHeight="22.0" prefWidth="60.0" styleClass="pop_font" text="1: " />
-                              <TextField fx:id="optionOneTextField" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 1..." styleClass="cpu_Font" />
-                           </children>
-                        </HBox>
+                        <Label fx:id="optionOne_Label" contentDisplay="CENTER" prefHeight="58.0" prefWidth="22.0" styleClass="pop_font" text="1: " />
+                        <TextField fx:id="optionOneTextField" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 1..." styleClass="cpu_Font" />
                      </children>
-                  </AnchorPane>
-                  <AnchorPane prefWidth="590.0">
+                  </HBox>
+                  <HBox fx:id="optionTwo_VBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" spacing="10.0">
                      <children>
-                        <HBox prefHeight="49.0" prefWidth="590.0">
-                           <children>
-                              <Label prefHeight="22.0" prefWidth="60.0" styleClass="pop_font" text="2:" />
-                              <TextField fx:id="optionOneTextField2" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 2..." styleClass="cpu_Font" />
-                           </children>
-                        </HBox>
+                        <Label fx:id="optionTwo_Label" contentDisplay="CENTER" prefHeight="73.0" prefWidth="22.0" styleClass="pop_font" text="2:" />
+                        <TextField fx:id="optionOneTextField2" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 2..." styleClass="cpu_Font" />
                      </children>
-                  </AnchorPane>
-                  <AnchorPane prefWidth="590.0">
+                  </HBox>
+                  <HBox fx:id="optionThree_VBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" spacing="10.0">
                      <children>
-                        <HBox prefHeight="49.0" prefWidth="590.0">
-                           <children>
-                              <Label prefHeight="22.0" prefWidth="60.0" styleClass="pop_font" text="3:" />
-                              <TextField fx:id="optionOneTextField21" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 3..." styleClass="cpu_Font" />
-                           </children>
-                        </HBox>
+                        <Label fx:id="optionThree_Label" contentDisplay="CENTER" prefHeight="86.0" prefWidth="22.0" styleClass="pop_font" text="3:" />
+                        <TextField fx:id="optionOneTextField21" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 3..." styleClass="cpu_Font" />
                      </children>
-                  </AnchorPane>
+                  </HBox>
+                  <HBox fx:id="optionFour_VBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" spacing="10.0">
+                     <children>
+                        <Label fx:id="optionFour_Label" contentDisplay="CENTER" prefHeight="70.0" prefWidth="22.0" styleClass="pop_font" text="4:" />
+                        <TextField fx:id="optionOneTextField211" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 4..." styleClass="cpu_Font" />
+                     </children>
+                  </HBox>
                   <Separator prefWidth="590.0">
                      <VBox.margin>
                         <Insets />
@@ -76,9 +98,9 @@
       </AnchorPane>
    </center>
    <top>
-      <AnchorPane prefHeight="46.0" prefWidth="650.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="top_AnchorPane" prefHeight="46.0" prefWidth="650.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" layoutX="209.0" layoutY="3.0" prefHeight="46.0" prefWidth="271.0" styleClass="title" stylesheets="@resources/Css/popUpStyle.css" text="Create Question">
+            <Label fx:id="addQ_Title" alignment="CENTER" layoutX="209.0" layoutY="3.0" prefHeight="46.0" prefWidth="271.0" styleClass="title" stylesheets="@resources/Css/popUpStyle.css" text="Add Question">
                <padding>
                   <Insets top="10.0" />
                </padding>
@@ -87,15 +109,15 @@
       </AnchorPane>
    </top>
    <left>
-      <Pane prefHeight="458.0" prefWidth="19.0" BorderPane.alignment="CENTER" />
+      <Pane fx:id="leftPane" prefHeight="458.0" prefWidth="19.0" BorderPane.alignment="CENTER" />
    </left>
    <bottom>
-      <AnchorPane prefHeight="20.0" prefWidth="690.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="bottom_AnchorPane" prefHeight="20.0" prefWidth="690.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="51.0" prefWidth="690.0" spacing="10.0">
+            <HBox fx:id="bottom_HBox" alignment="CENTER" prefHeight="51.0" prefWidth="690.0" spacing="10.0">
                <children>
                   <Button fx:id="saveButton" styleClass="finish_button" stylesheets="@resources/Css/popUpStyle.css" text="Save" />
-                  <ImageView fitHeight="32.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true" styleClass="clearButton">
+                  <ImageView fx:id="clearButton" fitHeight="32.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true" styleClass="clearButton">
                      <image>
                         <Image url="@Images/clearIcon.png" />
                      </image>
@@ -106,6 +128,6 @@
       </AnchorPane>
    </bottom>
    <right>
-      <Pane prefHeight="200.0" prefWidth="19.0" BorderPane.alignment="CENTER" />
+      <Pane fx:id="right_Pane" prefHeight="200.0" prefWidth="19.0" BorderPane.alignment="CENTER" />
    </right>
 </BorderPane>
