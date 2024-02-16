@@ -10,8 +10,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-
 import javafx.scene.paint.Color;
+
+import control.BoardControl;
 import model.Ladder;
 
 /**
@@ -19,13 +20,20 @@ import model.Ladder;
  *
  */
 public class Board {
-//	private String difficulty; // 0 easy game, 1 mid game, 2 hard game
+	private boolean tile_is_question;
+	// private String difficulty; // 0 easy game, 1 mid game, 2 hard game
 	private Tile[][] gameboard;
 	private LinkedList<Player> players;
 //	private int dice_Roll;
 	// 1 means Game has ended
 	private int gameEnd;
 	private Set<Integer> usedNumbers;
+	private int[] laddersizes;
+	private int[] snakesizes;
+	private int question_tiles;
+	private int max_steps;
+	private int red_snakes;
+	private int surprise_tiles;
 
 	/**
 	 * @param type
@@ -36,6 +44,7 @@ public class Board {
 		this.gameEnd = 0;
 //		this.difficulty = difficulty;
 		// Initialize each Tile object
+		this.tile_is_question = false;
 		usedNumbers = new HashSet<>();
 
 	}
@@ -46,11 +55,11 @@ public class Board {
 //		this.players = players2;
 //	}
 
-	private static void activateTile(int x, int y, Player player) {
+	private void activateTile(int x, int y, Player player) {
 		Tile tile = GameData.getInstance().getBoard().getGameboard()[x][y];
 		Snake snake = tile.getSnake();
 		Ladder ladder = tile.getLadder();
-		Question question = tile.getQuestion();
+//		Question question = tile.getQuestion();
 		int speical = tile.getType();
 		int answer;
 		if (snake != null) {
@@ -63,9 +72,9 @@ public class Board {
 			GameData.getInstance().getPlayer(player).addStep(ladder.getEnd());
 		}
 
-		if (question != null) {
-
-		}
+//		if (question != null) {
+//			this.tile_is_question = true;
+//		}
 		if (speical != 0) {
 			switch (speical) {
 			case (10):
@@ -82,7 +91,6 @@ public class Board {
 			case (1):
 				player.setCurrentP(speical);
 				GameData.getInstance().getPlayer(player).addStep(speical);
-
 				break;
 			}
 
@@ -128,6 +136,30 @@ public class Board {
 									// location of the player
 
 		return true; // move successful, return true
+	}
+
+	public Tile getTile(int tile_num) {
+		int[] pos = calculatePosition(tile_num);
+		int x = pos[0];
+		int y = pos[1];
+
+		Tile tile = gameboard[x][y];
+		if (tile != null) {
+			return tile;
+		}
+		return null;
+	}
+
+	public Tile is_question(int tile_num) {
+		int[] pos = calculatePosition(tile_num);
+		int x = pos[0];
+		int y = pos[1];
+
+		Tile tile = gameboard[x][y];
+		if (tile.getType() == 4) {
+			return tile;
+		}
+		return null;
 	}
 
 	private int[] calculatePosition(int newPosition) {
@@ -219,23 +251,35 @@ public class Board {
 		Random rand = new Random();
 		int randomNumber;
 		String diff = GameData.getInstance().getDifficulty();
-		if (diff == "Easy") // if game mode is easy
-			return rand.nextInt(8);
+		int dice = -1;
+
+		if (diff == "Easy") { // if game mode is easy
+			dice = rand.nextInt(8);//0-4 - steps 5,6,7 - questions
+			switch (dice) {
+			case 5:
+				return 7;
+			case 6:
+				return 8;
+			case 7:
+				return 9;
+			default:
+				return dice;
+			}
+		}
 		if (diff == "Medium") { // if game mode is mid
-			randomNumber = rand.nextInt(13);
-			switch (randomNumber) {
+			dice = rand.nextInt(13);//0-6 - steps 7,8,9,10,11,12 - questions
+			switch (dice) {
 			case 7:
 			case 8:
 				return 7;
 			case 9:
 			case 10:
 				return 8;
-
 			case 11:
 			case 12:
 				return 9;
 			default:
-				return randomNumber;
+				return dice;
 			}
 		} else { // if game mode is hard
 			randomNumber = rand.nextInt(15);
@@ -264,46 +308,46 @@ public class Board {
 //	public String getDifficulty() {
 //		return difficulty;
 //	}
-
+//	red_snakes = 1;
+//	question_tiles = 3;
+//	max_steps = 4;
+//	surprise_tiles = 0;
 	private void generate_RedSnake_and_Surprize() {
 		Random rand = new Random();
 		int num_of_tiles = GameData.getInstance().getNumOfTiles();
 		int randNum;
+		for(int i = 0; i <surprise_tiles ; i++) {
 		// Add surprise tile 10 steps for or 10 steps back
 		do {
-			randNum = rand.nextInt(num_of_tiles * num_of_tiles - 12) + 1;
+			randNum = rand.nextInt(num_of_tiles * num_of_tiles - 12 + 1) + 12;
 		} while (usedNumbers.contains(randNum)); // Ensure endRand doesn't exceed 49 and numbers are unique
 		usedNumbers.add(randNum);
-
 		int typeOfSurprize = rand.nextInt(2) * 2 - 1; // if good surprise or bad surprise
 		add_specialToTile(randNum, 10 * typeOfSurprize);// add surprise
-
+		}
+		
 		// Add red snake
+		for(int i = 0; i <red_snakes ; i++) {
 		do {
 			randNum = rand.nextInt(num_of_tiles * num_of_tiles - 12) + 1;
 		} while (usedNumbers.contains(randNum)); // Ensure endRand doesn't exceed 49 and numbers are unique
 		usedNumbers.add(randNum);
 		add_specialToTile(randNum, 1);// add red snake
-
+		}
+		
 		// Add question tile
+		for(int i = 0; i <question_tiles ; i++) {
 		do {
 			randNum = rand.nextInt(num_of_tiles * num_of_tiles - 12) + 1;
 		} while (usedNumbers.contains(randNum)); // Ensure endRand doesn't exceed 49 and numbers are unique
 		usedNumbers.add(randNum);
-		add_QuestionToTile(randNum, new Question());// add red snake
-
+		add_QuestionToTile(randNum, new Question());// add question
+		}
 	}
 
 	private void generate_Ladders() {
 		Random rand = new Random();
 		String gameDiff = GameData.getInstance().getDifficulty();
-		int[] laddersizes = null;
-		if (gameDiff.equals("Easy"))
-			laddersizes = new int[] { 1, 2, 3, 4 };
-		if (gameDiff.equals("Medium"))
-			laddersizes = new int[] { 1, 2, 3, 4, 5, 6 };
-		if (gameDiff.equals("Hard"))
-			laddersizes = new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
 
 //		Set<Integer> usedNumbers = new HashSet<>();
 		for (int i : laddersizes) {
@@ -327,9 +371,36 @@ public class Board {
 
 	public void generate_board_Objects() {
 		int num_of_tiles = GameData.getInstance().getNumOfTiles();
+		String gameDiff = GameData.getInstance().getDifficulty();
+		if (gameDiff.equals("Easy")) {
+			laddersizes = new int[] { 1, 2, 3, 4 };
+			snakesizes = new int[] { 1, 2, 3 };
+			red_snakes = 1;
+			question_tiles = 3;
+			max_steps = 4;
+			surprise_tiles = 0;
+		}
+		if (gameDiff.equals("Medium")) {
+			laddersizes = new int[] { 1, 2, 3, 4, 5, 6 };
+			snakesizes = new int[] { 2, 2, 3, 1 };
+			red_snakes = 2;
+			question_tiles = 3;
+			max_steps = 6;
+			surprise_tiles = 1;
+
+		}
+		if (gameDiff.equals("Hard")) {
+			laddersizes = new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+			snakesizes = new int[] { 1, 1, 2, 2, 3, 3 };
+			red_snakes = 2;
+			question_tiles = 3;
+			max_steps = 6;
+			surprise_tiles = 2;
+
+		}
 
 		usedNumbers.add(1);
-		usedNumbers.add(num_of_tiles*num_of_tiles);
+		usedNumbers.add(num_of_tiles * num_of_tiles);
 		generate_Ladders();
 		generate_Snakes();
 		generate_RedSnake_and_Surprize();
@@ -337,7 +408,7 @@ public class Board {
 
 	private void generate_Snakes() {
 		Random rand = new Random();
-		int[] snakesizes = { 1, 2, 3 };
+
 		Color[] snake_color = { Color.YELLOW, Color.GREEN, Color.BLUE };
 
 		for (int i : snakesizes) {

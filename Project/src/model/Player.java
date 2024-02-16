@@ -36,6 +36,7 @@ public class Player {
 		this.token = "/view/Images/tokens/" + token + "3D.png";
 		this.placment_history = new LinkedList<Integer>();
 		this.currentP = 1;
+		placment_history.add(1);
 	}
 
 	/**

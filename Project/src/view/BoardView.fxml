@@ -29,46 +29,46 @@
          </children></Pane>
    </bottom>
    <left>
-      <AnchorPane prefWidth="242.0" styleClass="statuspane" stylesheets="@resources/Css/all_Style.css">
+      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="242.0" styleClass="statuspane" stylesheets="@resources/Css/all_Style.css">
          <BorderPane.margin>
             <Insets left="10.0" right="10.0" />
          </BorderPane.margin>
          <children>
             <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="490.0" prefWidth="262.0" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label id="turn_Lable" fx:id="turn_Lable" alignment="CENTER" contentDisplay="TOP" prefHeight="147.0" prefWidth="242.0" styleClass="normal_Font" stylesheets="@resources/Css/all_Style.css" text="Turn" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="85.0" styleClass="board_Font" text="Total play  time:" wrapText="true" />
+                  <Label id="timer_Label" fx:id="timer_Label" alignment="CENTER" contentDisplay="TOP" prefHeight="147.0" prefWidth="240.0" styleClass="normal_Font" stylesheets="@resources/Css/all_Style.css" text="timer" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
                      <font>
                         <Font name="Arial Narrow" size="12.0" />
                      </font>
                   </Label>
+                  <Label id="turn_Lable" fx:id="turn_Lable" alignment="CENTER" contentDisplay="TOP" prefHeight="210.0" prefWidth="242.0" styleClass="board_Font_Big" stylesheets="@resources/Css/all_Style.css" text="Turn" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                     <font>
+                        <Font name="Arial Narrow" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="board_Font" text="Time left for turn:" wrapText="true" />
                   <Label id="countDown_Label" fx:id="countDown_Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="105.0" prefWidth="237.0" styleClass="normal_Font" stylesheets="@resources/Css/all_Style.css" text="countDown_Label" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
                      <font>
                         <Font name="Arial Narrow" size="12.0" />
                      </font>
                   </Label>
-                  <AnchorPane>
+                  <Label id="turn_Lable" fx:id="turn_Lable1" alignment="CENTER" contentDisplay="TOP" prefHeight="147.0" prefWidth="242.0" styleClass="normal_Font" stylesheets="@resources/Css/all_Style.css" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                     <font>
+                        <Font name="Arial Narrow" size="12.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="170.0" prefWidth="222.0">
                      <children>
-                        <Pane layoutY="-2.0" prefHeight="249.0" prefWidth="242.0">
-                           <children>
-                              <Label id="turn_Lable" fx:id="turn_Lable1" alignment="CENTER" contentDisplay="TOP" prefHeight="147.0" prefWidth="242.0" styleClass="normal_Font" stylesheets="@resources/Css/all_Style.css" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
-                                 <font>
-                                    <Font name="Arial Narrow" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label id="timer_Label" fx:id="timer_Label" alignment="CENTER" contentDisplay="TOP" prefHeight="147.0" prefWidth="242.0" styleClass="normal_Font" stylesheets="@resources/Css/all_Style.css" text="timer" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
-                                 <font>
-                                    <Font name="Arial Narrow" size="12.0" />
-                                 </font>
-                              </Label>
-                              <ImageView fx:id="diceImage" fitHeight="95.0" fitWidth="106.0" layoutX="78.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@dice/dice1.png" />
-                                 </image></ImageView>
-                           </children></Pane>
+                        <ImageView fx:id="diceImage" fitHeight="100.0" fitWidth="100.0" layoutX="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@dice/dice1.png" />
+                           </image>
+                        </ImageView>
                      </children>
-                  </AnchorPane>
-                  <AnchorPane />
-                  <Button id="Dice_Botton" fx:id="rollButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" styleClass="rollbutton" stylesheets="@resources/Css/Buttons.css" text="Roll Dice" textAlignment="CENTER">
+                  </Pane>
+                  <AnchorPane prefHeight="47.0" prefWidth="222.0" />
+                  <Button id="Dice_Botton" fx:id="rollButton" alignment="BASELINE_CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" styleClass="rollbutton" stylesheets="@resources/Css/Buttons.css" text="Roll Dice" textAlignment="CENTER">
                      <font>
                         <Font size="38.0" />
                      </font>

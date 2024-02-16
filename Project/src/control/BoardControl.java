@@ -1,6 +1,7 @@
 package control;
 
 import model.Player;
+import model.Question;
 import model.Snake;
 import model.Tile;
 
@@ -75,6 +76,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class BoardControl {
 
+	private static Stage popupStage;
+
 	@FXML
 	private ResourceBundle resources; // Resource bundle for localization
 
@@ -108,18 +111,18 @@ public class BoardControl {
 
 	@FXML
 	private Button rollButton;
-
 	// rolling dice function
-	@FXML
+//	@FXML
 
 	// Create a HashMap to store the rectangles
-	HashMap<Integer, Rectangle> tile_Map = new HashMap<>();
+	HashMap<Integer, Rectangle> tile_Map;
 	int test_Move_counter = 0;
 	// Initialize the timer properties
-	private IntegerProperty counter = new SimpleIntegerProperty(60); // Initial time in seconds
+	private IntegerProperty counter; // Initial time in seconds
 	private Timeline timer;
 
 	private GridPane grid; // The grid that will contain the tiles
+	int set_turn_time;
 
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 
@@ -130,9 +133,11 @@ public class BoardControl {
 //		for (Player player : GameData.getInstance().getplayer_list()) {
 //			System.out.println(player.toString());
 //		}
+		set_turn_time = 45;
+		tile_Map = new HashMap<>();
 		canvas = new Pane();
 		canvas.opacityProperty().set(0.7);
-
+		counter = new SimpleIntegerProperty(set_turn_time);
 		createCountDown();
 		startCountDown();
 		createTimer();
@@ -173,7 +178,10 @@ public class BoardControl {
 
 		// Set the action for the return button
 		return_btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
-		turn_Lable.setText("Bree");
+		
+		turn_Lable.setTextFill(Color.web(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getColor()));
+		turn_Lable.setText(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getName()
+				+ "'s turn");
 		rollButton.setOnAction(event -> roll(Board.get_Dice_Result(),
 				GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn())));
 
@@ -293,12 +301,12 @@ public class BoardControl {
 		for (int i = placment.size() - 2; i >= 0; i--) {
 			Pane startTile = (Pane) grid.lookup("#" + p.getPlacment_history().get(i));
 			if (startTile.lookup("#VBox" + p.getID()) != null) {
-			VBox playerbox = (VBox) startTile.lookup("#VBox" + p.getID());
-			Label playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
-			ImageView img = (ImageView) playerbox.lookup("#Image" + p.getID());
+				VBox playerbox = (VBox) startTile.lookup("#VBox" + p.getID());
+				Label playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
+				ImageView img = (ImageView) playerbox.lookup("#Image" + p.getID());
 //			System.out.println("clean_Tile old_pos: " + p.getPreviousStep() + "Player: " + p.getID());
-			playerbox.getChildren().removeAll(playerName, img);
-			startTile.getChildren().removeAll(playerbox);
+				playerbox.getChildren().removeAll(playerName, img);
+				startTile.getChildren().removeAll(playerbox);
 			}
 		}
 
@@ -306,7 +314,7 @@ public class BoardControl {
 
 	private void move_Player(Player p) {
 		checkwin(GameData.getInstance().getBoard().getGameEnd());
-		if (p.getCurrentP() == p.getPreviousStep() ) {
+		if (p.getCurrentP() == p.getPreviousStep()) {
 			return;
 		}
 		clean_Tile(p);
@@ -341,8 +349,18 @@ public class BoardControl {
 
 		curr_Tile.getChildren().addAll(playerbox);
 
+		check_Question(Integer.parseInt(curr_Tile.getId()));
 	}
 
+	private void check_Question(int curr_Tile) {
+		// TODO Auto-generated method stub
+		System.out.println("check_Question " + curr_Tile);
+		Tile quetion_tile = board.is_question(curr_Tile);
+		if(quetion_tile != null) {
+			System.out.println("is a question");
+			showQuestion();
+		}
+	}
 
 	private void initiate_Players(Player p) {
 		p.addStep(1);
@@ -373,6 +391,7 @@ public class BoardControl {
 
 		new_pos_pane.getChildren().addAll(playerbox);
 
+		
 	}
 
 	public void add_Ladders(int start, int end) {
@@ -465,17 +484,22 @@ public class BoardControl {
 		double angle = Math.toDegrees(Math.atan2(startY - endY, startX - endX));
 
 		Random rand = new Random();
-		int randomNumber = (rand.nextInt(11) - 5) * 10; // Generate random numbers in the range 1 to 5
 
 		CubicCurve cubic = new CubicCurve();
 		cubic.setStartX(startX);
 		cubic.setStartY(startY);
+		
+//		int randomNumber = (rand.nextInt(11) - 5) * 10; 
+		int randomNumber = (rand.nextInt(11)-5) * 10; 
 
-		double controlX1 = startX - (distance + randomNumber); // 25% along the line from start to end
-		double controlY1 = startY;
-		randomNumber = (rand.nextInt(20) - 10) * 10; // Generate random numbers in the range 1 to 5
-		double controlX2 = endX + (distance + randomNumber); // 75% along the line from start to end
-		double controlY2 = endY;
+		double controlX1 = startX - (distance + randomNumber); 
+		randomNumber = (rand.nextInt(11)-5) * 10; 
+		double controlY1 = startY+randomNumber;
+		randomNumber = (rand.nextInt(11)-5) * 10; 
+//		randomNumber = (rand.nextInt(20) - 10) * 10; 
+		double controlX2 = endX + (distance + randomNumber); 
+		randomNumber = (rand.nextInt(11)-5) * 10; 
+		double controlY2 = endY+randomNumber;
 		cubic.setControlX1(controlX1);
 		cubic.setControlY1(controlY1);
 		cubic.setControlX2(controlX2);
@@ -511,7 +535,7 @@ public class BoardControl {
 			add_Ladders(l.getStart(), l.getEnd());
 		}
 		for (Snake s : GameData.getInstance().getSnake_list()) {
-//	System.out.println("l.getStart() " + l.getStart() + " l.getEnd() " + l.getEnd());
+	System.out.println("l.getStart() " + s.getStart() + " l.getEnd() " + s.getEnd());
 			add_Snakes(s.getStart(), s.getEnd(), s.getColor());
 		}
 
@@ -543,8 +567,9 @@ public class BoardControl {
 		timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
 			counter.set(counter.get() - 1);
 			if (counter.get() == 0) {
-				// Timer completed, stop the timer
-				timer.stop();
+				roll(Board.get_Dice_Result(),
+						GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()));
+//				timer.stop();
 			}
 		}));
 		timer.setCycleCount(Timeline.INDEFINITE); // Repeat indefinitely
@@ -566,6 +591,7 @@ public class BoardControl {
 	}
 
 	private void startCountDown() {
+		counter.set(set_turn_time);
 		timer.play();
 	}
 
@@ -589,25 +615,31 @@ public class BoardControl {
 						diceImage.setImage(new Image(file.toURI().toString()));
 						rollButton.setDisable(false);
 						this.stop();
+						if(dice == 7 || dice == 8 || dice ==9) {
+							Question q = GameData.getInstance().get_Question(dice);
+							showQuestion();
+						}
 						GameData.getInstance().getBoard().move(dice, player);
 //						for (Player p : GameData.getInstance().getplayer_list()) {
 //							initiate_Players(p, old_post);
 //						}
 						move_Player(player);
-						test_Move_counter++;
-
 						if (GameData.getInstance().getPlayerTurn() < GameData.getInstance().getplayer_list().size()
 								- 1) {
 							GameData.getInstance().setPlayerTurn(GameData.getInstance().getPlayerTurn() + 1);
 						} else {
 							GameData.getInstance().setPlayerTurn(0);
 						}
+						turn_Lable.setTextFill(Color.web(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getColor()));
+						turn_Lable.setText(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getName()
+								+ "'s turn");
 
 					}
 				}
 			}
 		};
 		animationTimer.start();
+		startCountDown();
 	}
 
 	// Method to navigate to another screen
@@ -625,9 +657,12 @@ public class BoardControl {
 			e.printStackTrace();
 		}
 	}
+
 	private void checkwin(int gameEnd) {
 		// TODO Auto-generated method stub
-		if(gameEnd ==1) {
+		if (gameEnd == 1) {
+			stopTimer();
+			timeline.stop();
 			System.out.println("youwonlol");
 			System.out.println("youwonlol");
 			System.out.println("youwonlol");
@@ -643,6 +678,26 @@ public class BoardControl {
 	}
 
 	void enable_action(int x, int y) {
+
+	}
+
+	public void showQuestion() {
+		// TODO Auto-generated method stub
+        popupStage = new Stage();
+
+        // Load the FXML file for the pop-up
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/GameQuestion.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Set the scene and show the stage
+        Scene scene = new Scene(root);
+        popupStage.setScene(scene);
+        popupStage.show();
 
 	}
 

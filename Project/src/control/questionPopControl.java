@@ -5,6 +5,7 @@ import javafx.scene.control.TextField;
 import model.Question;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class questionPopControl {
@@ -32,7 +33,7 @@ public class questionPopControl {
         question.setQuestion(questionTextField.getText());
         question.setCorrectAnswer(correctAnswerTextField.getText());
 
-        List<String> answers = new ArrayList<>();
+        LinkedList<String> answers = new LinkedList<String>();
         answers.add(optionOneTextField.getText());
         answers.add(optionOneTextField2.getText());
         answers.add(optionOneTextField21.getText());

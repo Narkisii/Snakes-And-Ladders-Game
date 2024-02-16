@@ -1,6 +1,8 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.LinkedList;
 import java.util.List;
 
 public class Question {
@@ -12,7 +14,7 @@ public class Question {
 
 
 	@JsonProperty("answers")
-    private List<String> answers;
+    private LinkedList<String> answers;
 
     @JsonProperty("correct_ans")
     private String correctAnswer;
@@ -23,6 +25,13 @@ public class Question {
     // Constructor
     public Question() {
     	this.id = nextId++;
+    	this.question = "yesyyesyyes";
+    	this.answers = new LinkedList<String>();
+    	this.correctAnswer = "correctAnswercorrectAnswercorrectAnswer";
+    	answers.add(correctAnswer);
+    	answers.add(correctAnswer);
+    	answers.add(correctAnswer);
+    	answers.add(correctAnswer);
     }
     
 
@@ -55,11 +64,11 @@ public class Question {
 	}
 
     // Getters and setters for the new fields
-    public List<String> getAnswers() {
+    public LinkedList<String> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<String> answers) {
+    public void setAnswers(LinkedList<String> answers) {
         this.answers = answers;
     }
 

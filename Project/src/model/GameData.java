@@ -3,13 +3,14 @@ package model;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import control.HistoryControl;
 
 public class GameData {
 	private int numberOfPlayers;
 	private String difficulty;
-	private HashMap<Integer, Question> questions;
+	private HashMap<Integer, LinkedList<Question>> questions_Map;
 	private LinkedList<Player> player_list;
 	private LinkedList<Snake> snake_list;
 	private LinkedList<Ladder> ladders;
@@ -26,12 +27,12 @@ public class GameData {
 	// Private constructor
 	private GameData() {
 		// Initialization code here
-		this.questions = new HashMap<Integer, Question>();
+//		this.questions = new HashMap<Integer, Question>();
 		this.player_list = new LinkedList<Player>();
 		this.snake_list = new LinkedList<Snake>();
 		this.ladders = new LinkedList<Ladder>();
 		this.specialTiles_list = new LinkedList<Tile>();
-		this.questions = new HashMap<Integer, Question>();
+		this.questions_Map = new HashMap<Integer, LinkedList<Question>>();
 		this.difficulty = "Easy";
 		this.playerTurn = 0;
 		this.numberOfPlayers = 1;
@@ -88,6 +89,15 @@ public class GameData {
 		}
 	}
 
+	public Question get_Question(int diff) {//7-easy, 8- med, 9 - hard
+//		LinkedList<Question> q_list = questions_Map.get(diff);
+//		Random rand = new Random();
+//		int generator = rand.nextInt(q_list.size());
+		
+//		return q_list.get(generator);
+		return new Question();
+	}
+	
 	/**
 	 * @param difficulty the difficulty to set
 	 */
@@ -112,15 +122,15 @@ public class GameData {
 	/**
 	 * @return the questions
 	 */
-	public HashMap<Integer, Question> getQuestions() {
-		return questions;
+	public HashMap<Integer, LinkedList<Question>> getQuestions() {
+		return questions_Map;
 	}
 
 	/**
 	 * @param questions the questions to set
 	 */
-	public void setQuestions(HashMap<Integer, Question> questions) {
-		this.questions = questions;
+	public void setQuestions(HashMap<Integer, LinkedList<Question>> questions) {
+		this.questions_Map = questions;
 	}
 
 	/**
