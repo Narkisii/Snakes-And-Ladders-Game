@@ -32,13 +32,13 @@
                </ScrollPane>
                <HBox fx:id="qSettings_HBox" prefHeight="100.0" prefWidth="591.0" spacing="10.0">
                   <children>
-                     <Label fx:id="difficulty_Label" styleClass="pop_font" text="Difficulty" />
+                     <Label fx:id="difficulty_Label" alignment="CENTER" prefHeight="30.0" prefWidth="110.0" styleClass="pop_font" text="Difficulty" />
                      <ComboBox fx:id="difficulty_ComBox" prefWidth="150.0" promptText="Question difficulty">
                         <padding>
                            <Insets top="5.0" />
                         </padding>
                      </ComboBox>
-                        <Label fx:id="correctAns_Label" prefHeight="30.0" prefWidth="170.0" styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" text="Correct answer">
+                        <Label fx:id="correctAns_Label" alignment="CENTER" prefHeight="30.0" prefWidth="193.0" styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" text="Correct answer">
                         <padding>
                            <Insets left="30.0" />
                         </padding>
