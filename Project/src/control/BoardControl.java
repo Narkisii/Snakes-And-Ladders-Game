@@ -278,8 +278,8 @@ public class BoardControl {
 			return;
 		}
 		clean_Tile(p);
-		Pane startTile = (Pane) grid.lookup("#" + p.getCurrentP());
-		VBox playerbox = (VBox) startTile.lookup("#VBox" + p.getID());
+		Pane curr_Tile = (Pane) grid.lookup("#" + p.getCurrentP());
+		VBox playerbox = (VBox) curr_Tile.lookup("#VBox" + p.getID());
 		Label playerName = null;
 		ImageView img = null;
 		if (playerbox == null) {
@@ -307,7 +307,7 @@ public class BoardControl {
 
 		playerbox.getChildren().addAll(playerName, img);
 
-		startTile.getChildren().addAll(playerbox);
+		curr_Tile.getChildren().addAll(playerbox);
 
 	}
 
