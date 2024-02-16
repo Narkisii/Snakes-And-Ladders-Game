@@ -2,19 +2,33 @@ package control;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
+
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import model.Question;
+import model.QuestionsFromJson;
 
 public class QuestionWizControl {
 
@@ -29,37 +43,64 @@ public class QuestionWizControl {
 
 	@FXML
 	private Tab MediumTab;
+	
+	@FXML
+	private Tab HardTab;
 
 	@FXML
 	private Button Return_Btn;
 
 	@FXML
-	private AnchorPane hardTab;
+	private AnchorPane hardTab,easyTab,mediumTab;
 
 	@FXML
 	private ScrollPane easyScroll;
 	@FXML
 	private VBox vBox;
+	
+	@FXML
+	private TableView<Question> questionTable;
+
+	@FXML
+	private TableColumn<Question, String> id;
+
+	@FXML
+	private TableColumn<Question, String> question;
 
 	@FXML
 	void initialize() {
-		/*
-		easyScroll.setFitToWidth(true);
-		easyScroll.setFitToHeight(true);
-		
-		for (int i = 1; i <= 5; i++) {
-			Button button = new Button("Button " + i);
-			button.setOnAction(event -> {
-				// Handle the button click here
-				System.out.println("Button clicked: " + button.getText());
-			});
+	    // Read the question data from the JSON file
+	    QuestionsFromJson  questionData;
+	    List<Question>questionList;
+	    try {
+	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return;
+	    }
+	    questionList = questionData.getQuestions(); // Uncomment this line
+	    //id.setCellValueFactory(new PropertyValueFactory<>("id"));
+	    question.setCellValueFactory(new PropertyValueFactory<>("quest3ion"));
 
-			HBox questionRow = new HBox(button); // Create a new HBox for each button
-			vBox.getChildren().add(questionRow); // Add the HBox to the VBox
-		} */
-		Return_Btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
+	    // Set the table data
+	    ObservableList<Question> data = FXCollections.observableArrayList(questionList); // Uncomment this line
+	    questionTable.setItems(data);
+	    Return_Btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
+	    questionTable.setRowFactory(tv -> {
+	        TableRow<Question> row = new TableRow<>();
+	        row.setOnMouseClicked(event -> {
+	            if (! row.isEmpty() && event.getButton()==MouseButton.PRIMARY 
+	                 && event.getClickCount() == 2) {
+
+	                Question clickedRow = row.getItem();
+	                System.out.println(clickedRow.getQuestion());
+	            }
+	        });
+	        return row ;
+	    });
 
 	}
+
 
 	private void navigateTo(String fxmlFile) {
 		try {
@@ -78,58 +119,9 @@ public class QuestionWizControl {
 	private boolean delete_Q(Question q) {
 		return true;
 	}
+	
+	 private QuestionsFromJson  readQuestionFromJson(String filePath) throws IOException {
+	        ObjectMapper mapper = new ObjectMapper();
+	        return mapper.readValue(Paths.get(filePath).toFile(), new TypeReference<QuestionsFromJson >() {});
+	    }
 }
-
-//package control;
-//import javafx.fxml.FXML;
-//import javafx.fxml.FXMLLoader;
-//import javafx.scene.Node;
-//import javafx.scene.control.Button;
-//import javafx.scene.layout.VBox;
-//import model.Question;
-//
-//public class QuestionWiz {
-//	 @FXML
-//	    private VBox easyQuestions;
-//	    @FXML
-//	    private VBox mediumQuestions;
-//	    @FXML
-//	    private VBox hardQuestions;
-//	   
-//	    private Question[] easy_Questions;
-//	    private Question[] mid_Questions;
-//	    private Question[] hard_Questions;
-//
-//	    private Button button_edit, button_add, button_return;
-//
-//	    @FXML
-//	    public void initialize() {
-//	        loadQuestionsIntoVBox();
-//	    }
-//
-//	    private void loadQuestionsIntoVBox() {
-//	        try {
-//	            for (int i = 0; i < 10; i++) {
-//	                FXMLLoader loader = new FXMLLoader(getClass().getResource("QuestionWiz.fxml")); // Ensure this is the correct path to your 'question' FXML file
-//	                Node question = loader.load();
-//	                easyQuestions.getChildren().add(question);
-//	            }
-//	        } catch (Exception e) {
-//	            e.printStackTrace();
-//	            // Handle exceptions here
-//	        }
-//	    }
-//	    
-//	    private boolean addQ() {
-//	    	return true;
-//	    }
-//	    
-//	    private boolean edit_Q(Question q) {
-//	    	return true;
-//	    }
-//	    
-//	    
-//	    
-//	}
-//
-//

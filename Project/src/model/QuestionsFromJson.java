@@ -1,20 +1,23 @@
 package model;
 
-import java.util.HashMap;
+import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class QuestionsFromJson {
-	private HashMap<Integer, Question> questionsList;
-	
-	public QuestionsFromJson(String path) {
-		super();
-		this.questionsList = new HashMap<Integer, Question>();
-		// implement json import method
-	}
-	public HashMap<Integer, Question> getQuestionsFromJson() {
-		return questionsList;
-	}
+    @JsonProperty("questions")
+    private List<Question> question;
 
-	public HashMap<Integer, Question> getQuestions() {
-		return questionsList;
-	}	
+    // Default constructor
+    public QuestionsFromJson() {
+    }
+
+    // Getters
+    public List<Question> getQuestions() {
+        return question;
+    }
+
+    // Setters
+    public void setQuestions(List<Question> questions) {
+        this.question = questions;
+    }
 }

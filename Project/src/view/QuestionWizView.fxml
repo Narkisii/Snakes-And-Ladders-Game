@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@resources/Css/all_Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.QuestionWizControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@resources/Css/all_Style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.QuestionWizControl">
    <bottom>
       <Pane prefHeight="85.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
@@ -37,7 +37,7 @@
         <tabs>
           <Tab fx:id="EasyTab" text="Easy">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane fx:id="easyTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <VBox spacing="10.0">
                            <children>
@@ -62,10 +62,10 @@
                               </HBox>
                               <ScrollPane prefHeight="419.0" prefWidth="1242.0">
                                  <content>
-                                    <TableView prefHeight="411.0" prefWidth="1244.0" styleClass="table_font" stylesheets="@resources/Css/table_Css.css">
+                                    <TableView fx:id="questionTable" prefHeight="411.0" prefWidth="1244.0" styleClass="table_font" stylesheets="@resources/Css/table_Css.css">
                                       <columns>
-                                          <TableColumn prefWidth="97.33333021402359" text="Num" />
-                                        <TableColumn maxWidth="703.2000045776367" prefWidth="657.0666656494141" text="Question" />
+                                          <TableColumn fx:id="id" prefWidth="97.33333021402359" text="Num" />
+                                        <TableColumn fx:id="question" maxWidth="703.2000045776367" prefWidth="657.0666656494141" text="question" />
                                           <TableColumn minWidth="0.0" prefWidth="235.0" text="Edit" />
                                           <TableColumn prefWidth="235.0" text="Remove" />
                                       </columns>
@@ -80,7 +80,7 @@
           </Tab>
           <Tab fx:id="MediumTab" text="Medium">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane fx:id="mediumTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <VBox spacing="10.0">
                            <children>
@@ -121,7 +121,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Hard">
+            <Tab fx:id="HardTab" text="Hard">
                <content>
                   <AnchorPane fx:id="hardTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
