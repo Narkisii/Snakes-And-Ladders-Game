@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="winner" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.winScreen_Controller">
+   <center>
+      <Pane fx:id="main_pane" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="400.0" prefWidth="600.0">
+               <children>
+                  <Label fx:id="winner_label" alignment="CENTER" prefHeight="402.0" prefWidth="599.0" styleClass="title" stylesheets="@resources/Css/all_Style.css" text="You win" wrapText="true" />
+               </children>
+            </VBox>
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

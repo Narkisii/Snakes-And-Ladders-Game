@@ -158,6 +158,13 @@ public class GameData {
 		return player_list;
 	}
 
+	public Player get_Player(int index) {
+		if(player_list.get(index) != null) {
+			return player_list.get(index);
+		}
+		return null;
+	}
+	
 	/**
 	 * @param player_list the player_list to set
 	 */
@@ -182,6 +189,10 @@ public class GameData {
 			}
 		}
 		return null;
+	}
+	public Player getPlayer(int player) {
+		
+		return player_list.get(player);
 	}
 
 	/**

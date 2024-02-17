@@ -119,7 +119,7 @@ public class Board {
 		// This if is check if the player as moved so much that he won
 		if (newPosition >= (numTiles * numTiles)) {
 			gameEnd = 1;
-			player.setCurrentP(numTiles * numTiles);
+			player.setCurrentP((numTiles * numTiles));
 			return false;
 		}
 

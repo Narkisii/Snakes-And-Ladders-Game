@@ -112,7 +112,6 @@ public class BoardControl {
 	@FXML
 	private Button rollButton;
 	// rolling dice function
-//	@FXML
 
 	// Create a HashMap to store the rectangles
 	HashMap<Integer, Rectangle> tile_Map;
@@ -178,8 +177,9 @@ public class BoardControl {
 
 		// Set the action for the return button
 		return_btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
-		
-		turn_Lable.setTextFill(Color.web(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getColor()));
+
+		turn_Lable.setTextFill(Color
+				.web(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getColor()));
 		turn_Lable.setText(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getName()
 				+ "'s turn");
 		rollButton.setOnAction(event -> roll(Board.get_Dice_Result(),
@@ -356,7 +356,7 @@ public class BoardControl {
 		// TODO Auto-generated method stub
 		System.out.println("check_Question " + curr_Tile);
 		Tile quetion_tile = board.is_question(curr_Tile);
-		if(quetion_tile != null) {
+		if (quetion_tile != null) {
 			System.out.println("is a question");
 			showQuestion();
 		}
@@ -391,7 +391,6 @@ public class BoardControl {
 
 		new_pos_pane.getChildren().addAll(playerbox);
 
-		
 	}
 
 	public void add_Ladders(int start, int end) {
@@ -488,18 +487,18 @@ public class BoardControl {
 		CubicCurve cubic = new CubicCurve();
 		cubic.setStartX(startX);
 		cubic.setStartY(startY);
-		
-//		int randomNumber = (rand.nextInt(11) - 5) * 10; 
-		int randomNumber = (rand.nextInt(11)-5) * 10; 
 
-		double controlX1 = startX - (distance + randomNumber); 
-		randomNumber = (rand.nextInt(11)-5) * 10; 
-		double controlY1 = startY+randomNumber;
-		randomNumber = (rand.nextInt(11)-5) * 10; 
+//		int randomNumber = (rand.nextInt(11) - 5) * 10; 
+		int randomNumber = (rand.nextInt(11) - 5) * 10;
+
+		double controlX1 = startX - (distance + randomNumber);
+		randomNumber = (rand.nextInt(11) - 5) * 10;
+		double controlY1 = startY + randomNumber;
+		randomNumber = (rand.nextInt(11) - 5) * 10;
 //		randomNumber = (rand.nextInt(20) - 10) * 10; 
-		double controlX2 = endX + (distance + randomNumber); 
-		randomNumber = (rand.nextInt(11)-5) * 10; 
-		double controlY2 = endY+randomNumber;
+		double controlX2 = endX + (distance + randomNumber);
+		randomNumber = (rand.nextInt(11) - 5) * 10;
+		double controlY2 = endY + randomNumber;
 		cubic.setControlX1(controlX1);
 		cubic.setControlY1(controlY1);
 		cubic.setControlX2(controlX2);
@@ -535,7 +534,7 @@ public class BoardControl {
 			add_Ladders(l.getStart(), l.getEnd());
 		}
 		for (Snake s : GameData.getInstance().getSnake_list()) {
-	System.out.println("l.getStart() " + s.getStart() + " l.getEnd() " + s.getEnd());
+			System.out.println("l.getStart() " + s.getStart() + " l.getEnd() " + s.getEnd());
 			add_Snakes(s.getStart(), s.getEnd(), s.getColor());
 		}
 
@@ -600,6 +599,7 @@ public class BoardControl {
 	}
 
 	private void roll(int dice, Player player) {
+		
 		rollButton.setDisable(true);
 		final long[] frameCounter = { 0 };
 		final Random random = new Random();
@@ -615,24 +615,27 @@ public class BoardControl {
 						diceImage.setImage(new Image(file.toURI().toString()));
 						rollButton.setDisable(false);
 						this.stop();
-						if(dice == 7 || dice == 8 || dice ==9) {
+						if (dice == 7 || dice == 8 || dice == 9) {
 							Question q = GameData.getInstance().get_Question(dice);
 							showQuestion();
+							
+						} else {
+							GameData.getInstance().getBoard().move(dice, player);
+							move_Player(player);
 						}
-						GameData.getInstance().getBoard().move(dice, player);
-//						for (Player p : GameData.getInstance().getplayer_list()) {
-//							initiate_Players(p, old_post);
-//						}
-						move_Player(player);
+//						GameData.getInstance().getBoard().move(48, player);
+//						move_Player(player);
+
 						if (GameData.getInstance().getPlayerTurn() < GameData.getInstance().getplayer_list().size()
 								- 1) {
 							GameData.getInstance().setPlayerTurn(GameData.getInstance().getPlayerTurn() + 1);
 						} else {
 							GameData.getInstance().setPlayerTurn(0);
 						}
-						turn_Lable.setTextFill(Color.web(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getColor()));
-						turn_Lable.setText(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getName()
-								+ "'s turn");
+						turn_Lable.setTextFill(Color.web(GameData.getInstance().getplayer_list()
+								.get(GameData.getInstance().getPlayerTurn()).getColor()));
+						turn_Lable.setText(GameData.getInstance().getplayer_list()
+								.get(GameData.getInstance().getPlayerTurn()).getName() + "'s turn");
 
 					}
 				}
@@ -661,15 +664,31 @@ public class BoardControl {
 	private void checkwin(int gameEnd) {
 		// TODO Auto-generated method stub
 		if (gameEnd == 1) {
-			stopTimer();
+//			stopTimer();
 			timeline.stop();
-			System.out.println("youwonlol");
-			System.out.println("youwonlol");
-			System.out.println("youwonlol");
-			System.out.println("youwonlol");
-			System.out.println("youwonlol");
-			System.out.println("youwonlol");
+			timer.stop();
+			
+			popupStage = new Stage();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/WinScreen_view.fxml"));
+			Parent root = null;
+			try {
+				root = loader.load();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
+			// Load the FXML file for the pop-up
+			winScreen_Controller controller = loader.getController();
+			Player Player_won = GameData.getInstance().getplayer_list()
+					.get(GameData.getInstance().getPlayerTurn());
+
+			controller.setWinner(Player_won);
+
+			Scene scene = new Scene(root);
+//			controller.setPreviousWindow(this);
+			// Set the scene and show the stage
+			popupStage.setScene(scene);
+			popupStage.show();
 		}
 	}
 
@@ -683,22 +702,22 @@ public class BoardControl {
 
 	public void showQuestion() {
 		// TODO Auto-generated method stub
-        popupStage = new Stage();
+		popupStage = new Stage();
 
-        // Load the FXML file for the pop-up
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/GameQuestion.fxml"));
-        Parent root = null;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		// Load the FXML file for the pop-up
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/GameQuestion.fxml"));
+		Parent root = null;
+		try {
+			root = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-        // Set the scene and show the stage
-        Scene scene = new Scene(root);
-        popupStage.setScene(scene);
-        popupStage.show();
-
+		// Set the scene and show the stage
+		Scene scene = new Scene(root);
+		popupStage.setScene(scene);
+		popupStage.show();
+		startCountDown();
 	}
 
 }
