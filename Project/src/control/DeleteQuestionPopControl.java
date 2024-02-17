@@ -22,10 +22,10 @@ public class DeleteQuestionPopControl {
     @FXML
     public void initialize() {
         yesButton.setOnAction(event -> {
-            QuestionsFromJson questionsFromJson = QuestionsFromJson.getInstance();
-            questionsFromJson.removeQuestion(questionToDelete);
-            QuestionsFromJson.writeQuestionsToJson();
-            closeWindow();
+//            QuestionsFromJson questionsFromJson = QuestionsFromJson.getInstance();
+//            questionsFromJson.removeQuestion(questionToDelete);
+//            QuestionsFromJson.writeQuestionsToJson();
+//            closeWindow();
         });
 
         noButton.setOnAction(event -> closeWindow());

@@ -62,6 +62,8 @@
 .text-field {
     -fx-control-inner-background: #ffffe0; 
     -fx-pref-height: 200.0;
+    -fx-font-size: 20px;
+    
 }
 
 .finish_button {

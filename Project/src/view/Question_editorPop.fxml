@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.AddQuestionPopControl">
+<BorderPane styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.QuestionEditorPopControl">
    <center>
       <AnchorPane prefHeight="300.0" prefWidth="650.0" stylesheets="@resources/Css/popUpStyle.css">
          <children>
@@ -24,11 +24,7 @@
                   <Label prefHeight="30.0" prefWidth="106.0" styleClass="pop_font" text="Question:" />
                   <ScrollPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="63.0" prefWidth="591.0">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="576.0">
-                           <children>
-                              <TextField fx:id="question" prefHeight="49.0" prefWidth="591.0" styleClass="cpu_Font" />
-                           </children>
-                        </AnchorPane>
+                        <TextField fx:id="question_field" alignment="TOP_LEFT" prefHeight="30.0" prefWidth="576.0" styleClass="search_Font" />
                      </content>
                   </ScrollPane>
                   <HBox prefHeight="37.0" prefWidth="591.0" spacing="10.0">
@@ -60,25 +56,25 @@
                   <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" spacing="10.0">
                      <children>
                         <Label contentDisplay="CENTER" prefHeight="58.0" prefWidth="22.0" styleClass="pop_font" text="1: " />
-                        <TextField fx:id="ans1" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 1..." styleClass="cpu_Font" />
+                        <TextField fx:id="ans1" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 1..." styleClass="search_Font" />
                      </children>
                   </HBox>
                   <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" spacing="10.0">
                      <children>
                         <Label contentDisplay="CENTER" prefHeight="73.0" prefWidth="22.0" styleClass="pop_font" text="2:" />
-                        <TextField fx:id="ans2" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 2..." styleClass="cpu_Font" />
+                        <TextField fx:id="ans2" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 2..." styleClass="search_Font" />
                      </children>
                   </HBox>
                   <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" spacing="10.0">
                      <children>
                         <Label contentDisplay="CENTER" prefHeight="86.0" prefWidth="22.0" styleClass="pop_font" text="3:" />
-                        <TextField fx:id="ans3" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 3..." styleClass="cpu_Font" />
+                        <TextField fx:id="ans3" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 3..." styleClass="search_Font" />
                      </children>
                   </HBox>
                   <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" spacing="10.0">
                      <children>
                         <Label contentDisplay="CENTER" prefHeight="70.0" prefWidth="22.0" styleClass="pop_font" text="4:" />
-                        <TextField fx:id="ans4" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 4..." styleClass="cpu_Font" />
+                        <TextField fx:id="ans4" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 4..." styleClass="search_Font" />
                      </children>
                   </HBox>
                   <Separator prefWidth="590.0">
@@ -100,7 +96,7 @@
    <top>
       <AnchorPane prefHeight="46.0" prefWidth="650.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" layoutX="209.0" layoutY="3.0" prefHeight="46.0" prefWidth="271.0" styleClass="title" stylesheets="@resources/Css/popUpStyle.css" text="Add Question">
+            <Label fx:id="main_Label" alignment="CENTER" layoutX="209.0" layoutY="3.0" prefHeight="46.0" prefWidth="271.0" styleClass="title" stylesheets="@resources/Css/popUpStyle.css" text="Add Question">
                <padding>
                   <Insets top="10.0" />
                </padding>

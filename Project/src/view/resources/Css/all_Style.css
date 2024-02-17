@@ -50,6 +50,7 @@
     -fx-effect: dropshadow(three-pass-box, black, 1.5, 1.5, 0, 0);
 	-fx-font-family: 'JejuHallasan';
 }
+
 .board_Font{
 	-fx-text-fill: #7EFF5E;
     -fx-font-size: 20px;

@@ -48,7 +48,7 @@ public class QuestionWizControl {
 
 	@FXML
 	private Tab MediumTab;
-	
+
 	@FXML
 	private Tab HardTab;
 
@@ -56,199 +56,294 @@ public class QuestionWizControl {
 	private Button Return_Btn;
 
 	@FXML
-	private AnchorPane hardTab,easyTab,mediumTab;
+	private AnchorPane hardTab, easyTab, mediumTab;
 
 	@FXML
 	private ScrollPane easyScroll;
 	@FXML
 	private VBox vBox;
-	
-	@FXML
-	private TableView<Question> easy_QTable;
 
 	@FXML
-	private TableColumn<Question, String> id_col_easy;
+	private TableView<Question> qTable;
 
 	@FXML
-	private TableColumn<Question, String> q_col_easy;
-	
+	private TableColumn<Question, String> id_col;
+
+	@FXML
+	private TableColumn<Question, String> q_col;
+
 	@FXML
 	private TextField med_search_input, hard_search_input, easy_search_input;
-	
-	@FXML
-	private Button add_easy_button;
-	
-	@FXML
-	private Button rm_med_button;
-	
-	@FXML
-	private Button easy_button,med_button,hard_button;
-	
-    private Stage popupStage;
 
+	@FXML
+	private Button add_button;
+
+	@FXML
+	private Button rm_button;
+
+	@FXML
+	private Button easy_button, med_button, hard_button;
+
+	private Stage popupStage;
+	List<Question> easy_questionList, med_questionList, hard_questionList;
 	@FXML
 	void initialize() {
-	    // Read the question data from the JSON file
-	    QuestionsFromJson  questionData;
-	    List<Question>easy_questionList,med_questionList,hard_questionList;
-	    try {
-	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	        return;
-	    }
-	    
-	    //Sort the Json 
-	    easy_questionList = questionData.getQuestionsByDifficulty(1);
-	    med_questionList = questionData.getQuestionsByDifficulty(2);
-	    hard_questionList = questionData.getQuestionsByDifficulty(3);
-	    
-	    // Update col
-	    id_col_easy.setCellValueFactory(new PropertyValueFactory<>("id"));
-	    q_col_easy.setCellValueFactory(new PropertyValueFactory<>("question"));
+		// Read the question data from the JSON file
+//		QuestionsFromJson questionData;
+//		List<Question> easy_questionList, med_questionList, hard_questionList;
+//		try {
+////	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
+//			questionData = QuestionsFromJson.readQuestionsFromJson();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			return;
+//		}
+//
+//		// Sort the Json
+//		easy_questionList = questionData.getQuestionsByDifficulty(1);
+//		med_questionList = questionData.getQuestionsByDifficulty(2);
+//		hard_questionList = questionData.getQuestionsByDifficulty(3);
 
-	    // Set the table data
-	    ObservableList<Question> data = FXCollections.observableArrayList(med_questionList); // Uncomment this line
-	    easy_QTable.setItems(data);
-	    
-	    //Activate buttons easy, med, and hard
-	    easy_button.setOnAction(event -> {
-	        ObservableList<Question> easyData = FXCollections.observableArrayList(easy_questionList);
-	        easy_QTable.setItems(easyData);
-	    });
+		update_table();
+		
+		// Set the table data
+		ObservableList<Question> data = FXCollections.observableArrayList(easy_questionList); // Uncomment this line
+		qTable.setItems(data);
+		q_col.setText("Easy Questions");
+		// Activate buttons easy, med, and hard
+		easy_button.setOnAction(event -> {
+			update_table();
 
-	    med_button.setOnAction(event -> {
-	        ObservableList<Question> medData = FXCollections.observableArrayList(med_questionList);
-	        easy_QTable.setItems(medData);
-	    });
+			ObservableList<Question> easyData = FXCollections.observableArrayList(easy_questionList);
+			qTable.setItems(easyData);
+			q_col.setText("Easy Questions");
 
-	    hard_button.setOnAction(event -> {
-	        ObservableList<Question> hardData = FXCollections.observableArrayList(hard_questionList);
-	        easy_QTable.setItems(hardData);
-	    });
-	    
-	    //remove
-	    rm_med_button.setOnAction(event -> {
-	        if (popupStage != null && popupStage.isShowing()) {
-	            // If a pop-up is already open, do nothing
-	            return;
-	        }
+		});
 
-	        // Create a new Stage for the pop-up
-	        popupStage = new Stage();
+		med_button.setOnAction(event -> {
+			update_table();
 
-	        // Load the FXML file for the pop-up
-	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/deleteQuestionPop.fxml"));
-	        Parent root = null;
-	        try {
-	            root = loader.load();
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
+			ObservableList<Question> medData = FXCollections.observableArrayList(med_questionList);
+			qTable.setItems(medData);
+			q_col.setText("Medium Questions");
 
-	        // Get the controller and pass the question object
-	        DeleteQuestionPopControl controller = loader.getController();
-	        Question selectedQuestion = easy_QTable.getSelectionModel().getSelectedItem();
-	        if (selectedQuestion != null) {
-	            controller.setQuestionToDelete(selectedQuestion);
-	        }
+		});
 
-	        // Set the scene and show the stage
-	        Scene scene = new Scene(root);
-	        popupStage.setScene(scene);
-	        popupStage.show();
-	    });
-	    
-	    //Add question
-	    add_easy_button.setOnAction(event -> {
-	        if (popupStage != null && popupStage.isShowing()) {
-	            // If a pop-up is already open, do nothing
-	            return;
-	        }
+		hard_button.setOnAction(event -> {
+			update_table();
 
-	        // Create a new Stage for the pop-up
-	        popupStage = new Stage();
+			ObservableList<Question> hardData = FXCollections.observableArrayList(hard_questionList);
+			qTable.setItems(hardData);
+			q_col.setText("Hard Questions");
+		});
 
-	        // Load the FXML file for the pop-up
-	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/addQuestionPop.fxml"));
-	        Parent root = null;
-	        try {
-	            root = loader.load();
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
+		// remove
+		rm_button.setOnAction(event -> {
+			if (popupStage != null && popupStage.isShowing()) {
+				// If a pop-up is already open, do nothing
+				return;
+			}
 
-	        // Get the controller and pass the question object
-	        AddQuestionPopControl controller = loader.getController();
-	        // You can pass any necessary data to the controller here
+			// Create a new Stage for the pop-up
+			popupStage = new Stage();
 
-	        // Set the scene and show the stage
-	        Scene scene = new Scene(root);
-	        popupStage.setScene(scene);
-	        popupStage.show();
-	    });
+			// Load the FXML file for the pop-up
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/deleteQuestionPop.fxml"));
+			Parent root = null;
+			try {
+				root = loader.load();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
+			// Get the controller and pass the question object
+			DeleteQuestionPopControl controller = loader.getController();
+			Question selectedQuestion = qTable.getSelectionModel().getSelectedItem();
+			if (selectedQuestion != null) {
+				controller.setQuestionToDelete(selectedQuestion);
+			}
 
-	    
-	 // Add a mouse click event to the rows of the table
-	    easy_QTable.setRowFactory(tv -> {
-	        TableRow<Question> row = new TableRow<>();
-	        final AtomicInteger clickCount = new AtomicInteger(0);
-	        final Timeline clickTimer = new Timeline(new KeyFrame(Duration.seconds(2), e -> clickCount.set(0)));
-	        clickTimer.setCycleCount(1);
+			// Set the scene and show the stage
+			Scene scene = new Scene(root);
+			popupStage.setScene(scene);
+			popupStage.show();
+		});
 
-	        row.setOnMouseClicked(event -> {
-	            if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
-	                clickCount.incrementAndGet();
-	                if (clickCount.get() == 2 && (popupStage == null || !popupStage.isShowing())) {
-	                    // Create a new Stage for the pop-up
-	                    popupStage = new Stage();
+		// Add question
+		add_button.setOnAction(event -> {
+			if (popupStage != null && popupStage.isShowing()) {
+				// If a pop-up is already open, do nothing
+				return;
+			}
 
-	                    // Load the FXML file for the pop-up
-	                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/EditQuestionPop.fxml"));
-	                    Parent root = null;
-	                    try {
-	                        root = loader.load();
-	                    } catch (IOException e) {
-	                        e.printStackTrace();
-	                    }
+			// Create a new Stage for the pop-up
+			popupStage = new Stage();
 
-	                    // Get the controller and pass the question object
-	                    EditQuestionPopControl controller = loader.getController();
-	                    controller.setQuestion(row.getItem() );
+			// Load the FXML file for the pop-up
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Question_editorPop.fxml"));
+			Parent root = null;
+			try {
+				root = loader.load();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
-	                    // Set the scene and show the stage
-	                    Scene scene = new Scene(root);
-	                    popupStage.setScene(scene);
-	                    popupStage.show();
+			// Get the controller and pass the question object
+			QuestionEditorPopControl controller = loader.getController();
+			// Pass controller so I can update the table when question added
+			controller.setPreviousWindow(this);
+			controller.setType("add");
 
-	                    // Reset click count
-	                    clickCount.set(0);
-	                }
-	                clickTimer.playFromStart();
-	            }
-	        });
-	        return row;
-	    });
+			// Set the scene and show the stage
+			Scene scene = new Scene(root);
+			popupStage.setScene(scene);
+			popupStage.show();
+		});
 
+		// Add a mouse click event to the rows of the table
+		qTable.setRowFactory(tv -> {
+			TableRow<Question> row = new TableRow<>();
+			final AtomicInteger clickCount = new AtomicInteger(0);
+			final Timeline clickTimer = new Timeline(new KeyFrame(Duration.seconds(2), e -> clickCount.set(0)));
+			clickTimer.setCycleCount(1);
 
-	    
-	    //Configure buttons
-	    Return_Btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
-	   // add_easy_button.setOnAction(event -> navigateTo("/view/addQuestionPop.fxml"));
-	    
-	   
+			row.setOnMouseClicked(event -> {
+				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
+					clickCount.incrementAndGet();
+					if (clickCount.get() == 2 && (popupStage == null || !popupStage.isShowing())) {
+						
+						
+						popupStage = new Stage();
+
+						// Load the FXML file for the pop-up
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Question_editorPop.fxml"));
+						Parent root = null;
+						try {
+							root = loader.load();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+
+						// Get the controller and pass the question object
+						QuestionEditorPopControl controller = loader.getController();
+						// Pass controller so I can update the table when question added
+						controller.setPreviousWindow(this);
+						controller.setType("edit");
+						if(row.getItem() != null)
+						controller.init_edit(row.getItem());
+
+						// Set the scene and show the stage
+						Scene scene = new Scene(root);
+						popupStage.setScene(scene);
+						popupStage.show();
+						
+						// Create a new Stage for the pop-up
+//						popupStage = new Stage();
+//
+//						// Load the FXML file for the pop-up
+//						FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/EditQuestionPop.fxml"));
+//						Parent root = null;
+//						try {
+//							root = loader.load();
+//						} catch (IOException e) {
+//							e.printStackTrace();
+//						}
+//
+//						// Get the controller and pass the question object
+//						EditQuestionPopControl controller = loader.getController();
+//						controller.setQuestion(row.getItem());
+//
+//						// Set the scene and show the stage
+//						Scene scene = new Scene(root);
+//						popupStage.setScene(scene);
+//						popupStage.show();
+
+						// Reset click count
+						clickCount.set(0);
+					}
+					clickTimer.playFromStart();
+				}
+			});
+			return row;
+		});
+
+		// Configure buttons
+		Return_Btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
+		// add_easy_button.setOnAction(event ->
+		// navigateTo("/view/addQuestionPop.fxml"));
 
 	}
 
+	
+	
+	public void update_table(){
+		QuestionsFromJson questionData;
+//		List<Question> easy_questionList, med_questionList, hard_questionList;
+		try {
+//	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
+			questionData = QuestionsFromJson.readQuestionsFromJson();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		}
+
+		// Sort the Json
+		easy_questionList = questionData.getQuestionsByDifficulty(1);
+		med_questionList = questionData.getQuestionsByDifficulty(2);
+		hard_questionList = questionData.getQuestionsByDifficulty(3);
+		
+		// Update col
+//		id_col.setCellValueFactory(new PropertyValueFactory<>("id"));
+		q_col.setCellValueFactory(new PropertyValueFactory<>("question"));
+
+	}
+	public void re_init(int q_diff) {
+		QuestionsFromJson questionData;
+		List<Question> easy_questionList, med_questionList, hard_questionList;
+		try {
+//	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
+			questionData = QuestionsFromJson.readQuestionsFromJson();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		}
+
+		// Sort the Json
+		easy_questionList = questionData.getQuestionsByDifficulty(1);
+		med_questionList = questionData.getQuestionsByDifficulty(2);
+		hard_questionList = questionData.getQuestionsByDifficulty(3);
+
+		// Update col
+		id_col.setCellValueFactory(new PropertyValueFactory<>("id"));
+		q_col.setCellValueFactory(new PropertyValueFactory<>("question"));
+
+		// Set the table data
+		if (q_diff == 1) {
+			ObservableList<Question> data = FXCollections.observableArrayList(easy_questionList); // Uncomment this line
+			qTable.setItems(data);
+			q_col.setText("Easy Questions");
+
+		}
+		if (q_diff == 2) {
+			ObservableList<Question> data = FXCollections.observableArrayList(med_questionList); // Uncomment this line
+			qTable.setItems(data);
+			q_col.setText("Medium Questions");
+
+		}
+		if (q_diff == 3) {
+			ObservableList<Question> data = FXCollections.observableArrayList(hard_questionList); // Uncomment this line
+			qTable.setItems(data);
+			q_col.setText("Hard Questions");
+
+		}
+	}
 
 	private void navigateTo(String fxmlFile) {
 		try {
 			Stage stage = (Stage) Return_Btn.getScene().getWindow();
-            double width = stage.getScene().getWidth();
-            double height = stage.getScene().getHeight();
-            
-            Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
+			double width = stage.getScene().getWidth();
+			double height = stage.getScene().getHeight();
+			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
 
 			stage.setScene(scene);
 		} catch (IOException e) {
@@ -259,9 +354,9 @@ public class QuestionWizControl {
 	private boolean delete_Q(Question q) {
 		return true;
 	}
-	
-	 private QuestionsFromJson  readQuestionFromJson(String filePath) throws IOException {
-	        ObjectMapper mapper = new ObjectMapper();
-	        return mapper.readValue(Paths.get(filePath).toFile(), new TypeReference<QuestionsFromJson >() {});
-	    }
+
+//	 private QuestionsFromJson  readQuestionFromJson(String filePath) throws IOException {
+//	        ObjectMapper mapper = new ObjectMapper();
+//	        return mapper.readValue(Paths.get(filePath).toFile(), new TypeReference<QuestionsFromJson >() {});
+//	    }
 }
