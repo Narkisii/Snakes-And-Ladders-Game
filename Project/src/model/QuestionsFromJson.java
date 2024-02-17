@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 public class QuestionsFromJson {
 	@JsonProperty("questions")
 	private List<Question> questions;
-	private static String path = "src\\Json\\Questions.txt";
+	private static String path = "src/Json/Questions.txt";
 	// Singleton instance
 	private static QuestionsFromJson instance;
 
@@ -57,7 +57,7 @@ public class QuestionsFromJson {
 			}
 		}
 		if (index != -1) {
-			this.questions.remove(index);
+			questions.remove(index);
 		} else {
 			return;
 		}
@@ -69,7 +69,7 @@ public class QuestionsFromJson {
 				throw new DuplicateError();
 			}
 		}
-		this.questions.add(question);
+		questions.add(question);
 
 	}
 
@@ -93,7 +93,7 @@ public class QuestionsFromJson {
 		try {
 			// Read existing questions from JSON file
 			ObjectMapper objectMapper = new ObjectMapper();
-			List<Question> questions = objectMapper.readValue(new File("src\\Json\\Questions.txt"),
+			List<Question> questions = objectMapper.readValue(new File("src/Json/Questions.txt"),
 					new TypeReference<List<Question>>() {
 					});
 
@@ -107,7 +107,7 @@ public class QuestionsFromJson {
 			}
 
 			// Write the updated questions back to the JSON file
-			objectMapper.writeValue(new File("src\\Json\\Questions.txt"), questions);
+			objectMapper.writeValue(new File("src/Json/Questions.txt"), questions);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
