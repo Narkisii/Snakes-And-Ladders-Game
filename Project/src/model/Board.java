@@ -247,7 +247,7 @@ public class Board {
 		GameData.getInstance().addspecialTiles_list(tile);
 	}
 
-	public static int get_Dice_Result() {
+	public int get_Dice_Result() {
 		Random rand = new Random();
 		int randomNumber;
 		String diff = GameData.getInstance().getDifficulty();

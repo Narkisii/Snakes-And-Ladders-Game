@@ -182,7 +182,7 @@ public class BoardControl {
 				.web(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getColor()));
 		turn_Lable.setText(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getName()
 				+ "'s turn");
-		rollButton.setOnAction(event -> roll(Board.get_Dice_Result(),
+		rollButton.setOnAction(event -> roll(board.get_Dice_Result(),
 				GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn())));
 
 		for (Player p : GameData.getInstance().getplayer_list()) {
@@ -566,7 +566,7 @@ public class BoardControl {
 		timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
 			counter.set(counter.get() - 1);
 			if (counter.get() == 0) {
-				roll(Board.get_Dice_Result(),
+				roll(board.get_Dice_Result(),
 						GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()));
 //				timer.stop();
 			}
