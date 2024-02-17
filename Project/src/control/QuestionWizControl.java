@@ -86,6 +86,7 @@ public class QuestionWizControl {
 
 	private Stage popupStage;
 	List<Question> easy_questionList, med_questionList, hard_questionList;
+
 	@FXML
 	void initialize() {
 		// Read the question data from the JSON file
@@ -105,16 +106,17 @@ public class QuestionWizControl {
 //		hard_questionList = questionData.getQuestionsByDifficulty(3);
 
 		update_table();
-		
+
 		// Set the table data
-		ObservableList<Question> data = FXCollections.observableArrayList(easy_questionList); // Uncomment this line
-		qTable.setItems(data);
+//		ObservableList<Question> data = FXCollections.observableArrayList(easy_questionList); // Uncomment this line
+//		qTable.setItems(data);
 		q_col.setText("Easy Questions");
 		// Activate buttons easy, med, and hard
 		easy_button.setOnAction(event -> {
 			update_table();
 
 			ObservableList<Question> easyData = FXCollections.observableArrayList(easy_questionList);
+			update_table();
 			qTable.setItems(easyData);
 			q_col.setText("Easy Questions");
 
@@ -161,7 +163,9 @@ public class QuestionWizControl {
 			Question selectedQuestion = qTable.getSelectionModel().getSelectedItem();
 			if (selectedQuestion != null) {
 				controller.setQuestionToDelete(selectedQuestion);
+
 			}
+			controller.setPreviousWindow(this);
 
 			// Set the scene and show the stage
 			Scene scene = new Scene(root);
@@ -211,8 +215,7 @@ public class QuestionWizControl {
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
 					clickCount.incrementAndGet();
 					if (clickCount.get() == 2 && (popupStage == null || !popupStage.isShowing())) {
-						
-						
+
 						popupStage = new Stage();
 
 						// Load the FXML file for the pop-up
@@ -229,34 +232,13 @@ public class QuestionWizControl {
 						// Pass controller so I can update the table when question added
 						controller.setPreviousWindow(this);
 						controller.setType("edit");
-						if(row.getItem() != null)
-						controller.init_edit(row.getItem());
+						if (row.getItem() != null)
+							controller.init_edit(row.getItem());
 
 						// Set the scene and show the stage
 						Scene scene = new Scene(root);
 						popupStage.setScene(scene);
 						popupStage.show();
-						
-						// Create a new Stage for the pop-up
-//						popupStage = new Stage();
-//
-//						// Load the FXML file for the pop-up
-//						FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/EditQuestionPop.fxml"));
-//						Parent root = null;
-//						try {
-//							root = loader.load();
-//						} catch (IOException e) {
-//							e.printStackTrace();
-//						}
-//
-//						// Get the controller and pass the question object
-//						EditQuestionPopControl controller = loader.getController();
-//						controller.setQuestion(row.getItem());
-//
-//						// Set the scene and show the stage
-//						Scene scene = new Scene(root);
-//						popupStage.setScene(scene);
-//						popupStage.show();
 
 						// Reset click count
 						clickCount.set(0);
@@ -274,9 +256,7 @@ public class QuestionWizControl {
 
 	}
 
-	
-	
-	public void update_table(){
+	public void update_table() {
 		QuestionsFromJson questionData;
 //		List<Question> easy_questionList, med_questionList, hard_questionList;
 		try {
@@ -291,15 +271,15 @@ public class QuestionWizControl {
 		easy_questionList = questionData.getQuestionsByDifficulty(1);
 		med_questionList = questionData.getQuestionsByDifficulty(2);
 		hard_questionList = questionData.getQuestionsByDifficulty(3);
-		
+
 		// Update col
 //		id_col.setCellValueFactory(new PropertyValueFactory<>("id"));
 		q_col.setCellValueFactory(new PropertyValueFactory<>("question"));
 
 	}
+
 	public void re_init(int q_diff) {
 		QuestionsFromJson questionData;
-		List<Question> easy_questionList, med_questionList, hard_questionList;
 		try {
 //	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
 			questionData = QuestionsFromJson.readQuestionsFromJson();
@@ -316,22 +296,26 @@ public class QuestionWizControl {
 		// Update col
 		id_col.setCellValueFactory(new PropertyValueFactory<>("id"));
 		q_col.setCellValueFactory(new PropertyValueFactory<>("question"));
+		
+		ObservableList<Question> data = FXCollections.observableArrayList(easy_questionList); // Uncomment this line
+		qTable.setItems(data);
+		q_col.setText("Easy Questions");
 
 		// Set the table data
 		if (q_diff == 1) {
-			ObservableList<Question> data = FXCollections.observableArrayList(easy_questionList); // Uncomment this line
+			data = FXCollections.observableArrayList(easy_questionList); // Uncomment this line
 			qTable.setItems(data);
 			q_col.setText("Easy Questions");
 
 		}
 		if (q_diff == 2) {
-			ObservableList<Question> data = FXCollections.observableArrayList(med_questionList); // Uncomment this line
+			data = FXCollections.observableArrayList(med_questionList); // Uncomment this line
 			qTable.setItems(data);
 			q_col.setText("Medium Questions");
 
 		}
 		if (q_diff == 3) {
-			ObservableList<Question> data = FXCollections.observableArrayList(hard_questionList); // Uncomment this line
+			data = FXCollections.observableArrayList(hard_questionList); // Uncomment this line
 			qTable.setItems(data);
 			q_col.setText("Hard Questions");
 

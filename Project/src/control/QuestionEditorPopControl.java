@@ -3,8 +3,10 @@ package control;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import exceptions.HandleExceptions;
 import javafx.collections.FXCollections;
@@ -19,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.DuplicateError;
 import model.InputIsEmpty;
+import model.InputIsNotUnique;
 import model.Question;
 import model.QuestionsFromJson;
 
@@ -52,6 +55,7 @@ public class QuestionEditorPopControl {
 		textFieldList.add(question_field);
 		textFieldList.add(ans1);
 		textFieldList.add(ans2);
+		textFieldList.add(ans3);
 		textFieldList.add(ans4);
 		clearButton.setOnMouseClicked(event -> {
 			clear_text();
@@ -96,7 +100,7 @@ public class QuestionEditorPopControl {
 
 					return true;
 				}
-			} catch (InputIsEmpty | DuplicateError | IOException e) {
+			} catch (InputIsEmpty | DuplicateError | IOException | InputIsNotUnique e) {
 				// TODO Auto-generated catch block
 				HandleExceptions.showException(e);
 			}
@@ -104,7 +108,6 @@ public class QuestionEditorPopControl {
 		} else
 
 		{
-
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Save Question");
 			alert.setHeaderText(null);
@@ -150,7 +153,7 @@ public class QuestionEditorPopControl {
 					return true;
 
 				}
-			} catch (DuplicateError | IOException | NumberFormatException | InputIsEmpty e) {
+			} catch (DuplicateError | IOException | InputIsEmpty | InputIsNotUnique e) {
 				// TODO: handle exception
 				HandleExceptions.showException(e);
 
@@ -173,14 +176,19 @@ public class QuestionEditorPopControl {
 	}
 
 	// Check if any imput is empty
-	public boolean checkEmpty() throws InputIsEmpty {
-		for (TextField f : textFieldList) {
-			if (f.getText().isEmpty()) {
-				throw new InputIsEmpty(f.getId());
-			}
-		}
-		return true;
+	public boolean checkEmpty() throws InputIsEmpty, InputIsNotUnique {
+	    Set<String> inputs = new HashSet<>();
+	    for (TextField f : textFieldList) {
+	        String input = f.getText();
+	        if (input.isEmpty()) {
+	            throw new InputIsEmpty(f.getId());
+	        } else if (!inputs.add(input.toLowerCase())) {
+	            throw new InputIsNotUnique(f.getId() + " " + f.getText());
+	        }
+	    }
+	    return true;
 	}
+
 
 	public void setPreviousWindow(QuestionWizControl questionWizControl2) {
 		// TODO Auto-generated method stub

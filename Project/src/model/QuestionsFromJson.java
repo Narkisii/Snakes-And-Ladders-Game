@@ -50,14 +50,16 @@ public class QuestionsFromJson {
 	}
 
 	public void removeQuestion(Question question) {
+		System.out.println("questions.size() " + questions.size());
 		int index = -1;
-		for (int i = 0; i < questions.size() - 1; i++) {
+		for (int i = 0; i < questions.size(); i++) {
 			if (question.equals(questions.get(i))) {
+				System.out.println(i);
 				index = i;
 			}
 		}
 		if (index != -1) {
-			questions.remove(index);
+			this.questions.remove(index);
 		} else {
 			return;
 		}
