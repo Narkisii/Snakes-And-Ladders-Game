@@ -1,9 +1,13 @@
 package model;
 
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import control.HistoryControl;
 
@@ -292,7 +296,6 @@ public class GameData {
 	public boolean get_isIngame() {
 		return in_game;
 	}
-	
 	
 
 
