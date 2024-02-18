@@ -100,7 +100,7 @@ public class QuestionEditorPopControl {
 
 					return true;
 				}
-			} catch (InputIsEmpty | DuplicateError | IOException | InputIsNotUnique e) {
+			} catch (InputIsEmpty | DuplicateError | IOException | InputIsNotUnique | NoJsonFileFound e) {
 				// TODO Auto-generated catch block
 				HandleExceptions.showException(e);
 			}
@@ -153,7 +153,7 @@ public class QuestionEditorPopControl {
 					return true;
 
 				}
-			} catch (DuplicateError | IOException | InputIsEmpty | InputIsNotUnique e) {
+			} catch (DuplicateError | IOException | InputIsEmpty | InputIsNotUnique | NoJsonFileFound e) {
 				// TODO: handle exception
 				HandleExceptions.showException(e);
 

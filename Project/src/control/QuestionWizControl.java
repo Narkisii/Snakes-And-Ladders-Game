@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import exceptions.HandleExceptions;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
@@ -262,8 +263,8 @@ public class QuestionWizControl {
 		try {
 //	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
 			questionData = QuestionsFromJson.getInstance().readQuestionsFromJson();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException | NoJsonFileFound e) {
+			HandleExceptions.showException(e);
 			return;
 		}
 
@@ -283,8 +284,9 @@ public class QuestionWizControl {
 		try {
 //	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
 			questionData = QuestionsFromJson.getInstance().readQuestionsFromJson();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException | NoJsonFileFound e) {
+//			e.printStackTrace();
+			HandleExceptions.showException(e);
 			return;
 		}
 

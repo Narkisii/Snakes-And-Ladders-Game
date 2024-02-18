@@ -33,7 +33,7 @@ public class DeleteQuestionPopControl {
 				questionsFromJson.toJson();
 				previousWindow.re_init(questionToDelete.getDifficulty());
 				closeWindow();
-			} catch (IOException e) {
+			} catch (IOException | NoJsonFileFound e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 

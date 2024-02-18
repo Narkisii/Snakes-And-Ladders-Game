@@ -1,5 +1,6 @@
 package exceptions;
 
+import javax.lang.model.type.ErrorType;
 import javax.swing.JOptionPane;
 
 import javafx.scene.control.Alert;
@@ -19,8 +20,8 @@ public class HandleExceptions extends JOptionPane{
 	
 	public static void showException(Exception e) {
 		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Save Question");
-		alert.setContentText("Error: " + e.getMessage());
+		alert.setTitle(e.getClass().getName());
+		alert.setContentText("Error: \n" + e.getMessage());
 		alert.showAndWait();
 
 //		JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

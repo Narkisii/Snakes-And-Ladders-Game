@@ -12,6 +12,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import control.NoJsonFileFound;
+
 public class QuestionsFromJson {
 	private static QuestionsFromJson instance;
 
@@ -65,7 +67,7 @@ public class QuestionsFromJson {
 		this.questions = questions;
 	}
 
-	public QuestionsFromJson readQuestionsFromJson() throws IOException {
+	public QuestionsFromJson readQuestionsFromJson() throws IOException, NoJsonFileFound {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		try {
@@ -75,11 +77,15 @@ public class QuestionsFromJson {
 
 		}catch (Exception e) {
 			// TODO: handle exception
+			try {
 			String path = "Json/Questions.txt";
 			this.file = new File(path);
 			QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
 			return questions_class;
-
+			}catch (Exception e1) {
+				// TODO: handle exception
+				throw new NoJsonFileFound();
+			}
 		}
 
 		//        List<Question> questions = new 

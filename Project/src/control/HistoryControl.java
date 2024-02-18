@@ -20,6 +20,9 @@ import javafx.stage.Stage;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import exceptions.HandleExceptions;
+
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
@@ -66,16 +69,18 @@ public class HistoryControl {
 	    @FXML
 	    private TableColumn<History, String> winnerCol;
     
-	    private String path = "Json/History.txt";
+	    private String path = "src/Json/History.txt";
     @FXML
     public void initialize() {
-    	
+        returnBtn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
+
     	// Read the history data from the JSON file
         List<History> historyData;
         try {
             historyData = readHistoryFromJson(path);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | NoJsonFileFound e) {
+        	HandleExceptions.showException(e);
+//            e.printStackTrace();
             return;
         }
         
@@ -93,18 +98,22 @@ public class HistoryControl {
         // Set the data to the TableView
         historyTable.setItems(observableList);
         // Add action for your button here
-        returnBtn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
     }
     
-    private List<History> readHistoryFromJson(String filePath) throws IOException {
+    private List<History> readHistoryFromJson(String filePath) throws IOException, NoJsonFileFound {
         ObjectMapper mapper = new ObjectMapper();
         try {
             return mapper.readValue(Paths.get(filePath).toFile(), new TypeReference<List<History>>() {});
 		} catch (Exception e) {
 			// TODO: handle exception
-			filePath = "src/Json/History.txt";
-			return mapper.readValue(Paths.get(filePath).toFile(), new TypeReference<List<History>>() {});
+			try {
+				filePath = "Json/History.txt";
+				return mapper.readValue(Paths.get(filePath).toFile(), new TypeReference<List<History>>() {});
 
+			} catch (Exception e2) {
+				// TODO: handle exception
+				throw new NoJsonFileFound();
+			}
 		}
     }
     
