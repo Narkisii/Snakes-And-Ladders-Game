@@ -12,8 +12,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import control.NoJsonFileFound;
-
 public class QuestionsFromJson {
 	private static QuestionsFromJson instance;
 

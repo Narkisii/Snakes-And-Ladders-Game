@@ -1,5 +1,6 @@
 package control;
 import model.History;
+import model.NoJsonFileFound;
 
 import java.io.IOException;
 import java.util.List;

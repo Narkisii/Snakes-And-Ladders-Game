@@ -5,6 +5,7 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import model.NoJsonFileFound;
 import model.Question;
 import model.QuestionsFromJson;
 
