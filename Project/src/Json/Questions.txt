@@ -1,18 +1,136 @@
 {
-  "questions" : [ {
-    "question" : "q2",
-    "answers" : [ "answer1", "answer2", "answer3", "answer4" ],
-    "correct_ans" : "1",
-    "difficulty" : 1
-  }, {
-    "question" : "q3",
-    "answers" : [ "answer1", "answer2", "answer3", "answer4" ],
-    "correct_ans" : "1",
-    "difficulty" : 3
-  }, {
-    "question" : "q3",
-    "answers" : [ "answer1", "answer2", "answer3", "answer4" ],
-    "correct_ans" : "1",
-    "difficulty" : 1
-  } ]
+    "questions": [
+        {
+            "question": "What does software architecture encompass in its design decisions?",
+            "answers": [
+                "Structure, Behavior, Interaction, Non-functional properties",
+                "Only the physical structure of the system",
+                "Just the user interface design",
+                "The programming languages used"
+            ],
+            "correct_ans": "2",
+            "difficulty": "1"
+        },
+        {
+            "question": "What is the primary purpose of software design and implementation?",
+            "answers": [
+                "To develop a marketing strategy",
+                "To develop an executable software system",
+                "To write user manuals",
+                "To test the software"
+            ],
+            "correct_ans": "1",
+            "difficulty": "1"
+        },
+        {
+            "question": "When is it preferable to buy application software rather than build it?",
+            "answers": [
+                "When the software is for a unique, one-of-a-kind system",
+                "When an off-the-shelf solution can be adapted to meet user",
+                "Only for small, simple applications",
+                "When the software must be developed in a conventional programming"
+            ],
+            "correct_ans": "1",
+            "difficulty": "1"
+        },
+        {
+            "question": "How do Perry and Wolf define software architecture?",
+            "answers": [
+                "As a set of elements, form, and rationale",
+                "Solely based on the software's functionality",
+                "As the programming code structure",
+                "Based on the software's cost"
+            ],
+            "correct_ans": "2",
+            "difficulty": "2"
+        },
+        {
+            "question": "What is an architectural pattern?",
+            "answers": [
+                "A fixed set of design rules that cannot be altered",
+                "A specific programming language structure",
+                "A set of design decisions applicable to recurring design problems",
+                "A blueprint for graphical user interfaces"
+            ],
+            "correct_ans": "2",
+            "difficulty": "2"
+        },
+        {
+            "question": "What is a design pattern in software engineering?",
+            "answers": [
+                "A detailed software specification",
+                "A common solution to a recurring problem in design",
+                "A unique approach for each software system",
+                "A method for cost estimation"
+            ],
+            "correct_ans": "1",
+            "difficulty": "2"
+        },
+        {
+            "question": "What does the client-server architecture involve?",
+            "answers": [
+                "A single server handling all tasks",
+                "A system with no servers",
+                "Clients accessing services from separate servers",
+                "Only peer-to-peer interactions"
+            ],
+            "correct_ans": "2",
+            "difficulty": "3"
+        },
+        {
+            "question": "What is the temporal aspect of software architecture?",
+            "answers": [
+                "The architecture remains constant over time",
+                "The architecture changes over a system's lifetime",
+                "The architecture is only relevant at the beginning of the system's life",
+                "The architecture is decided after the system is built"
+            ],
+            "correct_ans": "1",
+            "difficulty": "3"
+        },
+        {
+            "question": "What is the intent of the Singleton pattern in software design?",
+            "answers": [
+                "To ensure multiple instances of a class",
+                "To ensure a class has one instance with global access",
+                "To provide multiple access points to a class",
+                "To allow unrestricted subclassing of a class"
+            ],
+            "correct_ans": "1",
+            "difficulty": "3"
+        },
+        {
+            "question": "What is software architecture?",
+            "answers": [
+                "The set of principal design decisions about a system",
+                "The programming language used for development",
+                "The database technology chosen for the system",
+                "The user interface layout"
+            ],
+            "correct_ans": "4",
+            "difficulty": "1"
+        },
+        {
+            "question": "What is a common use of client-server architecture?",
+            "answers": [
+                "For systems that do not require a network",
+                "For systems that do not involve data sharing",
+                "For systems where data in a shared database has to be accessed from",
+                "For standalone desktop applications"
+            ],
+            "correct_ans": "2",
+            "difficulty": "1"
+        },
+        {
+            "question": "What does an architectural pattern describe?",
+            "answers": [
+                "A system organization that has been successful in previous systems",
+                "The specific coding standards for a system",
+                "The network infrastructure of a system",
+                "The budget for the system's development"
+            ],
+            "correct_ans": "3",
+            "difficulty": "1"
+        }
+    ]
 }
