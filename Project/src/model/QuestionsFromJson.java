@@ -15,32 +15,28 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 public class QuestionsFromJson {
 	private static QuestionsFromJson instance;
 
-
 	/**
 	 * 
 	 */
-	
-	
-	
+
 	@JsonProperty("questions")
 	private List<Question> questions;
 //	private String path = "src/Json/Questions.txt";
-	
-	private String path = "src/Json/Questions.txt";
+
+	private String path;
 	File file;
 
 	public QuestionsFromJson() {
 		super();
-		this.file = new File(path);
-
+		this.file = returnFile();
 	}
+
 	public static QuestionsFromJson getInstance() {
 		if (instance == null) {
 			instance = new QuestionsFromJson();
 		}
 		return instance;
 	}
-	
 
 //	// Private constructor
 //	private get_QuestionsFromJson(List<Question> questions) {
@@ -67,26 +63,50 @@ public class QuestionsFromJson {
 
 	public QuestionsFromJson readQuestionsFromJson() throws IOException, NoJsonFileFound {
 		ObjectMapper mapper = new ObjectMapper();
-		
-		try {
-		this.file = new File(path);
-		QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
-		return questions_class;
 
-		}catch (Exception e) {
-			// TODO: handle exception
-			try {
-			String path = "Json/Questions.txt";
+		try {
+			path = "src/Json/Questions.txt";
 			this.file = new File(path);
 			QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
 			return questions_class;
-			}catch (Exception e1) {
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			try {
+				this.path = "Json/Questions.txt";
+				this.file = new File(path);
+				QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
+				return questions_class;
+			} catch (Exception e1) {
 				// TODO: handle exception
 				throw new NoJsonFileFound();
 			}
 		}
+	}
 
-		//        List<Question> questions = new 
+	public File returnFile() {
+		ObjectMapper mapper = new ObjectMapper();
+		file = null;
+		try {
+			path = "src/Json/Questions.txt";
+			this.file = new File(path);
+			QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
+			return file;
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			try {
+				this.path = "Json/Questions.txt";
+				this.file = new File(path);
+				QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
+				return file;
+			} catch (Exception e1) {
+				// TODO: handle exception
+			}
+		}
+		return file;
+
+		// List<Question> questions = new
 //		QuestionsFromJson questions_class = mapper.readValue(new File(path), QuestionsFromJson.class);
 //		QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
 
@@ -143,9 +163,8 @@ public class QuestionsFromJson {
 //			List<Question> questions = objectMapper.readValue(new File(path),
 //					new TypeReference<List<Question>>() {
 //					});
-			List<Question> questions = objectMapper.readValue(file,
-					new TypeReference<List<Question>>() {
-					});
+			List<Question> questions = objectMapper.readValue(file, new TypeReference<List<Question>>() {
+			});
 			// Find the question to be edited and replace it with the new question
 			for (int i = 0; i < questions.size(); i++) {
 				Question q = questions.get(i);
@@ -177,7 +196,7 @@ public class QuestionsFromJson {
 	public void toJson() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.enable(SerializationFeature.INDENT_OUTPUT); // Enable pretty printing
-		
+
 		mapper.writeValue(file, this);
 
 //		mapper.writeValue(new File(path), this);
