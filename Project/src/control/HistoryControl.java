@@ -66,13 +66,14 @@ public class HistoryControl {
 	    @FXML
 	    private TableColumn<History, String> winnerCol;
     
+	    private String path = "Json/History.txt";
     @FXML
     public void initialize() {
     	
     	// Read the history data from the JSON file
         List<History> historyData;
         try {
-            historyData = readHistoryFromJson("src\\Json\\History.txt");
+            historyData = readHistoryFromJson(path);
         } catch (IOException e) {
             e.printStackTrace();
             return;
@@ -97,7 +98,14 @@ public class HistoryControl {
     
     private List<History> readHistoryFromJson(String filePath) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(Paths.get(filePath).toFile(), new TypeReference<List<History>>() {});
+        try {
+            return mapper.readValue(Paths.get(filePath).toFile(), new TypeReference<List<History>>() {});
+		} catch (Exception e) {
+			// TODO: handle exception
+			filePath = "src/Json/History.txt";
+			return mapper.readValue(Paths.get(filePath).toFile(), new TypeReference<List<History>>() {});
+
+		}
     }
     
     public HistoryControl createHistoryRecord(String players, int difficulty, String playTime, String winner) {

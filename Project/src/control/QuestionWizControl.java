@@ -261,7 +261,7 @@ public class QuestionWizControl {
 //		List<Question> easy_questionList, med_questionList, hard_questionList;
 		try {
 //	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
-			questionData = QuestionsFromJson.readQuestionsFromJson();
+			questionData = QuestionsFromJson.getInstance().readQuestionsFromJson();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;
@@ -282,7 +282,7 @@ public class QuestionWizControl {
 		QuestionsFromJson questionData;
 		try {
 //	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
-			questionData = QuestionsFromJson.readQuestionsFromJson();
+			questionData = QuestionsFromJson.getInstance().readQuestionsFromJson();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;

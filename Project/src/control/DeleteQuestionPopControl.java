@@ -28,7 +28,7 @@ public class DeleteQuestionPopControl {
 		yesButton.setOnAction(event -> {
 			QuestionsFromJson questionsFromJson;
 			try {
-				questionsFromJson = QuestionsFromJson.readQuestionsFromJson();
+				questionsFromJson = QuestionsFromJson.getInstance().readQuestionsFromJson();
 				questionsFromJson.removeQuestion(questionToDelete);
 				questionsFromJson.toJson();
 				previousWindow.re_init(questionToDelete.getDifficulty());

@@ -81,7 +81,7 @@ public class QuestionEditorPopControl {
 				alert.setHeaderText(null);
 				alert.setContentText("Saved Question");
 
-				questionsFromJson = QuestionsFromJson.readQuestionsFromJson();
+				questionsFromJson = QuestionsFromJson.getInstance().readQuestionsFromJson();
 				// Create a new Question object
 
 				if (checkEmpty()) {
@@ -114,7 +114,7 @@ public class QuestionEditorPopControl {
 			alert.setContentText("Saved Edit");
 			try {
 				///  edit question
-				QuestionsFromJson questionsFromJson = QuestionsFromJson.readQuestionsFromJson();
+				QuestionsFromJson questionsFromJson = QuestionsFromJson.getInstance().readQuestionsFromJson();
 				if (checkEmpty()) {
 
 					// Get the updated question text

@@ -43,7 +43,7 @@
                     <HBox alignment="CENTER" GridPane.columnIndex="1">
                         <ImageView fitHeight="88.0" fitWidth="90.0">
                             <image>
-                                <Image url="@Images/dice1%20(1).png" />
+                                <Image url="@Images/dice1.png" />
                             </image>
                         </ImageView>
                         <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@resources/Css/all_Style.css" text="Roll the dice to determine your actions in each turn." wrapText="true" />
@@ -51,7 +51,7 @@
                     <HBox alignment="CENTER">
                         <ImageView fitHeight="86.0" fitWidth="91.0">
                             <image>
-                                <Image url="@Images/bulb1%20(1).png" />
+                                <Image url="@Images/bulb1.png" />
                             </image>
                         </ImageView>
                         <Label prefHeight="86.0" prefWidth="336.0" stylesheets="@resources/Css/all_Style.css" text="Objective: Be the first player to reach the end of the game board." wrapText="true">
@@ -74,7 +74,7 @@
                     <HBox alignment="CENTER" GridPane.rowIndex="1">
                         <ImageView fitHeight="79.0" fitWidth="80.0">
                             <image>
-                                <Image url="@Images/arrow1%20(1).png" />
+                                <Image url="@Images/arrow1.png" />
                             </image>
                         </ImageView>
                         <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@resources/Css/all_Style.css" text="Move forward the indicated number of steps on the board." wrapText="true">
@@ -85,7 +85,7 @@
                     <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
                         <ImageView fitHeight="92.0" fitWidth="102.0">
                             <image>
-                                <Image url="@Images/warningSign%20(1).png" />
+                                <Image url="@Images/warningSign.png" />
                             </image>
                             <HBox.margin>
                                 <Insets right="10.0" />
@@ -99,7 +99,7 @@
                     <HBox alignment="CENTER" GridPane.rowIndex="2">
                         <ImageView fitHeight="94.0" fitWidth="109.0">
                             <image>
-                                <Image url="@Images/question%20(1).png" />
+                                <Image url="@Images/question.png" />
                             </image>
                         </ImageView>
                         <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@resources/Css/all_Style.css" text="Answer questions on question squares to proceed." wrapText="true">
@@ -110,7 +110,7 @@
                     <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
                         <ImageView fitHeight="68.0" fitWidth="69.0">
                             <image>
-                                <Image url="@Images/gift%20(1).png" />
+                                <Image url="@Images/gift.png" />
                             </image>
                             <HBox.margin>
                                 <Insets />
@@ -124,7 +124,7 @@
                     <HBox alignment="CENTER" GridPane.rowIndex="3">
                         <ImageView fitHeight="85.0" fitWidth="84.0">
                             <image>
-                                <Image url="@Images/difficulty%20(1).png" />
+                                <Image url="@Images/difficulty.png" />
                             </image>
                         </ImageView>
                         <Label prefHeight="86.0" prefWidth="336.0" styleClass="instruction_Font, rounded-frame" stylesheets="@resources/Css/all_Style.css" text="Choose the difficulty level (easy, medium, or hard) before starting." wrapText="true">
@@ -135,7 +135,7 @@
                     <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
                         <ImageView fitHeight="84.0" fitWidth="92.0">
                             <image>
-                                <Image url="@Images/winning%20(1).png" />
+                                <Image url="@Images/winning.png" />
                             </image>
                      <HBox.margin>
                         <Insets right="15.0" />

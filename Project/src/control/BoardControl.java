@@ -199,6 +199,7 @@ public class BoardControl {
 
 	}
 
+	//Createa the gridpane of the board with the initialized tiles and thiers id
 	private GridPane createBoard(int numTiles) {
 		grid = new GridPane(); // Initialize the grid
 		grid.setId("grid");
@@ -276,6 +277,7 @@ public class BoardControl {
 
 	}
 
+	//add all special tiles (Surprise, question and red snake)
 	private void add_SpecialTiles() {
 		LinkedList<Tile> specialTiles = GameData.getInstance().getspecialTiles_list();
 		for (Tile tile : specialTiles) {
@@ -296,6 +298,7 @@ public class BoardControl {
 
 	}
 
+	//Clean tile from user token
 	private void clean_Tile(Player p) {
 		LinkedList<Integer> placment = p.getPlacment_history();
 		for (int i = placment.size() - 2; i >= 0; i--) {
@@ -312,6 +315,7 @@ public class BoardControl {
 
 	}
 
+	//move player
 	private void move_Player(Player p) {
 		checkwin(GameData.getInstance().getBoard().getGameEnd());
 		if (p.getCurrentP() == p.getPreviousStep()) {
@@ -352,6 +356,7 @@ public class BoardControl {
 		check_Question(Integer.parseInt(curr_Tile.getId()));
 	}
 
+	//Check if the tile has a question
 	private void check_Question(int curr_Tile) {
 		// TODO Auto-generated method stub
 		System.out.println("check_Question " + curr_Tile);
@@ -362,6 +367,7 @@ public class BoardControl {
 		}
 	}
 
+	//initiate the players tokens
 	private void initiate_Players(Player p) {
 		p.addStep(1);
 		Pane new_pos_pane = (Pane) grid.lookup("#" + p.getCurrentP());
@@ -393,6 +399,7 @@ public class BoardControl {
 
 	}
 
+	
 	public void add_Ladders(int start, int end) {
 		Random random = new Random();
 
@@ -606,13 +613,21 @@ public class BoardControl {
 		AnimationTimer animationTimer = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
+				String path = "view/Images/dice/";
 				if (frameCounter[0]++ % 3 == 0) { // adjust the 6 to control the speed of the animation
 					if (frameCounter[0] < 90) { // adjust the 90 to control the duration of the animation
-						File file = new File("src/view/Images/dice/" + (random.nextInt(10)) + ".png");
-						diceImage.setImage(new Image(file.toURI().toString()));
+						try {
+						Image img = new Image(path + (random.nextInt(10)) + ".png");
+						diceImage.setImage(img);
+						}catch (Exception e) {
+							// TODO: handle exception
+							path = "Images/dice/";
+							Image img = new Image(path + (random.nextInt(10)) + ".png");
+							diceImage.setImage(img);
+						}
 					} else {
-						File file = new File("src/view/Images/dice/" + dice + ".png");
-						diceImage.setImage(new Image(file.toURI().toString()));
+						Image img = new Image(path + dice + ".png");
+						diceImage.setImage(img);
 						rollButton.setDisable(false);
 						this.stop();
 						if (dice == 7 || dice == 8 || dice == 9) {

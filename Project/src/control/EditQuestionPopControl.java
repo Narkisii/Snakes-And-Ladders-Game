@@ -65,7 +65,7 @@ public class EditQuestionPopControl {
 	public void saveQuestion() {
 		try {
 
-			QuestionsFromJson questionsFromJson = QuestionsFromJson.readQuestionsFromJson();
+			QuestionsFromJson questionsFromJson = QuestionsFromJson.getInstance().readQuestionsFromJson();
 
 			// Get the updated question text
 			String updatedQuestionText = questionTextField.getText();

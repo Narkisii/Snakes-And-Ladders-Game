@@ -511,7 +511,7 @@ public class PlayersControl {
 
 	private void navigateTo(String fxmlFile) {
 		try {
-			Stage stage = (Stage) return_Btn.getScene().getWindow();
+			Stage stage = (Stage) start_game_Btn.getScene().getWindow();
 			double width = stage.getScene().getWidth();
 			double height = stage.getScene().getHeight();
 
