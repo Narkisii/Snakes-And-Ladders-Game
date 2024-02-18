@@ -70,18 +70,18 @@ public class Tile {
 	public String get_Image() {
 		switch (type) {
 		case (10):
-			this.image_path = "/view/Images/gift (1).png";
+			this.image_path = "/view/Images/gift.png";
 			break;
 
 		case (-10):
-			this.image_path = "/view/Images/gift (1).png";
+			this.image_path = "/view/Images/gift.png";
 			break;
 		case (1):
 			this.image_path = "/view/Images/Snakes/red_snake.png";
 			break;
 
 		case (4):
-			this.image_path = "/view/Images/question (1).png";
+			this.image_path = "/view/Images/question.png";
 			break;
 		}
 		return image_path;

@@ -1,6 +1,7 @@
 package model;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,20 +13,43 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class QuestionsFromJson {
-	@JsonProperty("questions")
-	private List<Question> questions;
-	private static String path = "src/Json/Questions.txt";
-	// Singleton instance
 	private static QuestionsFromJson instance;
 
-	// Private constructor
-	private QuestionsFromJson(List<Question> questions) {
-		this.questions = questions;
-	}
 
-	private QuestionsFromJson() {
-		this.questions = new ArrayList<>();
+	/**
+	 * 
+	 */
+	
+	
+	
+	@JsonProperty("questions")
+	private List<Question> questions;
+//	private String path = "src/Json/Questions.txt";
+	
+	private String path = "src/Json/Questions.txt";
+	File file;
+
+	public QuestionsFromJson() {
+		super();
+		this.file = new File(path);
+
 	}
+	public static QuestionsFromJson getInstance() {
+		if (instance == null) {
+			instance = new QuestionsFromJson();
+		}
+		return instance;
+	}
+	
+
+//	// Private constructor
+//	private get_QuestionsFromJson(List<Question> questions) {
+//		this.questions = questions;
+//	}
+//
+//	private set_QuestionsFromJson() {
+//		this.questions = new ArrayList<>();
+//	}
 
 	/**
 	 * @return the questions
@@ -41,12 +65,29 @@ public class QuestionsFromJson {
 		this.questions = questions;
 	}
 
-	public static QuestionsFromJson readQuestionsFromJson() throws IOException {
+	public QuestionsFromJson readQuestionsFromJson() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
-//        List<Question> questions = new 
-		QuestionsFromJson questions_class = mapper.readValue(new File(path), QuestionsFromJson.class);
-//        questions_class.questions = questions_class.getQuestions();
+		
+		try {
+		this.file = new File(path);
+		QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
 		return questions_class;
+
+		}catch (Exception e) {
+			// TODO: handle exception
+			String path = "Json/Questions.txt";
+			this.file = new File(path);
+			QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
+			return questions_class;
+
+		}
+
+		//        List<Question> questions = new 
+//		QuestionsFromJson questions_class = mapper.readValue(new File(path), QuestionsFromJson.class);
+//		QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
+
+//        questions_class.questions = questions_class.getQuestions();
+//		return questions_class;
 	}
 
 	public void removeQuestion(Question question) {
@@ -95,10 +136,12 @@ public class QuestionsFromJson {
 		try {
 			// Read existing questions from JSON file
 			ObjectMapper objectMapper = new ObjectMapper();
-			List<Question> questions = objectMapper.readValue(new File("src/Json/Questions.txt"),
+//			List<Question> questions = objectMapper.readValue(new File(path),
+//					new TypeReference<List<Question>>() {
+//					});
+			List<Question> questions = objectMapper.readValue(file,
 					new TypeReference<List<Question>>() {
 					});
-
 			// Find the question to be edited and replace it with the new question
 			for (int i = 0; i < questions.size(); i++) {
 				Question q = questions.get(i);
@@ -109,7 +152,9 @@ public class QuestionsFromJson {
 			}
 
 			// Write the updated questions back to the JSON file
-			objectMapper.writeValue(new File("src/Json/Questions.txt"), questions);
+//			objectMapper.writeValue(new File(path), questions);
+			objectMapper.writeValue(file, questions);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -128,8 +173,10 @@ public class QuestionsFromJson {
 	public void toJson() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.enable(SerializationFeature.INDENT_OUTPUT); // Enable pretty printing
+		
+		mapper.writeValue(file, this);
 
-		mapper.writeValue(new File(path), this);
+//		mapper.writeValue(new File(path), this);
 	}
 
 }

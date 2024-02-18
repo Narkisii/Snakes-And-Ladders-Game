@@ -62,7 +62,7 @@
                      <children>
                         <ImageView fx:id="diceImage" fitHeight="100.0" fitWidth="100.0" layoutX="65.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@dice/dice1.png" />
+                              <Image url="@Images/dice/0.png" />
                            </image>
                         </ImageView>
                      </children>
