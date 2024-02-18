@@ -108,6 +108,8 @@ public class QuestionWizControl {
 //		hard_questionList = questionData.getQuestionsByDifficulty(3);
 
 		update_table();
+		ObservableList<Question> data = FXCollections.observableArrayList(easy_questionList); // Uncomment this line
+		qTable.setItems(data);
 
 		// Set the table data
 //		ObservableList<Question> data = FXCollections.observableArrayList(easy_questionList); // Uncomment this line

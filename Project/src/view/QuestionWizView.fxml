@@ -44,7 +44,7 @@
                   </HBox>
                   <AnchorPane prefWidth="1230.0">
                      <children>
-                        <HBox layoutX="6.0" layoutY="10.0" spacing="10.0" stylesheets="@resources/Css/Buttons.css">
+                        <HBox alignment="CENTER" layoutX="6.0" layoutY="10.0" prefHeight="56.0" prefWidth="1246.0" spacing="10.0" stylesheets="@resources/Css/Buttons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Label contentDisplay="CENTER" prefHeight="32.0" prefWidth="103.0" styleClass="cpu_Font" text="Search">
                                  <stylesheets>
@@ -58,9 +58,12 @@
                                     <Image url="@Images/search-icon.png" />
                                  </image>
                               </ImageView>
-                              <Pane prefHeight="46.0" prefWidth="290.0" />
-                              <Button fx:id="add_button" mnemonicParsing="false" prefHeight="46.0" prefWidth="256.0" styleClass="addQuestion_Button" text="Add Question" />
-                              <Button fx:id="rm_button" mnemonicParsing="false" prefHeight="46.0" prefWidth="236.0" style="-fx-background-color: Red;" styleClass="addQuestion_Button" text="Remove Question" />
+                              <Pane prefHeight="56.0" prefWidth="330.0">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="12.0" prefHeight="32.0" prefWidth="328.0" styleClass="qWizFont" stylesheets="@resources/Css/popUpStyle.css" text="Double click on question to edit" />
+                                 </children></Pane>
+                              <Button fx:id="add_button" mnemonicParsing="false" prefHeight="46.0" prefWidth="219.0" styleClass="addQuestion_Button" text="Add Question" />
+                              <Button fx:id="rm_button" mnemonicParsing="false" prefHeight="46.0" prefWidth="214.0" style="-fx-background-color: Red;" styleClass="addQuestion_Button" text="Remove Question" />
                            </children>
                         </HBox>
                      </children>
