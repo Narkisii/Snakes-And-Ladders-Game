@@ -62,15 +62,15 @@ public class winScreen_Controller {
 	}
 
 	private void anim_init() {
+//      nodes[i] = new Rectangle(10, 10, color);
+//      angles[i] = 2.0 * Math.PI * random.nextDouble();
+//      start[i] = random.nextInt(2000000000);
 
 		for (int i = 0; i < STAR_COUNT; i++) {
 			int r = random.nextInt(255);
 			int g = random.nextInt(255);
 			int b = random.nextInt(255);
 			Color color = Color.rgb(r, g, b);
-//            nodes[i] = new Rectangle(10, 10, color);
-//            angles[i] = 2.0 * Math.PI * random.nextDouble();
-//            start[i] = random.nextInt(2000000000);
 			nodes1[i] = new Circle(3, color);
 			nodes2[i] = new Circle(3, color);
 			angles[i] = 2.0 * Math.PI * random.nextDouble();
