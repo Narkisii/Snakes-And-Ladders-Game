@@ -10,7 +10,7 @@ import javafx.scene.control.Alert.AlertType;
  * @author Ariel Bubis 205735749
  *
  */
-public class HandleExceptions extends JOptionPane{
+public class HandleExceptions {
 
 	/**
 	 * 
@@ -24,7 +24,6 @@ public class HandleExceptions extends JOptionPane{
 		alert.setContentText("Error: \n" + e.getMessage());
 		alert.showAndWait();
 
-//		JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 	}
 	
 }
