@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="mainBorderPane" styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.LoginController">
+    <center>
+        <AnchorPane fx:id="mainPane" prefHeight="300.0" prefWidth="650.0" stylesheets="@resources/Css/popUpStyle.css">
+            <children>
+                <HBox fx:id="buttonHBox" alignment="CENTER" layoutX="213.0" layoutY="384.0" prefHeight="49.0" prefWidth="227.0" spacing="10.0">
+                    <Button fx:id="loginButton" styleClass="finish_button" stylesheets="@resources/Css/popUpStyle.css" text="Log in" />
+                    <Button fx:id="cancelButton" styleClass="finish_button" stylesheets="@resources/Css/popUpStyle.css" text="Cancel" />
+                </HBox>
+                <VBox fx:id="formVBox" layoutX="145.0" layoutY="105.0" prefHeight="202.0" prefWidth="363.0" spacing="10.0" stylesheets="@resources/Css/popUpStyle.css" AnchorPane.bottomAnchor="151.0" AnchorPane.leftAnchor="145.0" AnchorPane.rightAnchor="144.0" AnchorPane.topAnchor="105.0">
+                    <children>
+                        <Label fx:id="usernameLabel" styleClass="pop_font" text="User name:" />
+                        <TextField fx:id="usernameField" prefHeight="41.0" prefWidth="592.0" promptText="Enter your username" styleClass="search_Font" />
+                        
+                        <Label fx:id="passwordLabel" styleClass="pop_font" text="Password:" />
+                        <PasswordField fx:id="passwordField" prefHeight="30.0" prefWidth="591.0" promptText="Enter your password" styleClass="search_Font" />
+                    </children>
+                    <padding>
+                        <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
+                    </padding>
+                </VBox>
+            <ImageView fx:id="movingImage" fitHeight="150.0" fitWidth="200.0" layoutX="485.0" layoutY="294.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/BackGround/1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="movingImage1" fitHeight="150.0" fitWidth="200.0" layoutX="13.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/BackGround/2.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-19.0" layoutY="358.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/LogInSnake.gif" />
+               </image>
+            </ImageView>
+            </children>
+        </AnchorPane>
+    </center>
+    <top>
+        <AnchorPane fx:id="topAnchorPane" prefHeight="46.0" prefWidth="650.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="loginLabel" alignment="CENTER" layoutX="210.0" layoutY="2.0" prefHeight="46.0" prefWidth="271.0" styleClass="title" stylesheets="@resources/Css/popUpStyle.css" text="User Login">
+                    <padding>
+                        <Insets top="10.0" />
+                    </padding>
+                </Label>
+            </children>
+        </AnchorPane>
+    </top>
+    <left>
+        <Pane fx:id="leftPane" prefHeight="458.0" prefWidth="19.0" BorderPane.alignment="CENTER" />
+    </left>
+    <right>
+        <Pane fx:id="rightPane" prefHeight="200.0" prefWidth="19.0" BorderPane.alignment="CENTER" />
+    </right>
+    <bottom>
+        <AnchorPane fx:id="bottomAnchorPane" prefHeight="20.0" prefWidth="690.0" BorderPane.alignment="CENTER" />
+    </bottom>
+</BorderPane>
