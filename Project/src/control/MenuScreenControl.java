@@ -33,19 +33,21 @@ public class MenuScreenControl {
 
 	private AnchorPane root;
 	@FXML
+	
+	private static boolean first_start = true;
 	public void initialize() {
 		splash_Screen();
 	}
 
 	
 	private void init() {		
+		System.out.print(first_start);
 		button_start.setOnAction(event -> navigateTo("/view/SettingsView.fxml"));
 		button_questionWizard.setOnAction(event -> navigateTo("/view/QuestionWizView.fxml"));
 		button_History.setOnAction(event -> navigateTo("/view/HistoryView.fxml"));
 		button_instructions.setOnAction(event -> navigateTo("/view/Instructions.fxml"));
 		quit.setOnAction(event -> ((Stage) quit.getScene().getWindow()).close());
         Menu_Pane.getChildren().remove(root);
-
 	}
 	
 	private void navigateTo(String fxmlFile) {
@@ -63,6 +65,7 @@ public class MenuScreenControl {
 //				stage.setScene(scene);
 //			}
 			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
+
 			stage.setScene(scene);
 
 		} catch (IOException e) {
@@ -72,6 +75,9 @@ public class MenuScreenControl {
 	}
 	
 	private void splash_Screen() {
+		System.out.print("splash_Screen " + first_start);
+
+		if(first_start) {
         Image image = new Image("/view/Images/BackGround/Scorpion_SplashScreen.png");
         ImageView imageView = new ImageView(image);
         
@@ -94,7 +100,7 @@ public class MenuScreenControl {
 
         PauseTransition pt = new PauseTransition(Duration.millis(10));
 
-        FadeTransition ft = new FadeTransition(Duration.millis(1000), imageView);
+        FadeTransition ft = new FadeTransition(Duration.millis(500), imageView);
         ft.setFromValue(1.0);
         ft.setToValue(0.0);
 
@@ -103,10 +109,11 @@ public class MenuScreenControl {
         // After the fade out is finished, load your menu
         ft.setOnFinished(event -> init());
         
-        
         root.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ft.play());
-
-        // Start the fade out
+        first_start = false;
+		}else {
+			init();
+		}
         
 	}
 }
