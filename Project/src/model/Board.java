@@ -236,12 +236,12 @@ public class Board {
 
 	}
 
-	public void add_QuestionToTile(int tile_num, Question q) {
+	public void add_QuestionToTile(int tile_num, int difficulty) {
 		int[] pos = calculatePosition(tile_num);
 		int x = pos[0];
 		int y = pos[1];
 		Tile tile = gameboard[x][y];
-		tile.setQuestion(q);
+		tile.setQuestion(GameData.getInstance().get_Question(difficulty));
 		tile.setType(4);
 		tile.setId(tile_num);
 		GameData.getInstance().addspecialTiles_list(tile);
@@ -342,7 +342,7 @@ public class Board {
 				randNum = rand.nextInt(num_of_tiles * num_of_tiles - 12) + 1;
 			} while (usedNumbers.contains(randNum)); // Ensure endRand doesn't exceed 49 and numbers are unique
 			usedNumbers.add(randNum);
-			add_QuestionToTile(randNum, new Question());// add question
+			add_QuestionToTile(randNum,7+i);// add question
 		}
 	}
 

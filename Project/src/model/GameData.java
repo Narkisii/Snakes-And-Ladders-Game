@@ -1,5 +1,6 @@
 package model;
 
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,11 +11,12 @@ import java.util.Random;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import control.HistoryControl;
+import exceptions.HandleExceptions;
 
 public class GameData {
 	private int numberOfPlayers;
 	private String difficulty;
-	private HashMap<Integer, LinkedList<Question>> questions_Map;
+	private HashMap<Integer, List<Question>> questions_Map;
 	private LinkedList<Player> player_list;
 	private LinkedList<Snake> snake_list;
 	private LinkedList<Ladder> ladders;
@@ -30,13 +32,22 @@ public class GameData {
 
 	// Private constructor
 	private GameData() {
+		QuestionsFromJson questionData;
+		try {
+//	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
+			questionData = QuestionsFromJson.getInstance().readQuestionsFromJson();
+		} catch (IOException | NoJsonFileFound e) {
+			HandleExceptions.showException(e);
+			return;
+		}
+
 		// Initialization code here
 //		this.questions = new HashMap<Integer, Question>();
 		this.player_list = new LinkedList<Player>();
 		this.snake_list = new LinkedList<Snake>();
 		this.ladders = new LinkedList<Ladder>();
 		this.specialTiles_list = new LinkedList<Tile>();
-		this.questions_Map = new HashMap<Integer, LinkedList<Question>>();
+		this.questions_Map = questionData.init_QuestionMap();
 		this.difficulty = "Easy";
 		this.playerTurn = 0;
 		this.numberOfPlayers = 1;
@@ -44,6 +55,10 @@ public class GameData {
 		this.in_game = false;
 	}
 
+	
+
+	
+	
 	// Static method to get the singleton instance
 	public static GameData getInstance() {
 		if (instance == null) {
@@ -94,12 +109,13 @@ public class GameData {
 	}
 
 	public Question get_Question(int diff) {//7-easy, 8- med, 9 - hard
-//		LinkedList<Question> q_list = questions_Map.get(diff);
-//		Random rand = new Random();
-//		int generator = rand.nextInt(q_list.size());
+		List<Question> q_list = questions_Map.get(diff);
+		System.out.println(q_list);
+		Random rand = new Random();
+		int generator = rand.nextInt(q_list.size()-1);
 		
-//		return q_list.get(generator);
-		return new Question();
+		return q_list.get(generator);
+//		return new Question();
 	}
 	
 	/**
@@ -126,14 +142,14 @@ public class GameData {
 	/**
 	 * @return the questions
 	 */
-	public HashMap<Integer, LinkedList<Question>> getQuestions() {
+	public HashMap<Integer, List<Question>> getQuestions() {
 		return questions_Map;
 	}
 
 	/**
 	 * @param questions the questions to set
 	 */
-	public void setQuestions(HashMap<Integer, LinkedList<Question>> questions) {
+	public void setQuestions(HashMap<Integer, List<Question>> questions) {
 		this.questions_Map = questions;
 	}
 

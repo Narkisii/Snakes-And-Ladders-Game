@@ -64,7 +64,9 @@ import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.QuadCurveTo;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.Board;
 import model.GameData;
 import model.Ladder;
@@ -284,7 +286,7 @@ public class BoardControl {
 				GridPane.setColumnIndex(stackPane, column);
 				stackPane.setId(String.valueOf(count));
 				// Add the StackPane to the grid
-				stackPane.setMinSize(90, 90);
+				stackPane.setMinSize(0, 0);
 
 				grid.add(stackPane, column, numTiles - 1 - i);
 				stackPane.toBack();
@@ -348,6 +350,7 @@ public class BoardControl {
 				System.out.println("is a question");
 				showQuestion(board.getTile(tile_num).getQuestion());
 			}
+			
 
 		}
 	}
@@ -364,7 +367,7 @@ public class BoardControl {
 		VBox playerbox = vboxlist.get(p.getID()-1);
 		animate(playerbox,prev_tile,curr_Tile,p);
 
-		check_Question(Integer.parseInt(curr_Tile.getId()));
+//		check_Question(Integer.parseInt(curr_Tile.getId()));
 
 		
 //		System.out.println(vboxlist.size());
@@ -415,15 +418,15 @@ public class BoardControl {
 
 	}
 	//Check if the tile has a question
-	private void check_Question(int curr_Tile) {
-		// TODO Auto-generated method stub
-		System.out.println("check_Question " + curr_Tile);
-		Tile quetion_tile = board.is_question(curr_Tile);
-		if (quetion_tile != null) {
-			System.out.println("is a question");
-			showQuestion(board.getTile(curr_Tile).getQuestion());
-		}
-	}
+//	private void check_Question(int curr_Tile) {
+//		// TODO Auto-generated method stub
+//		System.out.println("check_Question " + curr_Tile);
+//		Tile quetion_tile = board.is_question(curr_Tile);
+//		if (quetion_tile != null) {
+//			System.out.println("is a question");
+//			showQuestion(board.getTile(curr_Tile).getQuestion());
+//		}
+//	}
 
 	//initiate the players tokens
 	private void initiate_Players(Player p) {
@@ -667,7 +670,6 @@ public class BoardControl {
 	}
 
 	private void roll(int dice, Player player) {
-		
 		rollButton.setDisable(true);
 		final long[] frameCounter = { 0 };
 		final Random random = new Random();
@@ -784,6 +786,12 @@ public class BoardControl {
 		}
 
 		popupStage = new Stage();
+		popupStage.initOwner((return_btn).getScene().getWindow());
+		popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
+		popupStage.setAlwaysOnTop(true); // Set always on top
+		popupStage.setResizable(false);
+		popupStage.getStyle();
+//		popupStage.initStyle(StageStyle.UNDECORATED);
 		// Load the FXML file for the pop-up
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/GameQuestion.fxml"));
 		Parent root = null;
@@ -792,9 +800,11 @@ public class BoardControl {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		questionPopControl questionPopControl = loader.getController();
 		// Set the scene and show the stage
 		questionPopControl.set_question(q);
+		
 		Scene scene = new Scene(root);
 		popupStage.setScene(scene);
 		popupStage.show();

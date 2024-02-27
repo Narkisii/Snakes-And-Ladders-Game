@@ -20,7 +20,5 @@ public class HandleExceptions {
 		alert.setTitle(e.getClass().getName());
 		alert.setContentText("Error: \n" + e.getMessage());
 		alert.showAndWait();
-
 	}
-	
 }

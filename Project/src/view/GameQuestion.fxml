@@ -9,15 +9,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.TextFlow?>
 
-<BorderPane styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="control.questionPopControl">
+<BorderPane styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.questionPopControl">
    <center>
       <AnchorPane prefHeight="300.0" prefWidth="650.0" stylesheets="@resources/Css/popUpStyle.css">
          <children>
             <VBox alignment="CENTER_LEFT" prefHeight="413.0" prefWidth="650.0" spacing="15.0" stylesheets="@resources/Css/popUpStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <TextFlow fx:id="questionTextBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS" />
+                  <Label fx:id="questionTextBox" alignment="CENTER" prefHeight="166.0" prefWidth="654.0" style="-fx-opacity: 1;" styleClass="radioAnswers" text="Label" />
                   <Label fx:id="chooseAnswerTitle" styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" text="choose answer:">
                      <VBox.margin>
                         <Insets />
@@ -42,7 +41,7 @@
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                      <children>
                         <Button fx:id="checkAnswerButton" prefHeight="49.0" prefWidth="630.0" styleClass="checkButton" stylesheets="@resources/Css/Buttons.css" text="check answer" />
-                        <TextFlow fx:id="answerTextBox" prefHeight="46.0" prefWidth="805.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" />
+                        <Label fx:id="check_Answer_label" alignment="CENTER" prefHeight="48.0" prefWidth="478.0" style="-fx-background-color: white; -fx-background-radius: 5;" styleClass="radioAnswers" text="Label" />
                      </children>
                      <padding>
                         <Insets top="10.0" />
@@ -56,7 +55,7 @@
    <top>
       <Pane prefHeight="59.0" prefWidth="690.0">
          <children>
-            <Label fx:id="QuestionTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="220.0" layoutY="12.0" prefWidth="250.0" styleClass="title" stylesheets="@resources/Css/popUpStyle.css" text="Easy Question:" />
+            <Label fx:id="QuestionTitle" alignment="CENTER" contentDisplay="CENTER" prefHeight="61.0" prefWidth="673.0" styleClass="title" stylesheets="@resources/Css/popUpStyle.css" text="Easy Question:" />
          </children></Pane>
    </top>
    <left>

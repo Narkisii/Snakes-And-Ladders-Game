@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +16,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class QuestionsFromJson {
 	private static QuestionsFromJson instance;
-
+	private HashMap<Integer, List<Question>> questionMap;
 	/**
 	 * 
 	 */
@@ -29,6 +31,8 @@ public class QuestionsFromJson {
 	public QuestionsFromJson() {
 		super();
 		this.file = returnFile();
+		questionMap = new HashMap<Integer, List<Question>>();
+
 	}
 
 	public static QuestionsFromJson getInstance() {
@@ -54,6 +58,15 @@ public class QuestionsFromJson {
 		return questions;
 	}
 
+	
+	public HashMap<Integer, List<Question>> init_QuestionMap(){
+		questionMap.put(7, getQuestionsByDifficulty(1));
+		questionMap.put(8, getQuestionsByDifficulty(2));
+		questionMap.put(9, getQuestionsByDifficulty(3));
+
+		return questionMap;
+		
+	}
 	/**
 	 * @param questions the questions to set
 	 */
