@@ -3,6 +3,8 @@
  */
 package model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -11,27 +13,6 @@ import java.util.Random;
  */
 public class Tile {
 	/**
-	 * @return the image_path
-	 */
-	public String getImage_path() {
-		return image_path;
-	}
-
-	/**
-	 * @param image_path the image_path to set
-	 */
-	public void setImage_path(String image_path) {
-		this.image_path = image_path;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
-
-	/**
 	 * @param id the id to set
 	 */
 	public void setId(int id) {
@@ -39,12 +20,13 @@ public class Tile {
 	}
 
 	private int type; // 10 = special 10 step forward, -10 - special 10 steps backward, 1 = red snake
-						// 4 - question
+						// 4 - question, 5 - ladder, -5 - snake
 	private Snake snake; // Snake head
 	private Ladder ladder; // Ladder start
 	private Question question;
 	private String image_path;
 	private int id;
+    private static final Map<Integer, String> TILE_IMAGE_PATHS = createImagePathMap();
 
 	public Tile(int id, int type, Snake snake, Ladder ladder) {
 		super();
@@ -67,26 +49,15 @@ public class Tile {
 
 	// 10 = special 10 step forward, -10 - special 10 steps backward, 1 = red snake
 	// 4 - question
-	public String get_Image() {
-		switch (type) {
-		case (10):
-			this.image_path = "/view/Images/gift.png";
-			break;
-
-		case (-10):
-			this.image_path = "/view/Images/gift.png";
-			break;
-		case (1):
-			this.image_path = "/view/Images/Snakes/red_snake.png";
-			break;
-
-		case (4):
-			this.image_path = "/view/Images/question.png";
-			break;
-		}
-		return image_path;
-
-	}
+    private static Map<Integer, String> createImagePathMap() {
+        Map<Integer, String> imagePathMap = new HashMap<>();
+        imagePathMap.put(10, "/view/Images/gift.png");
+        imagePathMap.put(-10, "/view/Images/gift.png");
+        imagePathMap.put(1, "/view/Images/Snakes/red_snake.png");
+        imagePathMap.put(4, "/view/Images/question.png");
+        // Add more mappings as needed
+        return imagePathMap;
+    }
 
 	/**
 	 * @param type
@@ -96,6 +67,26 @@ public class Tile {
 		setType();
 
 	}
+	/**
+	 * @return the image_path
+	 */
+    public String get_Image() {
+        return TILE_IMAGE_PATHS.getOrDefault(type, "/view/Images/default.png");
+    }
+	/**
+	 * @param image_path the image_path to set
+	 */
+	public void setImage_path(String image_path) {
+		this.image_path = image_path;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
 
 	public Snake getSnake() {
 		return snake;

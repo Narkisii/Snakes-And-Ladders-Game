@@ -317,23 +317,31 @@ public class BoardControl {
 
 	}
 
-	//Clean tile from user token
-	private void clean_Tile(Player p) {
-		LinkedList<Integer> placment = p.getPlacment_history();
-		for (int i = placment.size() - 2; i >= 0; i--) {
-			Pane startTile = (Pane) grid.lookup("#" + p.getPlacment_history().get(i));
-			if (startTile.lookup("#VBox" + p.getID()) != null) {
-				VBox playerbox = (VBox) startTile.lookup("#VBox" + p.getID());
-				Label playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
-				ImageView img = (ImageView) playerbox.lookup("#Image" + p.getID());
-//			System.out.println("clean_Tile old_pos: " + p.getPreviousStep() + "Player: " + p.getID());
-				playerbox.getChildren().removeAll(playerName, img);
-				startTile.getChildren().removeAll(playerbox);
-			}
+//	//Clean tile from user token
+//	private void clean_Tile(Player p) {
+//		LinkedList<Integer> placment = p.getPlacment_history();
+//		for (int i = placment.size() - 2; i >= 0; i--) {
+//			Pane startTile = (Pane) grid.lookup("#" + p.getPlacment_history().get(i));
+//			if (startTile.lookup("#VBox" + p.getID()) != null) {
+//				VBox playerbox = (VBox) startTile.lookup("#VBox" + p.getID());
+//				Label playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
+//				ImageView img = (ImageView) playerbox.lookup("#Image" + p.getID());
+////			System.out.println("clean_Tile old_pos: " + p.getPreviousStep() + "Player: " + p.getID());
+//				playerbox.getChildren().removeAll(playerName, img);
+//				startTile.getChildren().removeAll(playerbox);
+//			}
+//		}
+//
+//	}
+
+	private void checktile_type(int tile_num, Player p){
+		//Check if the tile is adding more steps to the players
+		if(board.getTile(tile_num).getType() != 0 && board.getTile(tile_num).getType() != 4 ) {
+			board.activateTile(tile_num, p);
+			move_Player(p);
 		}
-
 	}
-
+	
 	//move player
 	private void move_Player(Player p) {
 		System.out.println(p.toString());
@@ -341,83 +349,61 @@ public class BoardControl {
 		if (p.getCurrentP() == p.getPreviousStep()) {
 			return;
 		}
-//		clean_Tile(p);
 		Pane curr_Tile = (Pane) grid.lookup("#" + p.getCurrentP());
 		Pane prev_tile = (Pane) grid.lookup("#" + p.getPreviousStep());
-
-//		VBox playerbox = (VBox) curr_Tile.lookup("#VBox" + p.getID());
-		System.out.println(vboxlist.size());
 		VBox playerbox = vboxlist.get(p.getID()-1);
-		int old_placment = p.getPreviousStep();
-		int curr_P = p.getCurrentP();
-//		if (old_placment < curr_P) {
-//			for (int i = old_placment; i < curr_P; i++) {
-//				Pane temp = (Pane) grid.lookup("#" + p.getCurrentP());
-//				temp.getChildren().addAll(playerbox);
-//			}
-//		}
+		animate(playerbox,prev_tile,curr_Tile,p);
+
+		check_Question(Integer.parseInt(curr_Tile.getId()));
+
 		
-		Point2D tileEnd = curr_Tile.localToScene(curr_Tile.getWidth() / 2, curr_Tile.getHeight() / 2);
-		Point2D prevTile = prev_tile.localToScene(prev_tile.getWidth() / 2, prev_tile.getHeight() / 2);
+//		System.out.println(vboxlist.size());
+//		int old_placment = p.getPreviousStep();
+//		int prev_p = p.getPlacment_history().get(p.getPlacment_history().size()-3);
+//		int median_placemnt = p.getPlacment_history().get(p.getPlacment_history().size()-2);
+//		int curr_P = p.getCurrentP();
+//		System.out.println("Curr_Tile "+curr_P +" type: " + board.getTile(curr_P).getType());
+//		System.out.println("median_placemnt: "+median_placemnt +" type: " + board.getTile(median_placemnt).getType());
+//		System.out.println("getPlacment_history " + p.getPlacment_history());
+
+//		if(board.getTile(median_placemnt).getType() == 5 || board.getTile(median_placemnt).getType() == -5 ) {
+//			prev_tile = (Pane) grid.lookup("#" + prev_p);
+//			Pane median_tile = (Pane) grid.lookup("#" + median_placemnt);
+//		    animate(playerbox,prev_tile,median_tile,  () -> {
+//		        // This code will run after the first animation completes
+//		        animate(playerbox, curr_Tile, median_tile, null); // Start the second animation
+//		    });
+//		}
+//		checktile_type(curr_P,p);
+	}
+
+	private void animate(VBox playerbox, Pane start, Pane end,Player p) {
+		Point2D tileEnd = end.localToScene(end.getWidth() / 2, end.getHeight() / 2);
+		Point2D prevTile = start.localToScene(start.getWidth() / 2, start.getHeight() / 2);
 		double startX = tileEnd.getX();
 		double startY = tileEnd.getY();
 		double startX_prev = prevTile.getX();
 		double startY_prev = prevTile.getY();
-//		double startX = curr_Tile.getLayoutX();
-//		double startY = curr_Tile.getLayoutY();
-//		double startX_prev = prev_tile.getLayoutX();
-//		double startY_prev = prev_tile.getLayoutY();
+		int curr_P = p.getCurrentP();
 
-		System.out.println("Startx:" + startX + ", startY: " + startY);
-		System.out.println("startX_prev:" + startX_prev + ", startY_prev: " + startY_prev);
-		playerbox.setViewOrder(-3);
-        TranslateTransition tt = new TranslateTransition(Duration.seconds(3), playerbox);
-//        tt.setNode(playerbox);
-//        tt.setFromX(startX_prev);
-//        tt.setFromY(startY_prev);
+        TranslateTransition tt = new TranslateTransition(Duration.seconds(0.5), playerbox);
 
         // Set the end position (the new tile)
-        tt.setToX(startX);
-//        tt.setToY(startY);
-        // Start the animation
+        tt.setToX(startX-startX_prev);
+        tt.setToY(startY-startY_prev);
+        //Play Animation
         tt.play();
-        
-//        tt.stop();
-//		curr_Tile.getChildren().addAll(playerbox);
+        tt.setOnFinished(event -> {
+        	System.out.println(end.getId());
+        	System.out.println("prev_tile" + start.getId());
+        	playerbox.setTranslateX(0);
+        	playerbox.setTranslateY(0);
+        	end.getChildren().addAll(playerbox);
+    		checktile_type(curr_P,p);
 
-//		Label playerName = null;
-//		ImageView img = null;
-//		if (playerbox == null) {
-//			System.out.println("test");
-//			playerbox = new VBox();
-//			playerbox.setId("VBox" + p.getID());
-//			playerName = new Label(p.getName());
-//			playerName.setTextFill(Color.web(p.getColor()));
-//			playerName.setId(String.valueOf(p.getID()) + p.getName());
-//			playerName.getStylesheets().add("/view/resources/Css/all_Style.css");
-//			playerName.getStyleClass().add("player_font");
-//			Image img_file = new Image(p.getToken());
-//			img = new ImageView(img_file);
-//			img.setId("Image" + p.getID());
-//			img.setFitHeight(50);
-//			img.setFitWidth(50);
-//			img.setPreserveRatio(false);
-//		} else {
-//			Pane oldParent = (Pane) playerbox.getParent();
-//			if (oldParent != null) {
-//				oldParent.getChildren().remove(playerbox);
-//			}
-//			playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
-//			img = (ImageView) playerbox.lookup("#Image" + p.getID());
-//		}
+        });
 
-//		playerbox.getChildren().addAll(playerName, img);
-
-//		curr_Tile.getChildren().addAll(playerbox);
-
-		check_Question(Integer.parseInt(curr_Tile.getId()));
 	}
-
 	//Check if the tile has a question
 	private void check_Question(int curr_Tile) {
 		// TODO Auto-generated method stub

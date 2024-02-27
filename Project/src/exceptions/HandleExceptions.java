@@ -1,8 +1,5 @@
 package exceptions;
 
-import javax.lang.model.type.ErrorType;
-import javax.swing.JOptionPane;
-
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
