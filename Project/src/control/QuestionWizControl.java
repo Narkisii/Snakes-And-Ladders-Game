@@ -1,6 +1,6 @@
 package control;
 
-import java.awt.TextField;
+import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -16,6 +16,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -85,12 +86,20 @@ public class QuestionWizControl {
 
 	@FXML
 	private Button rm_button;
+	
+	@FXML
+	private TextField searchField;
 
 	@FXML
 	private Button easy_button, med_button, hard_button;
 
 	private Stage popupStage;
 	List<Question> easy_questionList, med_questionList, hard_questionList;
+	
+	private FilteredList<Question> easyFilteredData;
+	private FilteredList<Question> medFilteredData;
+	private FilteredList<Question> hardFilteredData;
+	private FilteredList<Question> currentFilteredData; // Tracks the currently displayed filtered list
 
 	@FXML
 	void initialize() {
@@ -110,40 +119,49 @@ public class QuestionWizControl {
 //		med_questionList = questionData.getQuestionsByDifficulty(2);
 //		hard_questionList = questionData.getQuestionsByDifficulty(3);
 
-		update_table();
-		ObservableList<Question> data = FXCollections.observableArrayList(easy_questionList); // Uncomment this line
-		qTable.setItems(data);
+		//filtered list for search
+	     
+		 update_table();
 
-		// Set the table data
-//		ObservableList<Question> data = FXCollections.observableArrayList(easy_questionList); // Uncomment this line
-//		qTable.setItems(data);
-		q_col.setText("Easy Questions");
+		 ObservableList<Question> easyData = FXCollections.observableArrayList(easy_questionList);
+		 ObservableList<Question> medData = FXCollections.observableArrayList(med_questionList);
+		 ObservableList<Question> hardData = FXCollections.observableArrayList(hard_questionList);
+		 update_table();
+		 easyFilteredData = new FilteredList<>(FXCollections.observableArrayList(easy_questionList), p -> true);
+			medFilteredData = new FilteredList<>(FXCollections.observableArrayList(med_questionList), p -> true);
+
+		 hardFilteredData = new FilteredList<>(FXCollections.observableArrayList(hard_questionList), p -> true);
+		 
+		
+		
+		currentFilteredData = easyFilteredData;
+		qTable.setItems(currentFilteredData);
+		
 		// Activate buttons easy, med, and hard
 		easy_button.setOnAction(event -> {
-			update_table();
-
-			ObservableList<Question> easyData = FXCollections.observableArrayList(easy_questionList);
-			update_table();
-			qTable.setItems(easyData);
+			 currentFilteredData = easyFilteredData;
+			 update_table();
+			    updateFilter();
+			    qTable.setItems(currentFilteredData);
 			q_col.setText("Easy Questions");
 
 		});
 
 		med_button.setOnAction(event -> {
-			update_table();
-
-			ObservableList<Question> medData = FXCollections.observableArrayList(med_questionList);
-			qTable.setItems(medData);
-			q_col.setText("Medium Questions");
+			 currentFilteredData = medFilteredData;
+			 update_table();
+			    updateFilter();
+			    qTable.setItems(currentFilteredData);
+			    q_col.setText("Medium Questions");
 
 		});
 
 		hard_button.setOnAction(event -> {
-			update_table();
-
-			ObservableList<Question> hardData = FXCollections.observableArrayList(hard_questionList);
-			qTable.setItems(hardData);
-			q_col.setText("Hard Questions");
+			  currentFilteredData = hardFilteredData;
+				 update_table();
+			    updateFilter();
+			    qTable.setItems(currentFilteredData);
+			    q_col.setText("Hard Questions");
 		});
 
 		// remove
@@ -289,6 +307,9 @@ public class QuestionWizControl {
 		// add_easy_button.setOnAction(event ->
 		// navigateTo("/view/addQuestionPop.fxml"));
 
+		searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            updateFilter();
+        });
 	}
 
 	public void update_table() {
@@ -311,6 +332,20 @@ public class QuestionWizControl {
 //		id_col.setCellValueFactory(new PropertyValueFactory<>("id"));
 		q_col.setCellValueFactory(new PropertyValueFactory<>("question"));
 
+	}
+	
+	private void updateFilter() {
+	    if (currentFilteredData != null) {
+	        currentFilteredData.setPredicate(question -> {
+	            // If filter text is empty, display all questions.
+	            if (searchField == null || searchField.getText().isEmpty()) {
+	                return true;
+	            }
+	            // Compare lower case strings for case-insensitive search.
+	            String lowerCaseFilter = searchField.getText().toLowerCase();
+	            return question.getQuestion().toLowerCase().contains(lowerCaseFilter);
+	        });
+	    }
 	}
 
 	public void re_init(int q_diff) {

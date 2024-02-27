@@ -53,7 +53,7 @@
                                     <URL value="@resources/Css/Buttons.css" />
                                  </stylesheets>
                               </Label>
-                              <TextField prefHeight="31.0" prefWidth="265.0" promptText="search questions..." />
+                              <TextField fx:id="searchField" prefHeight="31.0" prefWidth="265.0" promptText="search questions..." />
                               <ImageView fitHeight="29.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true" styleClass="search_Icon">
                                  <image>
                                     <Image url="@Images/search-icon.png" />
