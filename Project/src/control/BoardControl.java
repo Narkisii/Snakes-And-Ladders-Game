@@ -8,7 +8,9 @@ import model.Tile;
 import java.awt.BasicStroke;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -45,6 +47,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -204,6 +207,7 @@ public class BoardControl {
 		add_SpecialTiles();
 //        group = new Group();
 //        group.getChildren().addAll(
+		
 //                boardpane,
 //                return_btn,
 //                turn_Lable,
@@ -214,7 +218,6 @@ public class BoardControl {
 //                grid
 //                
 //        );
-
 	}
 
 	//Createa the gridpane of the board with the initialized tiles and thiers id
@@ -281,7 +284,7 @@ public class BoardControl {
 				GridPane.setColumnIndex(stackPane, column);
 				stackPane.setId(String.valueOf(count));
 				// Add the StackPane to the grid
-				stackPane.setMinSize(0, 0);
+				stackPane.setMinSize(90, 90);
 
 				grid.add(stackPane, column, numTiles - 1 - i);
 				stackPane.toBack();
@@ -300,19 +303,17 @@ public class BoardControl {
 	private void add_SpecialTiles() {
 		LinkedList<Tile> specialTiles = GameData.getInstance().getspecialTiles_list();
 		for (Tile tile : specialTiles) {
-			System.out.println("test");
 			Pane startTile = (Pane) grid.lookup("#" + tile.getId());
-			System.out.println("startTile " + startTile.getId());
 			Image img = new Image(tile.get_Image());
 			ImageView tile_img = new ImageView(img);
-			System.out.println(startTile.getChildren().add(tile_img));
-			tile_img.setFitHeight(90);
-			tile_img.setFitWidth(90);
+			System.out.println(tile.get_Image());
+			tile_img.setFitHeight(70);
+			tile_img.setFitWidth(70);
 //			tile_img.fitHeightProperty().bind(startTile.heightProperty());
 //			tile_img.fitWidthProperty().bind(startTile.widthProperty());
-
 			tile_img.setPreserveRatio(false);
 			tile_img.opacityProperty().set(0.8);
+			startTile.getChildren().add(tile_img);
 		}
 
 	}
@@ -339,6 +340,15 @@ public class BoardControl {
 		if(board.getTile(tile_num).getType() != 0 && board.getTile(tile_num).getType() != 4 ) {
 			board.activateTile(tile_num, p);
 			move_Player(p);
+		}
+		if(board.getTile(tile_num).getType() == 4) {
+//			System.out.println("check_Question " + curr_Tile);
+			Tile quetion_tile = board.is_question(tile_num);
+			if (quetion_tile != null) {
+				System.out.println("is a question");
+				showQuestion(board.getTile(tile_num).getQuestion());
+			}
+
 		}
 	}
 	
@@ -411,7 +421,7 @@ public class BoardControl {
 		Tile quetion_tile = board.is_question(curr_Tile);
 		if (quetion_tile != null) {
 			System.out.println("is a question");
-			showQuestion();
+			showQuestion(board.getTile(curr_Tile).getQuestion());
 		}
 	}
 
@@ -434,8 +444,8 @@ public class BoardControl {
 			Image img_file = new Image(p.getToken());
 			img = new ImageView(img_file);
 			img.setId("Image" + p.getID());
-			img.setFitHeight(50);
-			img.setFitWidth(50);
+			img.setFitHeight(90);
+			img.setFitWidth(90);
 			img.setPreserveRatio(false);
 		} else {
 			playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
@@ -645,6 +655,8 @@ public class BoardControl {
 
 	}
 
+	
+	
 	private void startCountDown() {
 		counter.set(set_turn_time);
 		timer.play();
@@ -681,7 +693,7 @@ public class BoardControl {
 						this.stop();
 						if (dice == 7 || dice == 8 || dice == 9) {
 							Question q = GameData.getInstance().get_Question(dice);
-							showQuestion();
+							showQuestion(q);
 							
 						} else {
 							GameData.getInstance().getBoard().move(dice, player);
@@ -764,10 +776,14 @@ public class BoardControl {
 
 	}
 
-	public void showQuestion() {
-		// TODO Auto-generated method stub
-		popupStage = new Stage();
+	public void showQuestion(Question q) {
+//		Question q = board.getTile(tile_num).getQuestion();
+		if(q == null) {
+			System.out.println("No question");
+			return;
+		}
 
+		popupStage = new Stage();
 		// Load the FXML file for the pop-up
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/GameQuestion.fxml"));
 		Parent root = null;
@@ -776,8 +792,9 @@ public class BoardControl {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		questionPopControl questionPopControl = loader.getController();
 		// Set the scene and show the stage
+		questionPopControl.set_question(q);
 		Scene scene = new Scene(root);
 		popupStage.setScene(scene);
 		popupStage.show();

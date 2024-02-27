@@ -23,13 +23,34 @@ public class questionPopControl {
 
     @FXML
     private TextField optionOneTextField21;
+    Question question = new Question();
 
     public void initialize() {
         // Initialization logic here
+    	init_question(question);
     }
 
     public Question getQuestionFromFields() {
         Question question = new Question();
+//        question.setQuestion(questionTextField.getText());
+//        question.setCorrectAnswer(correctAnswerTextField.getText());
+//
+//        LinkedList<String> answers = new LinkedList<String>();
+//        answers.add(optionOneTextField.getText());
+//        answers.add(optionOneTextField2.getText());
+//        answers.add(optionOneTextField21.getText());
+//
+//        question.setAnswers(answers);
+
+        return question;
+    }
+    
+    
+    public void set_question(Question q) {
+    	this.question = q;
+
+    }
+    private void init_question(Question question) {
         question.setQuestion(questionTextField.getText());
         question.setCorrectAnswer(correctAnswerTextField.getText());
 
@@ -40,6 +61,5 @@ public class questionPopControl {
 
         question.setAnswers(answers);
 
-        return question;
     }
 }
