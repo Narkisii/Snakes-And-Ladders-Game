@@ -307,6 +307,14 @@ public class GameData {
 	public boolean get_isIngame() {
 		return in_game;
 	}
+
+	@Override
+	public String toString() {
+		return "GameData [numberOfPlayers=" + numberOfPlayers + ", difficulty=" + difficulty + ", questions_Map="
+				+ questions_Map + ", player_list=" + player_list + ", snake_list=" + snake_list + ", ladders=" + ladders
+				+ ", specialTiles_list=" + specialTiles_list + ", History=" + History + ", playerTurn=" + playerTurn
+				+ ", board=" + board + ", in_game=" + in_game + "]";
+	}
 	
 
 

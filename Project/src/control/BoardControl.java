@@ -8,6 +8,7 @@ import model.Tile;
 import java.awt.BasicStroke;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -24,6 +25,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -76,7 +78,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class BoardControl {
 
-	private static Stage popupStage;
+	private Stage popupStage;
 
 	@FXML
 	private ResourceBundle resources; // Resource bundle for localization
@@ -114,14 +116,18 @@ public class BoardControl {
 	// rolling dice function
 
 	// Create a HashMap to store the rectangles
-	HashMap<Integer, Rectangle> tile_Map;
-	int test_Move_counter = 0;
+	private HashMap<Integer, Rectangle> tile_Map;
+	
 	// Initialize the timer properties
 	private IntegerProperty counter; // Initial time in seconds
 	private Timeline timer;
 
 	private GridPane grid; // The grid that will contain the tiles
 	int set_turn_time;
+
+	private Group group;
+
+	private ArrayList<VBox> vboxlist;
 
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 
@@ -132,6 +138,7 @@ public class BoardControl {
 //		for (Player player : GameData.getInstance().getplayer_list()) {
 //			System.out.println(player.toString());
 //		}
+		vboxlist = new ArrayList<VBox>();
 		set_turn_time = 45;
 		tile_Map = new HashMap<>();
 		canvas = new Pane();
@@ -174,7 +181,6 @@ public class BoardControl {
 		boardpane.getChildren().add(grid);
 		drawLinesInSeparateThread();
 		mainPain.getChildren().add(canvas);
-
 		// Set the action for the return button
 		return_btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
 
@@ -196,6 +202,18 @@ public class BoardControl {
 		board = GameData.getInstance().getBoard();
 		board.generate_board_Objects();
 		add_SpecialTiles();
+//        group = new Group();
+//        group.getChildren().addAll(
+//                boardpane,
+//                return_btn,
+//                turn_Lable,
+//                countDown_Label,
+//                timer_Label,
+//                diceImage,
+//                rollButton,
+//                grid
+//                
+//        );
 
 	}
 
@@ -266,6 +284,7 @@ public class BoardControl {
 				stackPane.setMinSize(0, 0);
 
 				grid.add(stackPane, column, numTiles - 1 - i);
+				stackPane.toBack();
 				// Increment the count
 
 				count++;
@@ -317,41 +336,84 @@ public class BoardControl {
 
 	//move player
 	private void move_Player(Player p) {
+		System.out.println(p.toString());
 		checkwin(GameData.getInstance().getBoard().getGameEnd());
 		if (p.getCurrentP() == p.getPreviousStep()) {
 			return;
 		}
-		clean_Tile(p);
+//		clean_Tile(p);
 		Pane curr_Tile = (Pane) grid.lookup("#" + p.getCurrentP());
-		VBox playerbox = (VBox) curr_Tile.lookup("#VBox" + p.getID());
-		Label playerName = null;
-		ImageView img = null;
-		if (playerbox == null) {
-			playerbox = new VBox();
-			playerbox.setId("VBox" + p.getID());
-			playerName = new Label(p.getName());
-			playerName.setTextFill(Color.web(p.getColor()));
-			playerName.setId(String.valueOf(p.getID()) + p.getName());
-			playerName.getStylesheets().add("/view/resources/Css/all_Style.css");
-			playerName.getStyleClass().add("player_font");
-			Image img_file = new Image(p.getToken());
-			img = new ImageView(img_file);
-			img.setId("Image" + p.getID());
-			img.setFitHeight(50);
-			img.setFitWidth(50);
-			img.setPreserveRatio(false);
-		} else {
-			Pane oldParent = (Pane) playerbox.getParent();
-			if (oldParent != null) {
-				oldParent.getChildren().remove(playerbox);
-			}
-			playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
-			img = (ImageView) playerbox.lookup("#Image" + p.getID());
-		}
+		Pane prev_tile = (Pane) grid.lookup("#" + p.getPreviousStep());
 
-		playerbox.getChildren().addAll(playerName, img);
+//		VBox playerbox = (VBox) curr_Tile.lookup("#VBox" + p.getID());
+		System.out.println(vboxlist.size());
+		VBox playerbox = vboxlist.get(p.getID()-1);
+		int old_placment = p.getPreviousStep();
+		int curr_P = p.getCurrentP();
+//		if (old_placment < curr_P) {
+//			for (int i = old_placment; i < curr_P; i++) {
+//				Pane temp = (Pane) grid.lookup("#" + p.getCurrentP());
+//				temp.getChildren().addAll(playerbox);
+//			}
+//		}
+		
+		Point2D tileEnd = curr_Tile.localToScene(curr_Tile.getWidth() / 2, curr_Tile.getHeight() / 2);
+		Point2D prevTile = prev_tile.localToScene(prev_tile.getWidth() / 2, prev_tile.getHeight() / 2);
+		double startX = tileEnd.getX();
+		double startY = tileEnd.getY();
+		double startX_prev = prevTile.getX();
+		double startY_prev = prevTile.getY();
+//		double startX = curr_Tile.getLayoutX();
+//		double startY = curr_Tile.getLayoutY();
+//		double startX_prev = prev_tile.getLayoutX();
+//		double startY_prev = prev_tile.getLayoutY();
 
-		curr_Tile.getChildren().addAll(playerbox);
+		System.out.println("Startx:" + startX + ", startY: " + startY);
+		System.out.println("startX_prev:" + startX_prev + ", startY_prev: " + startY_prev);
+		playerbox.setViewOrder(-3);
+        TranslateTransition tt = new TranslateTransition(Duration.seconds(3), playerbox);
+//        tt.setNode(playerbox);
+//        tt.setFromX(startX_prev);
+//        tt.setFromY(startY_prev);
+
+        // Set the end position (the new tile)
+        tt.setToX(startX);
+//        tt.setToY(startY);
+        // Start the animation
+        tt.play();
+        
+//        tt.stop();
+//		curr_Tile.getChildren().addAll(playerbox);
+
+//		Label playerName = null;
+//		ImageView img = null;
+//		if (playerbox == null) {
+//			System.out.println("test");
+//			playerbox = new VBox();
+//			playerbox.setId("VBox" + p.getID());
+//			playerName = new Label(p.getName());
+//			playerName.setTextFill(Color.web(p.getColor()));
+//			playerName.setId(String.valueOf(p.getID()) + p.getName());
+//			playerName.getStylesheets().add("/view/resources/Css/all_Style.css");
+//			playerName.getStyleClass().add("player_font");
+//			Image img_file = new Image(p.getToken());
+//			img = new ImageView(img_file);
+//			img.setId("Image" + p.getID());
+//			img.setFitHeight(50);
+//			img.setFitWidth(50);
+//			img.setPreserveRatio(false);
+//		} else {
+//			Pane oldParent = (Pane) playerbox.getParent();
+//			if (oldParent != null) {
+//				oldParent.getChildren().remove(playerbox);
+//			}
+//			playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
+//			img = (ImageView) playerbox.lookup("#Image" + p.getID());
+//		}
+
+//		playerbox.getChildren().addAll(playerName, img);
+
+//		curr_Tile.getChildren().addAll(playerbox);
 
 		check_Question(Integer.parseInt(curr_Tile.getId()));
 	}
@@ -372,6 +434,7 @@ public class BoardControl {
 		p.addStep(1);
 		Pane new_pos_pane = (Pane) grid.lookup("#" + p.getCurrentP());
 		VBox playerbox = (VBox) new_pos_pane.lookup("#VBox" + p.getID());
+		
 		Label playerName = null;
 		ImageView img = null;
 		if (playerbox == null) {
@@ -392,11 +455,11 @@ public class BoardControl {
 			playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
 			img = (ImageView) playerbox.lookup("#Image" + p.getID());
 		}
-
+		
 		playerbox.getChildren().addAll(playerName, img);
-
+		vboxlist.add(playerbox);
 		new_pos_pane.getChildren().addAll(playerbox);
-
+		
 	}
 
 	
@@ -663,12 +726,12 @@ public class BoardControl {
 	// Method to navigate to another screen
 	private void navigateTo(String fxmlFile) {
 		try {
-			grid.getChildren().clear();
 			Stage stage = (Stage) return_btn.getScene().getWindow();
 			double width = stage.getScene().getWidth();
 			double height = stage.getScene().getHeight();
-
+			System.out.print(GameData.getInstance().toString());
 			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
+			mainPain.getChildren().clear();
 
 			stage.setScene(scene);
 		} catch (IOException e) {
@@ -735,4 +798,7 @@ public class BoardControl {
 		startCountDown();
 	}
 
+	
+	
+	private void clear_all() {}
 }
