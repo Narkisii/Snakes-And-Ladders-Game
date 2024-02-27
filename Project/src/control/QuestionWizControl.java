@@ -56,6 +56,9 @@ public class QuestionWizControl {
 
 	@FXML
 	private Button Return_Btn;
+	
+	@FXML
+	private Button LogIn_Btn;
 
 	@FXML
 	private AnchorPane hardTab, easyTab, mediumTab;
@@ -207,6 +210,34 @@ public class QuestionWizControl {
 			popupStage.setScene(scene);
 			popupStage.show();
 		});
+		// Add question
+				LogIn_Btn.setOnAction(event -> {
+					if (popupStage != null && popupStage.isShowing()) {
+						// If a pop-up is already open, do nothing
+						return;
+					}
+
+					// Create a new Stage for the pop-up
+					popupStage = new Stage();
+
+					// Load the FXML file for the pop-up
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LogIn.fxml"));
+					Parent root = null;
+					try {
+						root = loader.load();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+					// Get the controller and pass the question object
+					LoginController controller = loader.getController();
+					
+
+					// Set the scene and show the stage
+					Scene scene = new Scene(root);
+					popupStage.setScene(scene);
+					popupStage.show();
+				});
 
 		// Add a mouse click event to the rows of the table
 		qTable.setRowFactory(tv -> {

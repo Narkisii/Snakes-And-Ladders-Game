@@ -20,6 +20,7 @@
       <Pane prefHeight="85.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="Return_Btn" layoutY="-1.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="256.0" styleClass="Normal_button" stylesheets="@resources/Css/Buttons.css" text="Return" />
+            <Button fx:id="LogIn_Btn" layoutX="1024.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="256.0" styleClass="LogIn_button" stylesheets="@resources/Css/Buttons.css" text="Log In" />
          </children>
       </Pane>
    </bottom>

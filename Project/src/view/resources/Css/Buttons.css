@@ -22,6 +22,19 @@
 .board_Button:hover {
     -fx-effect: dropshadow(three-pass-box, #0f4d00, 5.0, 5.0, 0.0, 0.0);
 }
+
+.LogIn_button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #FFFF00;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, black, 5.0, 5.0, 0.0, 0.0);
+    -fx-font-size: 50.0px;
+}
+.LogIn_button:hover {
+    -fx-effect: dropshadow(three-pass-box, #0f4d00, 5.0, 5.0, 0.0, 0.0);
+}
+
 .cpu_button {
     -fx-background-color: transparent;
     -fx-border-color: transparent;

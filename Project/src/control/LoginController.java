@@ -42,6 +42,8 @@ public class LoginController {
     @FXML
     private ImageView movingImage1; // New ImageView for the moving image
 
+    
+    /*
     // Method to initialize the controller
     public void initialize() {
         assert mainPane != null : "fx:id=\"mainPane\" was not injected: check your FXML file 'Login.fxml'.";
@@ -70,4 +72,7 @@ public class LoginController {
         transition.setAutoReverse(true); // Reverse direction on completion
         transition.play(); // Start the animation
     }
+    */
 }
+
+
