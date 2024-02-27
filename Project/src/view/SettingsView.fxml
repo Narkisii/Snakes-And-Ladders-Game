@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="720.0" prefWidth="1080.0" styleClass="bodybg" stylesheets="@resources/Css/all_Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.SettingsControl">
+<BorderPane prefHeight="720.0" prefWidth="1080.0" styleClass="bodybg" stylesheets="@resources/Css/all_Style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="control.SettingsControl">
    <center>
       <AnchorPane fx:id="outerpPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
          <children>

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@resources/Css/all_Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.HistoryControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@resources/Css/all_Style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="control.HistoryControl">
    <top>
       <Pane fx:id="topPane" minWidth="-Infinity" prefHeight="85.0" prefWidth="85.0" BorderPane.alignment="CENTER" />
    </top>

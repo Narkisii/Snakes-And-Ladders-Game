@@ -41,7 +41,6 @@ public class MenuScreenControl {
 
 	
 	private void init() {		
-		System.out.print(first_start);
 		button_start.setOnAction(event -> navigateTo("/view/SettingsView.fxml"));
 		button_questionWizard.setOnAction(event -> navigateTo("/view/QuestionWizView.fxml"));
 		button_History.setOnAction(event -> navigateTo("/view/HistoryView.fxml"));
@@ -75,8 +74,6 @@ public class MenuScreenControl {
 	}
 	
 	private void splash_Screen() {
-		System.out.print("splash_Screen " + first_start);
-
 		if(first_start) {
         Image image = new Image("/view/Images/BackGround/Scorpion_SplashScreen.png");
         ImageView imageView = new ImageView(image);

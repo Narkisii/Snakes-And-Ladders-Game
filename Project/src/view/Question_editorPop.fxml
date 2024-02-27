@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.QuestionEditorPopControl">
+<BorderPane styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="control.QuestionEditorPopControl">
    <center>
       <AnchorPane prefHeight="300.0" prefWidth="650.0" stylesheets="@resources/Css/popUpStyle.css">
          <children>

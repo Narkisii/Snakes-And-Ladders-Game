@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="150.0" prefWidth="450.0" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.DeleteQuestionPopControl">
+<AnchorPane prefHeight="150.0" prefWidth="450.0" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="control.DeleteQuestionPopControl">
     <VBox alignment="CENTER" prefHeight="150.0" prefWidth="450.0" spacing="20.0" styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
             <HBox alignment="CENTER" spacing="20.0">
