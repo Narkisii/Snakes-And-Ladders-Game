@@ -236,7 +236,9 @@ public class QuestionWizControl {
 					}
 
 					// Create a new Stage for the pop-up
+					// Disable pop up resizing
 					popupStage = new Stage();
+					popupStage.setResizable(false);
 
 					// Load the FXML file for the pop-up
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LogIn.fxml"));

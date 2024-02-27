@@ -1,7 +1,6 @@
 package control;
 
-
-import javafx.animation.TranslateTransition;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -14,7 +13,6 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 public class LoginController {
-
 
     @FXML
     private HBox buttonHBox;
@@ -42,7 +40,10 @@ public class LoginController {
     @FXML
     private ImageView movingImage1; // New ImageView for the moving image
 
-    
+    public void initialize() {
+    	loginButton.setDisable(true);
+    	ChangeListener<String> textFieldListener = 
+    }
     /*
     // Method to initialize the controller
     public void initialize() {
