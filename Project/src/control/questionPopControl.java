@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Player;
 import model.Question;
 
 import java.util.ArrayList;
@@ -58,6 +59,10 @@ public class questionPopControl {
 
 	private Integer corr_answer;
 
+	private BoardControl prev_control;
+
+	private Player player;
+
     
     public void initialize() {
         // Initialization logic here
@@ -93,13 +98,27 @@ public class questionPopControl {
 
     
     private void check_Answer(String selectedAnswer) {
+    	int steps = 0;
+    	if(question.getDifficulty() == 1) {
+    		steps = -1;
+    	}
+		if(question.getDifficulty() == 2) {
+    		steps = -2;
+		}
+		if(question.getDifficulty() == 3) {
+    		steps = -3;
+		}
     	if(selectedAnswer.equals(corr_answer_str)) {
     		check_Answer_label.setText("Correct!");
     		check_Answer_label.setStyle("-fx-background-color: green;"); // Set background to green
-
+    		if(question.getDifficulty() == 3) {
+        		prev_control.move_Player(1, player);
+    		}
     	}else {
     		check_Answer_label.setText("you fucked up!");
     		check_Answer_label.setStyle("-fx-background-color: red;"); // Set background to green
+    		prev_control.move_Player(steps, player);
+
 		}
     	answerOne.setDisable(true);
         answerTwo.setDisable(true);
@@ -145,7 +164,19 @@ public class questionPopControl {
 		answerFour.setText(answers.get(3));
 		questionTextBox.setText(theQ);
     }
+	
+	
+	public void prev_window(BoardControl boardControl) {
+		this.prev_control = boardControl;
+	}
+
+
+	public void set_player(Player p) {
+		// TODO Auto-generated method stub
+		this.player = p;
+	}
 }
+
 
 //public Question getQuestionFromFields() {
 //Question question = new Question();

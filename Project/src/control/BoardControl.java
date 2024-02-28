@@ -72,7 +72,7 @@ import model.GameData;
 import model.Ladder;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
-
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -122,7 +122,7 @@ public class BoardControl {
 
 	// Create a HashMap to store the rectangles
 	private HashMap<Integer, Rectangle> tile_Map;
-	
+
 	// Initialize the timer properties
 	private IntegerProperty counter; // Initial time in seconds
 	private Timeline timer;
@@ -209,7 +209,7 @@ public class BoardControl {
 		add_SpecialTiles();
 //        group = new Group();
 //        group.getChildren().addAll(
-		
+
 //                boardpane,
 //                return_btn,
 //                turn_Lable,
@@ -222,7 +222,7 @@ public class BoardControl {
 //        );
 	}
 
-	//Createa the gridpane of the board with the initialized tiles and thiers id
+	// Createa the gridpane of the board with the initialized tiles and thiers id
 	private GridPane createBoard(int numTiles) {
 		grid = new GridPane(); // Initialize the grid
 		grid.setId("grid");
@@ -301,7 +301,7 @@ public class BoardControl {
 
 	}
 
-	//add all special tiles (Surprise, question and red snake)
+	// add all special tiles (Surprise, question and red snake)
 	private void add_SpecialTiles() {
 		LinkedList<Tile> specialTiles = GameData.getInstance().getspecialTiles_list();
 		for (Tile tile : specialTiles) {
@@ -337,39 +337,49 @@ public class BoardControl {
 //
 //	}
 
-	private void checktile_type(int tile_num, Player p){
-		//Check if the tile is adding more steps to the players
-		if(board.getTile(tile_num).getType() != 0 && board.getTile(tile_num).getType() != 4 ) {
+	private void checktile_type(int tile_num, Player p) {
+		// Check if the tile is adding more steps to the players
+		if (board.getTile(tile_num).getType() != 0 && board.getTile(tile_num).getType() != 4) {
 			board.activateTile(tile_num, p);
-			move_Player(p);
+			move_Player(-5, p);
 		}
-		if(board.getTile(tile_num).getType() == 4) {
+		if (board.getTile(tile_num).getType() == 4) {
 //			System.out.println("check_Question " + curr_Tile);
 			Tile quetion_tile = board.is_question(tile_num);
 			if (quetion_tile != null) {
 				System.out.println("is a question");
-				showQuestion(board.getTile(tile_num).getQuestion());
+				showQuestion(board.getTile(tile_num).getQuestion(), p);
 			}
-			
-
 		}
 	}
-	
-	//move player
-	private void move_Player(Player p) {
+
+	// move player
+	public void move_Player(int dice, Player p) {
+		if (dice != 0 && dice != -5) {
+			System.out.println(dice);
+			GameData.getInstance().getBoard().move(dice, p);
+		}
 		System.out.println(p.toString());
+		System.out.println(p.getPlacment_history());
+
 		checkwin(GameData.getInstance().getBoard().getGameEnd());
 		if (p.getCurrentP() == p.getPreviousStep()) {
 			return;
 		}
 		Pane curr_Tile = (Pane) grid.lookup("#" + p.getCurrentP());
 		Pane prev_tile = (Pane) grid.lookup("#" + p.getPreviousStep());
-		VBox playerbox = vboxlist.get(p.getID()-1);
-		animate(playerbox,prev_tile,curr_Tile,p);
+		VBox playerbox = vboxlist.get(p.getID() - 1);
+		if (dice != 0) {
+			animate(playerbox, prev_tile, curr_Tile, p);
+		}
+//		PauseTransition delay = new PauseTransition(Duration.seconds(1)); // 2 seconds delay
+//		delay.setOnFinished(event -> {
+//			checktile_type(p.getCurrentP(), p);
+//		});
+//		delay.play();
 
 //		check_Question(Integer.parseInt(curr_Tile.getId()));
 
-		
 //		System.out.println(vboxlist.size());
 //		int old_placment = p.getPreviousStep();
 //		int prev_p = p.getPlacment_history().get(p.getPlacment_history().size()-3);
@@ -390,7 +400,13 @@ public class BoardControl {
 //		checktile_type(curr_P,p);
 	}
 
-	private void animate(VBox playerbox, Pane start, Pane end,Player p) {
+	private void animate(VBox playerbox, Pane start, Pane end, Player p) {
+		if (playerbox == null || start == null || end == null || p == null) {
+			return;
+		}
+//		if(p.getCurrentP() == Integer.valueOf(end.getId())) {
+//			return;
+//		}
 		Point2D tileEnd = end.localToScene(end.getWidth() / 2, end.getHeight() / 2);
 		Point2D prevTile = start.localToScene(start.getWidth() / 2, start.getHeight() / 2);
 		double startX = tileEnd.getX();
@@ -399,25 +415,25 @@ public class BoardControl {
 		double startY_prev = prevTile.getY();
 		int curr_P = p.getCurrentP();
 
-        TranslateTransition tt = new TranslateTransition(Duration.seconds(0.5), playerbox);
+		TranslateTransition tt = new TranslateTransition(Duration.seconds(0.5), playerbox);
 
-        // Set the end position (the new tile)
-        tt.setToX(startX-startX_prev);
-        tt.setToY(startY-startY_prev);
-        //Play Animation
-        tt.play();
-        tt.setOnFinished(event -> {
-        	System.out.println(end.getId());
-        	System.out.println("prev_tile" + start.getId());
-        	playerbox.setTranslateX(0);
-        	playerbox.setTranslateY(0);
-        	end.getChildren().addAll(playerbox);
-    		checktile_type(curr_P,p);
-
-        });
+		// Set the end position (the new tile)
+		tt.setToX(startX - startX_prev);
+		tt.setToY(startY - startY_prev);
+		// Play Animation
+		tt.play();
+		tt.setOnFinished(event -> {
+			System.out.println(end.getId());
+			System.out.println("prev_tile" + start.getId());
+			playerbox.setTranslateX(0);
+			playerbox.setTranslateY(0);
+			end.getChildren().addAll(playerbox);
+			checktile_type(p.getCurrentP(), p);
+//    		checktile_type(curr_P,p);
+		});
 
 	}
-	//Check if the tile has a question
+	// Check if the tile has a question
 //	private void check_Question(int curr_Tile) {
 //		// TODO Auto-generated method stub
 //		System.out.println("check_Question " + curr_Tile);
@@ -428,12 +444,12 @@ public class BoardControl {
 //		}
 //	}
 
-	//initiate the players tokens
+	// initiate the players tokens
 	private void initiate_Players(Player p) {
 		p.addStep(1);
 		Pane new_pos_pane = (Pane) grid.lookup("#" + p.getCurrentP());
 		VBox playerbox = (VBox) new_pos_pane.lookup("#VBox" + p.getID());
-		
+
 		Label playerName = null;
 		ImageView img = null;
 		if (playerbox == null) {
@@ -454,14 +470,13 @@ public class BoardControl {
 			playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
 			img = (ImageView) playerbox.lookup("#Image" + p.getID());
 		}
-		
+
 		playerbox.getChildren().addAll(playerName, img);
 		vboxlist.add(playerbox);
 		new_pos_pane.getChildren().addAll(playerbox);
-		
+
 	}
 
-	
 	public void add_Ladders(int start, int end) {
 		Random random = new Random();
 
@@ -658,8 +673,6 @@ public class BoardControl {
 
 	}
 
-	
-	
 	private void startCountDown() {
 		counter.set(set_turn_time);
 		timer.play();
@@ -680,9 +693,9 @@ public class BoardControl {
 				if (frameCounter[0]++ % 3 == 0) { // adjust the 6 to control the speed of the animation
 					if (frameCounter[0] < 90) { // adjust the 90 to control the duration of the animation
 						try {
-						Image img = new Image(path + (random.nextInt(10)) + ".png");
-						diceImage.setImage(img);
-						}catch (Exception e) {
+							Image img = new Image(path + (random.nextInt(10)) + ".png");
+							diceImage.setImage(img);
+						} catch (Exception e) {
 							// TODO: handle exception
 							path = "Images/dice/";
 							Image img = new Image(path + (random.nextInt(10)) + ".png");
@@ -695,11 +708,11 @@ public class BoardControl {
 						this.stop();
 						if (dice == 7 || dice == 8 || dice == 9) {
 							Question q = GameData.getInstance().get_Question(dice);
-							showQuestion(q);
-							
+							showQuestion(q, player);
+
 						} else {
-							GameData.getInstance().getBoard().move(dice, player);
-							move_Player(player);
+//							GameData.getInstance().getBoard().move(dice, player);
+							move_Player(dice, player);
 						}
 //						GameData.getInstance().getBoard().move(48, player);
 //						move_Player(player);
@@ -745,7 +758,7 @@ public class BoardControl {
 //			stopTimer();
 			timeline.stop();
 			timer.stop();
-			
+
 			popupStage = new Stage();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/WinScreen_view.fxml"));
 			Parent root = null;
@@ -757,8 +770,7 @@ public class BoardControl {
 
 			// Load the FXML file for the pop-up
 			winScreen_Controller controller = loader.getController();
-			Player Player_won = GameData.getInstance().getplayer_list()
-					.get(GameData.getInstance().getPlayerTurn());
+			Player Player_won = GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn());
 
 			controller.setWinner(Player_won);
 
@@ -778,9 +790,9 @@ public class BoardControl {
 
 	}
 
-	public void showQuestion(Question q) {
+	public void showQuestion(Question q, Player p) {
 //		Question q = board.getTile(tile_num).getQuestion();
-		if(q == null) {
+		if (q == null) {
 			System.out.println("No question");
 			return;
 		}
@@ -800,18 +812,18 @@ public class BoardControl {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		questionPopControl questionPopControl = loader.getController();
 		// Set the scene and show the stage
 		questionPopControl.set_question(q);
-		
+		questionPopControl.prev_window(this);
+		questionPopControl.set_player(p);
 		Scene scene = new Scene(root);
 		popupStage.setScene(scene);
 		popupStage.show();
 		startCountDown();
 	}
 
-	
-	
-	private void clear_all() {}
+	private void clear_all() {
+	}
 }
