@@ -129,19 +129,28 @@ public class Board {
 			newPosition = newPosition + diceResult;
 		// This if is check if the player as moved so much that he won
 		if (newPosition >= (numTiles * numTiles)) {
+			newPosition = numTiles * numTiles;
 			gameEnd = 1;
 			player.setCurrentP((numTiles * numTiles));
 			return false;
 		}
+		if(newPosition <= 0) {
+			newPosition = 1;
+			player.setCurrentP(1);
+		}
+		int[] pos = calculatePosition(newPosition);
+		int x = pos[0];
+		int y = pos[1];
+	    System.out.println("Player name : " +player.getName()+" + "+diceResult+" and now he is in X " + x + " Y " + y);
+	    System.out.println("Tile number "+ newPosition);
+	    System.out.println("");
+		if(newPosition != player.getPreviousStep() || player.getCurrentP() != 1 || player.getCurrentP() != (numTiles * numTiles)) {
+			GameData.getInstance().getPlayer(player).setCurrentP(newPosition);// update player's position
+			GameData.getInstance().getPlayer(player).addStep(newPosition);
+		}
 
-//		int[] pos = calculatePosition(newPosition);
-//		int x = pos[0];
-//		int y = pos[1];
-//	    System.out.println("Player name : " +player.getName()+" + "+diceResult+" and now he is in X " + x + " Y " + y);
-//	    System.out.println("Tile number "+ newPosition);
-//	    System.out.println("");
-		GameData.getInstance().getPlayer(player).setCurrentP(newPosition);// update player's position
-		GameData.getInstance().getPlayer(player).addStep(newPosition);
+//		GameData.getInstance().getPlayer(player).setCurrentP(newPosition);// update player's position
+//		GameData.getInstance().getPlayer(player).addStep(newPosition);
 
 //		activateTile(x, y, player); // if ther's a special object - Snake Ladder or question it will update the
 									// location of the player
