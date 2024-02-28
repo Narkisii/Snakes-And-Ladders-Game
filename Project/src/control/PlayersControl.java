@@ -29,6 +29,7 @@ import javafx.stage.Stage;
 import model.Board;
 import model.GameData;
 import model.Player;
+import model.cpu_Player;
 
 public class PlayersControl {
 
@@ -50,6 +51,8 @@ public class PlayersControl {
 	@FXML
 	private Button remove_Cpu;
 	private int num_cpu = 0;
+	
+	
 //	private LinkedList <Player> players = new LinkedList<Player>();
 	List<String> tokens = Arrays.stream(Tokens.values()).map(Enum::name).collect(Collectors.toList());
 	List<String> colors = Arrays.stream(Colors.values()).map(Enum::name).collect(Collectors.toList());
@@ -79,16 +82,21 @@ public class PlayersControl {
 		remove_Cpu.setOnAction(event -> {
 			remove_CPU();
 		});
+		
+		if(numberOfPlayers == 1) {
+			addCpu();
+		}
 	}
 
 	private void remove_CPU() {
 		// TODO Auto-generated method stub
 		numberOfPlayers--;
 		num_cpu--;
+		index--;
 		if (num_cpu == 0) {
 			remove_Cpu.setDisable(true);
 		}
-		if (num_cpu + numberOfPlayers == 5) {
+		if (numberOfPlayers <=5) {
 			add_CPU.setDisable(false);
 		}
 		List<String> colors_temp = colors;
@@ -451,6 +459,7 @@ public class PlayersControl {
 
 	private void startGame(int numberOfPlayers) {
 		int counter = 1;
+		System.out.println(num_cpu);
 
 		for (Node node : playerContainer.getChildren()) {
 			if (node instanceof HBox) {
@@ -468,10 +477,17 @@ public class PlayersControl {
 																							// your HBox
 
 				// Create a new Player object and add it to the list
-				Player p = new Player(counter, color, playerName, token);
+				if (numberOfPlayers - num_cpu == counter) {
+					Player p = new Player(counter, color, playerName, token);
+					GameData.getInstance().addPlayer(p);
+
+				} else {
+					cpu_Player cpu_Player = new cpu_Player(counter, color, playerName, token);
+					GameData.getInstance().addPlayer(cpu_Player);
+				}
 				counter++;
+				
 //	            players.add(p);
-				GameData.getInstance().addPlayer(p);
 				GameData.getInstance().setNumberOfPlayers(GameData.getInstance().getplayer_list().size());
 			}
 

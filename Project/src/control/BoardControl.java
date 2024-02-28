@@ -4,6 +4,7 @@ import model.Player;
 import model.Question;
 import model.Snake;
 import model.Tile;
+import model.cpu_Player;
 
 import java.awt.BasicStroke;
 import java.io.File;
@@ -67,6 +68,7 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import model.Board;
 import model.GameData;
 import model.Ladder;
@@ -209,7 +211,6 @@ public class BoardControl {
 		add_SpecialTiles();
 //        group = new Group();
 //        group.getChildren().addAll(
-
 //                boardpane,
 //                return_btn,
 //                turn_Lable,
@@ -218,7 +219,7 @@ public class BoardControl {
 //                diceImage,
 //                rollButton,
 //                grid
-//                
+//
 //        );
 	}
 
@@ -296,7 +297,6 @@ public class BoardControl {
 			}
 
 		}
-
 		return grid;
 
 	}
@@ -319,23 +319,6 @@ public class BoardControl {
 		}
 
 	}
-
-//	//Clean tile from user token
-//	private void clean_Tile(Player p) {
-//		LinkedList<Integer> placment = p.getPlacment_history();
-//		for (int i = placment.size() - 2; i >= 0; i--) {
-//			Pane startTile = (Pane) grid.lookup("#" + p.getPlacment_history().get(i));
-//			if (startTile.lookup("#VBox" + p.getID()) != null) {
-//				VBox playerbox = (VBox) startTile.lookup("#VBox" + p.getID());
-//				Label playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
-//				ImageView img = (ImageView) playerbox.lookup("#Image" + p.getID());
-////			System.out.println("clean_Tile old_pos: " + p.getPreviousStep() + "Player: " + p.getID());
-//				playerbox.getChildren().removeAll(playerName, img);
-//				startTile.getChildren().removeAll(playerbox);
-//			}
-//		}
-//
-//	}
 
 	private void checktile_type(int tile_num, Player p) {
 		// Check if the tile is adding more steps to the players
@@ -372,35 +355,11 @@ public class BoardControl {
 		if (dice != 0) {
 			animate(playerbox, prev_tile, curr_Tile, p);
 		}
-//		PauseTransition delay = new PauseTransition(Duration.seconds(1)); // 2 seconds delay
-//		delay.setOnFinished(event -> {
-//			checktile_type(p.getCurrentP(), p);
-//		});
-//		delay.play();
-
-//		check_Question(Integer.parseInt(curr_Tile.getId()));
-
-//		System.out.println(vboxlist.size());
-//		int old_placment = p.getPreviousStep();
-//		int prev_p = p.getPlacment_history().get(p.getPlacment_history().size()-3);
-//		int median_placemnt = p.getPlacment_history().get(p.getPlacment_history().size()-2);
-//		int curr_P = p.getCurrentP();
-//		System.out.println("Curr_Tile "+curr_P +" type: " + board.getTile(curr_P).getType());
-//		System.out.println("median_placemnt: "+median_placemnt +" type: " + board.getTile(median_placemnt).getType());
-//		System.out.println("getPlacment_history " + p.getPlacment_history());
-
-//		if(board.getTile(median_placemnt).getType() == 5 || board.getTile(median_placemnt).getType() == -5 ) {
-//			prev_tile = (Pane) grid.lookup("#" + prev_p);
-//			Pane median_tile = (Pane) grid.lookup("#" + median_placemnt);
-//		    animate(playerbox,prev_tile,median_tile,  () -> {
-//		        // This code will run after the first animation completes
-//		        animate(playerbox, curr_Tile, median_tile, null); // Start the second animation
-//		    });
-//		}
-//		checktile_type(curr_P,p);
 	}
 
 	private void animate(VBox playerbox, Pane start, Pane end, Player p) {
+		startCountDown();
+
 		if (playerbox == null || start == null || end == null || p == null) {
 			return;
 		}
@@ -433,16 +392,6 @@ public class BoardControl {
 		});
 
 	}
-	// Check if the tile has a question
-//	private void check_Question(int curr_Tile) {
-//		// TODO Auto-generated method stub
-//		System.out.println("check_Question " + curr_Tile);
-//		Tile quetion_tile = board.is_question(curr_Tile);
-//		if (quetion_tile != null) {
-//			System.out.println("is a question");
-//			showQuestion(board.getTile(curr_Tile).getQuestion());
-//		}
-//	}
 
 	// initiate the players tokens
 	private void initiate_Players(Player p) {
@@ -652,8 +601,20 @@ public class BoardControl {
 			if (counter.get() == 0) {
 				roll(board.get_Dice_Result(),
 						GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()));
+			}
+			if (counter.get() == 40) {
+				System.out.println("test1");
+				System.out.println(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getClass()
+						.getName());
+				if (GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getClass()
+						.getName() == "model.cpu_Player") {
+					cpu_Player cpu_p= (cpu_Player) GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn());
+					cpu_p.execute();
+					roll(cpu_p.getDiceResult(), cpu_p);
+				}
 //				timer.stop();
 			}
+
 		}));
 		timer.setCycleCount(Timeline.INDEFINITE); // Repeat indefinitely
 	}
@@ -682,7 +643,7 @@ public class BoardControl {
 		timer.stop();
 	}
 
-	private void roll(int dice, Player player) {
+	public void roll(int dice, Player player) {
 		rollButton.setDisable(true);
 		final long[] frameCounter = { 0 };
 		final Random random = new Random();
@@ -716,18 +677,11 @@ public class BoardControl {
 						}
 //						GameData.getInstance().getBoard().move(48, player);
 //						move_Player(player);
-
-						if (GameData.getInstance().getPlayerTurn() < GameData.getInstance().getplayer_list().size()
-								- 1) {
-							GameData.getInstance().setPlayerTurn(GameData.getInstance().getPlayerTurn() + 1);
-						} else {
-							GameData.getInstance().setPlayerTurn(0);
-						}
+						GameData.getInstance().next_turn();
 						turn_Lable.setTextFill(Color.web(GameData.getInstance().getplayer_list()
 								.get(GameData.getInstance().getPlayerTurn()).getColor()));
 						turn_Lable.setText(GameData.getInstance().getplayer_list()
 								.get(GameData.getInstance().getPlayerTurn()).getName() + "'s turn");
-
 					}
 				}
 			}
@@ -790,13 +744,13 @@ public class BoardControl {
 
 	}
 
-	public void showQuestion(Question q, Player p) {
+	private void showQuestion(Question q, Player p) {
 //		Question q = board.getTile(tile_num).getQuestion();
 		if (q == null) {
 			System.out.println("No question");
 			return;
 		}
-
+//		timer.stop();
 		popupStage = new Stage();
 		popupStage.initOwner((return_btn).getScene().getWindow());
 		popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
@@ -819,11 +773,15 @@ public class BoardControl {
 		questionPopControl.prev_window(this);
 		questionPopControl.set_player(p);
 		Scene scene = new Scene(root);
+		popupStage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> {
+			startCountDown();
+		});
 		popupStage.setScene(scene);
 		popupStage.show();
-		startCountDown();
 	}
 
 	private void clear_all() {
 	}
+	
+	
 }

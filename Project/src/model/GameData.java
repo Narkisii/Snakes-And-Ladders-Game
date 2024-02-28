@@ -54,9 +54,6 @@ public class GameData {
 //		this.board = new Board(player_list);
 		this.in_game = false;
 	}
-
-	
-
 	
 	
 	// Static method to get the singleton instance
@@ -67,6 +64,15 @@ public class GameData {
 		return instance;
 	}
 
+	public void next_turn() {
+		if (getPlayerTurn() < getplayer_list().size()
+				- 1) {
+			setPlayerTurn(getPlayerTurn() + 1);
+		} else {
+			setPlayerTurn(0);
+		}
+
+	}
 	public void init_board() {
 		this.board = new Board(player_list);
 	}
