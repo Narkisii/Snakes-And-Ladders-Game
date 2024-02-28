@@ -40,6 +40,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -70,10 +71,13 @@ public class QuestionWizControl {
 	private ScrollPane easyScroll;
 
 	@FXML
-	private Pane messagePane, topPane;
+	private Pane messagePane;
+	
+	@FXML
+	private Pane topPane, leftPane, rightPane, bottomPane;
 
 	@FXML
-	private VBox vBox;
+	private VBox vBox, center_vBox;
 
 	@FXML
 	private TableView<Question> qTable;
@@ -100,8 +104,11 @@ public class QuestionWizControl {
 	private Button easy_button, med_button, hard_button;
 	
 	@FXML
-	private BorderPane qWiz_BorderPane;
+	private BorderPane q_BorderPane;
 
+	@FXML
+	private AnchorPane centerPane;
+	
 	private Stage popupStage;
 
 	List<Question> easy_questionList, med_questionList, hard_questionList;
@@ -128,7 +135,7 @@ public class QuestionWizControl {
 //		easy_questionList = questionData.getQuestionsByDifficulty(1);
 //		med_questionList = questionData.getQuestionsByDifficulty(2);
 //		hard_questionList = questionData.getQuestionsByDifficulty(3);
-			
+	
 		
 		// disable admin options in initialize
 		if (!isAdmin)
