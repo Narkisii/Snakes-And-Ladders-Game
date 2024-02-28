@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 import javafx.scene.control.Label;
+
+import org.jcp.xml.dsig.internal.dom.DOMSubTreeData;
 import org.junit.validator.PublicClassValidator;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -34,7 +36,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -53,15 +58,6 @@ public class QuestionWizControl {
 	private URL location;
 
 	@FXML
-	private Tab EasyTab;
-
-	@FXML
-	private Tab MediumTab;
-
-	@FXML
-	private Tab HardTab;
-
-	@FXML
 	private Button Return_Btn;
 
 	@FXML
@@ -74,7 +70,7 @@ public class QuestionWizControl {
 	private ScrollPane easyScroll;
 
 	@FXML
-	private Pane messagePane;
+	private Pane messagePane, topPane;
 
 	@FXML
 	private VBox vBox;
@@ -102,6 +98,9 @@ public class QuestionWizControl {
 
 	@FXML
 	private Button easy_button, med_button, hard_button;
+	
+	@FXML
+	private BorderPane qWiz_BorderPane;
 
 	private Stage popupStage;
 
@@ -129,11 +128,36 @@ public class QuestionWizControl {
 //		easy_questionList = questionData.getQuestionsByDifficulty(1);
 //		med_questionList = questionData.getQuestionsByDifficulty(2);
 //		hard_questionList = questionData.getQuestionsByDifficulty(3);
-
+			
+		
 		// disable admin options in initialize
-		if(!isAdmin) {
-		// isAdmin = false;
+		if (!isAdmin)
 			disableAdminControls(true);
+
+		else {
+			Button logout_Btn = LogIn_Btn;
+			logout_Btn.setText("Log out");
+
+			LogIn_Btn.setVisible(false);
+			logout_Btn.setVisible(true);
+
+			logout_Btn.setOnAction(event -> {
+				setPopUpStage();
+				
+				// Load the FXML file for the pop-up
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Logout.fxml"));
+				Parent root = null;
+				try {
+					root = loader.load();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				// Set the scene and show the stage
+				Scene scene = new Scene(root);
+				popupStage.setScene(scene);
+				popupStage.show();
+			});
 		}
 
 		update_table();
@@ -311,9 +335,9 @@ public class QuestionWizControl {
 	public void setAdmin(boolean status) {
 		isAdmin = status;
 	}
-	
+
 	public boolean isAdmin() {
-		if(isAdmin)
+		if (isAdmin)
 			return true;
 		return false;
 	}
@@ -322,7 +346,7 @@ public class QuestionWizControl {
 		add_button.setDisable(toDisable);
 		rm_button.setDisable(toDisable);
 		LogIn_Btn.setDisable(!toDisable);
-		
+
 		if (toDisable) {
 			messageLbl.setText("You must log in to edit questions");
 		} else {
@@ -437,6 +461,12 @@ public class QuestionWizControl {
 	private boolean delete_Q(Question q) {
 		return true;
 	}
+	
+	/*
+	private BorderPane adjsutScreen() {
+		
+	}
+	*/
 
 //	 private QuestionsFromJson  readQuestionFromJson(String filePath) throws IOException {
 //	        ObjectMapper mapper = new ObjectMapper();

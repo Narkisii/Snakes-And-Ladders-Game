@@ -15,9 +15,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@resources/Css/all_Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.QuestionWizControl">
+<BorderPane fx:id="qWiz_BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@resources/Css/all_Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.QuestionWizControl">
    <bottom>
-      <Pane prefHeight="85.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="85.0" prefWidth="1280.0">
          <children>
             <Button fx:id="Return_Btn" layoutY="-1.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="256.0" styleClass="Normal_button" stylesheets="@resources/Css/Buttons.css" text="Return" />
             <Button fx:id="LogIn_Btn" layoutX="1024.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="256.0" styleClass="LogIn_button" stylesheets="@resources/Css/Buttons.css" text="Log In" />
@@ -25,25 +25,25 @@
       </Pane>
    </bottom>
    <top>
-      <Pane prefHeight="126.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="topPane" prefHeight="126.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="124.0" prefWidth="1280.0" styleClass="GameName_font" stylesheets="@resources/Css/all_Style.css" text="Question wizard" />
          </children>
       </Pane>
    </top>
    <center>
-      <AnchorPane BorderPane.alignment="CENTER">
+      <AnchorPane>
          <children>
-            <VBox prefHeight="507.0" prefWidth="1245.0" spacing="10.0">
+            <VBox layoutY="1.0" prefHeight="507.0" prefWidth="1198.0" spacing="10.0">
                <children>
-                  <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="1246.0" spacing="5.0">
+                  <HBox prefHeight="33.0" prefWidth="1246.0" spacing="5.0" VBox.vgrow="ALWAYS">
                      <children>
                         <Button fx:id="easy_button" mnemonicParsing="false" prefHeight="26.0" prefWidth="83.0" text="Easy" />
                         <Button fx:id="med_button" mnemonicParsing="false" prefHeight="26.0" prefWidth="95.0" text="Medium" />
                         <Button fx:id="hard_button" mnemonicParsing="false" prefHeight="26.0" prefWidth="83.0" text="Hard" />
                      </children>
                   </HBox>
-                  <AnchorPane prefWidth="1230.0">
+                  <AnchorPane prefWidth="1230.0" VBox.vgrow="ALWAYS">
                      <children>
                         <HBox alignment="CENTER" layoutX="6.0" layoutY="10.0" prefHeight="56.0" prefWidth="1246.0" spacing="10.0" stylesheets="@resources/Css/Buttons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
@@ -62,14 +62,15 @@
                               <Pane fx:id="messagePane" prefHeight="56.0" prefWidth="330.0">
                                  <children>
                                     <Label fx:id="messageLbl" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="12.0" prefHeight="32.0" prefWidth="328.0" styleClass="qWizFont" stylesheets="@resources/Css/popUpStyle.css" />
-                                 </children></Pane>
+                                 </children>
+                              </Pane>
                               <Button fx:id="add_button" mnemonicParsing="false" prefHeight="46.0" prefWidth="219.0" styleClass="addQuestion_Button" text="Add Question" />
                               <Button fx:id="rm_button" mnemonicParsing="false" prefHeight="46.0" prefWidth="214.0" style="-fx-background-color: Red;" styleClass="addQuestion_Button" text="Remove Question" />
                            </children>
                         </HBox>
                      </children>
                   </AnchorPane>
-              <AnchorPane fx:id="easyTab" minHeight="0.0" minWidth="0.0">
+              <AnchorPane fx:id="easyTab" minHeight="-Infinity" minWidth="-Infinity" VBox.vgrow="ALWAYS">
                      <children>
                         <ScrollPane prefHeight="398.0" prefWidth="1246.0">
                           <content>

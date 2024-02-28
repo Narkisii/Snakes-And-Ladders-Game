@@ -23,11 +23,8 @@ public class LoginController {
 	private HBox buttonHBox;
 
 	@FXML
-	private Button loginButton;
-
-	@FXML
-	private Button cancelButton;
-
+	private Button loginButton, cancelButton;
+	
 	@FXML
 	private VBox formVBox;
 
@@ -36,6 +33,12 @@ public class LoginController {
 
 	@FXML
 	private PasswordField passwordField;
+	
+	@FXML
+	private Label statusLbl;
+	
+	@FXML
+	private Pane statusPane;
 
 	@FXML
 	private AnchorPane mainPane;
@@ -52,15 +55,19 @@ public class LoginController {
 	public void initialize() {
 		status = false;
 		
+		/*
 		Pane statusPane = new Pane();
 		statusPane.setVisible(false);
 
 		Label statusLbl = new Label("");
 		statusLbl.setVisible(false);
 		
+		
 		statusPane.getChildren().add(statusLbl);
 		statusLbl.setAlignment(Pos.CENTER);
 		formVBox.getChildren().add(statusPane);
+		
+		*/
 		
 		loginButton.setDisable(true); // disable button at initialize 
 
