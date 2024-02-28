@@ -27,6 +27,7 @@ public class SettingsControl {
 
     @FXML
     public void initialize() {
+    	GameData.getInstance().init();
         // Initialize the difficulty ComboBox
         difficulty.setItems(FXCollections.observableArrayList("Easy", "Medium", "Hard"));
         difficulty.getSelectionModel().select("Easy"); // Set default value

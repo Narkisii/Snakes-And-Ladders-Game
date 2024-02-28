@@ -1,16 +1,55 @@
-[
-    {
-        "date": "2024-02-08",
-        "players": ["Player1", "Player2"],
-        "difficulty": "Hard",
-        "playTime": "30 minutes",
-        "winner": "Player1"
-    },
-    {
-        "date": "2024-02-07",
-        "players": ["Player3", "Player4"],
-        "difficulty": "Easy",
-        "playTime": "15 minutes",
-        "winner": "Player4"
-    }
-]
+[ {
+  "date" : "2024-02-08",
+  "players" : [ "Player1", "Player2" ],
+  "difficulty" : "Hard",
+  "playTime" : "30 minutes",
+  "winner" : "Player1"
+}, {
+  "date" : "2024-02-07",
+  "players" : [ "Player3", "Player4" ],
+  "difficulty" : "Easy",
+  "playTime" : "15 minutes",
+  "winner" : "Player4"
+}, {
+  "date" : "2024-02-28",
+  "players" : [ "asdf", "RON" ],
+  "difficulty" : "Easy",
+  "playTime" : 1,
+  "winner" : "asdf"
+}, {
+  "date" : "2024-02-28",
+  "players" : [ "Ariel", "Ariel2", "Ariel3", "Ariel4", "Ariel5" ],
+  "difficulty" : "Easy",
+  "playTime" : 2,
+  "winner" : "Ariel"
+}, {
+  "date" : "2024-02-28",
+  "players" : [ "asdf", "MALFOY" ],
+  "difficulty" : "Easy",
+  "playTime" : 2,
+  "winner" : "asdf"
+}, {
+  "date" : "2024-02-28",
+  "players" : [ "asdf", "HERMIONE" ],
+  "difficulty" : "Easy",
+  "playTime" : 1,
+  "winner" : "asdf"
+}, {
+  "date" : "2024-02-28",
+  "players" : [ "asdf", "VEGETA" ],
+  "difficulty" : "Easy",
+  "playTime" : 1,
+  "winner" : "asdf"
+}, {
+  "date" : "2024-02-28",
+  "players" : [ "asdf", "VEGETA" ],
+  "difficulty" : "Easy",
+  "playTime" : 1,
+  "winner" : "VEGETA"
+}, {
+  "date" : "2024-02-28",
+  "players" : [ "asdf", "BLACKWIDOW" ],
+  "difficulty" : "Easy",
+  "playTime" : 1,
+  "winner" : "asdf"
+} ]

@@ -1,14 +1,25 @@
 package model;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import control.HistoryControl;
 import exceptions.HandleExceptions;
@@ -24,7 +35,10 @@ public class GameData {
 	private HistoryControl History;
 	private int playerTurn;
 	private Board board;
-	private boolean in_game;
+	QuestionsFromJson questionData;
+	private int playTime;
+	private String winner;
+
 //    private static Dice dice;
 
 	// Singleton instance
@@ -32,7 +46,11 @@ public class GameData {
 
 	// Private constructor
 	private GameData() {
-		QuestionsFromJson questionData;
+		init();
+	}
+	
+	
+	public void init() {
 		try {
 //	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
 			questionData = QuestionsFromJson.getInstance().readQuestionsFromJson();
@@ -52,9 +70,20 @@ public class GameData {
 		this.playerTurn = 0;
 		this.numberOfPlayers = 1;
 //		this.board = new Board(player_list);
-		this.in_game = false;
+
 	}
 	
+	public void reset() {
+	    this.player_list.clear();
+	    this.snake_list.clear();
+	    this.ladders.clear();
+	    this.specialTiles_list.clear();
+	    this.questions_Map.clear();
+	    this.difficulty = "Easy";
+	    this.playerTurn = 0;
+	    this.numberOfPlayers = 1;
+	}
+
 	
 	// Static method to get the singleton instance
 	public static GameData getInstance() {
@@ -73,6 +102,7 @@ public class GameData {
 		}
 
 	}
+	
 	public void init_board() {
 		this.board = new Board(player_list);
 	}
@@ -316,28 +346,81 @@ public class GameData {
 		this.board = board;
 	}
 
-	/**
-	 * @return the in_game
-	 */
-	public void set_In_game(boolean bool) {
-		this.in_game = bool;
-	}
-
-	/**
-	 * @param in_game the in_game to set
-	 */
-	public boolean get_isIngame() {
-		return in_game;
-	}
-
 	@Override
 	public String toString() {
 		return "GameData [numberOfPlayers=" + numberOfPlayers + ", difficulty=" + difficulty + ", questions_Map="
 				+ questions_Map + ", player_list=" + player_list + ", snake_list=" + snake_list + ", ladders=" + ladders
 				+ ", specialTiles_list=" + specialTiles_list + ", History=" + History + ", playerTurn=" + playerTurn
-				+ ", board=" + board + ", in_game=" + in_game + "]";
+				+ ", board=" + board + "]";
 	}
 	
+    public void appendGameToJson() {
+        ObjectMapper mapper = new ObjectMapper();
+//        File file = new File("gameData.json");
+        // Load existing game data
+        File file  = new File("src/Json/History.txt");
+        ArrayNode gameDataArray;
+        try {
+            gameDataArray = (ArrayNode) mapper.readTree(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        List<String> players = player_list.stream().map(player -> player.getName()).collect(Collectors.toList());
+        // Create new game data
+        ObjectNode game = mapper.createObjectNode();
+        game.put("date", LocalDate.now().toString());
+        game.putPOJO("players",players);
+        game.put("difficulty", difficulty);
+        game.put("playTime", playTime);
+        game.put("winner", winner);
+
+        // Append new game data to array
+        gameDataArray.add(game);
+        
+        // Print game data to console
+        System.out.println("Appending game data to JSON: " + game.toString());
+
+        // Write game data array back to file
+        try {
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file, gameDataArray);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+	/**
+	 * @return the playTime
+	 */
+	public int getPlayTime() {
+		return playTime;
+	}
+
+
+	/**
+	 * @param playTime the playTime to set
+	 */
+	public void setPlayTime(int playTime) {
+		this.playTime = playTime;
+	}
+
+
+	/**
+	 * @return the winner
+	 */
+	public String getWinner() {
+		return winner;
+	}
+
+
+	/**
+	 * @param winner the winner to set
+	 */
+	public void setWinner(String winner) {
+		this.winner = winner;
+	}
+
 
 
 }

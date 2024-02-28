@@ -136,6 +136,8 @@ public class BoardControl {
 
 	private ArrayList<VBox> vboxlist;
 
+	private int gameEnd_var;
+
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 
 	void initialize() {
@@ -189,7 +191,7 @@ public class BoardControl {
 		drawLinesInSeparateThread();
 		mainPain.getChildren().add(canvas);
 		// Set the action for the return button
-		return_btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
+		return_btn.setOnAction(event -> clear_all());
 
 		turn_Lable.setTextFill(Color
 				.web(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getColor()));
@@ -202,8 +204,6 @@ public class BoardControl {
 //			System.out.println("Adding:" + p.toString());
 			initiate_Players(p);
 		}
-
-		GameData.getInstance().set_In_game(true);
 
 		GameData.getInstance().init_board();
 		board = GameData.getInstance().getBoard();
@@ -358,6 +358,7 @@ public class BoardControl {
 	}
 
 	private void animate(VBox playerbox, Pane start, Pane end, Player p) {
+		if(gameEnd_var != 1)
 		startCountDown();
 
 		if (playerbox == null || start == null || end == null || p == null) {
@@ -604,11 +605,12 @@ public class BoardControl {
 			}
 			if (counter.get() == 40) {
 				System.out.println("test1");
-				System.out.println(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getClass()
-						.getName());
+				System.out.println(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn())
+						.getClass().getName());
 				if (GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getClass()
 						.getName() == "model.cpu_Player") {
-					cpu_Player cpu_p= (cpu_Player) GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn());
+					cpu_Player cpu_p = (cpu_Player) GameData.getInstance().getplayer_list()
+							.get(GameData.getInstance().getPlayerTurn());
 					cpu_p.execute();
 					roll(cpu_p.getDiceResult(), cpu_p);
 				}
@@ -667,16 +669,16 @@ public class BoardControl {
 						diceImage.setImage(img);
 						rollButton.setDisable(false);
 						this.stop();
-						if (dice == 7 || dice == 8 || dice == 9) {
-							Question q = GameData.getInstance().get_Question(dice);
-							showQuestion(q, player);
-
-						} else {
-//							GameData.getInstance().getBoard().move(dice, player);
-							move_Player(dice, player);
-						}
-//						GameData.getInstance().getBoard().move(48, player);
-//						move_Player(player);
+//						if (dice == 7 || dice == 8 || dice == 9) {
+//							Question q = GameData.getInstance().get_Question(dice);
+//							showQuestion(q, player);
+//
+//						} else {
+////							GameData.getInstance().getBoard().move(dice, player);
+//							move_Player(dice, player);
+//						}
+						GameData.getInstance().getBoard().move(48, player);
+						move_Player(48, player);
 						GameData.getInstance().next_turn();
 						turn_Lable.setTextFill(Color.web(GameData.getInstance().getplayer_list()
 								.get(GameData.getInstance().getPlayerTurn()).getColor()));
@@ -687,7 +689,7 @@ public class BoardControl {
 			}
 		};
 		animationTimer.start();
-		startCountDown();
+//		startCountDown();
 	}
 
 	// Method to navigate to another screen
@@ -707,13 +709,19 @@ public class BoardControl {
 	}
 
 	private void checkwin(int gameEnd) {
+		gameEnd_var = gameEnd;
 		// TODO Auto-generated method stub
 		if (gameEnd == 1) {
 //			stopTimer();
 			timeline.stop();
 			timer.stop();
-
 			popupStage = new Stage();
+			popupStage.initOwner((grid).getScene().getWindow());
+			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
+			popupStage.setAlwaysOnTop(true); // Set always on top
+			popupStage.setResizable(false);
+			popupStage.getStyle();
+
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/WinScreen_view.fxml"));
 			Parent root = null;
 			try {
@@ -725,7 +733,9 @@ public class BoardControl {
 			// Load the FXML file for the pop-up
 			winScreen_Controller controller = loader.getController();
 			Player Player_won = GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn());
-
+			GameData.getInstance().setWinner(Player_won.getName());
+			GameData.getInstance().setPlayTime(timeSeconds);
+			GameData.getInstance().appendGameToJson();
 			controller.setWinner(Player_won);
 
 			Scene scene = new Scene(root);
@@ -781,7 +791,37 @@ public class BoardControl {
 	}
 
 	private void clear_all() {
+		// "/view/MenuScreenView.fxml"
+		try {
+			GameData.getInstance().reset();
+			Stage stage = (Stage) return_btn.getScene().getWindow();
+			mainPain.getChildren().clear();
+			grid.getChildren().clear();
+			timer.stop();
+
+//			stage.close();
+			double width = stage.getScene().getWidth();
+			double height = stage.getScene().getHeight();
+			System.out.print(GameData.getInstance().toString());
+			Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/view/MenuScreenView.fxml")), width,
+					height);
+			stage.setScene(scene);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+//		mainPain.getChildren().clear();
+
+//        boardpane,
+//      return_btn,
+//      turn_Lable,
+//      countDown_Label,
+//      timer_Label,
+//      diceImage,
+//      rollButton,
+//      grid
 	}
-	
-	
+
 }

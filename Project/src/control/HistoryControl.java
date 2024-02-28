@@ -108,11 +108,12 @@ public class HistoryControl {
 		} catch (Exception e) {
 			// TODO: handle exception
 			try {
-				filePath = "Json/History.txt";
+				filePath = "src/Json/History.txt";
 				return mapper.readValue(Paths.get(filePath).toFile(), new TypeReference<List<History>>() {});
 
 			} catch (Exception e2) {
 				// TODO: handle exception
+				System.out.println(e2.getMessage());
 				throw new NoJsonFileFound();
 			}
 		}
