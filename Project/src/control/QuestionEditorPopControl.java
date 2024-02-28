@@ -49,9 +49,10 @@ public class QuestionEditorPopControl {
 	private Question questionAfterChange;
 
 	private String type;
-
+	
 	@FXML
 	public void initialize() {
+		
 		textFieldList = new ArrayList<>();
 		textFieldList.add(question_field);
 		textFieldList.add(ans1);
