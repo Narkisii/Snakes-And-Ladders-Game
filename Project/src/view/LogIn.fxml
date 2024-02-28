@@ -13,21 +13,29 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="mainBorderPane" styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.LoginController">
+<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="438.0" prefWidth="519.0" styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.LoginController">
     <center>
-        <AnchorPane fx:id="mainPane" prefHeight="300.0" prefWidth="650.0" stylesheets="@resources/Css/popUpStyle.css">
+        <AnchorPane fx:id="mainPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="482.0" stylesheets="@resources/Css/popUpStyle.css">
             <children>
-                <HBox fx:id="buttonHBox" alignment="CENTER" layoutX="187.0" layoutY="433.0" prefHeight="49.0" prefWidth="278.0" spacing="10.0">
-                    <Button fx:id="loginButton" styleClass="finish_button" stylesheets="@resources/Css/popUpStyle.css" text="Log in" />
-                    <Button fx:id="cancelButton" styleClass="finish_button" stylesheets="@resources/Css/popUpStyle.css" text="Cancel" />
-                </HBox>
-                <VBox fx:id="formVBox" layoutX="145.0" layoutY="106.0" prefHeight="202.0" prefWidth="363.0" spacing="10.0" stylesheets="@resources/Css/popUpStyle.css" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="145.0" AnchorPane.rightAnchor="144.0" AnchorPane.topAnchor="106.0">
+                <VBox fx:id="formVBox" layoutX="54.0" layoutY="22.4" prefHeight="290.0" prefWidth="400.0" spacing="10.0" stylesheets="@resources/Css/popUpStyle.css" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="54.0" AnchorPane.rightAnchor="54.0" AnchorPane.topAnchor="22.0">
                     <children>
                         <Label fx:id="usernameLabel" styleClass="pop_font" text="User name:" />
                         <TextField fx:id="usernameField" prefHeight="41.0" prefWidth="592.0" promptText="Enter your username" styleClass="search_Font" />
                         
                         <Label fx:id="passwordLabel" styleClass="pop_font" text="Password:" />
                         <PasswordField fx:id="passwordField" prefHeight="30.0" prefWidth="591.0" promptText="Enter your password" styleClass="search_Font" />
+                  <Pane fx:id="statusPane" prefHeight="64.0" prefWidth="302.0" visible="false">
+                     <children>
+                        <Label fx:id="statusLbl" alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="304.0" visible="false" />
+                     </children>
+                  </Pane>
+                      <HBox fx:id="buttonHBox" alignment="CENTER" prefHeight="82.0" prefWidth="482.0" spacing="10.0">
+                          <Button fx:id="loginButton" styleClass="finish_button" stylesheets="@resources/Css/popUpStyle.css" text="Log in" />
+                          <Button fx:id="cancelButton" styleClass="finish_button" stylesheets="@resources/Css/popUpStyle.css" text="Cancel" />
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                      </HBox>
                     </children>
                     <padding>
                         <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
@@ -38,21 +46,23 @@
                   <Image url="@Images/LogInSnake.gif" />
                </image>
             </ImageView>
-                <Label fx:id="loginLabel" alignment="CENTER" layoutX="181.0" prefHeight="46.0" prefWidth="271.0" styleClass="title" stylesheets="@resources/Css/popUpStyle.css" text="User Login">
-                    <padding>
-                        <Insets top="10.0" />
-                    </padding>
-                </Label>
-            <ImageView fitHeight="141.0" fitWidth="154.0" layoutX="4.0" layoutY="367.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Images/logInScreen.png" />
-               </image>
-            </ImageView>
             </children>
         </AnchorPane>
     </center>
     <top>
-        <AnchorPane fx:id="topAnchorPane" prefHeight="46.0" prefWidth="650.0" BorderPane.alignment="CENTER" />
+        <AnchorPane fx:id="topAnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="84.0" prefWidth="519.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="131.0" fitWidth="114.0" layoutX="2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/logInScreen.png" />
+               </image>
+            </ImageView>
+                <Label fx:id="loginLabel" alignment="CENTER" layoutY="-2.0" prefHeight="87.0" prefWidth="519.0" styleClass="title" stylesheets="@resources/Css/popUpStyle.css" text="User Login">
+                    <padding>
+                        <Insets top="20.0" />
+                    </padding>
+                </Label>
+         </children></AnchorPane>
     </top>
     <left>
         <Pane fx:id="leftPane" prefHeight="458.0" prefWidth="19.0" BorderPane.alignment="CENTER" />
@@ -61,6 +71,6 @@
         <Pane fx:id="rightPane" prefHeight="200.0" prefWidth="19.0" BorderPane.alignment="CENTER" />
     </right>
     <bottom>
-        <AnchorPane fx:id="bottomAnchorPane" prefHeight="20.0" prefWidth="690.0" BorderPane.alignment="CENTER" />
+        <AnchorPane fx:id="bottomAnchorPane" prefHeight="68.0" prefWidth="519.0" BorderPane.alignment="CENTER" />
     </bottom>
 </BorderPane>
