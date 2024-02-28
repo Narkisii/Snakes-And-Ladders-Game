@@ -50,7 +50,7 @@ public class LoginController {
 	private static boolean status;
 
 	public void initialize() {
-		setLoginStatus(false);
+		status = false;
 		
 		Pane statusPane = new Pane();
 		statusPane.setVisible(false);
@@ -81,11 +81,14 @@ public class LoginController {
 	        
 	        // check login details 
 	        if (nameInput.equals("admin") && passInputString.equals("admin")) {
-	            setLoginStatus(true);
+	            status = true;
 	            statusLbl.setVisible(true);
 	            statusPane.setVisible(true);
 	            statusLbl.setText("Login successful");
-
+	            
+	            previousWindow.setAdmin(status);
+	            previousWindow.disableAdminControls(false);
+	            
 	            PauseTransition delay = new PauseTransition(Duration.seconds(2));
 	            delay.setOnFinished( event_2 -> {
 	                // close the screen
@@ -97,7 +100,6 @@ public class LoginController {
 	            // make the screen wait for 5 seconds then close it
 	            delay.play();
 	            return;
-	            
 	        } else {
 	            statusLbl.setText("Invalid credentials");
 	        }	        
@@ -109,17 +111,18 @@ public class LoginController {
 		this.previousWindow = questionWizControl2;
 	}
 
-	public boolean getLoginStatus() {
-		return status;
-	}
-
-	public void setLoginStatus(boolean loginStatus) {
-		this.status = loginStatus;
-	}
+//	public boolean getLoginStatus() {
+//		return status;
+//	}
 	
 	public QuestionWizControl getPreviousWindow() {
 		return previousWindow;
 	}
+	
+	public boolean getStatus() {
+		return status;
+	}
+	
 	/*
 	 * // Method to initialize the controller public void initialize() { assert
 	 * mainPane != null :

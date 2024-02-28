@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@resources/Css/all_Style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="control.QuestionWizControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@resources/Css/all_Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.QuestionWizControl">
    <bottom>
       <Pane prefHeight="85.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
@@ -59,9 +59,9 @@
                                     <Image url="@Images/search-icon.png" />
                                  </image>
                               </ImageView>
-                              <Pane prefHeight="56.0" prefWidth="330.0">
+                              <Pane fx:id="messagePane" prefHeight="56.0" prefWidth="330.0">
                                  <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="12.0" prefHeight="32.0" prefWidth="328.0" styleClass="qWizFont" stylesheets="@resources/Css/popUpStyle.css" text="Double click on question to edit" />
+                                    <Label fx:id="messageLbl" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="12.0" prefHeight="32.0" prefWidth="328.0" styleClass="qWizFont" stylesheets="@resources/Css/popUpStyle.css" />
                                  </children></Pane>
                               <Button fx:id="add_button" mnemonicParsing="false" prefHeight="46.0" prefWidth="219.0" styleClass="addQuestion_Button" text="Add Question" />
                               <Button fx:id="rm_button" mnemonicParsing="false" prefHeight="46.0" prefWidth="214.0" style="-fx-background-color: Red;" styleClass="addQuestion_Button" text="Remove Question" />

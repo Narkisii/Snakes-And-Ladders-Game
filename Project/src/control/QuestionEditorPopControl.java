@@ -1,5 +1,6 @@
 package control;
 
+import java.awt.ScrollPane;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +19,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.DuplicateError;
 import model.InputIsEmpty;
@@ -31,10 +33,13 @@ public class QuestionEditorPopControl {
 	private TextField question_field, ans1, ans2, ans3, ans4;
 
 	@FXML
-	private Label main_Label;
-
+	private Label main_Label, answerOpt_lbl, correctAnswer_lbl;
+	
 	@FXML
 	private ComboBox<String> difficulty_ComBox, correctAns_ComBox;
+	
+	@FXML
+	private HBox ans_1_HBox, ans_2_HBox, ans_3_HBox, ans_4_HBox;
 
 	@FXML
 	private Button saveButton;
@@ -43,25 +48,30 @@ public class QuestionEditorPopControl {
 
 	@FXML
 	private ImageView clearButton;
+	
+	private ScrollPane qScroll_Pane;
 
 	List<TextField> textFieldList;
 	private Question question;
 	private Question questionAfterChange;
 
 	private String type;
-	
+
 	@FXML
 	public void initialize() {
-		
+
 		textFieldList = new ArrayList<>();
 		textFieldList.add(question_field);
+
 		textFieldList.add(ans1);
 		textFieldList.add(ans2);
 		textFieldList.add(ans3);
 		textFieldList.add(ans4);
+
 		clearButton.setOnMouseClicked(event -> {
 			clear_text();
 		});
+
 		// Populate the correctAns_ComBox with values from 1 to 4
 		correctAns_ComBox.setItems(FXCollections.observableArrayList("1", "2", "3", "4"));
 
@@ -84,8 +94,8 @@ public class QuestionEditorPopControl {
 				alert.setContentText("Saved Question");
 
 				questionsFromJson = QuestionsFromJson.getInstance().readQuestionsFromJson();
-				// Create a new Question object
 
+				// Create a new Question object
 				if (checkEmpty()) {
 					Question newQuestion = new Question();
 					newQuestion.setQuestion(question_field.getText());
@@ -115,7 +125,7 @@ public class QuestionEditorPopControl {
 			alert.setHeaderText(null);
 			alert.setContentText("Saved Edit");
 			try {
-				///  edit question
+				/// edit question
 				QuestionsFromJson questionsFromJson = QuestionsFromJson.getInstance().readQuestionsFromJson();
 				if (checkEmpty()) {
 
@@ -179,22 +189,20 @@ public class QuestionEditorPopControl {
 
 	// Check if any imput is empty
 	public boolean checkEmpty() throws InputIsEmpty, InputIsNotUnique {
-	    Set<String> inputs = new HashSet<>();
-	    for (TextField f : textFieldList) {
-	        String input = f.getText();
-	        if (input.isEmpty()) {
-	            throw new InputIsEmpty(f.getId());
-	        } else if (!inputs.add(input.toLowerCase())) {
-	            throw new InputIsNotUnique(f.getId() + " " + f.getText());
-	        }
-	    }
-	    return true;
+		Set<String> inputs = new HashSet<>();
+		for (TextField f : textFieldList) {
+			String input = f.getText();
+			if (input.isEmpty()) {
+				throw new InputIsEmpty(f.getId());
+			} else if (!inputs.add(input.toLowerCase())) {
+				throw new InputIsNotUnique(f.getId() + " " + f.getText());
+			}
+		}
+		return true;
 	}
-
 
 	public void setPreviousWindow(QuestionWizControl questionWizControl2) {
 		// TODO Auto-generated method stub
-
 		this.previousWindow = questionWizControl2;
 
 	}
@@ -221,20 +229,44 @@ public class QuestionEditorPopControl {
 		// TODO Auto-generated method stub
 		this.question = question;
 		this.questionAfterChange = new Question();
-		System.out.println(question.getQuestion());
+		
+		// import question
 		String theQ = question.getQuestion();
-
-		// Get the answers from the question
-		List<String> answers = question.getAnswers();
-
-		// Populate the TextFields with the answers
-		ans1.setText(answers.get(0));
-		ans2.setText(answers.get(1));
-		ans3.setText(answers.get(2));
-		ans4.setText(answers.get(3));
 		question_field.setText(theQ);
-		correctAns_ComBox.setValue(String.valueOf(question.getCorrectAnswer()));
+
+		// import difficulty
 		difficulty_ComBox.setValue(String.valueOf(question.getDifficulty()));
 
+		if(previousWindow.isAdmin()) {
+			// Get answers and show on screen
+			List<String> answers = question.getAnswers();
+
+			// Populate the TextFields with the answers
+			ans1.setText(answers.get(0));
+			ans2.setText(answers.get(1));
+			ans3.setText(answers.get(2));
+			ans4.setText(answers.get(3));
+			correctAns_ComBox.setValue(String.valueOf(question.getCorrectAnswer()));
+		}
+		else {
+			question_field.setEditable(false);
+			question_field.setDisable(true);
+			
+			// hide correct answer
+			correctAns_ComBox.setVisible(false);
+			correctAnswer_lbl.setVisible(false);
+			
+			// disable the difficulty choose
+			difficulty_ComBox.setDisable(true);
+			
+			// hide answers
+			answerOpt_lbl.setVisible(false);
+			ans_1_HBox.setVisible(false);
+			ans_2_HBox.setVisible(false);
+			ans_3_HBox.setVisible(false);
+			ans_4_HBox.setVisible(false);
+			
+			saveButton.setDisable(true);
+		}
 	}
 }

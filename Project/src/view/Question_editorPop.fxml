@@ -15,14 +15,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="control.QuestionEditorPopControl">
+<BorderPane styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.QuestionEditorPopControl">
    <center>
       <AnchorPane prefHeight="300.0" prefWidth="650.0" stylesheets="@resources/Css/popUpStyle.css">
          <children>
             <VBox spacing="10.0" stylesheets="@resources/Css/popUpStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label prefHeight="30.0" prefWidth="106.0" styleClass="pop_font" text="Question:" />
-                  <ScrollPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="63.0" prefWidth="591.0">
+                  <ScrollPane fx:id="qScroll_Pane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="63.0" prefWidth="591.0">
                      <content>
                         <TextField fx:id="question_field" alignment="TOP_LEFT" prefHeight="30.0" prefWidth="576.0" styleClass="search_Font" />
                      </content>
@@ -35,7 +35,7 @@
                               <Insets top="5.0" />
                            </padding>
                         </ComboBox>
-                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="217.0" styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" text="Correct answer">
+                        <Label fx:id="correctAnswer_lbl" alignment="CENTER" prefHeight="30.0" prefWidth="217.0" styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" text="Correct answer">
                            <padding>
                               <Insets left="30.0" />
                            </padding>
@@ -48,30 +48,30 @@
                      </children>
                   </HBox>
                   <Separator prefWidth="591.0" styleClass="seperator" />
-                  <Label styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" text="Answers options:">
+                  <Label fx:id="answerOpt_lbl" styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" text="Answers options:">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                   </Label>
-                  <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" spacing="10.0">
+                  <HBox fx:id="ans_1_HBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" spacing="10.0">
                      <children>
                         <Label contentDisplay="CENTER" prefHeight="58.0" prefWidth="22.0" styleClass="pop_font" text="1: " />
                         <TextField fx:id="ans1" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 1..." styleClass="search_Font" />
                      </children>
                   </HBox>
-                  <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" spacing="10.0">
+                  <HBox fx:id="ans_2_HBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" spacing="10.0">
                      <children>
                         <Label contentDisplay="CENTER" prefHeight="73.0" prefWidth="22.0" styleClass="pop_font" text="2:" />
                         <TextField fx:id="ans2" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 2..." styleClass="search_Font" />
                      </children>
                   </HBox>
-                  <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" spacing="10.0">
+                  <HBox fx:id="ans_3_HBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" spacing="10.0">
                      <children>
                         <Label contentDisplay="CENTER" prefHeight="86.0" prefWidth="22.0" styleClass="pop_font" text="3:" />
                         <TextField fx:id="ans3" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 3..." styleClass="search_Font" />
                      </children>
                   </HBox>
-                  <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" spacing="10.0">
+                  <HBox fx:id="ans_4_HBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" spacing="10.0">
                      <children>
                         <Label contentDisplay="CENTER" prefHeight="70.0" prefWidth="22.0" styleClass="pop_font" text="4:" />
                         <TextField fx:id="ans4" prefHeight="50.0" prefWidth="542.0" promptText="Enter answer option 4..." styleClass="search_Font" />
