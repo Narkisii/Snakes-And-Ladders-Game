@@ -669,16 +669,16 @@ public class BoardControl {
 						diceImage.setImage(img);
 						rollButton.setDisable(false);
 						this.stop();
-//						if (dice == 7 || dice == 8 || dice == 9) {
-//							Question q = GameData.getInstance().get_Question(dice);
-//							showQuestion(q, player);
-//
-//						} else {
-////							GameData.getInstance().getBoard().move(dice, player);
-//							move_Player(dice, player);
-//						}
-						GameData.getInstance().getBoard().move(48, player);
-						move_Player(48, player);
+						if (dice == 7 || dice == 8 || dice == 9) {
+							Question q = GameData.getInstance().get_Question(dice);
+							showQuestion(q, player);
+
+						} else {
+//							GameData.getInstance().getBoard().move(dice, player);
+							move_Player(dice, player);
+						}
+//						GameData.getInstance().getBoard().move(48, player);
+//						move_Player(48, player);
 						GameData.getInstance().next_turn();
 						turn_Lable.setTextFill(Color.web(GameData.getInstance().getplayer_list()
 								.get(GameData.getInstance().getPlayerTurn()).getColor()));
