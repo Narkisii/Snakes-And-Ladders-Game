@@ -32,6 +32,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Blend;
@@ -64,6 +65,7 @@ import javafx.scene.shape.Polyline;
 import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.QuadCurveTo;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -120,7 +122,7 @@ public class BoardControl {
 
 	@FXML
 	private Button rollButton;
-	// rolling dice function
+	
 
 	// Create a HashMap to store the rectangles
 //	private HashMap<Integer, Rectangle> tile_Map;
@@ -138,8 +140,9 @@ public class BoardControl {
 
 	private int gameEnd_var;
 
+	private int image_size;
+	
 	@FXML // This method is called by the FXMLLoader when initialization is complete
-
 	void initialize() {
 		// Create Board - getNumOfTiles() X getNumOfTiles() = Board
 		// the Board constractor gets in Row and calculate the size
@@ -157,39 +160,41 @@ public class BoardControl {
 		createCountDown();
 		startCountDown();
 		createTimer();
-//		Pane startTile = (Pane) grid.lookup("#" + p.getCurrentP());
 		grid = (GridPane) mainPain.lookup("#grid");
-//		if (!GameData.getInstance().get_isIngame()) {
-//		boolean isRedrawing = new Boolean(false);
 
 		// Add a listener to the width and height properties of the scene
 		mainPain.widthProperty().addListener((observable, oldValue, newValue) -> {
 			if (oldValue.intValue() != 0) {
-				System.out.println("widthProperty : observable " + observable.toString() + " oldValue " + oldValue
-						+ " newValue " + newValue);
+//				System.out.println("widthProperty : observable " + observable.toString() + " oldValue " + oldValue
+//						+ " newValue " + newValue);
 				canvas.getChildren().clear();
 				mainPain.getChildren().remove(canvas);
 				redrawLines();
 				mainPain.getChildren().add(canvas);
+				add_SpecialTiles();
 			}
 		});
 
 		mainPain.heightProperty().addListener((observable, oldValue, newValue) -> {
 			if (oldValue.intValue() != 0) {
-				System.out.println("heightProperty : observable " + observable.toString() + " oldValue " + oldValue
-						+ " newValue " + newValue);
+//				System.out.println("heightProperty : observable " + observable.toString() + " oldValue " + oldValue
+//						+ " newValue " + newValue);
 				canvas.getChildren().clear();
 				mainPain.getChildren().remove(canvas);
 				drawLinesInSeparateThread();
 				mainPain.getChildren().add(canvas);
+				add_SpecialTiles();
+
 			}
 		});
 
 //		}
 		grid = createBoard(GameData.getInstance().getNumOfTiles());
 
+
 		boardpane.getChildren().add(grid);
 		drawLinesInSeparateThread();
+		
 		mainPain.getChildren().add(canvas);
 		// Set the action for the return button
 		return_btn.setOnAction(event -> clear_all());
@@ -201,30 +206,13 @@ public class BoardControl {
 		rollButton.setOnAction(event -> roll(board.get_Dice_Result(),
 				GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn())));
 
-		for (Player p : GameData.getInstance().getplayer_list()) {
-//			System.out.println("Adding:" + p.toString());
-			initiate_Players(p);
-		}
-
 		GameData.getInstance().init_board();
 		board = GameData.getInstance().getBoard();
 		board.generate_board_Objects();
-		add_SpecialTiles();
-//        group = new Group();
-//        group.getChildren().addAll(
-//                boardpane,
-//                return_btn,
-//                turn_Lable,
-//                countDown_Label,
-//                timer_Label,
-//                diceImage,
-//                rollButton,
-//                grid
-//
-//        );
+//		add_SpecialTiles();
 	}
 
-	// Createa the gridpane of the board with the initialized tiles and thiers id
+	// Create the gridpane of the board with the initialized tiles and thiers id
 	private GridPane createBoard(int numTiles) {
 		grid = new GridPane(); // Initialize the grid
 		grid.setId("grid");
@@ -307,18 +295,20 @@ public class BoardControl {
 		LinkedList<Tile> specialTiles = GameData.getInstance().getspecialTiles_list();
 		for (Tile tile : specialTiles) {
 			Pane startTile = (Pane) grid.lookup("#" + tile.getId());
-			Image img = new Image(tile.get_Image());
-			ImageView tile_img = new ImageView(img);
-			System.out.println(tile.get_Image());
-			tile_img.setFitHeight(70);
-			tile_img.setFitWidth(70);
-//			tile_img.fitHeightProperty().bind(startTile.heightProperty());
-//			tile_img.fitWidthProperty().bind(startTile.widthProperty());
-			tile_img.setPreserveRatio(false);
-			tile_img.opacityProperty().set(0.8);
-			startTile.getChildren().add(tile_img);
+			ImageView tile_img = (ImageView)startTile.lookup("#image"+tile.getId());
+			if(tile_img == null) {
+				Image img = new Image(tile.get_Image());
+				tile_img = new ImageView(img);
+				tile_img.setId("image"+tile.getId());
+				tile_img.setPreserveRatio(true);
+				tile_img.opacityProperty().set(0.8);
+				tile_img.fitHeightProperty().bind(startTile.heightProperty().multiply(0.8));
+				tile_img.fitWidthProperty().bind(startTile.widthProperty().multiply(0.8));
+				startTile.getChildren().add(tile_img);
+			}
+			tile_img.fitHeightProperty().bind(startTile.heightProperty().multiply(0.8));
+			tile_img.fitWidthProperty().bind(startTile.widthProperty().multiply(0.8));
 		}
-
 	}
 
 	private void checktile_type(int tile_num, Player p) {
@@ -340,11 +330,11 @@ public class BoardControl {
 	// move player
 	public void move_Player(int dice, Player p) {
 		if (dice != 0 && dice != -5) {
-			System.out.println(dice);
+//			System.out.println(dice);
 			GameData.getInstance().getBoard().move(dice, p);
 		}
-		System.out.println(p.toString());
-		System.out.println(p.getPlacment_history());
+//		System.out.println(p.toString());
+//		System.out.println(p.getPlacment_history());
 
 		checkwin(GameData.getInstance().getBoard().getGameEnd());
 		if (p.getCurrentP() == p.getPreviousStep()) {
@@ -390,9 +380,7 @@ public class BoardControl {
 			playerbox.setTranslateY(0);
 			end.getChildren().addAll(playerbox);
 			checktile_type(p.getCurrentP(), p);
-//    		checktile_type(curr_P,p);
 		});
-
 	}
 
 	// initiate the players tokens
@@ -414,100 +402,41 @@ public class BoardControl {
 			Image img_file = new Image(p.getToken());
 			img = new ImageView(img_file);
 			img.setId("Image" + p.getID());
-			img.setFitHeight(90);
-			img.setFitWidth(90);
-			img.setPreserveRatio(false);
+//			img.setFitHeight(image_size);
+//			img.setFitWidth(image_size);
+			img.setPreserveRatio(true);
+			if(GameData.getInstance().getDifficulty().equals("Hard")) {
+				playerbox.getChildren().addAll(img);
+			}else {
+				playerbox.getChildren().addAll(playerName, img);
+			}
+			vboxlist.add(playerbox);
+			new_pos_pane.getChildren().addAll(playerbox);
+
 		} else {
 			playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
 			img = (ImageView) playerbox.lookup("#Image" + p.getID());
 		}
-
-		playerbox.getChildren().addAll(playerName, img);
-		vboxlist.add(playerbox);
-		new_pos_pane.getChildren().addAll(playerbox);
+		img.fitHeightProperty().bind(new_pos_pane.heightProperty().multiply(0.8));
+		img.fitWidthProperty().bind(new_pos_pane.widthProperty().multiply(0.8));
 
 	}
-
-//	public void add_Ladders(int start, int end) {
-////		Random random = new Random();
-////		Colors[] colors = Colors.values();
-////		Colors randomColor = colors[random.nextInt(colors.length)];
-////		String color2 = randomColor.name(); // 50% transparent
-////		Color color = Color.web(color2);
-//
-//		GameElementFactory factory = new GameElementFactory(canvas);
-//
-////		GameElement snake = factory.getGameElement("SNAKE");
-////		snake.add(start, end);
-//
-//		
-//		canvas.setPickOnBounds(false);
-//
-//		Pane startTile = (Pane) grid.lookup("#" + start);
-//		Pane endTile = (Pane) grid.lookup("#" + end);
-//		if (startTile == null || endTile == null) {
-//			return;
-//		}
-//		Point2D tileStart = startTile.localToScene(startTile.getWidth() / 2, startTile.getHeight() / 2);
-//		Point2D tileEnd = endTile.localToScene(endTile.getWidth() / 2, endTile.getHeight() / 2);
-//		double startX = tileStart.getX();
-//		double startY = tileStart.getY();
-//		double endX = tileEnd.getX();
-//		double endY = tileEnd.getY();
-//		double distance = tileStart.distance(tileEnd);
-//		GameElement ladder = factory.getGameElement("LADDER");
-//		ladder.add(startX,startY,endX,endY, distance);
-//
-//		
-//		
-////		double angle = Math.toDegrees(Math.atan2(startY - endY, startX - endX));
-//////		System.out.println(angle);
-////		Rectangle rectangle = new Rectangle();
-////		int temp = 40;
-////		LinearGradient gradient = new LinearGradient(0, temp, temp, temp, false, CycleMethod.REPEAT,
-////				new Stop(0.5, Color.TRANSPARENT), new Stop(0.5, color));
-//////		Image image = new Image("/view/Images/Ladders/GreenLadder.png");
-////
-////		rectangle.setStroke(color); // change this to the color you want
-////		rectangle.setStrokeWidth(5); // change this to the color you want
-////		rectangle.getStrokeDashArray().add(5.0);
-////		int rect_width = 50;
-////		if (angle == 90 || angle == -90) {
-////			rectangle.setX(endX);
-////			rectangle.setY(endY);
-////			rectangle.setWidth(rect_width);
-////			rectangle.setHeight(distance); // set the height as you need
-////			gradient = new LinearGradient(temp, 0, temp, temp, false, CycleMethod.REPEAT,
-////					new Stop(0.5, Color.TRANSPARENT), new Stop(0.5, color));
-////
-////		} else {
-////			if (angle < 90) {
-//////				System.out.println("angle<90");
-////				rectangle.setX(endX - startTile.getWidth() / 2);
-////				rectangle.setY((startY + endY) / 2);
-////				rectangle.setWidth(distance);
-////				rectangle.setHeight(rect_width); // set the height as you need
-////				rectangle.setRotate(angle);
-////
-////			} else {
-//////				System.out.println("angle>90");
-////				rectangle.setX(startX - startTile.getWidth() / 2);
-////				rectangle.setY((startY + endY) / 2);
-////				rectangle.setWidth(distance);
-////				rectangle.setHeight(rect_width); // set the height as you need
-////				rectangle.setRotate(angle);
-////			}
-////		}
-//////	    ImagePattern radialGradient = new ImagePattern(image, temp, temp, distance, rect_width, false); 
-////
-////		rectangle.setFill(gradient);
-////		canvas.getChildren().add(rectangle);
-//	}
+//	Image img = new Image(tile.get_Image());
+//	tile_img = new ImageView(img);
+//	tile_img.setId("image"+tile.getId());
+//	tile_img.setPreserveRatio(true);
+//	tile_img.opacityProperty().set(0.8);
+//	tile_img.fitHeightProperty().bind(startTile.heightProperty().multiply(0.8));
+//	tile_img.fitWidthProperty().bind(startTile.widthProperty().multiply(0.8));
+//	startTile.getChildren().add(tile_img);
+//}
+//tile_img.fitHeightProperty().bind(startTile.heightProperty().multiply(0.8));
+//tile_img.fitWidthProperty().bind(startTile.widthProperty().multiply(0.8));
 
 	public void add_GameElement(int start, int end, Object element) {
 		GameElementFactory factory = new GameElementFactory(canvas);
 		canvas.setPickOnBounds(false);
-		System.out.println("add_GameElement: " + element.getClass().getName() + " Start: " + start + " End" + end);
+//		System.out.println("add_GameElement: " + element.getClass().getName() + " Start: " + start + " End" + end);
 
 		Pane startTile = (Pane) grid.lookup("#" + start);
 		Pane endTile = (Pane) grid.lookup("#" + end);
@@ -551,79 +480,6 @@ public class BoardControl {
 
 	}
 
-	public void add_Snakes(int start, int end, Color color) {
-		GameElementFactory factory = new GameElementFactory(canvas);
-
-		canvas.setPickOnBounds(false);
-
-		// get the StackPane for the squares
-//		Rectangle startTile = tile_Map.get(start);
-//		Rectangle endTile = tile_Map.get(end);
-		Pane startTile = (Pane) grid.lookup("#" + start);
-		Pane endTile = (Pane) grid.lookup("#" + end);
-		if (startTile == null || endTile == null) {
-//			System.out.println("null on one of tiles???");
-			return;
-		}
-		Point2D tileStart = startTile.localToScene(startTile.getWidth() / 2, startTile.getHeight() / 2);
-		Point2D tileEnd = endTile.localToScene(endTile.getWidth() / 2, endTile.getHeight() / 2);
-
-		double startX = tileEnd.getX();
-		double startY = tileEnd.getY();
-		double endX = tileStart.getX();
-		double endY = tileStart.getY();
-
-		double distance = tileStart.distance(tileEnd);
-		GameElement snake = factory.getGameElement("SNAKE");
-		snake.set_Color(color);
-		snake.add(startX, startY, endX, endY, distance);
-
-//		double angle = Math.toDegrees(Math.atan2(startY - endY, startX - endX));
-//
-//		Random rand = new Random();
-//
-//		CubicCurve cubic = new CubicCurve();
-//		cubic.setStartX(startX);
-//		cubic.setStartY(startY);
-//
-////		int randomNumber = (rand.nextInt(11) - 5) * 10; 
-//		int randomNumber = (rand.nextInt(11) - 5) * 10;
-//
-//		double controlX1 = startX - (distance + randomNumber);
-//		randomNumber = (rand.nextInt(11) - 5) * 10;
-//		double controlY1 = startY + randomNumber;
-//		randomNumber = (rand.nextInt(11) - 5) * 10;
-////		randomNumber = (rand.nextInt(20) - 10) * 10; 
-//		double controlX2 = endX + (distance + randomNumber);
-//		randomNumber = (rand.nextInt(11) - 5) * 10;
-//		double controlY2 = endY + randomNumber;
-//		cubic.setControlX1(controlX1);
-//		cubic.setControlY1(controlY1);
-//		cubic.setControlX2(controlX2);
-//		cubic.setControlY2(controlY2);
-//
-//		cubic.setEndX(endX);
-//		cubic.setEndY(endY);
-//		Image image = new Image("view/Images/Snakes/SnakeHead.png");
-//		ImageView imageView = new ImageView(image);
-//		imageView.setFitWidth(50);
-//		imageView.setFitHeight(50);
-//		imageView.setPreserveRatio(true);
-////		double angle2 = Math.toDegrees(Math.atan2(startY - (startY-(distance/4))-Math.tan(angle), startX - (startX+Math.cos(angle)*200)));
-//
-//		imageView.setX(endX - imageView.getFitWidth() / 2);
-//		imageView.setY(endY - imageView.getFitHeight() / 2);
-//		Colors[] colors = Colors.values();
-//		Colors randomColor = colors[rand.nextInt(colors.length)];
-//		String transparentColor = randomColor.name(); // 50% transparent
-////		System.out.println("Start:" + start + "End: " + end + "Color: " + transparentColor);
-//
-//		cubic.setStroke(color);
-//		cubic.setStrokeWidth(20);
-//		cubic.setFill(Color.TRANSPARENT);
-//
-//		canvas.getChildren().addAll(cubic, imageView);
-	}
 
 	public void redrawLines() {
 		for (Ladder l : GameData.getInstance().getLadders()) {
@@ -636,13 +492,17 @@ public class BoardControl {
 //			add_Snakes(s.getStart(), s.getEnd(), s.getColor());
 			add_GameElement(s.getStart(), s.getEnd(), s);
 		}
-
+//		add_SpecialTiles();
 	}
 
 	public void drawLinesInSeparateThread() {
 
 		Thread thread = new Thread(() -> {
 			Platform.runLater(() -> {
+				for (Player p : GameData.getInstance().getplayer_list()) {
+//					System.out.println("Adding:" + p.toString());
+					initiate_Players(p);
+				}
 
 				for (Ladder l : GameData.getInstance().getLadders()) {
 //					System.out.println("l.getStart() " + l.getStart() + " l.getEnd() " + l.getEnd());
@@ -652,6 +512,13 @@ public class BoardControl {
 				for (Snake s : GameData.getInstance().getSnake_list()) {
 //			System.out.println("l.getStart() " + l.getStart() + " l.getEnd() " + l.getEnd());
 					add_GameElement(s.getStart(), s.getEnd(), s);
+				}
+				add_SpecialTiles();
+				
+				for (VBox playerbox: vboxlist) {
+					Pane new_pos_pane = (Pane) grid.lookup("#" + playerbox.getId());
+					playerbox.prefHeightProperty().bind(new_pos_pane.heightProperty().multiply(0.8));
+					playerbox.prefWidthProperty().bind(new_pos_pane.widthProperty().multiply(0.8));
 				}
 			});
 		});
@@ -701,7 +568,7 @@ public class BoardControl {
 
 	}
 
-	private void startCountDown() {
+	public void startCountDown() {
 		counter.set(set_turn_time);
 		timer.play();
 	}
@@ -719,7 +586,7 @@ public class BoardControl {
 			public void handle(long now) {
 				String path = "view/Images/dice/";
 				if (frameCounter[0]++ % 3 == 0) { // adjust the 6 to control the speed of the animation
-					if (frameCounter[0] < 90) { // adjust the 90 to control the duration of the animation
+					if (frameCounter[0] < 50) { // adjust the 90 to control the duration of the animation
 						try {
 							Image img = new Image(path + (random.nextInt(10)) + ".png");
 							diceImage.setImage(img);
@@ -754,7 +621,7 @@ public class BoardControl {
 			}
 		};
 		animationTimer.start();
-//		startCountDown();
+		startCountDown();
 	}
 
 	// Method to navigate to another screen
@@ -811,15 +678,16 @@ public class BoardControl {
 		}
 	}
 
-	void gameloop() {
-
-	}
-
-	void enable_action(int x, int y) {
-
-	}
+//	void gameloop() {
+//
+//	}
+//
+//	void enable_action(int x, int y) {
+//
+//	}
 
 	private void showQuestion(Question q, Player p) {
+		timer.stop();
 //		Question q = board.getTile(tile_num).getQuestion();
 		if (q == null) {
 			System.out.println("No question");
@@ -848,9 +716,10 @@ public class BoardControl {
 		questionPopControl.prev_window(this);
 		questionPopControl.set_player(p);
 		Scene scene = new Scene(root);
-		popupStage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> {
-			startCountDown();
-		});
+//		popupStage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> {
+//			System.out.println("WINDOW_CLOSE_REQUEST");
+//			startCountDown();
+//		});
 		popupStage.setScene(scene);
 		popupStage.show();
 	}
@@ -876,6 +745,10 @@ public class BoardControl {
 			e.printStackTrace();
 		}
 
+	}
+
+	public Button get_rollButton(){
+		return rollButton;
 	}
 
 }

@@ -151,7 +151,7 @@ public class QuestionEditorPopControl {
 					questionAfterChange.setCorrectAnswer(selectedCorrectAnswer);
 					questionAfterChange.setDifficulty(Integer.parseInt(selectedDifficulty));
 
-					check_duplicates(questionAfterChange);
+//					check_duplicates(questionAfterChange);
 					// Update the question list
 					questionsFromJson.removeQuestion(question);
 					questionsFromJson.addQuestion(questionAfterChange);
@@ -175,10 +175,6 @@ public class QuestionEditorPopControl {
 
 	}
 
-	private void check_duplicates(Question newQuestion) {
-		// TODO Auto-generated method stub
-
-	}
 
 	// Clear all text fields
 	public void clear_text() {

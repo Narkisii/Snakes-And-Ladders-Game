@@ -25,14 +25,16 @@ public class Ladder_Object implements GameElement {
 
 	@Override
 	public void add(double startX, double startY, double endX, double endY, double distance) {
-		System.out
-				.println("startX" + startX + "startY" + startY + "endX" + endX + "endY" + endY + "distance" + distance);
+//		System.out
+//				.println("startX" + startX + "startY" + startY + "endX" + endX + "endY" + endY + "distance" + distance);
 		// TODO Auto-generated method stub
 		Random random = new Random();
-
+		String color2 = "Blue";
 		Colors[] colors = Colors.values();
+		while(color2.equals("Blue") || color2.equals("Green") || color2.equals("Yellow")) {
 		Colors randomColor = colors[random.nextInt(colors.length)];
-		String color2 = randomColor.name(); // 50% transparent
+		color2 = randomColor.name(); // 50% transparent
+		}
 		Color color = Color.web(color2);
 
 		double angle = Math.toDegrees(Math.atan2(startY - endY, startX - endX));

@@ -7,6 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextFlow;
@@ -53,6 +55,11 @@ public class questionPopControl {
 	@FXML
 	private Label questionTextBox;
 
+	@FXML
+	private ImageView p_image_viewr;
+
+	@FXML
+	private Label p_name_label;
 	private Question question;
 
 	private ToggleGroup toggleGroup;
@@ -80,7 +87,6 @@ public class questionPopControl {
 				checkAnswerButton.setDisable(false);
 			}
 		});
-
 		// Set an action listener for the checkAnswerButton
 		checkAnswerButton.setOnAction(event -> {
 			RadioButton selectedRadioButton = (RadioButton) toggleGroup.getSelectedToggle();
@@ -113,11 +119,14 @@ public class questionPopControl {
 			check_Answer_label.setStyle("-fx-background-color: green;"); // Set background to green
 			if (question.getDifficulty() == 3) {
 				prev_control.move_Player(1, player);
+				prev_control.startCountDown();
+
 			}
 		} else {
-			check_Answer_label.setText("you fucked up!");
+			check_Answer_label.setText("You're Wrong!");
 			check_Answer_label.setStyle("-fx-background-color: red;"); // Set background to green
 			prev_control.move_Player(steps, player);
+			prev_control.startCountDown();
 
 		}
 		answerOne.setDisable(true);
@@ -128,6 +137,7 @@ public class questionPopControl {
 
 		PauseTransition delay = new PauseTransition(Duration.seconds(2)); // 2 seconds delay
 		delay.setOnFinished(event -> {
+			prev_control.get_rollButton().setDisable(false);
 			Stage stage = (Stage) checkAnswerButton.getScene().getWindow();
 			stage.close();
 		});
@@ -137,13 +147,11 @@ public class questionPopControl {
 
 	public void set_question(Question q) {
 		this.question = q;
-		System.out.println(question.getQuestion());
 		String theQ = question.getQuestion();
 		corr_answer = Integer.valueOf(question.getCorrectAnswer());
 		// Get the answers from the question
 		List<String> answers = question.getAnswers();
 		corr_answer_str = answers.get(corr_answer - 1);
-		System.out.println(answers);
 
 		System.out.println("corr_answer " + corr_answer + " corr_answer_str " + corr_answer_str);
 		if (q.getDifficulty() == 1) {
@@ -174,20 +182,22 @@ public class questionPopControl {
 		if (player.getClass().getName() == "model.cpu_Player") {
 			cpu_Player cpu_Player = ((cpu_Player) player);
 			cpu_Player.set_question_controll(this);
-			cpu_Player.execute_question();
+			CommandInvoker invoker = new CommandInvoker();
+			invoker.addCommand(new SelectAnswerCommand((cpu_Player) player));
+			invoker.addCommand(new DelayCommand(2)); // Delay of 2 seconds
+			invoker.addCommand(new PressButtonCommand((cpu_Player) player));
+			invoker.executeCommands();
+			checkAnswerButton.setVisible(false);
+			p_name_label.setText("Answering: " + player.getName() + "CPU PLAYER");
+			p_name_label.setTextFill(Color.web(player.getColor()));
+
+		} else {
+			p_name_label.setText("Answering: " + player.getName());
+			p_name_label.setTextFill(Color.web(player.getColor()));
 		}
-	}
-
-
-	public void selectAnswer(int i) {
-		if (i == 1)
-			answerOne.setSelected(true);
-		if (i == 2)
-			answerTwo.setSelected(true);
-		if (i == 3)
-			answerThree.setSelected(true);
-		if (i == 4)
-			answerFour.setSelected(true);
+		Image img = new Image(player.getToken());
+		p_image_viewr.setImage(img);
+		prev_control.get_rollButton().setDisable(true);
 	}
 
 	/**
@@ -198,25 +208,31 @@ public class questionPopControl {
 	}
 
 	/**
-	 * @param answerFour the answerFour to set
+	 * @return the answerOne
 	 */
-	public void setAnswerFour(RadioButton answerFour) {
-		this.answerFour = answerFour;
+	public RadioButton getAnswerOne() {
+		return answerOne;
+	}
+
+	/**
+	 * @return the answerThree
+	 */
+	public RadioButton getAnswerThree() {
+		return answerThree;
+	}
+
+	/**
+	 * @return the answerTwo
+	 */
+	public RadioButton getAnswerTwo() {
+		return answerTwo;
+	}
+
+	/**
+	 * @return the checkAnswerButton
+	 */
+	public Button getCheckAnswerButton() {
+		return checkAnswerButton;
 	}
 
 }
-
-//public Question getQuestionFromFields() {
-//Question question = new Question();
-//question.setQuestion(questionTextField.getText());
-//question.setCorrectAnswer(correctAnswerTextField.getText());
-//
-//LinkedList<String> answers = new LinkedList<String>();
-//answers.add(optionOneTextField.getText());
-//answers.add(optionOneTextField2.getText());
-//answers.add(optionOneTextField21.getText());
-//
-//question.setAnswers(answers);
-//
-//return question;
-//}

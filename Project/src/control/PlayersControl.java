@@ -1,15 +1,19 @@
 package control;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import enums.CPUNames;
 import enums.Colors;
 import enums.Tokens;
+import exceptions.HandleExceptions;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -28,6 +32,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Board;
 import model.GameData;
+import model.InputIsEmpty;
+import model.InputIsNotUnique;
 import model.Player;
 import model.cpu_Player;
 
@@ -51,8 +57,7 @@ public class PlayersControl {
 	@FXML
 	private Button remove_Cpu;
 	private int num_cpu = 0;
-	
-	
+
 //	private LinkedList <Player> players = new LinkedList<Player>();
 	List<String> tokens = Arrays.stream(Tokens.values()).map(Enum::name).collect(Collectors.toList());
 	List<String> colors = Arrays.stream(Colors.values()).map(Enum::name).collect(Collectors.toList());
@@ -60,13 +65,15 @@ public class PlayersControl {
 	int index = 0;
 	int numberOfPlayers = GameData.getInstance().getNumberOfPlayers();
 
+	private ArrayList<TextField> playernames;
+
 	@FXML
 	public void initialize() {
 		start_game_Btn.setDisable(true);
 		PlayersPane.setFitToWidth(true);
 		PlayersPane.setFitToHeight(true);
 		if (numberOfPlayers == 5) {
-			add_CPU.setDisable(true);
+			remove_Cpu.setDisable(true);
 		}
 		remove_Cpu.setDisable(true);
 
@@ -80,23 +87,32 @@ public class PlayersControl {
 			addCpu();
 		});
 		remove_Cpu.setOnAction(event -> {
-			remove_CPU();
+			remove_CPU_function();
 		});
-		
-		if(numberOfPlayers == 1) {
+
+		if (numberOfPlayers == 1) {
 			addCpu();
+			remove_Cpu.setDisable(true);
+
+//			numberOfPlayers++;
 		}
 	}
 
-	private void remove_CPU() {
+	private void remove_CPU_function() {
+		System.out.println("numberOfPlayers " + numberOfPlayers + " num_cpu:" + num_cpu);
 		// TODO Auto-generated method stub
 		numberOfPlayers--;
 		num_cpu--;
 		index--;
+
+		System.out.println(numberOfPlayers - num_cpu);
 		if (num_cpu == 0) {
 			remove_Cpu.setDisable(true);
 		}
-		if (numberOfPlayers <=5) {
+		if (numberOfPlayers == 2 && num_cpu > 0) {
+			remove_Cpu.setDisable(true);
+		}
+		if (numberOfPlayers <= 5) {
 			add_CPU.setDisable(false);
 		}
 		List<String> colors_temp = colors;
@@ -248,7 +264,7 @@ public class PlayersControl {
 
 		TextField playerName = new TextField(); // Create a new playerName for the player's name
 //		playerName.setId("playerName" + (index + 1)); // unique id
-		playerName.setId("playerName"); // unique id
+		playerName.setId("playerName "+ (index + 1)); // unique id
 		playerName.setPromptText("playerName" + (index + 1));
 		playerName.setPrefHeight(65.0);
 		playerName.setPrefWidth(191.0);
@@ -262,7 +278,7 @@ public class PlayersControl {
 //		color.setId("color" + (index + 1)); // unique id
 
 		color.setPrefHeight(65.0);
-		color.setPrefWidth(240.0);
+		color.setPrefWidth(300.0);
 		color.getStylesheets().add("/view/resources/Css/Buttons.css");
 		color.getStyleClass().add("comboBox_Nornal");
 		playerRow.getChildren().add(color); // Add to the playerRow HBox
@@ -316,12 +332,13 @@ public class PlayersControl {
 				return false;
 			}
 		});
+		
 		ComboBox<String> token = new ComboBox<>(); // Create a new token for the player's token
 //		token.setId("token" + (index + 1)); // unique id
 		token.setId("token"); // unique id
 
 		token.setPrefHeight(65.0);
-		token.setPrefWidth(240.0);
+		token.setPrefWidth(300.0);
 		token.getStylesheets().add("/view/resources/Css/Buttons.css");
 		token.getStyleClass().add("comboBox_Nornal");
 		playerRow.getChildren().add(token); // Add 'token' to the playerRow HBox
@@ -385,6 +402,9 @@ public class PlayersControl {
 		// Add color options
 		color.getItems().addAll(colors);
 //		"Red", "Blue", "Green", "Yellow", "Purple"
+		color.setPromptText("Pick Color");
+		token.setPromptText("Pick Token");
+
 		return playerRow;
 	}
 
@@ -405,7 +425,7 @@ public class PlayersControl {
 		HBox.setHgrow(num, Priority.ALWAYS); // Make 'num' expand to fill available horizontal space
 
 		TextField playerName = new TextField(); // Create a new playerName for the player's name
-//		playerName.setId("playerName" + (index + 1)); // unique id
+		playerName.setId("playerName "+ (index + 1)); // unique id
 		playerName.setId("playerName"); // unique id
 
 		playerName.setPrefHeight(65.0);
@@ -422,7 +442,7 @@ public class PlayersControl {
 		color.setId("color"); // unique id
 
 		color.setPrefHeight(65.0);
-		color.setPrefWidth(240.0);
+		color.setPrefWidth(300.0);
 		color.getStylesheets().add("/view/resources/Css/Buttons.css");
 		color.getStyleClass().add("comboBox_Nornal");
 		color.setValue(colorForNewCPU);
@@ -434,7 +454,7 @@ public class PlayersControl {
 //		token.setId("token" + (index + 1)); // unique id
 		token.setId("token"); // unique id
 		token.setPrefHeight(65.0);
-		token.setPrefWidth(240.0);
+		token.setPrefWidth(300.0);
 		token.getStylesheets().add("/view/resources/Css/Buttons.css");
 		token.getStyleClass().add("comboBox_Nornal");
 		token.setValue(tokenForNewCPU);
@@ -460,21 +480,37 @@ public class PlayersControl {
 	private void startGame(int numberOfPlayers) {
 		int counter = 1;
 		System.out.println(num_cpu);
-
+		playernames = new ArrayList<TextField>();
 		for (Node node : playerContainer.getChildren()) {
 			if (node instanceof HBox) {
 				HBox row = (HBox) node;
 
 				// Get the player name, color, and token from the row
 				String playerName = ((TextField) row.getChildren().get(1)).getText(); // Replace 1 with the index of the
-																						// player name TextField in your
+				playernames.add(((TextField) row.getChildren().get(1)));														// player name TextField in your
+			}
+		}
+		try {
+			checkDup();
+		} catch (InputIsNotUnique e) {
+			// TODO Auto-generated catch block
+			HandleExceptions.showException(e);
+			return;
+		}		
+		for (Node node : playerContainer.getChildren()) {
+			if (node instanceof HBox) {
+				HBox row = (HBox) node;
+
+				// Get the player name, color, and token from the row
+				String playerName = ((TextField) row.getChildren().get(1)).getText(); // Replace 1 with the index of the
+				playernames.add(((TextField) row.getChildren().get(1)));														// player name TextField in your
 																						// HBox
 				String color = ((ComboBox<String>) row.getChildren().get(2)).getValue(); // Replace 2 with the index of
 																							// the color ComboBox in
 																							// your HBox
 				String token = ((ComboBox<String>) row.getChildren().get(3)).getValue(); // Replace 3 with the index of
 																							// the token ComboBox in
-																							// your HBox
+												// your HBox
 
 				// Create a new Player object and add it to the list
 				if (numberOfPlayers - num_cpu == counter) {
@@ -486,7 +522,7 @@ public class PlayersControl {
 					GameData.getInstance().addPlayer(cpu_Player);
 				}
 				counter++;
-				
+
 //	            players.add(p);
 				GameData.getInstance().setNumberOfPlayers(GameData.getInstance().getplayer_list().size());
 			}
@@ -539,4 +575,15 @@ public class PlayersControl {
 		}
 	}
 
+	private boolean checkDup() throws InputIsNotUnique {
+		Set<String> inputs = new HashSet<>();
+		for (TextField f : playernames) {
+			String input = f.getText();
+			if (!inputs.add(input.toLowerCase())) {
+				throw new InputIsNotUnique(f.getId() + " " + f.getText());
+			}
+		}
+		return true;
+
+	}
 }

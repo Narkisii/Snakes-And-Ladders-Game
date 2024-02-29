@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -16,7 +17,17 @@
          <children>
             <VBox alignment="CENTER_LEFT" prefHeight="413.0" prefWidth="650.0" spacing="15.0" stylesheets="@resources/Css/popUpStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label fx:id="questionTextBox" alignment="CENTER" prefHeight="166.0" prefWidth="654.0" style="-fx-opacity: 1;" styleClass="radioAnswers" text="Label" />
+                  <HBox prefHeight="171.0" prefWidth="652.0">
+                     <children>
+                        <Label fx:id="questionTextBox" alignment="CENTER" prefHeight="145.0" prefWidth="558.0" style="-fx-opacity: 1;" styleClass="radioAnswers" text="Label" wrapText="true" />
+                        <VBox prefHeight="147.0" prefWidth="183.0" styleClass="qWizFont" stylesheets="@resources/Css/all_Style.css">
+                           <children>
+                              <Label fx:id="p_name_label" prefHeight="27.0" prefWidth="128.0" text="Answering:" wrapText="true" />
+                              <ImageView fx:id="p_image_viewr" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
                   <Label fx:id="chooseAnswerTitle" styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" text="choose answer:">
                      <VBox.margin>
                         <Insets />
@@ -55,7 +66,7 @@
    <top>
       <Pane prefHeight="59.0" prefWidth="690.0">
          <children>
-            <Label fx:id="QuestionTitle" alignment="CENTER" contentDisplay="CENTER" prefHeight="61.0" prefWidth="673.0" styleClass="title" stylesheets="@resources/Css/popUpStyle.css" text="Easy Question:" />
+            <Label fx:id="QuestionTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="2.0" prefHeight="61.0" prefWidth="690.0" styleClass="title" stylesheets="@resources/Css/popUpStyle.css" text="Easy Question:" />
          </children></Pane>
    </top>
    <left>
