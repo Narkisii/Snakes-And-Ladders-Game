@@ -123,7 +123,7 @@ public class BoardControl {
 	// rolling dice function
 
 	// Create a HashMap to store the rectangles
-	private HashMap<Integer, Rectangle> tile_Map;
+//	private HashMap<Integer, Rectangle> tile_Map;
 
 	// Initialize the timer properties
 	private IntegerProperty counter; // Initial time in seconds
@@ -143,14 +143,15 @@ public class BoardControl {
 	void initialize() {
 		// Create Board - getNumOfTiles() X getNumOfTiles() = Board
 		// the Board constractor gets in Row and calculate the size
+		
 		// Set Players
 //		for (Player player : GameData.getInstance().getplayer_list()) {
 //			System.out.println(player.toString());
 //		}
-		vboxlist = new ArrayList<VBox>();
+		vboxlist = new ArrayList<VBox>();//VBoxes of the player tokens
 		set_turn_time = 45;
-		tile_Map = new HashMap<>();
-		canvas = new Pane();
+//		tile_Map = new HashMap<>();
+		canvas = new Pane();//Snake and ladders are drawn here separately
 		canvas.opacityProperty().set(0.7);
 		counter = new SimpleIntegerProperty(set_turn_time);
 		createCountDown();
@@ -267,7 +268,7 @@ public class BoardControl {
 				tile.setY((numTiles - 1 - i) * tile.getHeight());
 
 				// Add the square to the HashMap
-				tile_Map.put(count, tile);
+//				tile_Map.put(count, tile);
 //				tile.setId(String.valueOf(count));
 
 				// Create a new label with the current count
@@ -358,8 +359,8 @@ public class BoardControl {
 	}
 
 	private void animate(VBox playerbox, Pane start, Pane end, Player p) {
-		if(gameEnd_var != 1)
-		startCountDown();
+		if (gameEnd_var != 1)
+			startCountDown();
 
 		if (playerbox == null || start == null || end == null || p == null) {
 			return;
@@ -396,7 +397,7 @@ public class BoardControl {
 
 	// initiate the players tokens
 	private void initiate_Players(Player p) {
-		p.addStep(1);
+//		p.addStep(1);
 		Pane new_pos_pane = (Pane) grid.lookup("#" + p.getCurrentP());
 		VBox playerbox = (VBox) new_pos_pane.lookup("#VBox" + p.getID());
 
@@ -427,73 +428,132 @@ public class BoardControl {
 
 	}
 
-	public void add_Ladders(int start, int end) {
-		Random random = new Random();
+//	public void add_Ladders(int start, int end) {
+////		Random random = new Random();
+////		Colors[] colors = Colors.values();
+////		Colors randomColor = colors[random.nextInt(colors.length)];
+////		String color2 = randomColor.name(); // 50% transparent
+////		Color color = Color.web(color2);
+//
+//		GameElementFactory factory = new GameElementFactory(canvas);
+//
+////		GameElement snake = factory.getGameElement("SNAKE");
+////		snake.add(start, end);
+//
+//		
+//		canvas.setPickOnBounds(false);
+//
+//		Pane startTile = (Pane) grid.lookup("#" + start);
+//		Pane endTile = (Pane) grid.lookup("#" + end);
+//		if (startTile == null || endTile == null) {
+//			return;
+//		}
+//		Point2D tileStart = startTile.localToScene(startTile.getWidth() / 2, startTile.getHeight() / 2);
+//		Point2D tileEnd = endTile.localToScene(endTile.getWidth() / 2, endTile.getHeight() / 2);
+//		double startX = tileStart.getX();
+//		double startY = tileStart.getY();
+//		double endX = tileEnd.getX();
+//		double endY = tileEnd.getY();
+//		double distance = tileStart.distance(tileEnd);
+//		GameElement ladder = factory.getGameElement("LADDER");
+//		ladder.add(startX,startY,endX,endY, distance);
+//
+//		
+//		
+////		double angle = Math.toDegrees(Math.atan2(startY - endY, startX - endX));
+//////		System.out.println(angle);
+////		Rectangle rectangle = new Rectangle();
+////		int temp = 40;
+////		LinearGradient gradient = new LinearGradient(0, temp, temp, temp, false, CycleMethod.REPEAT,
+////				new Stop(0.5, Color.TRANSPARENT), new Stop(0.5, color));
+//////		Image image = new Image("/view/Images/Ladders/GreenLadder.png");
+////
+////		rectangle.setStroke(color); // change this to the color you want
+////		rectangle.setStrokeWidth(5); // change this to the color you want
+////		rectangle.getStrokeDashArray().add(5.0);
+////		int rect_width = 50;
+////		if (angle == 90 || angle == -90) {
+////			rectangle.setX(endX);
+////			rectangle.setY(endY);
+////			rectangle.setWidth(rect_width);
+////			rectangle.setHeight(distance); // set the height as you need
+////			gradient = new LinearGradient(temp, 0, temp, temp, false, CycleMethod.REPEAT,
+////					new Stop(0.5, Color.TRANSPARENT), new Stop(0.5, color));
+////
+////		} else {
+////			if (angle < 90) {
+//////				System.out.println("angle<90");
+////				rectangle.setX(endX - startTile.getWidth() / 2);
+////				rectangle.setY((startY + endY) / 2);
+////				rectangle.setWidth(distance);
+////				rectangle.setHeight(rect_width); // set the height as you need
+////				rectangle.setRotate(angle);
+////
+////			} else {
+//////				System.out.println("angle>90");
+////				rectangle.setX(startX - startTile.getWidth() / 2);
+////				rectangle.setY((startY + endY) / 2);
+////				rectangle.setWidth(distance);
+////				rectangle.setHeight(rect_width); // set the height as you need
+////				rectangle.setRotate(angle);
+////			}
+////		}
+//////	    ImagePattern radialGradient = new ImagePattern(image, temp, temp, distance, rect_width, false); 
+////
+////		rectangle.setFill(gradient);
+////		canvas.getChildren().add(rectangle);
+//	}
 
-		Colors[] colors = Colors.values();
-		Colors randomColor = colors[random.nextInt(colors.length)];
-		String color2 = randomColor.name(); // 50% transparent
-		Color color = Color.web(color2);
-		// mix the color
+	public void add_GameElement(int start, int end, Object element) {
+		GameElementFactory factory = new GameElementFactory(canvas);
 		canvas.setPickOnBounds(false);
+		System.out.println("add_GameElement: " + element.getClass().getName() + " Start: " + start + " End" + end);
 
 		Pane startTile = (Pane) grid.lookup("#" + start);
 		Pane endTile = (Pane) grid.lookup("#" + end);
 		if (startTile == null || endTile == null) {
+//			System.out.println("null on one of tiles???");
 			return;
 		}
+		// Grab the exact point of the tiles local to the grid, basically grabs the
+		// exact point from the board
 		Point2D tileStart = startTile.localToScene(startTile.getWidth() / 2, startTile.getHeight() / 2);
 		Point2D tileEnd = endTile.localToScene(endTile.getWidth() / 2, endTile.getHeight() / 2);
-		double startX = tileStart.getX();
-		double startY = tileStart.getY();
-		double endX = tileEnd.getX();
-		double endY = tileEnd.getY();
+
+		// distance between tiles
 		double distance = tileStart.distance(tileEnd);
-		double angle = Math.toDegrees(Math.atan2(startY - endY, startX - endX));
-//		System.out.println(angle);
-		Rectangle rectangle = new Rectangle();
-		int temp = 40;
-		LinearGradient gradient = new LinearGradient(0, temp, temp, temp, false, CycleMethod.REPEAT,
-				new Stop(0.5, Color.TRANSPARENT), new Stop(0.5, color));
-//		Image image = new Image("/view/Images/Ladders/GreenLadder.png");
 
-		rectangle.setStroke(color); // change this to the color you want
-		rectangle.setStrokeWidth(5); // change this to the color you want
-		rectangle.getStrokeDashArray().add(5.0);
-		int rect_width = 50;
-		if (angle == 90 || angle == -90) {
-			rectangle.setX(endX);
-			rectangle.setY(endY);
-			rectangle.setWidth(rect_width);
-			rectangle.setHeight(distance); // set the height as you need
-			gradient = new LinearGradient(temp, 0, temp, temp, false, CycleMethod.REPEAT,
-					new Stop(0.5, Color.TRANSPARENT), new Stop(0.5, color));
+		// Check what kind of Object we have, is it a snake or a ladder and use factory
+		// to create the object to draw
+		if (element instanceof Snake) { // Add the snake to the game
+			// Get the start x and y of the tile, get the end tile x and y
+			double startX = tileEnd.getX();
+			double startY = tileEnd.getY();
+			double endX = tileStart.getX();
+			double endY = tileStart.getY();
 
-		} else {
-			if (angle < 90) {
-//				System.out.println("angle<90");
-				rectangle.setX(endX - startTile.getWidth() / 2);
-				rectangle.setY((startY + endY) / 2);
-				rectangle.setWidth(distance);
-				rectangle.setHeight(rect_width); // set the height as you need
-				rectangle.setRotate(angle);
+			GameElement snake = factory.getGameElement("SNAKE");
+			snake.set_Color(((Snake) element).getColor());
 
-			} else {
-//				System.out.println("angle>90");
-				rectangle.setX(startX - startTile.getWidth() / 2);
-				rectangle.setY((startY + endY) / 2);
-				rectangle.setWidth(distance);
-				rectangle.setHeight(rect_width); // set the height as you need
-				rectangle.setRotate(angle);
-			}
+			snake.add(startX, startY, endX, endY, distance);
+
+		} else if (element instanceof Ladder) { // Add the ladder to the game
+			// Get the start x and y of the tile, get the end tile x and y
+			double startX = tileStart.getX();
+			double startY = tileStart.getY();
+			double endX = tileEnd.getX();
+			double endY = tileEnd.getY();
+
+			GameElement ladder = factory.getGameElement("LADDER");
+			ladder.set_Tile(startTile);
+			ladder.add(startX, startY, endX, endY, distance);
 		}
-//	    ImagePattern radialGradient = new ImagePattern(image, temp, temp, distance, rect_width, false); 
 
-		rectangle.setFill(gradient);
-		canvas.getChildren().add(rectangle);
 	}
 
 	public void add_Snakes(int start, int end, Color color) {
+		GameElementFactory factory = new GameElementFactory(canvas);
+
 		canvas.setPickOnBounds(false);
 
 		// get the StackPane for the squares
@@ -514,62 +574,67 @@ public class BoardControl {
 		double endY = tileStart.getY();
 
 		double distance = tileStart.distance(tileEnd);
-		double angle = Math.toDegrees(Math.atan2(startY - endY, startX - endX));
+		GameElement snake = factory.getGameElement("SNAKE");
+		snake.set_Color(color);
+		snake.add(startX, startY, endX, endY, distance);
 
-		Random rand = new Random();
-
-		CubicCurve cubic = new CubicCurve();
-		cubic.setStartX(startX);
-		cubic.setStartY(startY);
-
-//		int randomNumber = (rand.nextInt(11) - 5) * 10; 
-		int randomNumber = (rand.nextInt(11) - 5) * 10;
-
-		double controlX1 = startX - (distance + randomNumber);
-		randomNumber = (rand.nextInt(11) - 5) * 10;
-		double controlY1 = startY + randomNumber;
-		randomNumber = (rand.nextInt(11) - 5) * 10;
-//		randomNumber = (rand.nextInt(20) - 10) * 10; 
-		double controlX2 = endX + (distance + randomNumber);
-		randomNumber = (rand.nextInt(11) - 5) * 10;
-		double controlY2 = endY + randomNumber;
-		cubic.setControlX1(controlX1);
-		cubic.setControlY1(controlY1);
-		cubic.setControlX2(controlX2);
-		cubic.setControlY2(controlY2);
-
-		cubic.setEndX(endX);
-		cubic.setEndY(endY);
-		Image image = new Image("view/Images/Snakes/SnakeHead.png");
-		ImageView imageView = new ImageView(image);
-		imageView.setFitWidth(50);
-		imageView.setFitHeight(50);
-		imageView.setPreserveRatio(true);
-//		double angle2 = Math.toDegrees(Math.atan2(startY - (startY-(distance/4))-Math.tan(angle), startX - (startX+Math.cos(angle)*200)));
-
-		imageView.setX(endX - imageView.getFitWidth() / 2);
-		imageView.setY(endY - imageView.getFitHeight() / 2);
-		Colors[] colors = Colors.values();
-		Colors randomColor = colors[rand.nextInt(colors.length)];
-		String transparentColor = randomColor.name(); // 50% transparent
-//		System.out.println("Start:" + start + "End: " + end + "Color: " + transparentColor);
-
-		cubic.setStroke(color);
-		cubic.setStrokeWidth(20);
-		cubic.setFill(Color.TRANSPARENT);
-
-		canvas.getChildren().addAll(cubic, imageView);
-
+//		double angle = Math.toDegrees(Math.atan2(startY - endY, startX - endX));
+//
+//		Random rand = new Random();
+//
+//		CubicCurve cubic = new CubicCurve();
+//		cubic.setStartX(startX);
+//		cubic.setStartY(startY);
+//
+////		int randomNumber = (rand.nextInt(11) - 5) * 10; 
+//		int randomNumber = (rand.nextInt(11) - 5) * 10;
+//
+//		double controlX1 = startX - (distance + randomNumber);
+//		randomNumber = (rand.nextInt(11) - 5) * 10;
+//		double controlY1 = startY + randomNumber;
+//		randomNumber = (rand.nextInt(11) - 5) * 10;
+////		randomNumber = (rand.nextInt(20) - 10) * 10; 
+//		double controlX2 = endX + (distance + randomNumber);
+//		randomNumber = (rand.nextInt(11) - 5) * 10;
+//		double controlY2 = endY + randomNumber;
+//		cubic.setControlX1(controlX1);
+//		cubic.setControlY1(controlY1);
+//		cubic.setControlX2(controlX2);
+//		cubic.setControlY2(controlY2);
+//
+//		cubic.setEndX(endX);
+//		cubic.setEndY(endY);
+//		Image image = new Image("view/Images/Snakes/SnakeHead.png");
+//		ImageView imageView = new ImageView(image);
+//		imageView.setFitWidth(50);
+//		imageView.setFitHeight(50);
+//		imageView.setPreserveRatio(true);
+////		double angle2 = Math.toDegrees(Math.atan2(startY - (startY-(distance/4))-Math.tan(angle), startX - (startX+Math.cos(angle)*200)));
+//
+//		imageView.setX(endX - imageView.getFitWidth() / 2);
+//		imageView.setY(endY - imageView.getFitHeight() / 2);
+//		Colors[] colors = Colors.values();
+//		Colors randomColor = colors[rand.nextInt(colors.length)];
+//		String transparentColor = randomColor.name(); // 50% transparent
+////		System.out.println("Start:" + start + "End: " + end + "Color: " + transparentColor);
+//
+//		cubic.setStroke(color);
+//		cubic.setStrokeWidth(20);
+//		cubic.setFill(Color.TRANSPARENT);
+//
+//		canvas.getChildren().addAll(cubic, imageView);
 	}
 
 	public void redrawLines() {
 		for (Ladder l : GameData.getInstance().getLadders()) {
 //			System.out.println("l.getStart() " + l.getStart() + " l.getEnd() " + l.getEnd());
-			add_Ladders(l.getStart(), l.getEnd());
+//			add_Ladders(l.getStart(), l.getEnd());
+			add_GameElement(l.getStart(), l.getEnd(), l);
 		}
 		for (Snake s : GameData.getInstance().getSnake_list()) {
-			System.out.println("l.getStart() " + s.getStart() + " l.getEnd() " + s.getEnd());
-			add_Snakes(s.getStart(), s.getEnd(), s.getColor());
+//			System.out.println("l.getStart() " + s.getStart() + " l.getEnd() " + s.getEnd());
+//			add_Snakes(s.getStart(), s.getEnd(), s.getColor());
+			add_GameElement(s.getStart(), s.getEnd(), s);
 		}
 
 	}
@@ -581,12 +646,12 @@ public class BoardControl {
 
 				for (Ladder l : GameData.getInstance().getLadders()) {
 //					System.out.println("l.getStart() " + l.getStart() + " l.getEnd() " + l.getEnd());
-					add_Ladders(l.getStart(), l.getEnd());
+					add_GameElement(l.getStart(), l.getEnd(), l);
 				}
 
 				for (Snake s : GameData.getInstance().getSnake_list()) {
 //			System.out.println("l.getStart() " + l.getStart() + " l.getEnd() " + l.getEnd());
-					add_Snakes(s.getStart(), s.getEnd(), s.getColor());
+					add_GameElement(s.getStart(), s.getEnd(), s);
 				}
 			});
 		});
@@ -799,7 +864,6 @@ public class BoardControl {
 			grid.getChildren().clear();
 			timer.stop();
 
-//			stage.close();
 			double width = stage.getScene().getWidth();
 			double height = stage.getScene().getHeight();
 			System.out.print(GameData.getInstance().toString());
@@ -812,16 +876,6 @@ public class BoardControl {
 			e.printStackTrace();
 		}
 
-//		mainPain.getChildren().clear();
-
-//        boardpane,
-//      return_btn,
-//      turn_Lable,
-//      countDown_Label,
-//      timer_Label,
-//      diceImage,
-//      rollButton,
-//      grid
 	}
 
 }

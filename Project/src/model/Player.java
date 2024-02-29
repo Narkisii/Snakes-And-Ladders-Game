@@ -50,7 +50,19 @@ public class Player {
 	public void addStep(int placment) {
 		placment_history.add(placment);
 	}
+	
+	//@make sure it works!!
+	//@make sure it works!!
+	//@make sure it works!!
+	//@make sure it works!!
+	//@make sure it works!!
+	//@make sure it works!!
+	//@make sure it works!!
+	//@make sure it works!!
 	public int getPreviousStep() {
+		if(placment_history.size()-2 < 0) {
+			return 0;
+		}
 		return placment_history.get(placment_history.size()-2);
 	}
 
