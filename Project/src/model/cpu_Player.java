@@ -29,7 +29,7 @@ public class cpu_Player extends Player {
 
 	public void executeDice_roll() {
 		// Simulate rolling the dice and store the result
-//		this.board  = GameData.getInstance().getBoard();
+		this.board  = GameData.getInstance().getBoard();
 		diceResult = board.get_Dice_Result();	
 		board_Controll.roll(diceResult, this);
 	}
@@ -44,24 +44,46 @@ public class cpu_Player extends Player {
 //		question_Controll.getAnswerFour().setSelected(false);
 	}
 
-    public void selectAnswer() {
-        ArrayList<RadioButton> answers = question_Controll.getAnswerRadioButtons();
-//        RadioButton answ1 = question_Controll.getAnswerOne();
-//        RadioButton answ2 = question_Controll.getAnswerTwo();
-//        RadioButton answ3 = question_Controll.getAnswerThree();
-//        RadioButton answ4 = question_Controll.getAnswerFour();
-        
-//        answers.add(answ1);
-//        answers.add(answ2);
-//        answers.add(answ3);
-//        answers.add(answ4);
+	public void selectAnswer() {
+	    ArrayList<RadioButton> answers = question_Controll.getAnswerRadioButtons();
+	    int getCorr_answer = question_Controll.getCorr_answer();
 
-        Random rand = new Random();
-        int r = rand.nextInt(4);
-        
-        RadioButton slectedAnswer = answers.get(r);
-        slectedAnswer.setSelected(true);
-    }
+	    Random rand = new Random();
+	    int r;
+
+	    //Theres a 25% for answer right
+	    if(difficulty.equals("Easy")) {
+	        r = rand.nextInt(4);
+	    }
+	    //Theres a 50% for answer right
+	    else if(difficulty.equals("Medium")) {
+	        // 50% chance to select the correct answer
+	        if(rand.nextBoolean()) {
+	            r = getCorr_answer;
+	        } else {
+	            do {
+	                r = rand.nextInt(4);
+	            } while (r == getCorr_answer);
+	        }
+	    }
+	    //Theres a 75% for answer right
+	    else if(difficulty.equals("Hard")) {
+	        // 75% chance to select the correct answer
+	        if(rand.nextInt(4) != 0) {
+	            r = getCorr_answer;
+	        } else {
+	            do {
+	                r = rand.nextInt(4);
+	            } while (r == getCorr_answer);
+	        }
+	    } else {
+	        throw new IllegalArgumentException("Invalid difficulty level");
+	    }
+
+	    RadioButton selectedAnswer = answers.get(r);
+	    selectedAnswer.setSelected(true);
+	}
+
 
     public void pressButton() {
         Button checkAnswerButton = question_Controll.getCheckAnswerButton();
