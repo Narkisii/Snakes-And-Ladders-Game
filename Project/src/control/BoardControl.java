@@ -3,6 +3,7 @@ package control;
 import model.Player;
 import model.Question;
 import model.Snake;
+import model.SoundManager;
 import model.Tile;
 import model.cpu_Player;
 
@@ -15,10 +16,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import Intrefaces.GameEventObserver;
+import Intrefaces.GameEventSubject;
 import enums.Colors;
+import enums.GameEvent;
 import javafx.geometry.Pos;
 
 import javafx.animation.Timeline;
@@ -85,7 +90,7 @@ import javafx.util.Duration;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class BoardControl {
+public class BoardControl implements GameEventSubject{
 
 	private Stage popupStage;
 
@@ -141,6 +146,27 @@ public class BoardControl {
 	private ArrayList<VBox> vboxlist;
 
 	private int gameEnd_var;
+	
+	private List<GameEventObserver> observers = new ArrayList<>(); //observer list
+	
+	//OBSERVER METHODS
+		@Override
+	    public void attach(GameEventObserver observer) {
+	        observers.add(observer);
+	    }
+
+	    @Override
+	    public void detach(GameEventObserver observer) {
+	        observers.remove(observer);
+	    }
+
+	    @Override
+	    public void notifyObservers(GameEvent event) {
+	        for (GameEventObserver observer : observers) {
+	            observer.onEventTriggered(event);
+	        }}
+	    //END
+
 
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 	void initialize() {
@@ -212,7 +238,14 @@ public class BoardControl {
 		board = GameData.getInstance().getBoard();
 		board.generate_board_Objects();
 //		add_SpecialTiles();
-	}
+		
+		//attaching observer
+				SoundManager soundManager = new SoundManager();
+				board.attach(soundManager);
+
+			}
+
+	
 
 	// Create the gridpane of the board with the initialized tiles and thiers id
 	private GridPane createBoard(int numTiles) {
@@ -342,6 +375,9 @@ public class BoardControl {
 
 	// move player
 	public void move_Player(int dice, Player p) {
+		
+		board.notifyObservers(GameEvent.PLAYER_HIT_LADDER);//check observer
+		
 		if (dice != 0 && dice != -5) {
 //			System.out.println(dice);
 			GameData.getInstance().getBoard().move(dice, p);

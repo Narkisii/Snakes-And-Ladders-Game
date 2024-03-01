@@ -5,6 +5,7 @@ package model;
 
 import model.Snake;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,16 +14,19 @@ import java.util.Set;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction;
 
+import Intrefaces.GameEventObserver;
+import Intrefaces.GameEventSubject;
 import javafx.scene.paint.Color;
 
 import control.BoardControl;
+import enums.GameEvent;
 import model.Ladder;
 
 /**
  * @author liorf
  *
  */
-public class Board {
+public class Board implements GameEventSubject {
 	private boolean tile_is_question;
 	// private String difficulty; // 0 easy game, 1 mid game, 2 hard game
 	private Tile[][] gameboard;
@@ -37,6 +41,7 @@ public class Board {
 	private int max_steps;
 	private int red_snakes;
 	private int surprise_tiles;
+	private List<GameEventObserver> observers = new ArrayList<>(); //observer list
 
 	// Tile type:
 	// 10 = special 10 step forward, -10 - special 10 steps backward, 1 = red snake
@@ -54,6 +59,28 @@ public class Board {
 		usedNumbers = new HashSet<>();
 
 	}
+	
+	//OBSERVER METHODS
+		@Override
+	    public void attach(GameEventObserver observer) {
+	        observers.add(observer);
+	    	System.out.println("attached");
+
+	    }
+
+	    @Override
+	    public void detach(GameEventObserver observer) {
+	        observers.remove(observer);
+	    }
+
+	    @Override
+	    public void notifyObservers(GameEvent event) {
+	        for (GameEventObserver observer : observers) {
+	            observer.onEventTriggered(event);
+	        }}
+	    //END
+
+
 
 //	public Board(int numTilesInARow, LinkedList<Player> players2) {
 //		// TODO Auto-generated constructor stub
