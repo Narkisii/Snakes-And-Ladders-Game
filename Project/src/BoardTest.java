@@ -1,12 +1,14 @@
 
 import org.junit.Test;
 
+import control.BoardControl;
 import javafx.scene.paint.Color;
 import model.Board;
 import model.GameData;
 import model.Ladder;
 import model.Player;
 import model.Snake;
+import model.Tile;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -48,7 +50,10 @@ public class BoardTest {
 		board.getGameboard()[3][1].setSnake(snake);
 		player.addStep(1);
 		board.move(10, player);
-
+		Tile tile = board.getTile(snake.getStart());
+		if(tile.getSnake() != null) {
+			player.setCurrentP(tile.getSnake().getEnd());
+		}
 		// Check if player went down snake
 		Assert.assertEquals(5, player.getCurrentP());
 	}
@@ -65,6 +70,12 @@ public class BoardTest {
 		board.getGameboard()[4][0].setLadder(ladder);
 		player.addStep(1);
 		board.move(4, player);
+		Tile tile = board.getTile(ladder.getStart());
+		if(tile.getLadder() != null) {
+			player.setCurrentP(tile.getLadder().getEnd());
+		}
+		
+		
 
 		// Check if player went down snake
 		Assert.assertEquals(11, player.getCurrentP());
