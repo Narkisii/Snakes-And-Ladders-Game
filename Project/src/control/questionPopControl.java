@@ -60,6 +60,17 @@ public class questionPopControl {
 
 	@FXML
 	private Label p_name_label;
+	
+	
+	/****************************************************************/
+	//Here goes the timer @Itay
+	@FXML
+    private Label qTimer_label;
+	//Here goes the timer @Itay
+	/****************************************************************/
+
+	
+	
 	private Question question;
 
 	private ToggleGroup toggleGroup;
@@ -71,6 +82,9 @@ public class questionPopControl {
 
 	private Player player;
 
+
+	
+	
 	public void initialize() {
 		// Initialization logic here
 		toggleGroup = new ToggleGroup();
@@ -119,14 +133,14 @@ public class questionPopControl {
 			check_Answer_label.setStyle("-fx-background-color: green;"); // Set background to green
 			if (question.getDifficulty() == 3) {
 				prev_control.move_Player(1, player);
-				prev_control.startCountDown();
+//				prev_control.startCountDown();
 
 			}
 		} else {
 			check_Answer_label.setText("You're Wrong!");
 			check_Answer_label.setStyle("-fx-background-color: red;"); // Set background to green
 			prev_control.move_Player(steps, player);
-			prev_control.startCountDown();
+//			prev_control.startCountDown();
 
 		}
 		answerOne.setDisable(true);
@@ -137,6 +151,8 @@ public class questionPopControl {
 
 		PauseTransition delay = new PauseTransition(Duration.seconds(2)); // 2 seconds delay
 		delay.setOnFinished(event -> {
+			prev_control.startCountDown();
+
 			prev_control.get_rollButton().setDisable(false);
 			Stage stage = (Stage) checkAnswerButton.getScene().getWindow();
 			stage.close();
