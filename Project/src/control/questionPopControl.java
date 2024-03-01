@@ -1,6 +1,8 @@
 package control;
 
+import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,6 +23,8 @@ import model.cpu_Player;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class questionPopControl {
 	@FXML
@@ -86,6 +90,8 @@ public class questionPopControl {
 	
 	
 	public void initialize() {
+		
+		createTimer();
 		// Initialization logic here
 		toggleGroup = new ToggleGroup();
 		answerOne.setToggleGroup(toggleGroup);
@@ -116,6 +122,38 @@ public class questionPopControl {
 		});
 
 	}
+	private void createTimer() {
+	    // Create a 30 seconds duration
+	    AtomicInteger duration = new AtomicInteger(30);
+
+	    // Create a new timeline
+	    Timeline countdown = new Timeline();
+
+	    // Create a key frame that updates every second
+	    KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event -> {
+	        // Decrease the duration by one second
+	        int remaining = duration.decrementAndGet();
+	        // Calculate minutes and seconds
+	        long minutes = TimeUnit.SECONDS.toMinutes(remaining);
+	        long seconds = remaining - TimeUnit.MINUTES.toSeconds(minutes);
+	        // Update the label
+	        qTimer_label.setText(String.format("%02d:%02d", minutes, seconds));
+	        // If the duration is zero, stop the timeline
+	        if (remaining <= 0) {
+	            countdown.stop();
+	            check_Answer("Time up!");
+	        }
+	    });
+	    // Add the key frame to the timeline
+	    countdown.getKeyFrames().add(keyFrame);
+
+	    // Set the cycle count to indefinite, so the timeline repeats
+	    countdown.setCycleCount(Timeline.INDEFINITE);
+
+	    // Start the timeline
+	    countdown.play();
+
+	}
 
 	private void check_Answer(String selectedAnswer) {
 		int steps = 0;
@@ -128,7 +166,13 @@ public class questionPopControl {
 		if (question.getDifficulty() == 3) {
 			steps = -3;
 		}
-		if (selectedAnswer.equals(corr_answer_str)) {
+		
+		 if (selectedAnswer.equals("Time up!")) {
+		        check_Answer_label.setText("Time up!");
+		        check_Answer_label.setStyle("-fx-background-color: yellow;"); // Set background to yellow
+		        prev_control.move_Player(steps, player);
+		 }
+		 else if (selectedAnswer.equals(corr_answer_str)) {
 			check_Answer_label.setText("Correct!");
 			check_Answer_label.setStyle("-fx-background-color: green;"); // Set background to green
 			if (question.getDifficulty() == 3) {
