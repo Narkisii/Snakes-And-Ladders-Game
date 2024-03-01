@@ -525,7 +525,9 @@ public class PlayersControl {
 				counter++;
 
 //	            players.add(p);
-				GameData.getInstance().setNumberOfPlayers(GameData.getInstance().getplayer_list().size());
+//				GameData.getInstance().setNumberOfPlayers(GameData.getInstance().getplayer_list().size());
+//				GameData.getInstance().setNumberOfPlayers(numberOfPlayers);
+
 			}
 
 		}

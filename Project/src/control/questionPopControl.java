@@ -64,17 +64,14 @@ public class questionPopControl {
 
 	@FXML
 	private Label p_name_label;
-	
-	
+
 	/****************************************************************/
-	//Here goes the timer @Itay
+	// Here goes the timer @Itay
 	@FXML
-    private Label qTimer_label;
-	//Here goes the timer @Itay
+	private Label qTimer_label;
+	// Here goes the timer @Itay
 	/****************************************************************/
 
-	
-	
 	private Question question;
 
 	private ToggleGroup toggleGroup;
@@ -88,9 +85,11 @@ public class questionPopControl {
 
 	private int time = 30;
 
-	private Timeline countdown; 
+	private Timeline countdown;
 	ArrayList<RadioButton> radioButtons;
-	
+
+	private int steps;
+
 	public void initialize() {
 		radioButtons = new ArrayList<RadioButton>();
 		createTimer();
@@ -129,41 +128,42 @@ public class questionPopControl {
 		});
 
 	}
+
 	private void createTimer() {
-	    // Create a 30 seconds duration
-	    AtomicInteger duration = new AtomicInteger(time);
+		// Create a 30 seconds duration
+		AtomicInteger duration = new AtomicInteger(time);
 
-	    // Create a new timeline
-	    countdown = new Timeline();
+		// Create a new timeline
+		countdown = new Timeline();
 
-	    // Create a key frame that updates every second
-	    KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event -> {
-	        // Decrease the duration by one second
-	        int remaining = duration.decrementAndGet();
-	        // Calculate minutes and seconds
-	        long minutes = TimeUnit.SECONDS.toMinutes(remaining);
-	        long seconds = remaining - TimeUnit.MINUTES.toSeconds(minutes);
-	        // Update the label
-	        qTimer_label.setText(String.format("%02d:%02d", minutes, seconds));
-	        // If the duration is zero, stop the timeline
-	        if (remaining <= 0) {
-	            countdown.stop();
-	            check_Answer("Time up!");
-	        }
-	    });
-	    // Add the key frame to the timeline
-	    countdown.getKeyFrames().add(keyFrame);
+		// Create a key frame that updates every second
+		KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event -> {
+			// Decrease the duration by one second
+			int remaining = duration.decrementAndGet();
+			// Calculate minutes and seconds
+			long minutes = TimeUnit.SECONDS.toMinutes(remaining);
+			long seconds = remaining - TimeUnit.MINUTES.toSeconds(minutes);
+			// Update the label
+			qTimer_label.setText(String.format("%02d:%02d", minutes, seconds));
+			// If the duration is zero, stop the timeline
+			if (remaining <= 0) {
+				countdown.stop();
+				check_Answer("Time up!");
+			}
+		});
+		// Add the key frame to the timeline
+		countdown.getKeyFrames().add(keyFrame);
 
-	    // Set the cycle count to indefinite, so the timeline repeats
-	    countdown.setCycleCount(Timeline.INDEFINITE);
+		// Set the cycle count to indefinite, so the timeline repeats
+		countdown.setCycleCount(Timeline.INDEFINITE);
 
-	    // Start the timeline
-	    countdown.play();
+		// Start the timeline
+		countdown.play();
 
 	}
 
 	private void check_Answer(String selectedAnswer) {
-		int steps = 0;
+		steps = 0;
 		if (question.getDifficulty() == 1) {
 			steps = -1;
 		}
@@ -173,28 +173,26 @@ public class questionPopControl {
 		if (question.getDifficulty() == 3) {
 			steps = -3;
 		}
-		
-		 if (selectedAnswer.equals("Time up!")) {
-		        check_Answer_label.setText("Time up!");
-		        check_Answer_label.setStyle("-fx-background-color: yellow;"); // Set background to yellow
-		        prev_control.move_Player(steps, player);
 
-		 }
-		 else if (selectedAnswer.equals(corr_answer_str)) {
+		if (selectedAnswer.equals("Time up!")) {
+			check_Answer_label.setText("Time up!");
+			check_Answer_label.setStyle("-fx-background-color: yellow;"); // Set background to yellow
+			prev_control.move_Player(steps, player);
+
+		} else if (selectedAnswer.equals(corr_answer_str)) {
 			check_Answer_label.setText("Correct!");
 			check_Answer_label.setStyle("-fx-background-color: green;"); // Set background to green
 			if (question.getDifficulty() == 3) {
 				prev_control.move_Player(1, player);
 //				prev_control.startCountDown();
-			}else {
-		        prev_control.move_Player(steps, player);
+			} else {
+				prev_control.move_Player(0, player);
 			}
 		} else {
 			check_Answer_label.setText("You're Wrong!");
 			check_Answer_label.setStyle("-fx-background-color: red;"); // Set background to green
 			prev_control.move_Player(steps, player);
 //			prev_control.startCountDown();
-			
 		}
 		answerOne.setDisable(true);
 		answerTwo.setDisable(true);
@@ -204,14 +202,13 @@ public class questionPopControl {
 
 		PauseTransition delay = new PauseTransition(Duration.seconds(2)); // 2 seconds delay
 		delay.setOnFinished(event -> {
-			prev_control.startCountDown();
-			prev_control.get_rollButton().setDisable(false);
+//			prev_control.startCountDown();
+//			prev_control.get_rollButton().setDisable(false);
 			countdown.stop();
 			Stage stage = (Stage) checkAnswerButton.getScene().getWindow();
 			stage.close();
 		});
 		delay.play();
-
 	}
 
 	public void set_question(Question q) {
@@ -259,7 +256,7 @@ public class questionPopControl {
 			checkAnswerButton.setVisible(false);
 			p_name_label.setText("Answering: " + player.getName() + "CPU PLAYER");
 			p_name_label.setTextFill(Color.web(player.getColor()));
-			for(RadioButton rb : radioButtons) {
+			for (RadioButton rb : radioButtons) {
 				rb.setMouseTransparent(true);
 			}
 
@@ -276,7 +273,7 @@ public class questionPopControl {
 	 * @return the answerFour
 	 */
 	public ArrayList<RadioButton> getAnswerRadioButtons() {
-		
+
 		return radioButtons;
 	}
 
@@ -286,12 +283,14 @@ public class questionPopControl {
 	public Button getCheckAnswerButton() {
 		return checkAnswerButton;
 	}
+
 	/**
 	 * @return the corr_answer
 	 */
 	public Integer getCorr_answer() {
 		return corr_answer;
 	}
+
 	/**
 	 * @param corr_answer the corr_answer to set
 	 */
