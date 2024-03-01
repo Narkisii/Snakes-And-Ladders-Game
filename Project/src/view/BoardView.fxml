@@ -47,13 +47,18 @@
                         <Font name="Arial Narrow" size="12.0" />
                      </font>
                   </Label>
+                  <Pane prefHeight="179.0" prefWidth="222.0">
+                     <children>
+                        <ImageView fx:id="pTurn_image" fitHeight="110.0" fitWidth="110.0" layoutX="56.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
                   <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="board_Font" text="Time left for turn:" wrapText="true" />
                   <Label id="countDown_Label" fx:id="countDown_Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="105.0" prefWidth="237.0" styleClass="normal_Font" stylesheets="@resources/Css/all_Style.css" text="countDown_Label" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
                      <font>
                         <Font name="Arial Narrow" size="12.0" />
                      </font>
                   </Label>
-                  <Label id="turn_Lable" fx:id="turn_Lable1" alignment="CENTER" contentDisplay="TOP" prefHeight="147.0" prefWidth="242.0" styleClass="normal_Font" stylesheets="@resources/Css/all_Style.css" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                  <Label id="turn_Lable" fx:id="turn_Lable1" alignment="CENTER" contentDisplay="TOP" prefHeight="44.0" prefWidth="222.0" styleClass="normal_Font" stylesheets="@resources/Css/all_Style.css" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
                      <font>
                         <Font name="Arial Narrow" size="12.0" />
                      </font>

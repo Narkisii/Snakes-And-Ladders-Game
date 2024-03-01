@@ -518,13 +518,16 @@ public class PlayersControl {
 					GameData.getInstance().addPlayer(p);
 
 				} else {
+					//Create Cpu_player
 					cpu_Player cpu_Player = new cpu_Player(counter, color, playerName, token);
 					GameData.getInstance().addPlayer(cpu_Player);
 				}
 				counter++;
 
 //	            players.add(p);
-				GameData.getInstance().setNumberOfPlayers(GameData.getInstance().getplayer_list().size());
+//				GameData.getInstance().setNumberOfPlayers(GameData.getInstance().getplayer_list().size());
+//				GameData.getInstance().setNumberOfPlayers(numberOfPlayers);
+
 			}
 
 		}

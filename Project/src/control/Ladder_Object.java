@@ -22,7 +22,6 @@ public class Ladder_Object implements GameElement {
 	public void set_Tile(Pane tile) {
 		this.startTile = tile;
 	}
-
 	@Override
 	public void add(double startX, double startY, double endX, double endY, double distance) {
 //		System.out
@@ -33,7 +32,7 @@ public class Ladder_Object implements GameElement {
 		Colors[] colors = Colors.values();
 		while(color2.equals("Blue") || color2.equals("Green") || color2.equals("Yellow")) {
 		Colors randomColor = colors[random.nextInt(colors.length)];
-		color2 = randomColor.name(); // 50% transparent
+		color2 = randomColor.name(); 
 		}
 		Color color = Color.web(color2);
 

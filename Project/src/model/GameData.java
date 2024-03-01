@@ -94,11 +94,12 @@ public class GameData {
 	}
 
 	public void next_turn() {
-		if (getPlayerTurn() < getplayer_list().size()
+		System.out.println("getplayer_list().size()" + getplayer_list().size());
+		if (playerTurn < player_list.size()
 				- 1) {
-			setPlayerTurn(getPlayerTurn() + 1);
+			playerTurn ++;
 		} else {
-			setPlayerTurn(0);
+			playerTurn = 0;
 		}
 
 	}
