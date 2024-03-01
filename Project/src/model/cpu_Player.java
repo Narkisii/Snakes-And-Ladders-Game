@@ -45,16 +45,16 @@ public class cpu_Player extends Player {
 	}
 
     public void selectAnswer() {
-        ArrayList<RadioButton> answers = new ArrayList<RadioButton>();
-        RadioButton answ1 = question_Controll.getAnswerOne();
-        RadioButton answ2 = question_Controll.getAnswerTwo();
-        RadioButton answ3 = question_Controll.getAnswerThree();
-        RadioButton answ4 = question_Controll.getAnswerFour();
+        ArrayList<RadioButton> answers = question_Controll.getAnswerRadioButtons();
+//        RadioButton answ1 = question_Controll.getAnswerOne();
+//        RadioButton answ2 = question_Controll.getAnswerTwo();
+//        RadioButton answ3 = question_Controll.getAnswerThree();
+//        RadioButton answ4 = question_Controll.getAnswerFour();
         
-        answers.add(answ1);
-        answers.add(answ2);
-        answers.add(answ3);
-        answers.add(answ4);
+//        answers.add(answ1);
+//        answers.add(answ2);
+//        answers.add(answ3);
+//        answers.add(answ4);
 
         Random rand = new Random();
         int r = rand.nextInt(4);
@@ -68,20 +68,6 @@ public class cpu_Player extends Player {
         checkAnswerButton.fire();
     }
 
-
-	/**
-	 * @return the diceResult
-	 */
-	public int getDiceResult() {
-		return diceResult;
-	}
-
-	/**
-	 * @param diceResult the diceResult to set
-	 */
-	public void setDiceResult(int diceResult) {
-		this.diceResult = diceResult;
-	}
 
 	/**
 	 * @return the board

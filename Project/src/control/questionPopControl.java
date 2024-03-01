@@ -89,11 +89,16 @@ public class questionPopControl {
 	private int time = 30;
 
 	private Timeline countdown; 
-	
+	ArrayList<RadioButton> radioButtons;
 	
 	public void initialize() {
-		
+		radioButtons = new ArrayList<RadioButton>();
 		createTimer();
+		radioButtons.add(answerOne);
+		radioButtons.add(answerTwo);
+		radioButtons.add(answerThree);
+		radioButtons.add(answerFour);
+
 		// Initialization logic here
 		toggleGroup = new ToggleGroup();
 		answerOne.setToggleGroup(toggleGroup);
@@ -254,6 +259,9 @@ public class questionPopControl {
 			checkAnswerButton.setVisible(false);
 			p_name_label.setText("Answering: " + player.getName() + "CPU PLAYER");
 			p_name_label.setTextFill(Color.web(player.getColor()));
+			for(RadioButton rb : radioButtons) {
+				rb.setMouseTransparent(true);
+			}
 
 		} else {
 			p_name_label.setText("Answering: " + player.getName());
@@ -267,29 +275,9 @@ public class questionPopControl {
 	/**
 	 * @return the answerFour
 	 */
-	public RadioButton getAnswerFour() {
-		return answerFour;
-	}
-
-	/**
-	 * @return the answerOne
-	 */
-	public RadioButton getAnswerOne() {
-		return answerOne;
-	}
-
-	/**
-	 * @return the answerThree
-	 */
-	public RadioButton getAnswerThree() {
-		return answerThree;
-	}
-
-	/**
-	 * @return the answerTwo
-	 */
-	public RadioButton getAnswerTwo() {
-		return answerTwo;
+	public ArrayList<RadioButton> getAnswerRadioButtons() {
+		
+		return radioButtons;
 	}
 
 	/**
