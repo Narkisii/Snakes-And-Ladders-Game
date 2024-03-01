@@ -86,7 +86,9 @@ public class questionPopControl {
 
 	private Player player;
 
+	private int time = 30;
 
+	private Timeline countdown; 
 	
 	
 	public void initialize() {
@@ -124,10 +126,10 @@ public class questionPopControl {
 	}
 	private void createTimer() {
 	    // Create a 30 seconds duration
-	    AtomicInteger duration = new AtomicInteger(30);
+	    AtomicInteger duration = new AtomicInteger(time);
 
 	    // Create a new timeline
-	    Timeline countdown = new Timeline();
+	    countdown = new Timeline();
 
 	    // Create a key frame that updates every second
 	    KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event -> {
@@ -171,6 +173,7 @@ public class questionPopControl {
 		        check_Answer_label.setText("Time up!");
 		        check_Answer_label.setStyle("-fx-background-color: yellow;"); // Set background to yellow
 		        prev_control.move_Player(steps, player);
+
 		 }
 		 else if (selectedAnswer.equals(corr_answer_str)) {
 			check_Answer_label.setText("Correct!");
@@ -178,14 +181,15 @@ public class questionPopControl {
 			if (question.getDifficulty() == 3) {
 				prev_control.move_Player(1, player);
 //				prev_control.startCountDown();
-
+			}else {
+		        prev_control.move_Player(steps, player);
 			}
 		} else {
 			check_Answer_label.setText("You're Wrong!");
 			check_Answer_label.setStyle("-fx-background-color: red;"); // Set background to green
 			prev_control.move_Player(steps, player);
 //			prev_control.startCountDown();
-
+			
 		}
 		answerOne.setDisable(true);
 		answerTwo.setDisable(true);
@@ -196,8 +200,8 @@ public class questionPopControl {
 		PauseTransition delay = new PauseTransition(Duration.seconds(2)); // 2 seconds delay
 		delay.setOnFinished(event -> {
 			prev_control.startCountDown();
-
 			prev_control.get_rollButton().setDisable(false);
+			countdown.stop();
 			Stage stage = (Stage) checkAnswerButton.getScene().getWindow();
 			stage.close();
 		});

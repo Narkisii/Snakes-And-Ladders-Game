@@ -46,9 +46,9 @@
    </center>
 
    <top>
-      <Pane BorderPane.alignment="CENTER">
+      <Pane prefHeight="174.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="405.0" layoutY="14.0" styleClass="GameName_font" stylesheets="@resources/Css/all_Style.css" text="Players:" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="-1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="174.0" prefWidth="1280.0" styleClass="GameName_font" stylesheets="@resources/Css/all_Style.css" text="Players:" />
          </children>
       </Pane>
    </top>
