@@ -1,0 +1,12 @@
+package enums;
+
+public enum GameEvent {
+	PLAYER_HIT_SNAKE,
+    PLAYER_HIT_LADDER,
+    PLAYER_WINS,
+    PLAYER_ANSWERS_QUESTION,
+    CORRECT_ANSWER,
+    INCORRECT_ANSWER,
+    PLAYER_MISSES_TURN,
+    DICE_ROLL;
+}

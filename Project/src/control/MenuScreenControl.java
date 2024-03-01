@@ -41,13 +41,15 @@ public class MenuScreenControl {
 
 	
 	private void init() {		
+       // System.getProperty("user.dir");
+
 		button_start.setOnAction(event -> navigateTo("/view/SettingsView.fxml"));
 		button_questionWizard.setOnAction(event -> navigateTo("/view/QuestionWizView.fxml"));
 		button_History.setOnAction(event -> navigateTo("/view/HistoryView.fxml"));
 		button_instructions.setOnAction(event -> navigateTo("/view/Instructions.fxml"));
 		quit.setOnAction(event -> ((Stage) quit.getScene().getWindow()).close());
         Menu_Pane.getChildren().remove(root);
-	}
+        }
 	
 	private void navigateTo(String fxmlFile) {
 
