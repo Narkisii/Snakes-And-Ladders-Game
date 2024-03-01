@@ -286,5 +286,17 @@ public class questionPopControl {
 	public Button getCheckAnswerButton() {
 		return checkAnswerButton;
 	}
+	/**
+	 * @return the corr_answer
+	 */
+	public Integer getCorr_answer() {
+		return corr_answer;
+	}
+	/**
+	 * @param corr_answer the corr_answer to set
+	 */
+	public void setCorr_answer(Integer corr_answer) {
+		this.corr_answer = corr_answer;
+	}
 
 }
