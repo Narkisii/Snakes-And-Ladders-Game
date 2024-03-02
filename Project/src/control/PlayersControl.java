@@ -57,6 +57,7 @@ public class PlayersControl {
 	@FXML
 	private Button remove_Cpu;
 	private int num_cpu = 0;
+	private Set<String> usedCPUNames = new HashSet<String>();
 
 //	private LinkedList <Player> players = new LinkedList<Player>();
 	List<String> tokens = Arrays.stream(Tokens.values()).map(Enum::name).collect(Collectors.toList());
@@ -124,6 +125,8 @@ public class PlayersControl {
 			// Get the color and token ComboBoxes from the last row
 			ComboBox<String> colorComboBox = (ComboBox<String>) lastRow.getChildren().get(2);
 			ComboBox<String> tokenComboBox = (ComboBox<String>) lastRow.getChildren().get(3);
+			String playerName = ((TextField) lastRow.getChildren().get(1)).getText(); // Replace 1 with the index of the
+			usedCPUNames.remove(((TextField) lastRow.getChildren().get(1)).getText());														// player name TextField in your
 
 			// Get the selected color and token
 			String color = colorComboBox.getValue();
@@ -164,9 +167,12 @@ public class PlayersControl {
 		String colorForNewCPU = null;
 		String tokenForNewCPU = null;
 		Random random = new Random();
-		CPUNames randomName = cpuNames.get(random.nextInt(cpuNames.size()));
-		String nameCpu = randomName.name();
-
+		String nameCpu;
+		do {
+		    CPUNames randomName = cpuNames.get(random.nextInt(cpuNames.size()));
+		    nameCpu = randomName.name();
+		} while (usedCPUNames.contains(nameCpu));
+		usedCPUNames.add(nameCpu);
 		List<String> colors_temp = colors;
 		// TODO Auto-generated method stub
 		for (Node node : playerContainer.getChildren()) {
@@ -200,6 +206,7 @@ public class PlayersControl {
 			// Add your code here to set the color for the new CPU player
 		}
 		innit_cpuRow(nameCpu, colorForNewCPU, tokenForNewCPU);
+		System.out.println(usedCPUNames);
 	}
 
 	private void innit() {
