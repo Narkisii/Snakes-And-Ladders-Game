@@ -1,6 +1,7 @@
 package control;
 
-import java.awt.ScrollPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.TextArea;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,9 +18,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.DuplicateError;
 import model.InputIsEmpty;
@@ -31,7 +34,7 @@ import model.QuestionsFromJson;
 public class QuestionEditorPopControl {
 	@FXML
 	private TextField question_field, ans1, ans2, ans3, ans4;
-
+	
 	@FXML
 	private Label main_Label, answerOpt_lbl, correctAnswer_lbl;
 	
@@ -40,6 +43,9 @@ public class QuestionEditorPopControl {
 	
 	@FXML
 	private HBox ans_1_HBox, ans_2_HBox, ans_3_HBox, ans_4_HBox;
+	
+	@FXML
+	private VBox q_Vbox;
 
 	@FXML
 	private Button saveButton;
@@ -49,7 +55,11 @@ public class QuestionEditorPopControl {
 	@FXML
 	private ImageView clearButton;
 	
+	@FXML
 	private ScrollPane qScroll_Pane;
+	
+	@FXML
+	private AnchorPane center_Pane;
 
 	List<TextField> textFieldList;
 	private Question question;
@@ -62,7 +72,7 @@ public class QuestionEditorPopControl {
 
 		textFieldList = new ArrayList<>();
 		textFieldList.add(question_field);
-
+		
 		textFieldList.add(ans1);
 		textFieldList.add(ans2);
 		textFieldList.add(ans3);
@@ -109,7 +119,7 @@ public class QuestionEditorPopControl {
 					previousWindow.re_init(newQuestion.getDifficulty());
 					clear_text();
 					alert.showAndWait();
-
+					
 					return true;
 				}
 			} catch (InputIsEmpty | DuplicateError | IOException | InputIsNotUnique | NoJsonFileFound e) {
@@ -265,4 +275,6 @@ public class QuestionEditorPopControl {
 			saveButton.setDisable(true);
 		}
 	}
+	
+	//public void wrapText()
 }
