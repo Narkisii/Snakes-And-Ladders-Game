@@ -57,6 +57,8 @@ public class Board implements GameEventSubject {
 		// Initialize each Tile object
 		this.tile_is_question = false;
 		usedNumbers = new HashSet<>();
+		
+		
 
 	}
 	
@@ -94,6 +96,8 @@ public class Board implements GameEventSubject {
 		int y = pos[1];
 
 		Tile tile = GameData.getInstance().getBoard().getGameboard()[x][y];
+		SoundManager soundManager = new SoundManager();
+		tile.attach(soundManager);
 		Snake snake = tile.getSnake();
 		Ladder ladder = tile.getLadder();
 //		Question question = tile.getQuestion();
@@ -102,6 +106,7 @@ public class Board implements GameEventSubject {
 		int answer;
 		//Here the player can hit a snake
 		if (snake != null) {
+			tile.notifyObservers(GameEvent.PLAYER_HIT_SNAKE);// obserevr for snake
 			steps = snake.getEnd() - player.getCurrentP();
 			player.setCurrentP(snake.getEnd());
 			GameData.getInstance().getPlayer(player).addStep(snake.getEnd());
@@ -109,6 +114,7 @@ public class Board implements GameEventSubject {
 		
 		//Here the player can hit a ladded
 		if (ladder != null) {
+			tile.notifyObservers(GameEvent.PLAYER_HIT_LADDER);// obserevr for ladder
 			steps = ladder.getEnd() - player.getCurrentP();
 			player.setCurrentP(ladder.getEnd());
 			GameData.getInstance().getPlayer(player).addStep(ladder.getEnd());
@@ -120,17 +126,20 @@ public class Board implements GameEventSubject {
 		if (speical != 0) {
 			switch (speical) {
 			case (10)://Suprise add 10 steps ENUM GOOD_SURPRISE
+				tile.notifyObservers(GameEvent.GOOD_SURPRISE);// obserevr for good surprise
 				player.setCurrentP(speical);
 				GameData.getInstance().getPlayer(player).addStep(speical);
 
 				break;
 
 			case (-10)://Suprise subtract 10 steps ENUM BAD_URPRISE
+				tile.notifyObservers(GameEvent.BAD_URPRISE);// obserevr for bad surprise
 				player.setCurrentP(speical);
 				GameData.getInstance().getPlayer(player).addStep(speical);
 
 				break;
 			case (1)://Red snake -> go to the first tile
+				tile.notifyObservers(GameEvent.RED_SNAKE);// obserevr for red snake
 				player.setCurrentP(speical);
 				GameData.getInstance().getPlayer(player).addStep(speical);
 				break;

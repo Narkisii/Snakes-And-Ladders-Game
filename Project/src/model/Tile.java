@@ -3,15 +3,21 @@
  */
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import Intrefaces.GameEventObserver;
+import Intrefaces.GameEventSubject;
+import enums.GameEvent;
 
 /**
  * @author Lior f. & Itay o. & Ariel B.
  *
  */
-public class Tile {
+public class Tile implements GameEventSubject{
 	/**
 	 * @param id the id to set
 	 */
@@ -27,7 +33,11 @@ public class Tile {
 	private String image_path;
 	private int id;
     private static final Map<Integer, String> TILE_IMAGE_PATHS = createImagePathMap();
-
+    private List<GameEventObserver> observers = new ArrayList<>(); //observer list
+    
+    
+    
+    
 	public Tile(int id, int type, Snake snake, Ladder ladder) {
 		super();
 		this.id = id;
@@ -46,6 +56,30 @@ public class Tile {
 		else
 			type = 0;
 	}
+	
+	
+	//OBSERVER METHODS
+			@Override
+		    public void attach(GameEventObserver observer) {
+		        observers.add(observer);
+		    	System.out.println("attached");
+
+		    }
+
+		    @Override
+		    public void detach(GameEventObserver observer) {
+		        observers.remove(observer);
+		    }
+
+		    @Override
+		    public void notifyObservers(GameEvent event) {
+		        for (GameEventObserver observer : observers) {
+		            observer.onEventTriggered(event);
+		        }}
+		    //END
+	
+	
+	
 
 	// 10 = special 10 step forward, -10 - special 10 steps backward, 1 = red snake
 	// 4 - question

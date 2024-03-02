@@ -57,11 +57,10 @@ public class MenuScreenControl {
 
 	
 	private void init() {		
-       // System.getProperty("user.dir");
-		if(flagSong==0) {
+		
 			stopThemeSong();
 			themeSong();
-		}
+		
 		
 		button_start.setOnAction(event -> navigateTo("/view/SettingsView.fxml"));
 		button_questionWizard.setOnAction(event -> navigateTo("/view/QuestionWizView.fxml"));

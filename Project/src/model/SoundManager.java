@@ -2,89 +2,71 @@ package model;
 
 import Intrefaces.GameEventObserver;
 import enums.GameEvent;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 import java.io.IOException;
 import java.net.URL;
 
 public class SoundManager implements GameEventObserver {
+
+    // A single method to play sounds, given a URL
+    private void playSound(String soundFileName) {
+        try {
+            URL soundFile = this.getClass().getResource(soundFileName);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            // Set volume to 75%
+            FloatControl gainControl = 
+                (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            // Convert percentage to gain (decibels)
+            double gain = 0.75; // 0.75 = 75%
+            float dB = (float)(Math.log(gain)/Math.log(10.0)*20.0);
+            gainControl.setValue(dB);
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onEventTriggered(GameEvent event) {
         switch (event) {
             case PLAYER_HIT_SNAKE:
-                playSnakeSound();
+                playSound("/sounds/UpTheLadder.wav");
                 break;
             case PLAYER_HIT_LADDER:
-                playLadderSound();
+                playSound("/sounds/UpTheLadder.wav");
                 break;
             case PLAYER_WINS:
-                playWinSound();
+                playSound("/sounds/UpTheLadder.wav");
                 break;
-//            case PLAYER_ANSWERS_QUESTION:
-//                playQuestionSound();
-//                break;
             case CORRECT_ANSWER:
-                playCorrectAnswerSound();
+                playSound("/sounds/UpTheLadder.wav");
                 break;
             case INCORRECT_ANSWER:
-                playIncorrectAnswerSound();
+                playSound("/sounds/UpTheLadder.wav");
                 break;
             case PLAYER_MISSES_TURN:
-                playMissTurnSound();
+                playSound("/sounds/UpTheLadder.wav");
                 break;
             case DICE_ROLL:
-                playDiceRollSound();
+                playSound("/sounds/UpTheLadder.wav");
+                break;
+            case PLAYER_MOVE:
+                playSound("/sounds/UpTheLadder.wav");
+                break;
+            case GOOD_SURPRISE:
+                playSound("/sounds/UpTheLadder.wav");
+                break;
+            case BAD_URPRISE:
+                playSound("/sounds/UpTheLadder.wav");
+                break;
+            case RED_SNAKE:
+                playSound("/sounds/UpTheLadder.wav");
                 break;
             default:
-                // Optionally handle any unhandled cases
                 break;
         }
     }
 
-    private void playSnakeSound() {
-        // Code to play snake sound
-    }
-
-    private void playLadderSound() {
-    	  try {
-//    			System.out.println("sound1");
-
-    	        // Adjust the path to where your sound file is located
-    	        URL soundFile = this.getClass().getResource("/sounds/UpTheLadder.wav");
-    	        AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
-    	        Clip clip = AudioSystem.getClip();
-    	        clip.open(audioIn);
-    	        clip.start();
-    	    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-    	        e.printStackTrace();
-    	    }    }
-
-    private void playWinSound() {
-        // Code to play win sound
-    }
-
-    private void playQuestionSound() {
-        // Code to play question sound (trivia loop)
-    }
-
-    private void playCorrectAnswerSound() {
-        // Code to play correct answer sound
-    }
-
-    private void playIncorrectAnswerSound() {
-        // Code to play incorrect answer sound
-    }
-
-    private void playMissTurnSound() {
-        // Code to play miss turn sound
-    }
-
-    private void playDiceRollSound() {
-        // Code to play dice roll sound
-    }
-
-    // You can implement the sound-playing methods using javax.sound.sampled or any other Java sound API
 }

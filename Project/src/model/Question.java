@@ -2,12 +2,16 @@ package model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import Intrefaces.GameEventObserver;
+import Intrefaces.GameEventSubject;
+import enums.GameEvent;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-public class Question {
+public class Question implements GameEventSubject {
 //	private static int nextId = 1; // Static variable to keep track of the next available ID
 //    private int id; // question ID
 
@@ -23,7 +27,29 @@ public class Question {
 
     @JsonProperty("difficulty")
     private String difficulty;
+    
+    private List<GameEventObserver> observers = new ArrayList<>(); //observer list
 
+  //OBSERVER METHODS
+  		@Override
+  	    public void attach(GameEventObserver observer) {
+  	        observers.add(observer);
+  	    	System.out.println("attached");
+
+  	    }
+
+  	    @Override
+  	    public void detach(GameEventObserver observer) {
+  	        observers.remove(observer);
+  	    }
+
+  	    @Override
+  	    public void notifyObservers(GameEvent event) {
+  	        for (GameEventObserver observer : observers) {
+  	            observer.onEventTriggered(event);
+  	        }}
+  	    //END
+    
     // Constructor
     public Question() {
 //    	this.id = nextId++;

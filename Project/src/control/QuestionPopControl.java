@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Player;
 import model.Question;
+import model.SoundManager;
 import model.cpu_Player;
 
 import java.util.ArrayList;
@@ -26,7 +27,11 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class QuestionPopControl {
+import Intrefaces.GameEventObserver;
+import Intrefaces.GameEventSubject;
+import enums.GameEvent;
+
+public class QuestionPopControl implements GameEventSubject {
 	@FXML
 	private Label QuestionTitle;
 
@@ -80,11 +85,33 @@ public class QuestionPopControl {
 	private Player player;
 
 	private int time = 30;
+	
+	private List<GameEventObserver> observers = new ArrayList<>(); //observer list
 
 	private Timeline countdown;
 	ArrayList<RadioButton> radioButtons;
 
 	private int steps;
+	
+	//OBSERVER METHODS
+		@Override
+	    public void attach(GameEventObserver observer) {
+	        observers.add(observer);
+	    	System.out.println("attached");
+
+	    }
+
+	    @Override
+	    public void detach(GameEventObserver observer) {
+	        observers.remove(observer);
+	    }
+
+	    @Override
+	    public void notifyObservers(GameEvent event) {
+	        for (GameEventObserver observer : observers) {
+	            observer.onEventTriggered(event);
+	        }}
+	    //END
 
 	public void initialize() {
 		radioButtons = new ArrayList<RadioButton>();
@@ -124,6 +151,7 @@ public class QuestionPopControl {
 		});
 
 	}
+	
 
 	private void createTimer() {
 		// Create a 30 seconds duration
@@ -159,6 +187,10 @@ public class QuestionPopControl {
 	}
 
 	private void check_Answer(String selectedAnswer) {
+		
+		SoundManager soundManager = new SoundManager();
+		question.attach(soundManager);
+		
 		steps = 0;
 		if (question.getDifficulty() == 1) {
 			steps = -1;
@@ -171,11 +203,13 @@ public class QuestionPopControl {
 		}
 		//Times up - closes the window and takes the player back according to difficulty
 		if (selectedAnswer.equals("Time up!")) {
+			question.notifyObservers(GameEvent.INCORRECT_ANSWER);// obserevr for time up, same as incorrect
 			check_Answer_label.setText("Time up!");
 			check_Answer_label.setStyle("-fx-background-color: yellow;"); // Set background to yellow
 			prev_control.move_Player(steps, player);
 
 		} else if (selectedAnswer.equals(corr_answer_str)) {
+			question.notifyObservers(GameEvent.CORRECT_ANSWER);// obserevr for correct
 			check_Answer_label.setText("Correct!");
 			check_Answer_label.setStyle("-fx-background-color: green;"); // Set background to green
 			if (question.getDifficulty() == 3) {
@@ -185,6 +219,7 @@ public class QuestionPopControl {
 				prev_control.move_Player(0, player);
 			}
 		} else {
+			question.notifyObservers(GameEvent.INCORRECT_ANSWER);// obserevr for incorrect
 			check_Answer_label.setText("You're Wrong!");
 			check_Answer_label.setStyle("-fx-background-color: red;"); // Set background to green
 			prev_control.move_Player(steps, player);

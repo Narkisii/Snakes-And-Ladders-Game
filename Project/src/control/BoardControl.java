@@ -458,7 +458,7 @@ public class BoardControl implements GameEventSubject {
 	}
 
 	private void animate(VBox playerbox, Pane start, Pane end, Player p) {
-		board.notifyObservers(GameEvent.PLAYER_HIT_LADDER);// check observer
+		board.notifyObservers(GameEvent.PLAYER_MOVE);// check observer
 
 		if (gameEnd_var != 1)
 //			startCountDown();
@@ -636,6 +636,7 @@ public class BoardControl implements GameEventSubject {
 //				roll(board.get_Dice_Result(),
 //						GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()));
 				rollButton.setDisable(true);
+				board.notifyObservers(GameEvent.PLAYER_MISSES_TURN);// obserevr for missed turn
 				turn_Lable.setText("Missed your turn!!");
 				turn_Lable.setTextFill(Color.RED);
 				next_Turn();
@@ -690,6 +691,7 @@ public class BoardControl implements GameEventSubject {
 	}
 
 	public void roll(int dice, Player player) {
+	//	board.notifyObservers(GameEvent.DICE_ROLL);// obserevr for roll dice
 		rollButton.setDisable(true);
 		final long[] frameCounter = { 0 };
 		final Random random = new Random();
