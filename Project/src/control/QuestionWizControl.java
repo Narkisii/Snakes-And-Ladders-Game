@@ -38,6 +38,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -62,7 +63,7 @@ public class QuestionWizControl {
 	private Button Return_Btn;
 
 	@FXML
-	private Button LogIn_Btn;
+	private Button LogIn_Btn, Logout_Btn;
 
 	@FXML
 	private AnchorPane hardTab, easyTab, mediumTab;
@@ -72,12 +73,15 @@ public class QuestionWizControl {
 
 	@FXML
 	private Pane messagePane;
-	
+
 	@FXML
 	private Pane topPane, leftPane, rightPane, bottomPane;
 
 	@FXML
 	private VBox vBox, center_vBox;
+
+	@FXML
+	private HBox bottomMenu_HBox;
 
 	@FXML
 	private TableView<Question> qTable;
@@ -102,13 +106,13 @@ public class QuestionWizControl {
 
 	@FXML
 	private Button easy_button, med_button, hard_button;
-	
+
 	@FXML
 	private BorderPane q_BorderPane;
 
 	@FXML
 	private AnchorPane centerPane;
-	
+
 	private Stage popupStage;
 
 	List<Question> easy_questionList, med_questionList, hard_questionList;
@@ -135,22 +139,18 @@ public class QuestionWizControl {
 //		easy_questionList = questionData.getQuestionsByDifficulty(1);
 //		med_questionList = questionData.getQuestionsByDifficulty(2);
 //		hard_questionList = questionData.getQuestionsByDifficulty(3);
-	
-		
+
 		// disable admin options in initialize
-		if (!isAdmin)
+		if (!isAdmin) {
 			disableAdminControls(true);
-
+		}
 		else {
-			Button logout_Btn = LogIn_Btn;
-			logout_Btn.setText("Log out");
-
 			LogIn_Btn.setVisible(false);
-			logout_Btn.setVisible(true);
+			Logout_Btn.setVisible(true);
 
-			logout_Btn.setOnAction(event -> {
+			Logout_Btn.setOnAction(event -> {
 				setPopUpStage();
-				
+
 				// Load the FXML file for the pop-up
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Logout.fxml"));
 				Parent root = null;
@@ -159,7 +159,7 @@ public class QuestionWizControl {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				
+
 				// Set the scene and show the stage
 				Scene scene = new Scene(root);
 				popupStage.setScene(scene);
@@ -172,7 +172,7 @@ public class QuestionWizControl {
 		ObservableList<Question> easyData = FXCollections.observableArrayList(easy_questionList);
 		ObservableList<Question> medData = FXCollections.observableArrayList(med_questionList);
 		ObservableList<Question> hardData = FXCollections.observableArrayList(hard_questionList);
-		update_table();
+		// update_table();
 		easyFilteredData = new FilteredList<>(FXCollections.observableArrayList(easy_questionList), p -> true);
 		medFilteredData = new FilteredList<>(FXCollections.observableArrayList(med_questionList), p -> true);
 
@@ -188,7 +188,7 @@ public class QuestionWizControl {
 			updateFilter();
 			qTable.setItems(currentFilteredData);
 			q_col.setText("Easy Questions");
-
+			re_init(1);
 		});
 
 		med_button.setOnAction(event -> {
@@ -197,7 +197,7 @@ public class QuestionWizControl {
 			updateFilter();
 			qTable.setItems(currentFilteredData);
 			q_col.setText("Medium Questions");
-
+			re_init(2);
 		});
 
 		hard_button.setOnAction(event -> {
@@ -206,6 +206,7 @@ public class QuestionWizControl {
 			updateFilter();
 			qTable.setItems(currentFilteredData);
 			q_col.setText("Hard Questions");
+			re_init(3);
 		});
 
 		// Activate login button
@@ -277,7 +278,7 @@ public class QuestionWizControl {
 			// Pass controller so I can update the table when question added
 			controller.setPreviousWindow(this);
 			controller.setType("add");
-
+			
 			// Set the scene and show the stage
 			Scene scene = new Scene(root);
 			popupStage.setScene(scene);
@@ -344,8 +345,9 @@ public class QuestionWizControl {
 	}
 
 	public boolean isAdmin() {
-		if (isAdmin)
+		if (isAdmin) {
 			return true;
+		}
 		return false;
 	}
 
@@ -356,7 +358,8 @@ public class QuestionWizControl {
 
 		if (toDisable) {
 			messageLbl.setText("You must log in to edit questions");
-		} else {
+		}
+		else {
 			messageLbl.setText("Double click on question to edit");
 		}
 	}
@@ -446,7 +449,8 @@ public class QuestionWizControl {
 		// If a pop-up is already open, do nothing
 		if (popupStage != null && popupStage.isShowing()) {
 			return;
-		} else { // Create a new Stage for the pop-up
+		}
+		else { // Create a new Stage for the pop-up
 			popupStage = new Stage();
 			popupStage.setResizable(false);
 		}
@@ -468,12 +472,12 @@ public class QuestionWizControl {
 	private boolean delete_Q(Question q) {
 		return true;
 	}
-	
+
 	/*
-	private BorderPane adjsutScreen() {
-		
-	}
-	*/
+	 * private BorderPane adjsutScreen() {
+	 * 
+	 * }
+	 */
 
 //	 private QuestionsFromJson  readQuestionFromJson(String filePath) throws IOException {
 //	        ObjectMapper mapper = new ObjectMapper();
