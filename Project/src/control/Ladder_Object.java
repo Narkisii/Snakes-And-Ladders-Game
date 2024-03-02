@@ -39,36 +39,43 @@ public class Ladder_Object implements GameElement {
 		double angle = Math.toDegrees(Math.atan2(startY - endY, startX - endX));
 //		System.out.println(angle);
 		Rectangle rectangle = new Rectangle();
-		int temp = 40;
+//		int temp = 40;
+		int temp = random.nextInt(20)+20;
+
 		LinearGradient gradient = new LinearGradient(0, temp, temp, temp, false, CycleMethod.REPEAT,
 				new Stop(0.5, Color.TRANSPARENT), new Stop(0.5, color));
 //		Image image = new Image("/view/Images/Ladders/GreenLadder.png");
-
+		
 		rectangle.setStroke(color); // change this to the color you want
 		rectangle.setStrokeWidth(5); // change this to the color you want
 		rectangle.getStrokeDashArray().add(5.0);
 		int rect_width = 50;
 		if (angle == 90 || angle == -90) {
-			rectangle.setX(endX);
+			System.out.println("angle "+ angle +" "+color2);
+
+			rectangle.setX(endX-(rect_width/2));
 			rectangle.setY(endY);
 			rectangle.setWidth(rect_width);
 			rectangle.setHeight(distance); // set the height as you need
 			gradient = new LinearGradient(temp, 0, temp, temp, false, CycleMethod.REPEAT,
 					new Stop(0.5, Color.TRANSPARENT), new Stop(0.5, color));
-
+			
 		} else {
 			if (angle < 90) {
 //				System.out.println("angle<90");
-				rectangle.setX(endX - startTile.getWidth() / 2);
-				rectangle.setY((startY + endY) / 2);
+				System.out.println("angle "+ angle +" angle < 90 "+color2);
+				rectangle.setX(endX+(rect_width/2) - startTile.getWidth() / 2);
+				rectangle.setY(((startY + endY) / 2)-(rect_width/2));
 				rectangle.setWidth(distance);
 				rectangle.setHeight(rect_width); // set the height as you need
 				rectangle.setRotate(angle);
 
 			} else {
 //				System.out.println("angle>90");
-				rectangle.setX(startX - startTile.getWidth() / 2);
-				rectangle.setY((startY + endY) / 2);
+				System.out.println("angle "+ angle +" angle > 90 "+color2);
+
+				rectangle.setX(startX+(rect_width/2) - startTile.getWidth() / 2);
+				rectangle.setY(((startY + endY) / 2)-(rect_width/2));
 				rectangle.setWidth(distance);
 				rectangle.setHeight(rect_width); // set the height as you need
 				rectangle.setRotate(angle);
@@ -77,6 +84,8 @@ public class Ladder_Object implements GameElement {
 //	    ImagePattern radialGradient = new ImagePattern(image, temp, temp, distance, rect_width, false); 
 
 		rectangle.setFill(gradient);
+		double op = 0.5 + Math.random() * 0.4;
+		rectangle.setOpacity(op);
 		canvas.getChildren().add(rectangle);
 	}
 

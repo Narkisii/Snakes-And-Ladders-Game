@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import control.BoardControl;
@@ -70,17 +72,19 @@ public class cpu_Player extends Player {
 	    else if(difficulty.equals("Hard")) {
 	        // 75% chance to select the correct answer
 	        if(rand.nextInt(4) != 0) {
-	            r = getCorr_answer;
+	            r =  getCorr_answer;
 	        } else {
 	            do {
-	                r = rand.nextInt(4)-1;
+	                r = rand.nextInt(4);
 	            } while (r == getCorr_answer);
 	        }
 	    } else {
 	        throw new IllegalArgumentException("Invalid difficulty level");
 	    }
+	    
+//        r = rand.nextInt(100) < 99 ? getCorr_answer : rand.nextInt(4);
 
-	    RadioButton selectedAnswer = answers.get(r);
+	    RadioButton selectedAnswer = answers.get(r-1);
 	    selectedAnswer.setSelected(true);
 	}
 

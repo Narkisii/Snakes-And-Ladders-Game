@@ -193,12 +193,12 @@ public class BoardControl implements GameEventSubject {
 //		}
 		// STOP THEME SONG
 		MenuScreenControl.stopThemeSong();
-		themeSong();
+//		themeSong();
 		/**********************/
 		players_VBox_Container_list = new ArrayList<VBox>();// VBoxes of the player tokens
 //		tile_Map = new HashMap<>();
 		canvas = new Pane();// Snake and ladders are drawn here separately
-		canvas.opacityProperty().set(0.7);
+//		canvas.opacityProperty().set(0.85);
 		counter = new SimpleIntegerProperty(set_turn_time);
 		/**********************/
 
@@ -319,12 +319,14 @@ public class BoardControl implements GameEventSubject {
 				label.getStyleClass().add("tile_Font");
 				label.prefWidthProperty().bind(grid.widthProperty().divide(numTiles));
 				label.prefHeightProperty().bind(grid.heightProperty().divide(numTiles));
-				label.setAlignment(Pos.CENTER);
+//				label.setAlignment(Pos.CENTER);
 				label.minHeight(0);
 				label.minWidth(0);
+				label.setAlignment(Pos.TOP_LEFT);
 
 				// Create a new StackPane to hold the square and the label
 				Pane stackPane = new StackPane();
+				stackPane.setPadding(new Insets(10,10,10,10));
 				stackPane.getChildren().addAll(tile, label);
 				GridPane.setRowIndex(stackPane, numTiles - 1 - i);
 				GridPane.setColumnIndex(stackPane, column);
@@ -384,13 +386,6 @@ public class BoardControl implements GameEventSubject {
 		}
 
 		if (tile.getType() == 0) {
-//			GameData.getInstance().next_turn();
-//			turn_Lable.setTextFill(Color.web(GameData.getInstance().getplayer_list()
-//					.get(GameData.getInstance().getPlayerTurn()).getColor()));
-//			turn_Lable.setText(GameData.getInstance().getplayer_list()
-//					.get(GameData.getInstance().getPlayerTurn()).getName() + "'s turn");
-//			Image token = new Image(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getToken());
-//			pTurn_image.setImage(token);
 			next_Turn();
 		}
 	}
@@ -570,6 +565,7 @@ public class BoardControl implements GameEventSubject {
 //			System.out.println("null on one of tiles???");
 			return;
 		}
+		
 		// Grab the exact point of the tiles local to the grid, basically grabs the
 		// exact point from the board
 		Point2D tileStart = startTile.localToScene(startTile.getWidth() / 2, startTile.getHeight() / 2);
@@ -586,7 +582,6 @@ public class BoardControl implements GameEventSubject {
 			double startY = tileEnd.getY();
 			double endX = tileStart.getX();
 			double endY = tileStart.getY();
-
 			GameElement snake = factory.getGameElement("SNAKE");
 			snake.set_Color(((Snake) element).getColor());
 
@@ -594,6 +589,7 @@ public class BoardControl implements GameEventSubject {
 
 		} else if (element instanceof Ladder) { // Add the ladder to the game
 			// Get the start x and y of the tile, get the end tile x and y
+			System.out.println("tileStart " + start + "tileEnd " + end);
 			double startX = tileStart.getX();
 			double startY = tileStart.getY();
 			double endX = tileEnd.getX();
@@ -741,10 +737,10 @@ public class BoardControl implements GameEventSubject {
 						this.stop();
 						if (dice == 7 || dice == 8 || dice == 9) {
 							
-//							Question q = GameData.getInstance().get_Question(dice);
-//							showQuestion(q, player);
+							Question q = GameData.getInstance().get_Question(dice);
+							showQuestion(q, player);
 							
-							move_Player(dice, player);
+//							move_Player(dice, player);
 
 						} else {
 //							GameData.getInstance().getBoard().move(dice, player);
@@ -780,7 +776,7 @@ public class BoardControl implements GameEventSubject {
 		// TODO Auto-generated method stub
 		if (gameEnd == 1) {
 //			stopTimer();
-			stopThemeSong();
+//			stopThemeSong();
 			rollButton.setDisable(true);
 			timeline.stop();
 			timer.stop();
@@ -833,7 +829,7 @@ public class BoardControl implements GameEventSubject {
 		popupStage.setAlwaysOnTop(true); // Set always on top
 		popupStage.setResizable(false);
 		popupStage.getStyle();
-//		popupStage.initStyle(StageStyle.UNDECORATED);
+		popupStage.initStyle(StageStyle.UNDECORATED);
 		// Load the FXML file for the pop-up
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/GameQuestion.fxml"));
 		Parent root = null;
@@ -860,7 +856,7 @@ public class BoardControl implements GameEventSubject {
 	private void clear_all() {
 		// "/view/MenuScreenView.fxml"
 		try {
-			stopThemeSong();
+//			stopThemeSong();
 			GameData.getInstance().reset();
 			Stage stage = (Stage) return_btn.getScene().getWindow();
 			mainPain.getChildren().clear();
@@ -890,33 +886,33 @@ public class BoardControl implements GameEventSubject {
 	}
 	
 	
-	private void themeSong() {
-	    try {
-			flagSong=1;
-
-	        // Adjust the path to where your sound file is located
-	        URL soundFile = this.getClass().getResource("/sounds/BOARD_JUNGLE_SONG.wav");
-	        AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
-	        boardSongClip = AudioSystem.getClip();
-	        boardSongClip.open(audioIn);
-
-	        // Check if the Clip supports volume control
-	        if (boardSongClip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-	            FloatControl gainControl = (FloatControl) boardSongClip.getControl(FloatControl.Type.MASTER_GAIN);
-	            float dB = (float) (Math.log(0.15) / Math.log(10.0) * 20.0);
-	            gainControl.setValue(dB); // Reduce volume by a calculated dB value
-	        }
-	        boardSongClip.loop(Clip.LOOP_CONTINUOUSLY); // loop the sound
-
-//	        boardSongClip.start();
-	    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-	        e.printStackTrace();
-	    }
-	}
-	public void stopThemeSong() {
-	    if (boardSongClip != null) {
-	    	boardSongClip.stop(); // Stop the clip
-	    	boardSongClip.close(); // Close the clip to release resources
-	    }
-	}
+//	private void themeSong() {
+//	    try {
+//			flagSong=1;
+//
+//	        // Adjust the path to where your sound file is located
+//	        URL soundFile = this.getClass().getResource("/sounds/BOARD_JUNGLE_SONG.wav");
+//	        AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+//	        boardSongClip = AudioSystem.getClip();
+//	        boardSongClip.open(audioIn);
+//
+//	        // Check if the Clip supports volume control
+//	        if (boardSongClip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+//	            FloatControl gainControl = (FloatControl) boardSongClip.getControl(FloatControl.Type.MASTER_GAIN);
+//	            float dB = (float) (Math.log(0.05) / Math.log(10.0) * 20.0);
+//	            gainControl.setValue(dB); // Reduce volume by a calculated dB value
+//	        }
+//	        boardSongClip.loop(Clip.LOOP_CONTINUOUSLY); // loop the sound
+//
+////	        boardSongClip.start();
+//	    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+//	        e.printStackTrace();
+//	    }
+//	}
+//	public void stopThemeSong() {
+//	    if (boardSongClip != null) {
+//	    	boardSongClip.stop(); // Stop the clip
+//	    	boardSongClip.close(); // Close the clip to release resources
+//	    }
+//	}
 }

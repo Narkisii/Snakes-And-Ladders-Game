@@ -7,21 +7,28 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.CubicCurve;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.StrokeLineJoin;
+import javafx.scene.shape.StrokeType;
 
 public class Snake_Object implements GameElement {
 
 	Color color;
-	
-    private Pane canvas;
 
-    public Snake_Object(Pane canvas) {
-        this.canvas = canvas;
-    }
-    
-    public void set_Color(Color color) {
-        this.color = color;
-    }
+	private Pane canvas;
+
+	public Snake_Object(Pane canvas) {
+		this.canvas = canvas;
+	}
+
+	public void set_Color(Color color) {
+		this.color = color;
+	}
 
 	@Override
 	public void add(double startX, double startY, double endX, double endY, double distance) {
@@ -51,31 +58,54 @@ public class Snake_Object implements GameElement {
 
 		cubic.setEndX(endX);
 		cubic.setEndY(endY);
-		Image image = new Image("view/Images/Snakes/SnakeHead.png");
+		int rand_Head = rand.nextInt(4) + 1;
+		System.out.println("/view/Images/Snakes/" + color + "/" + rand_Head + ".png");
+		Image image = new Image("/view/Images/Snakes/" + color + "/" + rand_Head + ".png");
 		ImageView imageView = new ImageView(image);
 		imageView.setFitWidth(50);
 		imageView.setFitHeight(50);
 		imageView.setPreserveRatio(true);
-//		double angle2 = Math.toDegrees(Math.atan2(startY - (startY-(distance/4))-Math.tan(angle), startX - (startX+Math.cos(angle)*200)));
-
+		Polygon triangle = new Polygon();
+		triangle.getPoints().addAll(new Double[] { startX + 10, startY - 10, // Point 1
+				startX + 70, startY + 5, // Point 2
+				startX + 10, startY + 10 // Point 3
+		});
+		triangle.setFill(color);
+		Circle c = new Circle(startX + 10, startY, 10, color);
 		imageView.setX(endX - imageView.getFitWidth() / 2);
 		imageView.setY(endY - imageView.getFitHeight() / 2);
-		Colors[] colors = Colors.values();
-		Colors randomColor = colors[rand.nextInt(colors.length)];
-		String transparentColor = randomColor.name(); // 50% transparent
-//		System.out.println("Start:" + start + "End: " + end + "Color: " + transparentColor);
-
+//		int temp = rand.nextInt(20)+20;
+//		LinearGradient gradient = new LinearGradient(0, temp, temp, temp, false, CycleMethod.REPEAT, new Stop(0.45, color),
+//				new Stop(0.40, color.brighter()), new Stop(0.45, color.darker()));
+//
+//		cubic.setStroke(gradient);
 		cubic.setStroke(color);
+
 		cubic.setStrokeWidth(20);
 		cubic.setFill(Color.TRANSPARENT);
+//		cubic.getStrokeDashArray().addAll(20.0);
+//		cubic.setStrokeDashOffset(10);
+//		double dash_length = 15.0d;
+//		double gap_length = 50 * 0.2d; // 8 pixels gap
+//
+//		cubic.getStrokeDashArray().addAll(dash_length, gap_length);
+//		cubic.setStrokeDashOffset(0);
 
-		canvas.getChildren().addAll(cubic, imageView);
+//		cubic.setStrokeType(StrokeType.CENTERED);
+//		cubic.setStrokeLineJoin(StrokeLineJoin.ROUND);
+		double op = 0.5 + Math.random() * 0.4;
+		cubic.setOpacity(op);
+		imageView.setOpacity(op+0.5);
+		c.setOpacity(op-0.1);
+		triangle.setOpacity(op);
+		canvas.getChildren().addAll(cubic, imageView, c, triangle);
+//		canvas.getChildren().addAll(cubic, imageView);
+
 	}
 
 	@Override
 	public void set_Tile(Pane tile) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
-
