@@ -90,7 +90,7 @@ import javafx.util.Duration;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class BoardControl implements GameEventSubject{
+public class BoardControl implements GameEventSubject {
 
 	private Stage popupStage;
 
@@ -139,34 +139,36 @@ public class BoardControl implements GameEventSubject{
 	private Timeline timer;
 
 	private GridPane grid; // The grid that will contain the tiles
-	int set_turn_time;
 
 	private Group group;
 
-	private ArrayList<VBox> vboxlist;
+	private ArrayList<VBox> players_VBox_Container_list;
 
 	private int gameEnd_var;
-	
-	private List<GameEventObserver> observers = new ArrayList<>(); //observer list
-	
-	//OBSERVER METHODS
-		@Override
-	    public void attach(GameEventObserver observer) {
-	        observers.add(observer);
-	    }
 
-	    @Override
-	    public void detach(GameEventObserver observer) {
-	        observers.remove(observer);
-	    }
+	private List<GameEventObserver> observers = new ArrayList<>(); // observer list
 
-	    @Override
-	    public void notifyObservers(GameEvent event) {
-	        for (GameEventObserver observer : observers) {
-	            observer.onEventTriggered(event);
-	        }}
-	    //END
+	// Set Count down of each turn
+	int set_turn_time = 45;
 
+	// OBSERVER METHODS
+	@Override
+	public void attach(GameEventObserver observer) {
+		observers.add(observer);
+	}
+
+	@Override
+	public void detach(GameEventObserver observer) {
+		observers.remove(observer);
+	}
+
+	@Override
+	public void notifyObservers(GameEvent event) {
+		for (GameEventObserver observer : observers) {
+			observer.onEventTriggered(event);
+		}
+	}
+	// END
 
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 	void initialize() {
@@ -177,19 +179,22 @@ public class BoardControl implements GameEventSubject{
 //		for (Player player : GameData.getInstance().getplayer_list()) {
 //			System.out.println(player.toString());
 //		}
-		//STOP THEME SONG
+		// STOP THEME SONG
 		MenuScreenControl.stopThemeSong();
-		
-		vboxlist = new ArrayList<VBox>();// VBoxes of the player tokens
-		set_turn_time = 5;
+		/**********************/
+		players_VBox_Container_list = new ArrayList<VBox>();// VBoxes of the player tokens
 //		tile_Map = new HashMap<>();
 		canvas = new Pane();// Snake and ladders are drawn here separately
 		canvas.opacityProperty().set(0.7);
 		counter = new SimpleIntegerProperty(set_turn_time);
+		/**********************/
+
 		createCountDown();
 		startCountDown();
 		createTimer();
-		grid = (GridPane) mainPain.lookup("#grid");
+		/**********************/
+
+//		grid = (GridPane) mainPain.lookup("#grid");
 
 		// Add a listener to the width and height properties of the scene
 		mainPain.widthProperty().addListener((observable, oldValue, newValue) -> {
@@ -241,14 +246,12 @@ public class BoardControl implements GameEventSubject{
 		board = GameData.getInstance().getBoard();
 		board.generate_board_Objects();
 //		add_SpecialTiles();
-		
-		//attaching observer
-				SoundManager soundManager = new SoundManager();
-				board.attach(soundManager);
 
-			}
+		// attaching observer
+		SoundManager soundManager = new SoundManager();
+		board.attach(soundManager);
 
-	
+	}
 
 	// Create the gridpane of the board with the initialized tiles and thiers id
 	private GridPane createBoard(int numTiles) {
@@ -378,15 +381,14 @@ public class BoardControl implements GameEventSubject{
 
 	// move player
 	public void move_Player(int dice, Player p) {
-		
-		board.notifyObservers(GameEvent.PLAYER_HIT_LADDER);//check observer
-		
+
+//		board.notifyObservers(GameEvent.PLAYER_HIT_LADDER);//check observer
+
 		if (dice != 0 && dice != -5) {
 //			System.out.println(dice);
 			GameData.getInstance().getBoard().move(dice, p);
-
 		}
-		System.out.println("Boarcontrol move_Player " + p.toString());
+//		System.out.println("Boarcontrol move_Player " + p.toString());
 //		System.out.println(p.getPlacment_history());
 
 		checkwin(GameData.getInstance().getBoard().getGameEnd());
@@ -403,10 +405,10 @@ public class BoardControl implements GameEventSubject{
 		}
 		Pane curr_Tile = (Pane) grid.lookup("#" + p.getCurrentP());
 		Pane prev_tile = (Pane) grid.lookup("#" + p.getPreviousStep());
-		VBox playerbox = vboxlist.get(p.getID() - 1);
+		VBox playerbox = players_VBox_Container_list.get(p.getID() - 1);
 		if (dice != 0) {
 			animate(playerbox, prev_tile, curr_Tile, p);
-		}else {
+		} else {
 			next_Turn();
 		}
 	}
@@ -436,9 +438,11 @@ public class BoardControl implements GameEventSubject{
 
 	private void checkCPU() {
 		// TODO Auto-generated method stub
-		System.out.println("checkCPU" + GameData.getInstance().getplayer_list()
-				.get(GameData.getInstance().getPlayerTurn()).getClass().getName() + "Name: " + GameData.getInstance().getplayer_list()
-				.get(GameData.getInstance().getPlayerTurn()).getName());
+		System.out.println("checkCPU"
+				+ GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getClass()
+						.getName()
+				+ "Name: "
+				+ GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getName());
 		if (GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getClass().getName()
 				.equals("model.cpu_Player")) {
 			cpu_Player cpu_p = (cpu_Player) GameData.getInstance().getplayer_list()
@@ -448,12 +452,14 @@ public class BoardControl implements GameEventSubject{
 //			invoker.addCommand(new DelayCommand(2));
 			invoker.addCommand(new RollDiceCommand((cpu_Player) cpu_p));
 			invoker.executeCommands();
-		}else {
+		} else {
 			rollButton.setDisable(false);
 		}
 	}
 
 	private void animate(VBox playerbox, Pane start, Pane end, Player p) {
+		board.notifyObservers(GameEvent.PLAYER_HIT_LADDER);// check observer
+
 		if (gameEnd_var != 1)
 //			startCountDown();
 
@@ -515,7 +521,7 @@ public class BoardControl implements GameEventSubject{
 			} else {
 				playerbox.getChildren().addAll(playerName, img);
 			}
-			vboxlist.add(playerbox);
+			players_VBox_Container_list.add(playerbox);
 			new_pos_pane.getChildren().addAll(playerbox);
 			if (p instanceof model.cpu_Player) {
 				((cpu_Player) p).set_board_controll(this);
@@ -610,7 +616,7 @@ public class BoardControl implements GameEventSubject{
 				}
 				add_SpecialTiles();
 
-				for (VBox playerbox : vboxlist) {
+				for (VBox playerbox : players_VBox_Container_list) {
 					Pane new_pos_pane = (Pane) grid.lookup("#" + playerbox.getId());
 					playerbox.prefHeightProperty().bind(new_pos_pane.heightProperty().multiply(0.8));
 					playerbox.prefWidthProperty().bind(new_pos_pane.widthProperty().multiply(0.8));
@@ -626,7 +632,7 @@ public class BoardControl implements GameEventSubject{
 		// Create a timeline for the countdown
 		timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
 			counter.set(counter.get() - 1);
-			if (counter.get() == 0) {// לדלג על השחקן
+			if (counter.get() == 0) {// Skip player
 //				roll(board.get_Dice_Result(),
 //						GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()));
 				rollButton.setDisable(true);
@@ -763,7 +769,7 @@ public class BoardControl implements GameEventSubject{
 			popupStage.setAlwaysOnTop(true); // Set always on top
 			popupStage.setResizable(false);
 			popupStage.getStyle();
-			
+
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/WinScreen_view.fxml"));
 			Parent root = null;
 			try {
@@ -821,7 +827,7 @@ public class BoardControl implements GameEventSubject{
 			e.printStackTrace();
 		}
 
-		questionPopControl questionPopControl = loader.getController();
+		QuestionPopControl questionPopControl = loader.getController();
 		// Set the scene and show the stage
 		questionPopControl.set_question(q);
 		questionPopControl.prev_window(this);

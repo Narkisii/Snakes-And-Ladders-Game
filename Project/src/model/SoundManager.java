@@ -23,9 +23,9 @@ public class SoundManager implements GameEventObserver {
             case PLAYER_WINS:
                 playWinSound();
                 break;
-            case PLAYER_ANSWERS_QUESTION:
-                playQuestionSound();
-                break;
+//            case PLAYER_ANSWERS_QUESTION:
+//                playQuestionSound();
+//                break;
             case CORRECT_ANSWER:
                 playCorrectAnswerSound();
                 break;
@@ -50,7 +50,7 @@ public class SoundManager implements GameEventObserver {
 
     private void playLadderSound() {
     	  try {
-    			System.out.println("sound1");
+//    			System.out.println("sound1");
 
     	        // Adjust the path to where your sound file is located
     	        URL soundFile = this.getClass().getResource("/sounds/UpTheLadder.wav");

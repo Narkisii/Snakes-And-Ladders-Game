@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class questionPopControl {
+public class QuestionPopControl {
 	@FXML
 	private Label QuestionTitle;
 
@@ -65,12 +65,8 @@ public class questionPopControl {
 	@FXML
 	private Label p_name_label;
 
-	/****************************************************************/
-	// Here goes the timer @Itay
 	@FXML
 	private Label qTimer_label;
-	// Here goes the timer @Itay
-	/****************************************************************/
 
 	private Question question;
 
@@ -173,7 +169,7 @@ public class questionPopControl {
 		if (question.getDifficulty() == 3) {
 			steps = -3;
 		}
-
+		//Times up - closes the window and takes the player back according to difficulty
 		if (selectedAnswer.equals("Time up!")) {
 			check_Answer_label.setText("Time up!");
 			check_Answer_label.setStyle("-fx-background-color: yellow;"); // Set background to yellow

@@ -100,12 +100,14 @@ public class Board implements GameEventSubject {
 		int speical = tile.getType();
 		int steps = 0;
 		int answer;
+		//Here the player can hit a snake
 		if (snake != null) {
 			steps = snake.getEnd() - player.getCurrentP();
 			player.setCurrentP(snake.getEnd());
 			GameData.getInstance().getPlayer(player).addStep(snake.getEnd());
 		}
-
+		
+		//Here the player can hit a ladded
 		if (ladder != null) {
 			steps = ladder.getEnd() - player.getCurrentP();
 			player.setCurrentP(ladder.getEnd());
@@ -117,18 +119,18 @@ public class Board implements GameEventSubject {
 //		}
 		if (speical != 0) {
 			switch (speical) {
-			case (10):
+			case (10)://Suprise add 10 steps ENUM GOOD_SURPRISE
 				player.setCurrentP(speical);
 				GameData.getInstance().getPlayer(player).addStep(speical);
 
 				break;
 
-			case (-10):
+			case (-10)://Suprise subtract 10 steps ENUM BAD_URPRISE
 				player.setCurrentP(speical);
 				GameData.getInstance().getPlayer(player).addStep(speical);
 
 				break;
-			case (1):
+			case (1)://Red snake -> go to the first tile
 				player.setCurrentP(speical);
 				GameData.getInstance().getPlayer(player).addStep(speical);
 				break;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import control.BoardControl;
-import control.questionPopControl;
+import control.QuestionPopControl;
 import javafx.animation.PauseTransition;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
@@ -19,7 +19,7 @@ public class cpu_Player extends Player {
 	int diceResult;
 	Board board;
 	String difficulty;
-	private questionPopControl question_Controll;
+	private QuestionPopControl question_Controll;
 	private BoardControl board_Controll;
 	public cpu_Player(int ID, String color, String name, String token) {
 		super(ID, color, name, token);
@@ -34,7 +34,7 @@ public class cpu_Player extends Player {
 		board_Controll.roll(diceResult, this);
 	}
 
-	public void set_question_controll(questionPopControl questionPopControl) {
+	public void set_question_controll(QuestionPopControl questionPopControl) {
 		question_Controll = questionPopControl;
 //		question_Controll.getAnswerFour().setSelected(false);
 	}
