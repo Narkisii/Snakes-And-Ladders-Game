@@ -128,6 +128,7 @@ public class QuestionPopControl implements GameEventSubject {
 		answerThree.setToggleGroup(toggleGroup);
 		answerFour.setToggleGroup(toggleGroup);
 		checkAnswerButton.setDisable(true);
+
 		// Set listener to the radio buttons, to allow to check answer only if something
 		// is chosen
 		toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
@@ -183,7 +184,6 @@ public class QuestionPopControl implements GameEventSubject {
 
 		// Start the timeline
 		countdown.play();
-
 	}
 
 	private void check_Answer(String selectedAnswer) {

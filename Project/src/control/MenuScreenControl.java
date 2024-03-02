@@ -103,6 +103,7 @@ public class MenuScreenControl {
 	        AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
 	        splashScreenClip = AudioSystem.getClip();
 	        splashScreenClip.open(audioIn);
+	        splashScreenClip.loop(Clip.LOOP_CONTINUOUSLY); // loop the sound
 	        splashScreenClip.start();
 	    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 	        e.printStackTrace();
@@ -125,6 +126,7 @@ public class MenuScreenControl {
 	            float dB = (float) (Math.log(0.15) / Math.log(10.0) * 20.0);
 	            gainControl.setValue(dB); // Reduce volume by a calculated dB value
 	        }
+	        themeSongClip.loop(Clip.LOOP_CONTINUOUSLY); // loop the sound
 
 	        themeSongClip.start();
 	    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {

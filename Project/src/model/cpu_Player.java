@@ -73,7 +73,7 @@ public class cpu_Player extends Player {
 	            r = getCorr_answer;
 	        } else {
 	            do {
-	                r = rand.nextInt(4);
+	                r = rand.nextInt(4)-1;
 	            } while (r == getCorr_answer);
 	        }
 	    } else {

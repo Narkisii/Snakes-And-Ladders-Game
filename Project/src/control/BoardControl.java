@@ -10,6 +10,7 @@ import model.cpu_Player;
 import java.awt.BasicStroke;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +20,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import Intrefaces.GameEventObserver;
 import Intrefaces.GameEventSubject;
@@ -151,6 +159,10 @@ public class BoardControl implements GameEventSubject {
 	// Set Count down of each turn
 	int set_turn_time = 45;
 
+	private int flagSong = 0;
+
+	private Clip boardSongClip;
+
 	// OBSERVER METHODS
 	@Override
 	public void attach(GameEventObserver observer) {
@@ -181,6 +193,7 @@ public class BoardControl implements GameEventSubject {
 //		}
 		// STOP THEME SONG
 		MenuScreenControl.stopThemeSong();
+		themeSong();
 		/**********************/
 		players_VBox_Container_list = new ArrayList<VBox>();// VBoxes of the player tokens
 //		tile_Map = new HashMap<>();
@@ -366,6 +379,10 @@ public class BoardControl implements GameEventSubject {
 				showQuestion(board.getTile(tile_num).getQuestion(), p);
 			}
 		}
+		if(checkwin(GameData.getInstance().getBoard().getGameEnd())) {
+			return;
+		}
+
 		if (tile.getType() == 0) {
 //			GameData.getInstance().next_turn();
 //			turn_Lable.setTextFill(Color.web(GameData.getInstance().getplayer_list()
@@ -375,7 +392,6 @@ public class BoardControl implements GameEventSubject {
 //			Image token = new Image(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getToken());
 //			pTurn_image.setImage(token);
 			next_Turn();
-
 		}
 	}
 
@@ -391,7 +407,10 @@ public class BoardControl implements GameEventSubject {
 //		System.out.println("Boarcontrol move_Player " + p.toString());
 //		System.out.println(p.getPlacment_history());
 
-		checkwin(GameData.getInstance().getBoard().getGameEnd());
+//		if(checkwin(GameData.getInstance().getBoard().getGameEnd())) {
+//			return;
+//		}
+//		checkwin(GameData.getInstance().getBoard().getGameEnd());
 		if (p.getCurrentP() == p.getPreviousStep()) {
 //			GameData.getInstance().next_turn();
 //			turn_Lable.setTextFill(Color.web(GameData.getInstance().getplayer_list()
@@ -414,6 +433,7 @@ public class BoardControl implements GameEventSubject {
 	}
 
 	private void next_Turn() {
+		
 		PauseTransition pause = new PauseTransition(Duration.seconds(2));
 		pause.setOnFinished(event -> {
 			GameData.getInstance().next_turn();
@@ -427,10 +447,13 @@ public class BoardControl implements GameEventSubject {
 			pTurn_image.setImage(token);
 			PauseTransition pauseForCPUCheck = new PauseTransition(Duration.millis(500));
 			pauseForCPUCheck.setOnFinished(eventForCPUCheck -> {
+				
 				checkCPU(); // Call the checkCPU function here
 			});
 			pauseForCPUCheck.play();
 			startCountDown();
+			board.notifyObservers(GameEvent.PLAYER_TURN);//check observer
+
 		});
 		pause.play();
 
@@ -447,11 +470,12 @@ public class BoardControl implements GameEventSubject {
 				.equals("model.cpu_Player")) {
 			cpu_Player cpu_p = (cpu_Player) GameData.getInstance().getplayer_list()
 					.get(GameData.getInstance().getPlayerTurn());
-
-			CommandInvoker invoker = new CommandInvoker();
-//			invoker.addCommand(new DelayCommand(2));
-			invoker.addCommand(new RollDiceCommand((cpu_Player) cpu_p));
-			invoker.executeCommands();
+			if(GameData.getInstance().getBoard().getGameEnd() != 1) {
+				CommandInvoker invoker = new CommandInvoker();
+//				invoker.addCommand(new DelayCommand(2));
+				invoker.addCommand(new RollDiceCommand((cpu_Player) cpu_p));
+				invoker.executeCommands();
+			}
 		} else {
 			rollButton.setDisable(false);
 		}
@@ -636,7 +660,7 @@ public class BoardControl implements GameEventSubject {
 //				roll(board.get_Dice_Result(),
 //						GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()));
 				rollButton.setDisable(true);
-				board.notifyObservers(GameEvent.PLAYER_MISSES_TURN);// obserevr for missed turn
+//				board.notifyObservers(GameEvent.PLAYER_MISSES_TURN);// obserevr for missed turn
 				turn_Lable.setText("Missed your turn!!");
 				turn_Lable.setTextFill(Color.RED);
 				next_Turn();
@@ -691,7 +715,7 @@ public class BoardControl implements GameEventSubject {
 	}
 
 	public void roll(int dice, Player player) {
-	//	board.notifyObservers(GameEvent.DICE_ROLL);// obserevr for roll dice
+		board.notifyObservers(GameEvent.DICE_ROLL);// obserevr for roll dice
 		rollButton.setDisable(true);
 		final long[] frameCounter = { 0 };
 		final Random random = new Random();
@@ -716,22 +740,16 @@ public class BoardControl implements GameEventSubject {
 //						rollButton.setDisable(false);
 						this.stop();
 						if (dice == 7 || dice == 8 || dice == 9) {
-							Question q = GameData.getInstance().get_Question(dice);
-							showQuestion(q, player);
+							
+//							Question q = GameData.getInstance().get_Question(dice);
+//							showQuestion(q, player);
+							
+							move_Player(dice, player);
 
 						} else {
 //							GameData.getInstance().getBoard().move(dice, player);
 							move_Player(dice, player);
 						}
-//						GameData.getInstance().getBoard().move(48, player);
-//						move_Player(48, player);
-//						GameData.getInstance().next_turn();
-//						turn_Lable.setTextFill(Color.web(GameData.getInstance().getplayer_list()
-//								.get(GameData.getInstance().getPlayerTurn()).getColor()));
-//						turn_Lable.setText(GameData.getInstance().getplayer_list()
-//								.get(GameData.getInstance().getPlayerTurn()).getName() + "'s turn");
-//						Image token = new Image(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getToken());
-//						pTurn_image.setImage(token);
 
 					}
 				}
@@ -757,11 +775,12 @@ public class BoardControl implements GameEventSubject {
 //		}
 //	}
 
-	private void checkwin(int gameEnd) {
+	private boolean checkwin(int gameEnd) {
 		gameEnd_var = gameEnd;
 		// TODO Auto-generated method stub
 		if (gameEnd == 1) {
 //			stopTimer();
+			stopThemeSong();
 			rollButton.setDisable(true);
 			timeline.stop();
 			timer.stop();
@@ -793,19 +812,14 @@ public class BoardControl implements GameEventSubject {
 			// Set the scene and show the stage
 			popupStage.setScene(scene);
 			popupStage.show();
+			return true;
 		}
+		return false;
 	}
-
-//	void gameloop() {
-//
-//	}
-//
-//	void enable_action(int x, int y) {
-//
-//	}
 
 	private void showQuestion(Question q, Player p) {
 		timer.stop();
+		board.notifyObservers(GameEvent.QUESTION_POP);// obserevr for QUESTION_POP
 
 //		Question q = board.getTile(tile_num).getQuestion();
 		if (q == null) {
@@ -846,12 +860,13 @@ public class BoardControl implements GameEventSubject {
 	private void clear_all() {
 		// "/view/MenuScreenView.fxml"
 		try {
+			stopThemeSong();
 			GameData.getInstance().reset();
 			Stage stage = (Stage) return_btn.getScene().getWindow();
 			mainPain.getChildren().clear();
 			grid.getChildren().clear();
 			timer.stop();
-
+			
 			double width = stage.getScene().getWidth();
 			double height = stage.getScene().getHeight();
 			System.out.print(GameData.getInstance().toString());
@@ -872,5 +887,36 @@ public class BoardControl implements GameEventSubject {
 
 	public BoardControl getControlBoardControl() {
 		return this;
+	}
+	
+	
+	private void themeSong() {
+	    try {
+			flagSong=1;
+
+	        // Adjust the path to where your sound file is located
+	        URL soundFile = this.getClass().getResource("/sounds/BOARD_JUNGLE_SONG.wav");
+	        AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+	        boardSongClip = AudioSystem.getClip();
+	        boardSongClip.open(audioIn);
+
+	        // Check if the Clip supports volume control
+	        if (boardSongClip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+	            FloatControl gainControl = (FloatControl) boardSongClip.getControl(FloatControl.Type.MASTER_GAIN);
+	            float dB = (float) (Math.log(0.15) / Math.log(10.0) * 20.0);
+	            gainControl.setValue(dB); // Reduce volume by a calculated dB value
+	        }
+	        boardSongClip.loop(Clip.LOOP_CONTINUOUSLY); // loop the sound
+
+//	        boardSongClip.start();
+	    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+	        e.printStackTrace();
+	    }
+	}
+	public void stopThemeSong() {
+	    if (boardSongClip != null) {
+	    	boardSongClip.stop(); // Stop the clip
+	    	boardSongClip.close(); // Close the clip to release resources
+	    }
 	}
 }
