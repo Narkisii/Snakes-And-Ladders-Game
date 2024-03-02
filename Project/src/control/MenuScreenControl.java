@@ -1,6 +1,13 @@
 package control;
 
 import java.io.IOException;
+import java.net.URL;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
@@ -35,6 +42,9 @@ public class MenuScreenControl {
 	@FXML
 	
 	private static boolean first_start = true;
+	
+	private Clip splashScreenClip;
+	
 	public void initialize() {
 		splash_Screen();
 	}
@@ -75,10 +85,34 @@ public class MenuScreenControl {
 		}
 	}
 	
+	private void spalshScreenSound() {
+	    try {
+	        System.out.println("sound1");
+
+	        // Adjust the path to where your sound file is located
+	        URL soundFile = this.getClass().getResource("/sounds/splashSound.wav");
+	        AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+	        splashScreenClip = AudioSystem.getClip();
+	        splashScreenClip.open(audioIn);
+	        splashScreenClip.start();
+	    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	private void stopSplashScreenSound() {
+	    if (splashScreenClip != null) {
+	        splashScreenClip.stop(); // Stop the clip
+	        splashScreenClip.close(); // Close the clip to release resources
+	    }
+	}
+	
 	private void splash_Screen() {
 		if(first_start) {
+			spalshScreenSound();
         Image image = new Image("/view/Images/BackGround/Scorpion_SplashScreen.png");
         ImageView imageView = new ImageView(image);
+        
         
         // Create a StackPane to hold the image
         root = new AnchorPane();
@@ -105,10 +139,22 @@ public class MenuScreenControl {
 
         pt.setOnFinished(event -> ft.play());
 
+        /*
         // After the fade out is finished, load your menu
         ft.setOnFinished(event -> init());
         
-        root.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ft.play());
+        root.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ft.play());*/
+        
+        // Stop the sound and then load your menu after the fade out is finished
+        ft.setOnFinished(event -> {
+            stopSplashScreenSound();
+            init();
+        });
+        
+        root.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            stopSplashScreenSound(); // Ensure sound is stopped when splash screen is clicked
+            ft.play();
+        });
         first_start = false;
 		}else {
 			init();

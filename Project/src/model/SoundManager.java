@@ -57,9 +57,7 @@ public class SoundManager implements GameEventObserver {
     	        AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
     	        Clip clip = AudioSystem.getClip();
     	        clip.open(audioIn);
-    	    	System.out.println("sound2");
     	        clip.start();
-    	    	System.out.println("sound3");
     	    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
     	        e.printStackTrace();
     	    }    }
