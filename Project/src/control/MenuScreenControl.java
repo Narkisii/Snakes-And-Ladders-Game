@@ -51,6 +51,7 @@ public class MenuScreenControl {
 	private int flagSong=0;
 
 	public void initialize() {
+		
 		splash_Screen();
 	}
 
@@ -58,8 +59,8 @@ public class MenuScreenControl {
 	private void init() {		
        // System.getProperty("user.dir");
 		if(flagSong==0) {
+			stopThemeSong();
 			themeSong();
-			flagSong=1;
 		}
 		
 		button_start.setOnAction(event -> navigateTo("/view/SettingsView.fxml"));
@@ -111,7 +112,7 @@ public class MenuScreenControl {
 	
 	private void themeSong() {
 	    try {
-	        System.out.println("sound1");
+			flagSong=1;
 
 	        // Adjust the path to where your sound file is located
 	        URL soundFile = this.getClass().getResource("/sounds/themeSong.wav");
