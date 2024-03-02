@@ -47,6 +47,8 @@ public class MenuScreenControl {
 	private Clip splashScreenClip;
 	
 	private static Clip themeSongClip;
+	
+	private int flagSong=0;
 
 	public void initialize() {
 		splash_Screen();
@@ -55,7 +57,11 @@ public class MenuScreenControl {
 	
 	private void init() {		
        // System.getProperty("user.dir");
-		themeSong();
+		if(flagSong==0) {
+			themeSong();
+			flagSong=1;
+		}
+		
 		button_start.setOnAction(event -> navigateTo("/view/SettingsView.fxml"));
 		button_questionWizard.setOnAction(event -> navigateTo("/view/QuestionWizView.fxml"));
 		button_History.setOnAction(event -> navigateTo("/view/HistoryView.fxml"));
