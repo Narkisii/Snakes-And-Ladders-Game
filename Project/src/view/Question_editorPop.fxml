@@ -4,7 +4,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -21,7 +23,11 @@
             <VBox fx:id="q_Vbox" spacing="10.0" stylesheets="@resources/Css/popUpStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label prefHeight="30.0" prefWidth="106.0" styleClass="pop_font" text="Question:" />
-                  <TextField fx:id="question_field" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="62.0" prefWidth="576.0" styleClass="search_Font" />
+                  <ScrollPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="86.0" prefWidth="591.0">
+                     <content>
+                        <TextArea fx:id="question_TextArea" minHeight="-Infinity" minWidth="-Infinity" prefHeight="91.0" prefWidth="576.0" styleClass="question_Text" wrapText="true" />
+                     </content>
+                  </ScrollPane>
                   <HBox prefHeight="37.0" prefWidth="591.0" spacing="10.0">
                      <children>
                         <Label alignment="CENTER" prefHeight="30.0" prefWidth="125.0" styleClass="pop_font" text="Difficulty" />

@@ -33,7 +33,10 @@ import model.QuestionsFromJson;
 
 public class QuestionEditorPopControl {
 	@FXML
-	private TextField question_field, ans1, ans2, ans3, ans4;
+	private TextField ans1, ans2, ans3, ans4;
+	
+	@FXML
+	private TextArea question_TextArea;
 	
 	@FXML
 	private Label main_Label, answerOpt_lbl, correctAnswer_lbl;
@@ -71,7 +74,7 @@ public class QuestionEditorPopControl {
 	public void initialize() {
 
 		textFieldList = new ArrayList<>();
-		textFieldList.add(question_field);
+		// textFieldList.add(question_TextArea);
 		
 		textFieldList.add(ans1);
 		textFieldList.add(ans2);
@@ -108,7 +111,7 @@ public class QuestionEditorPopControl {
 				// Create a new Question object
 				if (checkEmpty()) {
 					Question newQuestion = new Question();
-					newQuestion.setQuestion(question_field.getText());
+					newQuestion.setQuestion(question_TextArea.getText());
 					newQuestion.setAnswers(new LinkedList<>(
 							Arrays.asList(ans1.getText(), ans2.getText(), ans3.getText(), ans4.getText())));
 					newQuestion.setCorrectAnswer(correctAns_ComBox.getValue());
@@ -140,7 +143,7 @@ public class QuestionEditorPopControl {
 				if (checkEmpty()) {
 
 					// Get the updated question text
-					String updatedQuestionText = question_field.getText();
+					String updatedQuestionText = question_TextArea.getText();
 
 					// Get the updated answers
 					LinkedList<String> updatedAnswers = new LinkedList<>();
@@ -238,7 +241,7 @@ public class QuestionEditorPopControl {
 		
 		// import question
 		String theQ = question.getQuestion();
-		question_field.setText(theQ);
+		question_TextArea.setText(theQ);
 
 		// import difficulty
 		difficulty_ComBox.setValue(String.valueOf(question.getDifficulty()));
@@ -255,8 +258,8 @@ public class QuestionEditorPopControl {
 			correctAns_ComBox.setValue(String.valueOf(question.getCorrectAnswer()));
 		}
 		else {
-			question_field.setEditable(false);
-			question_field.setDisable(true);
+			question_TextArea.setEditable(false);
+			question_TextArea.setDisable(true);
 			
 			// hide correct answer
 			correctAns_ComBox.setVisible(false);
@@ -276,5 +279,4 @@ public class QuestionEditorPopControl {
 		}
 	}
 	
-	//public void wrapText()
 }

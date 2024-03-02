@@ -68,7 +68,6 @@
     -fx-control-inner-background: #ffffe0; 
     -fx-pref-height: 200.0;
     -fx-font-size: 20.0px;
-    
 }
 
 .finish_button {
@@ -107,6 +106,10 @@
 .loginMsg {
 	-fx-font-size: 20.0pt;
 	-fx-font-weight: bold;
+}
+
+.question_Text {
+	-fx-font-size: 15pt;
 }
 
 
