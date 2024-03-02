@@ -177,6 +177,9 @@ public class BoardControl implements GameEventSubject{
 //		for (Player player : GameData.getInstance().getplayer_list()) {
 //			System.out.println(player.toString());
 //		}
+		//STOP THEME SONG
+		MenuScreenControl.stopThemeSong();
+		
 		vboxlist = new ArrayList<VBox>();// VBoxes of the player tokens
 		set_turn_time = 5;
 //		tile_Map = new HashMap<>();
