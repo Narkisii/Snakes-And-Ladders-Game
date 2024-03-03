@@ -168,6 +168,7 @@ public class BoardControl implements GameEventSubject {
 	void initialize() {
 		// STOP THEME SONG
 		MenuScreenControl.stopThemeSong();
+		MenuScreenControl.setFlagSong(0);
 //		themeSong();
 		/**********************/
 		players_VBox_Container_list = new ArrayList<VBox>();// VBoxes of the player tokens
@@ -566,14 +567,26 @@ public class BoardControl implements GameEventSubject {
 						if (dice == 7 || dice == 8 || dice == 9) {
 							if (GameData.getInstance().get_Question(dice) == null)
 								return;
+							
+							//For QA purposes to not show question window comment this:
+							
 							Question q = GameData.getInstance().get_Question(dice);
 							showQuestion(q, player);
+							
+							/*****/
+							
+							//For QA purposes to not show question window uncomment this:
+							
 //							move_Player(dice, player);
+							
+							/*****/
+
 						} else {
 //							GameData.getInstance().getBoard().move(dice, player);
 							move_Player(dice, player);
 						}
 
+						//move_Player(*lastTile*,player);
 					}
 				}
 			}
@@ -829,6 +842,8 @@ public class BoardControl implements GameEventSubject {
 		return false;
 	}
 
+//	public
+	
 	private void clear_all() {
 
 		try {

@@ -126,7 +126,7 @@ public class PlayersControl {
 			ComboBox<String> colorComboBox = (ComboBox<String>) lastRow.getChildren().get(2);
 			ComboBox<String> tokenComboBox = (ComboBox<String>) lastRow.getChildren().get(3);
 			String playerName = ((TextField) lastRow.getChildren().get(1)).getText(); // Replace 1 with the index of the
-			usedCPUNames.remove(((TextField) lastRow.getChildren().get(1)).getText());														// player name TextField in your
+			usedCPUNames.remove(((TextField) lastRow.getChildren().get(1)).getText()); // player name TextField in your
 
 			// Get the selected color and token
 			String color = colorComboBox.getValue();
@@ -169,8 +169,8 @@ public class PlayersControl {
 		Random random = new Random();
 		String nameCpu;
 		do {
-		    CPUNames randomName = cpuNames.get(random.nextInt(cpuNames.size()));
-		    nameCpu = randomName.name();
+			CPUNames randomName = cpuNames.get(random.nextInt(cpuNames.size()));
+			nameCpu = randomName.name();
 		} while (usedCPUNames.contains(nameCpu));
 		usedCPUNames.add(nameCpu);
 		List<String> colors_temp = colors;
@@ -271,7 +271,7 @@ public class PlayersControl {
 
 		TextField playerName = new TextField(); // Create a new playerName for the player's name
 //		playerName.setId("playerName" + (index + 1)); // unique id
-		playerName.setId("playerName "+ (index + 1)); // unique id
+		playerName.setId("playerName " + (index + 1)); // unique id
 		playerName.setPromptText("playerName" + (index + 1));
 		playerName.setPrefHeight(65.0);
 		playerName.setPrefWidth(191.0);
@@ -339,7 +339,7 @@ public class PlayersControl {
 				return false;
 			}
 		});
-		
+
 		ComboBox<String> token = new ComboBox<>(); // Create a new token for the player's token
 //		token.setId("token" + (index + 1)); // unique id
 		token.setId("token"); // unique id
@@ -432,8 +432,8 @@ public class PlayersControl {
 		HBox.setHgrow(num, Priority.ALWAYS); // Make 'num' expand to fill available horizontal space
 
 		TextField playerName = new TextField(); // Create a new playerName for the player's name
-		playerName.setId("playerName "+ (index + 1)); // unique id
-		playerName.setId("playerName"); // unique id
+		playerName.setId("cpu_playerName " + (index + 1)); // unique id
+//		playerName.setId("playerName"); // unique id
 
 		playerName.setPrefHeight(65.0);
 		playerName.setPrefWidth(191.0);
@@ -494,7 +494,7 @@ public class PlayersControl {
 
 				// Get the player name, color, and token from the row
 				String playerName = ((TextField) row.getChildren().get(1)).getText(); // Replace 1 with the index of the
-				playernames.add(((TextField) row.getChildren().get(1)));														// player name TextField in your
+				playernames.add(((TextField) row.getChildren().get(1))); // player name TextField in your
 			}
 		}
 		try {
@@ -503,41 +503,41 @@ public class PlayersControl {
 			// TODO Auto-generated catch block
 			HandleExceptions.showException(e);
 			return;
-		}		
+		}
 		for (Node node : playerContainer.getChildren()) {
 			if (node instanceof HBox) {
 				HBox row = (HBox) node;
 
 				// Get the player name, color, and token from the row
 				String playerName = ((TextField) row.getChildren().get(1)).getText(); // Replace 1 with the index of the
-				playernames.add(((TextField) row.getChildren().get(1)));														// player name TextField in your
-																						// HBox
+				playernames.add(((TextField) row.getChildren().get(1))); // player name TextField in your
+				// HBox
 				String color = ((ComboBox<String>) row.getChildren().get(2)).getValue(); // Replace 2 with the index of
 																							// the color ComboBox in
 																							// your HBox
 				String token = ((ComboBox<String>) row.getChildren().get(3)).getValue(); // Replace 3 with the index of
 																							// the token ComboBox in
-												// your HBox
+				// your HBox
 
 				// Create a new Player object and add it to the list
-				if (numberOfPlayers - num_cpu == counter) {
-					Player p = new Player(counter, color, playerName, token);
-					GameData.getInstance().addPlayer(p);
-				} else {
-					//Create Cpu_player
+				System.out.println("numberOfPlayers - num_cpu " + (numberOfPlayers - num_cpu));
+
+				TextField row1 = (TextField) row.getChildren().get(1);
+				System.out.println(row1.getId());
+				if (((TextField) row.getChildren().get(1)).getId().contains("cpu")) {
+					// Create Cpu_player
 					cpu_Player cpu_Player = new cpu_Player(counter, color, playerName, token);
 					GameData.getInstance().addPlayer(cpu_Player);
+				} else {
+					Player p = new Player(counter, color, playerName, token);
+					GameData.getInstance().addPlayer(p);
 				}
 				counter++;
 
-//	            players.add(p);
-//				GameData.getInstance().setNumberOfPlayers(GameData.getInstance().getplayer_list().size());
-//				GameData.getInstance().setNumberOfPlayers(numberOfPlayers);
 
 			}
 
 		}
-//		GameData.getInstance().setPlayers(players);
 
 		// Navigate to the game board
 		navigateTo("/view/BoardView.fxml");
