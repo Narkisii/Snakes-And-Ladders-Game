@@ -7,7 +7,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
+/**
+ * Controller class for the logout confirmation pop-up window.
+ * This class handles the user interaction and logic associated with confirming
+ * the logout action. It provides methods to initialize the controller, set button actions,
+ * approve logout, and set the previous window controller.
+ */
 public class LogoutControl {
 	@FXML
 	private Button yesButton, noButton;
@@ -33,6 +38,9 @@ public class LogoutControl {
 		});
 	}
 	
+    /**
+     * Confirms the logout action.
+     */
 	public void approveLogout() {
 		message_Lbl.setText("Successfully logged out");
 		message_Lbl.setStyle("-fx-text-fill: #367E18");
@@ -48,6 +56,10 @@ public class LogoutControl {
 		delay.play();
 	}
 
+    /**
+     * Sets the previous window controller.
+     * @param questionWizControl The previous window controller.
+     */
 	public void setPreviousWindow(QuestionWizControl questionWizControl) {
 		// TODO Auto-generated method stub
 		this.previousWindow = questionWizControl;

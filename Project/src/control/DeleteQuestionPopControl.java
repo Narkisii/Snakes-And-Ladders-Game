@@ -8,7 +8,12 @@ import javafx.stage.Stage;
 import model.NoJsonFileFound;
 import model.Question;
 import model.QuestionsFromJson;
-
+/**
+ * Controller class for the delete question confirmation pop-up window.
+ * This class handles the user interaction and logic associated with confirming
+ * the deletion of a question. It provides methods to set the question to be deleted,
+ * initialize the controller, close the window, and set the previous window controller.
+ */
 public class DeleteQuestionPopControl {
 	@FXML
 	private Button yesButton;
@@ -19,6 +24,11 @@ public class DeleteQuestionPopControl {
 	private Question questionToDelete;
 
 	private QuestionWizControl previousWindow;
+    /**
+     * Sets the question to be deleted.
+     * 
+     * @param question The question to be deleted
+     */
 
 	public void setQuestionToDelete(Question question) {
 		this.questionToDelete = question;
@@ -43,12 +53,21 @@ public class DeleteQuestionPopControl {
 
 		noButton.setOnAction(event -> closeWindow());
 	}
-
+	
+    /**
+     * Closes the current window.
+     */
 	private void closeWindow() {
 		Stage stage = (Stage) yesButton.getScene().getWindow();
 		stage.close();
 	}
 	
+    /**
+     * Sets the previous window.
+     * 
+     * @param questionWizControl2 The previous window controller
+     */
+
 	public void setPreviousWindow(QuestionWizControl questionWizControl2) {
 		// TODO Auto-generated method stub
 

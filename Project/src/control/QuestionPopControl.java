@@ -117,7 +117,12 @@ public class QuestionPopControl implements GameEventSubject {
 	            observer.onEventTriggered(event);
 	        }}
 	    //END
-
+	    
+	    
+	    /**
+	     * Initializes the controller.
+	     * This method sets up the radio buttons, toggle group, and action listeners for the check answer button.
+	     */
 	public void initialize() {
 		radioButtons = new ArrayList<RadioButton>();
 		createTimer();
@@ -192,7 +197,12 @@ public class QuestionPopControl implements GameEventSubject {
 		// Start the timeline
 		countdown.play();
 	}
-
+	
+	/**
+	 * Checks the selected answer against the correct answer and handles the outcome.
+	 * 
+	 * @param selectedAnswer The answer selected by the player.
+	 */
 	private void check_Answer(String selectedAnswer) {
 		// Create a sound manager instance
 		SoundManager soundManager = new SoundManager();
@@ -255,7 +265,13 @@ public class QuestionPopControl implements GameEventSubject {
 		});
 		delay.play();
 	}
-
+	
+	
+	/**
+	 * Sets the question and updates the UI elements with question details.
+	 * 
+	 * @param q The question object to be set.
+	 */
 	public void set_question(Question q) {
 		this.question = q;
 		String theQ = question.getQuestion();
@@ -286,7 +302,12 @@ public class QuestionPopControl implements GameEventSubject {
 	public void prev_window(BoardControl boardControl) {
 		this.prev_control = boardControl;
 	}
-
+	
+	/**
+	 * Sets the player for answering the question and updates the UI accordingly.
+	 * 
+	 * @param p The player object to be set.
+	 */
 	public void set_player(Player p) {
 		// TODO Auto-generated method stub
 		this.player = p;
