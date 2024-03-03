@@ -23,7 +23,9 @@ import enums.GameEvent;
 import model.Ladder;
 
 /**
- * @author liorf
+ * The Board class represents the game board for a Snake and Ladder game.
+ * It manages the game board, players' movement, and various game events.
+ * Implements the GameEventSubject interface to allow observation of game events.
  *
  */
 public class Board implements GameEventSubject {
@@ -46,9 +48,7 @@ public class Board implements GameEventSubject {
 	// Tile type:
 	// 10 = special 10 step forward, -10 - special 10 steps backward, 1 = red snake
 	// 4 - question, 5 - ladder, -5 - snake
-	/**
-	 * @param type
-	 */
+
 	/**
 	 * Constructor for the Board class.
 	 * Initializes the game board and sets the game end condition to 0.
@@ -193,7 +193,7 @@ public class Board implements GameEventSubject {
 	    for (int i = 0; i < numTiles; i++) {
 	        for (int j = 0; j < numTiles; j++) {
 	            // Create a new Tile using a TileBuilder and assign it to the current position
-	            gameboard[i][j] = new TileBuilder().build();
+	            gameboard[i][j] = new Tile();
 	        }
 	    }
 

@@ -17,7 +17,7 @@
                <children>
                   <Label fx:id="winner_label" alignment="CENTER" prefHeight="402.0" prefWidth="599.0" styleClass="winner_font" stylesheets="@resources/Css/popUpStyle.css" text="You win" wrapText="true" />
                   <ImageView fx:id="winner_img" fitHeight="150.0" fitWidth="158.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="back_toMenu_Btn" alignment="CENTER" mnemonicParsing="false" styleClass="winnerButton" stylesheets="@resources/Css/Buttons.css" text="Return to menu" />
+                  <Button fx:id="back_toMenu_Btn" alignment="CENTER" mnemonicParsing="false" styleClass="winnerButton" stylesheets="@resources/Css/Buttons.css" text="Quit to menu" />
                </children>
             </VBox>
          </children>
