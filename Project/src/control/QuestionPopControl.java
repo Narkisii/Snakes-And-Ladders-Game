@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -31,6 +32,10 @@ import Intrefaces.GameEventObserver;
 import Intrefaces.GameEventSubject;
 import enums.GameEvent;
 
+/**
+ * Controller class for the question pop-up window.
+ * This class manages the behavior and functionality of the pop-up window used to display questions during the game.
+ */
 public class QuestionPopControl implements GameEventSubject {
 	@FXML
 	private Label QuestionTitle;
@@ -153,14 +158,16 @@ public class QuestionPopControl implements GameEventSubject {
 
 	}
 	
-
+    /**
+     * Creates and starts the countdown timer.
+     */
 	private void createTimer() {
 		// Create a 30 seconds duration
 		AtomicInteger duration = new AtomicInteger(time);
 
 		// Create a new timeline
 		countdown = new Timeline();
-
+		qTimer_label.setFont(Font.font("JejuHallasan", 20));
 		// Create a key frame that updates every second
 		KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event -> {
 			// Decrease the duration by one second
@@ -187,44 +194,53 @@ public class QuestionPopControl implements GameEventSubject {
 	}
 
 	private void check_Answer(String selectedAnswer) {
-		
+		// Create a sound manager instance
 		SoundManager soundManager = new SoundManager();
+		// Attach the sound manager to the question
 		question.attach(soundManager);
 		
+		// Initialize steps variable
 		steps = 0;
+		// Determine steps based on question difficulty
 		if (question.getDifficulty() == 1) {
 			steps = -1;
-		}
-		if (question.getDifficulty() == 2) {
+		} else if (question.getDifficulty() == 2) {
 			steps = -2;
-		}
-		if (question.getDifficulty() == 3) {
+		} else if (question.getDifficulty() == 3) {
 			steps = -3;
 		}
-		//Times up - closes the window and takes the player back according to difficulty
+		
+		// Handle different cases based on selected answer
 		if (selectedAnswer.equals("Time up!")) {
-			question.notifyObservers(GameEvent.INCORRECT_ANSWER);// obserevr for time up, same as incorrect
+			// Notify observers about incorrect answer (time's up)
+			question.notifyObservers(GameEvent.INCORRECT_ANSWER);
+			// Update UI
 			check_Answer_label.setText("Time up!");
 			check_Answer_label.setStyle("-fx-background-color: yellow;"); // Set background to yellow
+			// Move player according to difficulty
 			prev_control.move_Player(steps, player);
-
 		} else if (selectedAnswer.equals(corr_answer_str)) {
-			question.notifyObservers(GameEvent.CORRECT_ANSWER);// obserevr for correct
+			// Notify observers about correct answer
+			question.notifyObservers(GameEvent.CORRECT_ANSWER);
+			// Update UI
 			check_Answer_label.setText("Correct!");
 			check_Answer_label.setStyle("-fx-background-color: green;"); // Set background to green
+			// Move player according to difficulty
 			if (question.getDifficulty() == 3) {
 				prev_control.move_Player(1, player);
-//				prev_control.startCountDown();
 			} else {
 				prev_control.move_Player(0, player);
 			}
 		} else {
-			question.notifyObservers(GameEvent.INCORRECT_ANSWER);// obserevr for incorrect
+			// Notify observers about incorrect answer
+			question.notifyObservers(GameEvent.INCORRECT_ANSWER);
+			// Update UI
 			check_Answer_label.setText("You're Wrong!");
-			check_Answer_label.setStyle("-fx-background-color: red;"); // Set background to green
+			check_Answer_label.setStyle("-fx-background-color: red;"); // Set background to red
+			// Move player according to difficulty
 			prev_control.move_Player(steps, player);
-//			prev_control.startCountDown();
 		}
+		// Disable UI elements after answering
 		answerOne.setDisable(true);
 		answerTwo.setDisable(true);
 		answerThree.setDisable(true);
@@ -233,8 +249,6 @@ public class QuestionPopControl implements GameEventSubject {
 
 		PauseTransition delay = new PauseTransition(Duration.seconds(2)); // 2 seconds delay
 		delay.setOnFinished(event -> {
-//			prev_control.startCountDown();
-//			prev_control.get_rollButton().setDisable(false);
 			countdown.stop();
 			Stage stage = (Stage) checkAnswerButton.getScene().getWindow();
 			stage.close();

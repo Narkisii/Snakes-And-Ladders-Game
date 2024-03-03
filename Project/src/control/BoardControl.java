@@ -680,6 +680,7 @@ public class BoardControl implements GameEventSubject {
 	public void roll(int dice, Player player) {
 		// Hide the pause button during dice rolling
 		pause_Btn.setVisible(false);
+		return_btn.setVisible(false);
 		// Notify observers about the dice roll event
 		board.notifyObservers(GameEvent.DICE_ROLL);
 		// Disable the roll button to prevent multiple rolls
@@ -917,6 +918,7 @@ public class BoardControl implements GameEventSubject {
 			// player
 			if (GameData.getInstance().getBoard().getGameEnd() != 1) {
 				pause_Btn.setVisible(false);
+				return_btn.setVisible(false);
 				// Create a CommandInvoker to execute the RollDiceCommand for the current CPU
 				// player
 				CommandInvoker invoker = new CommandInvoker();
@@ -932,6 +934,8 @@ public class BoardControl implements GameEventSubject {
 			// the pause button visible
 			rollButton.setDisable(false);
 			pause_Btn.setVisible(true);
+			return_btn.setVisible(true);
+
 		}
 	}
 
