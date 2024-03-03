@@ -58,7 +58,7 @@ public class MenuScreenControl {
 
 	private static Clip themeSongClip;
 
-	private int flagSong = 0;
+	private static int flagSong;
 
 	public void initialize() {
 		isSoundOn = true;
@@ -68,9 +68,11 @@ public class MenuScreenControl {
 
 	private void init() {
 
-		stopThemeSong();
-		themeSong();
-
+		if (getFlagSong() == 0) {
+			stopThemeSong();
+			themeSong();
+			flagSong =1;
+		}
 		button_start.setOnAction(event -> navigateTo("/view/SettingsView.fxml"));
 		button_questionWizard.setOnAction(event -> navigateTo("/view/QuestionWizView.fxml"));
 		button_History.setOnAction(event -> navigateTo("/view/HistoryView.fxml"));
@@ -121,7 +123,7 @@ public class MenuScreenControl {
 
 	private void themeSong() {
 		try {
-			flagSong = 1;
+			setFlagSong(1);
 
 			// Adjust the path to where your sound file is located
 			URL soundFile = this.getClass().getResource("/sounds/themeSong.wav");
@@ -205,8 +207,7 @@ public class MenuScreenControl {
 				ft.play();
 			});
 			first_start = false;
-		}
-		else {
+		} else {
 			init();
 		}
 	}
@@ -216,9 +217,12 @@ public class MenuScreenControl {
 			setSoundIcon(isSoundOn);
 			stopSplashScreenSound();
 			stopThemeSong();
+			flagSong = 0;
 		});
 		soundOff_Icon.setOnMouseClicked(event -> {
 			setSoundIcon(isSoundOn);
+			themeSong();
+			flagSong = 1;
 		});
 	}
 
@@ -227,11 +231,18 @@ public class MenuScreenControl {
 		if (isAllowed) {
 			soundOn_Icon.setVisible(false);
 			soundOff_Icon.setVisible(true);
-		}
-		else {
+		} else {
 			soundOn_Icon.setVisible(true);
 			soundOff_Icon.setVisible(false);
 		}
+	}
+
+	public static int getFlagSong() {
+		return flagSong;
+	}
+
+	public static void setFlagSong(int flagSong) {
+		MenuScreenControl.flagSong = flagSong;
 	}
 
 }

@@ -523,7 +523,6 @@ public class PlayersControl {
 				if (numberOfPlayers - num_cpu == counter) {
 					Player p = new Player(counter, color, playerName, token);
 					GameData.getInstance().addPlayer(p);
-
 				} else {
 					//Create Cpu_player
 					cpu_Player cpu_Player = new cpu_Player(counter, color, playerName, token);
