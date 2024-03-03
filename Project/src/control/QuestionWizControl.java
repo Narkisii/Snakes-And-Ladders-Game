@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javafx.scene.control.Label;
 
 import org.jcp.xml.dsig.internal.dom.DOMSubTreeData;
+import org.junit.platform.runner.JUnitPlatform;
 import org.junit.validator.PublicClassValidator;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -87,10 +88,7 @@ public class QuestionWizControl {
 	private TableView<Question> qTable;
 
 	@FXML
-	private TableColumn<Question, String> id_col;
-
-	@FXML
-	private TableColumn<Question, String> q_col;
+	private TableColumn<Question, String> id_col, q_col;
 
 	@FXML
 	private Button add_button;
@@ -124,30 +122,15 @@ public class QuestionWizControl {
 
 	@FXML
 	void initialize() {
-		// Read the question data from the JSON file
-//		QuestionsFromJson questionData;
-//		List<Question> easy_questionList, med_questionList, hard_questionList;
-//		try {
-////	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
-//			questionData = QuestionsFromJson.readQuestionsFromJson();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			return;
-//		}
-//
-//		// Sort the Json
-//		easy_questionList = questionData.getQuestionsByDifficulty(1);
-//		med_questionList = questionData.getQuestionsByDifficulty(2);
-//		hard_questionList = questionData.getQuestionsByDifficulty(3);
-
 		// disable admin options in initialize
+		rm_button.setDisable(true);
 		if (!isAdmin) {
+			// rm_button.setDisable(true);
 			disableAdminControls(true);
 		}
 		else {
 			setAdmin(true);
 		}
-
 		update_table();
 
 		ObservableList<Question> easyData = FXCollections.observableArrayList(easy_questionList);
@@ -161,6 +144,7 @@ public class QuestionWizControl {
 
 		currentFilteredData = easyFilteredData;
 		qTable.setItems(currentFilteredData);
+		q_col.setText("Easy Questions");
 
 		// Activate buttons easy, med, and hard
 		easy_button.setOnAction(event -> {
@@ -230,7 +214,7 @@ public class QuestionWizControl {
 			Question selectedQuestion = qTable.getSelectionModel().getSelectedItem();
 			if (selectedQuestion != null) {
 				controller.setQuestionToDelete(selectedQuestion);
-
+				
 			}
 			controller.setPreviousWindow(this);
 
@@ -258,7 +242,7 @@ public class QuestionWizControl {
 			// Pass controller so I can update the table when question added
 			controller.setPreviousWindow(this);
 			controller.setType("add");
-			
+
 			// Set the scene and show the stage
 			Scene scene = new Scene(root);
 			popupStage.setScene(scene);
@@ -275,8 +259,10 @@ public class QuestionWizControl {
 			row.setOnMouseClicked(event -> {
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
 					clickCount.incrementAndGet();
+					if (isAdmin) {
+						rm_button.setDisable(false);
+					}
 					if (clickCount.get() == 2 && (popupStage == null || !popupStage.isShowing())) {
-
 						popupStage = new Stage();
 
 						// Load the FXML file for the pop-up
@@ -322,10 +308,9 @@ public class QuestionWizControl {
 
 	public void setAdmin(boolean status) {
 		isAdmin = status;
-		
 		LogIn_Btn.setVisible(false);
 		Logout_Btn.setVisible(true);
-		
+
 		Logout_Btn.setOnAction(event -> {
 			setPopUpStage();
 
@@ -337,7 +322,7 @@ public class QuestionWizControl {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			LogoutControl logoutControl = loader.getController();
 			logoutControl.setPreviousWindow(this);
 
@@ -346,6 +331,8 @@ public class QuestionWizControl {
 			popupStage.setScene(scene);
 			popupStage.show();
 		});
+
+		// setRemoveButton();
 	}
 
 	public boolean isAdmin() {
@@ -357,7 +344,7 @@ public class QuestionWizControl {
 
 	public void disableAdminControls(boolean toDisable) {
 		add_button.setDisable(toDisable);
-		rm_button.setDisable(toDisable);
+		// rm_button.setDisable(toDisable);
 		LogIn_Btn.setDisable(!toDisable);
 
 		if (toDisable) {
@@ -404,6 +391,26 @@ public class QuestionWizControl {
 		}
 	}
 
+	public String checkSelectedQuestion(Question q) {
+		// Question selectedQuestion = qTable.getSelectionModel().getSelectedItem();
+		int questionDiff = q.getDifficulty();
+
+		String diff = null;
+
+		switch (questionDiff) {
+		case 1:
+			diff = "easy";
+			break;
+		case 2:
+			diff = "medium";
+			break;
+		case 3:
+			diff = "hard";
+			break;
+		}
+		return diff;
+	}
+
 	public void re_init(int q_diff) {
 		QuestionsFromJson questionData;
 		try {
@@ -414,6 +421,8 @@ public class QuestionWizControl {
 			HandleExceptions.showException(e);
 			return;
 		}
+
+		rm_button.setDisable(true);
 
 		// Sort the Json
 		easy_questionList = questionData.getQuestionsByDifficulty(1);
