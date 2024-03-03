@@ -44,7 +44,7 @@ public class LoginController {
 	@FXML
 	private Pane statusPane; // status pane for login message
 
-	private QuestionWizControl previousWindow; // hold questionWiz screen
+	private QuestionWizControl previousWindow; // hold questionWiz control
 
 	private static boolean status; // login status
 

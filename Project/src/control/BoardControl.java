@@ -114,6 +114,9 @@ public class BoardControl implements GameEventSubject {
 
 	@FXML
 	private Button pause_Btn;
+
+	// private MenuScreenControl menuControl;
+
 	// Create a HashMap to store the rectangles
 //	private HashMap<Integer, Rectangle> tile_Map;
 
@@ -219,7 +222,9 @@ public class BoardControl implements GameEventSubject {
 
 		mainPain.getChildren().add(canvas);
 		// Set the action for the return button
-		return_btn.setOnAction(event -> clear_all());
+		return_btn.setOnAction(event -> {
+			setExitScreen();
+		});
 
 		turn_Lable.setTextFill(Color
 				.web(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getColor()));
@@ -255,12 +260,13 @@ public class BoardControl implements GameEventSubject {
 			pauseLabel.setFont(new Font(50));
 			pauseLabel.setLayoutX(10);
 			pauseLabel.setLayoutY(300);
-			
+
 			// Add the label to the pane
 			canvas.getChildren().add(pauseLabel);
 
 			paused = true;
-		} else {
+		}
+		else {
 			if (timer != null)
 				timer.play();
 			if (timeline != null)
@@ -472,7 +478,8 @@ public class BoardControl implements GameEventSubject {
 			img.setPreserveRatio(true);
 			if (GameData.getInstance().getDifficulty().equals("Hard")) {
 				playerbox.getChildren().addAll(img);
-			} else {
+			}
+			else {
 				playerbox.getChildren().addAll(playerName, img);
 			}
 			players_VBox_Container_list.add(playerbox);
@@ -480,7 +487,8 @@ public class BoardControl implements GameEventSubject {
 			if (p instanceof model.cpu_Player) {
 				((cpu_Player) p).set_board_controll(this);
 			}
-		} else {
+		}
+		else {
 			playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
 			img = (ImageView) playerbox.lookup("#Image" + p.getID());
 		}
@@ -522,7 +530,8 @@ public class BoardControl implements GameEventSubject {
 
 			snake.add(startX, startY, endX, endY, distance);
 
-		} else if (element instanceof Ladder) { // Add the ladder to the game
+		}
+		else if (element instanceof Ladder) { // Add the ladder to the game
 			// Get the start x and y of the tile, get the end tile x and y
 			System.out.println("tileStart " + start + "tileEnd " + end);
 			double startX = tileStart.getX();
@@ -536,8 +545,7 @@ public class BoardControl implements GameEventSubject {
 		}
 
 	}
-	
-	
+
 	public void roll(int dice, Player player) {
 		pause_Btn.setVisible(false);
 		board.notifyObservers(GameEvent.DICE_ROLL);// obserevr for roll dice
@@ -559,7 +567,8 @@ public class BoardControl implements GameEventSubject {
 							Image img = new Image(path + (random.nextInt(10)) + ".png");
 							diceImage.setImage(img);
 						}
-					} else {
+					}
+					else {
 						Image img = new Image(path + dice + ".png");
 						diceImage.setImage(img);
 //						rollButton.setDisable(false);
@@ -567,26 +576,26 @@ public class BoardControl implements GameEventSubject {
 						if (dice == 7 || dice == 8 || dice == 9) {
 							if (GameData.getInstance().get_Question(dice) == null)
 								return;
-							
+
 							//For QA purposes to not show question window comment this:
-							
+
 							Question q = GameData.getInstance().get_Question(dice);
 							showQuestion(q, player);
-							
-							/*****/
-							
-							//For QA purposes to not show question window uncomment this:
-							
-//							move_Player(dice, player);
-							
+
 							/*****/
 
-						} else {
+							//For QA purposes to not show question window uncomment this:
+
+//							move_Player(dice, player);
+
+							/*****/
+//							move_Player(dice, player);
+						}
+						else {
 //							GameData.getInstance().getBoard().move(dice, player);
 							move_Player(dice, player);
 						}
 
-						//move_Player(*lastTile*,player);
 					}
 				}
 			}
@@ -627,7 +636,8 @@ public class BoardControl implements GameEventSubject {
 		VBox playerbox = players_VBox_Container_list.get(p.getID() - 1);
 		if (dice != 0) {
 			animate(playerbox, prev_tile, curr_Tile, p);
-		} else {
+		}
+		else {
 			next_Turn();
 		}
 	}
@@ -738,7 +748,8 @@ public class BoardControl implements GameEventSubject {
 				invoker.addCommand(new RollDiceCommand((cpu_Player) cpu_p));
 				invoker.executeCommands();
 			}
-		} else {
+		}
+		else {
 			rollButton.setDisable(false);
 			pause_Btn.setVisible(true);
 		}
@@ -757,7 +768,6 @@ public class BoardControl implements GameEventSubject {
 		}
 //		add_SpecialTiles();
 	}
-
 
 	private void showQuestion(Question q, Player p) {
 		stopTimer();
@@ -842,9 +852,7 @@ public class BoardControl implements GameEventSubject {
 		return false;
 	}
 
-//	public
-	
-	private void clear_all() {
+	void clear_all() {
 
 		try {
 //			stopThemeSong();
@@ -871,6 +879,38 @@ public class BoardControl implements GameEventSubject {
 
 	}
 
+	public void setExitScreen() {
+		// this method only need to set the screen and wait for the exit buttons event
+		setPopUpStage();
+
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/exitGamePop.fxml"));
+		Parent root = null;
+		try {
+			root = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		ExitGameControl exitControl = loader.getController();
+		exitControl.setPreviousWindow(this);
+
+		// Set the scene and show the stage
+		Scene scene = new Scene(root);
+		popupStage.setScene(scene);
+		popupStage.show();
+	}
+
+	public void setPopUpStage() {
+		// if the pop up is already open - do nothing
+		if (popupStage != null && popupStage.isShowing()) {
+			return;
+		}
+		else { // Create a new Stage for the pop-up
+			popupStage = new Stage();
+			popupStage.setResizable(false);
+		}
+	}
+
 	public Button get_rollButton() {
 		return rollButton;
 	}
@@ -878,6 +918,14 @@ public class BoardControl implements GameEventSubject {
 	public BoardControl getControlBoardControl() {
 		return this;
 	}
+
+//	public void setMenuControl(MenuScreenControl msControl) {
+//		this.menuControl = msControl;
+//	}
+//
+//	public MenuScreenControl getMenuControl() {
+//		return menuControl;
+//	}
 
 	// Method to navigate to another screen
 //	private void navigateTo(String fxmlFile) {
