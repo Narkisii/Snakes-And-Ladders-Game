@@ -203,7 +203,6 @@ public class QuestionWizControl {
 				e.printStackTrace();
 			}
 
-			// Get the controller and pass the question object
 			LoginController loginControl = loader.getController();
 			loginControl.setPreviousWindow(this);
 
@@ -338,6 +337,9 @@ public class QuestionWizControl {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			
+			LogoutControl logoutControl = loader.getController();
+			logoutControl.setPreviousWindow(this);
 
 			// Set the scene and show the stage
 			Scene scene = new Scene(root);

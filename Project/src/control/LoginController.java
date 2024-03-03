@@ -1,11 +1,15 @@
 package control;
 
+import java.io.IOException;
 import java.util.EventListener;
 
 import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -50,15 +54,15 @@ public class LoginController {
 
 	public void initialize() {
 		status = false;
-		setLoginButton();
+		checkUserInput();
 		setLoginEvent();
 		showLoginMessage(status);
-		if(status) {
-			login();
+		if (status) {
+			approveLogin();
 		}
 	}
 
-	public void setLoginButton() {
+	public void checkUserInput() {
 		/*
 		 * The login button will be disables at initialize, and enabled only when the
 		 * text fields are not empty.
@@ -70,6 +74,8 @@ public class LoginController {
 			loginButton.setDisable(isEmpty);
 		};
 		setTextFields(textFieldListener);
+
+		// TODO: handle cancel button
 	}
 
 	public void setTextFields(ChangeListener<String> listener) {
@@ -86,12 +92,12 @@ public class LoginController {
 
 			// Check login details
 			if (nameInput.equals("admin") && passInput.equals("admin")) {
-				// verify login 
-				status = true; 
-				login();
+				// verify login
+				status = true;
+				approveLogin();
 			}
 			// show login message according to status
-			showLoginMessage(status); 
+			showLoginMessage(status);
 		});
 	}
 
@@ -106,19 +112,20 @@ public class LoginController {
 		if (isValid) { // login details are correct
 			statusLbl.setText("Login successful!");
 			statusLbl.setStyle("-fx-text-fill: #367E18");
-		} else { // login details incorrect
+		}
+		else { // login details incorrect
 			statusLbl.setText("Incorrect username or password");
 			statusLbl.setStyle("-fx-text-fill: #C21010;");
 		}
 	}
 
-	public void login() {
+	public void approveLogin() {
 		// Approve the user is admin and give permissions
 		previousWindow.setAdmin(status);
 		previousWindow.disableAdminControls(false);
 
 		// Create animation event to close the screen after 5 seconds
-		PauseTransition delay = new PauseTransition(Duration.seconds(2));
+		PauseTransition delay = new PauseTransition(Duration.seconds(1));
 		delay.setOnFinished(event_2 -> {
 			Stage stage = (Stage) mainPane.getScene().getWindow();
 			stage.close();

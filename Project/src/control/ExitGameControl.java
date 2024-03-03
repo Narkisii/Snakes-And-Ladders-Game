@@ -17,7 +17,7 @@ public class ExitGameControl {
 	private Button exitButton, noExitButton;
 
 	@FXML
-	private AnchorPane popUpPane;
+	private AnchorPane exitPop_Pane;
 		
 	private BoardControl previousWindow; // hold board control
 	
@@ -28,10 +28,10 @@ public class ExitGameControl {
 
 	public void setButtons() {
 		exitButton.setOnAction(event -> {
-			// Create animation event to close the screen after 5 seconds
+			// Create animation event to close the screen after waiting
 			PauseTransition delay = new PauseTransition(Duration.millis(500));
 			delay.setOnFinished(event_2 -> {
-				Stage stage = (Stage) popUpPane.getScene().getWindow();
+				Stage stage = (Stage) exitPop_Pane.getScene().getWindow();
 				stage.close();
 			});
 			delay.play();
