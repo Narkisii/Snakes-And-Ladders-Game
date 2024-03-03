@@ -16,12 +16,14 @@
     -fx-text-fill: #7EFF5E;
     -fx-font-weight: bold;
     -fx-effect: dropshadow(three-pass-box, black, 5.0, 5.0, 0.0, 0.0);
-    -fx-font-size: 20.0px;
+    -fx-font-size: 30.0px;
 }
 
 .board_Button:hover {
-    -fx-effect: dropshadow(three-pass-box, #0f4d00, 5.0, 5.0, 0.0, 0.0);
+	-fx-rotate: 4.0;
+    -fx-effect: dropshadow(three-pass-box, #800000, 5.0, 5.0, 0.0, 0.0);
 }
+
 
 .LogIn_button {
     -fx-background-color: transparent;

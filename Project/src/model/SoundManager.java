@@ -13,6 +13,8 @@ public class SoundManager implements GameEventObserver {
 
 	// A single method to play sounds, given a URL
     private void playSound(String soundFileName) {
+    	if(!GameData.getInstance().getSoundFX())
+    		return;
         try {
             URL soundFile = this.getClass().getResource(soundFileName);
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
@@ -23,23 +25,6 @@ public class SoundManager implements GameEventObserver {
                 (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             // Convert percentage to gain (decibels)
             gainControl.setValue(dB);
-            clip.start();
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace();
-        }
-    }
-    private void playLoopSound(String soundFileName) {
-        try {
-            URL soundFile = this.getClass().getResource(soundFileName);
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioIn);
-            // Set volume to 75%
-            FloatControl gainControl = 
-                (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            // Convert percentage to gain (decibels)
-            gainControl.setValue(dB);
-            clip.loop(Clip.LOOP_CONTINUOUSLY); // Add this line to loop the sound
             clip.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
@@ -65,13 +50,8 @@ public class SoundManager implements GameEventObserver {
                 playSound("/sounds/Questions/INCORRECT_ANSWER.wav");
                 break;
             case QUESTION_POP:
-            	System.out.println("TEST");
                 playSound("/sounds/Questions/QUESTION_POP.wav");
                 break;
-                
-//            case PLAYER_MISSES_TURN:
-//                playSound("/sounds/UpTheLadder.wav");
-//                break;
             case PLAYER_TURN:
                 playSound("/sounds/Movement/PLAYER_TURN.wav");
                 break;

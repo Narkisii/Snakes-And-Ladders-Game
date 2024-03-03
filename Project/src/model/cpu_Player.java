@@ -55,7 +55,7 @@ public class cpu_Player extends Player {
 
 	    //Theres a 25% for answer right
 	    if(difficulty.equals("Easy")) {
-	        r = rand.nextInt(4);
+	        r = rand.nextInt(4)+1;
 	    }
 	    //Theres a 50% for answer right
 	    else if(difficulty.equals("Medium")) {
@@ -64,7 +64,7 @@ public class cpu_Player extends Player {
 	            r = getCorr_answer;
 	        } else {
 	            do {
-	                r = rand.nextInt(4);
+	                r = rand.nextInt(4)+1;
 	            } while (r == getCorr_answer);
 	        }
 	    }
@@ -75,7 +75,7 @@ public class cpu_Player extends Player {
 	            r =  getCorr_answer;
 	        } else {
 	            do {
-	                r = rand.nextInt(4);
+	                r = rand.nextInt(4)+1;
 	            } while (r == getCorr_answer);
 	        }
 	    } else {
@@ -83,7 +83,7 @@ public class cpu_Player extends Player {
 	    }
 	    
 //        r = rand.nextInt(100) < 99 ? getCorr_answer : rand.nextInt(4);
-
+	    System.out.println(answers + " r " + r);
 	    RadioButton selectedAnswer = answers.get(r-1);
 	    selectedAnswer.setSelected(true);
 	}

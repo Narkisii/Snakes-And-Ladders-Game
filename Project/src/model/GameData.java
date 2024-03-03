@@ -7,9 +7,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -38,6 +41,8 @@ public class GameData {
 	QuestionsFromJson questionData;
 	private int playTime;
 	private String winner;
+	private Boolean soundFX = true;
+	Map<Integer, Set<Question>> askedQuestionsMap = new HashMap<>();
 
 //    private static Dice dice;
 
@@ -48,8 +53,7 @@ public class GameData {
 	private GameData() {
 		init();
 	}
-	
-	
+
 	public void init() {
 		try {
 //	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
@@ -72,19 +76,18 @@ public class GameData {
 //		this.board = new Board(player_list);
 
 	}
-	
+
 	public void reset() {
-	    this.player_list.clear();
-	    this.snake_list.clear();
-	    this.ladders.clear();
-	    this.specialTiles_list.clear();
-	    this.questions_Map.clear();
-	    this.difficulty = "Easy";
-	    this.playerTurn = 0;
-	    this.numberOfPlayers = 1;
+		this.player_list.clear();
+		this.snake_list.clear();
+		this.ladders.clear();
+		this.specialTiles_list.clear();
+		this.questions_Map.clear();
+		this.difficulty = "Easy";
+		this.playerTurn = 0;
+		this.numberOfPlayers = 1;
 	}
 
-	
 	// Static method to get the singleton instance
 	public static GameData getInstance() {
 		if (instance == null) {
@@ -95,18 +98,18 @@ public class GameData {
 
 	public void next_turn() {
 		System.out.println("getplayer_list().size()" + getplayer_list().size());
-		if (playerTurn < player_list.size()
-				- 1) {
-			playerTurn ++;
+		if (playerTurn < player_list.size() - 1) {
+			playerTurn++;
 		} else {
 			playerTurn = 0;
 		}
 
 	}
-	
+
 	public void init_board() {
 		this.board = new Board(player_list);
 	}
+
 	/**
 	 * @return the difficulty
 	 */
@@ -145,16 +148,33 @@ public class GameData {
 		}
 	}
 
-	public Question get_Question(int diff) {//7-easy, 8- med, 9 - hard
+	public Question get_Question(int diff) {// 7-easy, 8- med, 9 - hard
 		List<Question> q_list = questions_Map.get(diff);
-		System.out.println(q_list);
-		Random rand = new Random();
-		int generator = rand.nextInt(q_list.size()-1);
+	    Set<Question> askedQuestions = askedQuestionsMap.getOrDefault(diff, new HashSet<>());
+	    if (askedQuestions.size() == q_list.size()) {
+	        // All questions have been asked, clear the set
+	        askedQuestions.clear();
+	    }
+	    Question question;
+	    do {
+	        Random rand = new Random();
+	        int generator = rand.nextInt(q_list.size());
+	        question = q_list.get(generator);
+	    } while (askedQuestions.contains(question));
+
+	    // Add the selected question to the set of asked questions
+	    askedQuestions.add(question);
+	    askedQuestionsMap.put(diff, askedQuestions);
+//
+//		System.out.println(q_list);
+//		Random rand = new Random();
+//		int generator = rand.nextInt(q_list.size());
+
+//		return q_list.get(generator);
 		
-		return q_list.get(generator);
-//		return new Question();
+		return question;
 	}
-	
+
 	/**
 	 * @param difficulty the difficulty to set
 	 */
@@ -212,12 +232,12 @@ public class GameData {
 	}
 
 	public Player get_Player(int index) {
-		if(player_list.get(index) != null) {
+		if (player_list.get(index) != null) {
 			return player_list.get(index);
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @param player_list the player_list to set
 	 */
@@ -229,8 +249,7 @@ public class GameData {
 		if (player != null) {
 			player_list.add(player);
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
@@ -243,8 +262,9 @@ public class GameData {
 		}
 		return null;
 	}
+
 	public Player getPlayer(int player) {
-		
+
 		return player_list.get(player);
 	}
 
@@ -319,12 +339,28 @@ public class GameData {
 	public void addspecialTiles_list(Tile st) {
 		specialTiles_list.add(st);
 	}
+
 	public boolean addSpecialtile(Tile t) {
-		if(t != null) {
+		if (t != null) {
 			return (specialTiles_list.add(t));
 		}
 		return false;
 	}
+
+	/**
+	 * @return the soundFX
+	 */
+	public Boolean getSoundFX() {
+		return soundFX;
+	}
+
+	/**
+	 * @param soundFX the soundFX to set
+	 */
+	public void setSoundFX(Boolean soundFX) {
+		this.soundFX = soundFX;
+	}
+
 	public void to_json() {
 	}
 
@@ -354,42 +390,41 @@ public class GameData {
 				+ ", specialTiles_list=" + specialTiles_list + ", History=" + History + ", playerTurn=" + playerTurn
 				+ ", board=" + board + "]";
 	}
-	
-    public void appendGameToJson() {
-        ObjectMapper mapper = new ObjectMapper();
+
+	public void appendGameToJson() {
+		ObjectMapper mapper = new ObjectMapper();
 //        File file = new File("gameData.json");
-        // Load existing game data
-        File file  = new File("src/Json/History.txt");
-        ArrayNode gameDataArray;
-        try {
-            gameDataArray = (ArrayNode) mapper.readTree(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-        List<String> players = player_list.stream().map(player -> player.getName()).collect(Collectors.toList());
-        // Create new game data
-        ObjectNode game = mapper.createObjectNode();
-        game.put("date", LocalDate.now().toString());
-        game.putPOJO("players",players);
-        game.put("difficulty", difficulty);
-        game.put("playTime", playTime);
-        game.put("winner", winner);
+		// Load existing game data
+		File file = new File("src/Json/History.txt");
+		ArrayNode gameDataArray;
+		try {
+			gameDataArray = (ArrayNode) mapper.readTree(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		}
+		List<String> players = player_list.stream().map(player -> player.getName()).collect(Collectors.toList());
+		// Create new game data
+		ObjectNode game = mapper.createObjectNode();
+		game.put("date", LocalDate.now().toString());
+		game.putPOJO("players", players);
+		game.put("difficulty", difficulty);
+		game.put("playTime", playTime);
+		game.put("winner", winner);
 
-        // Append new game data to array
-        gameDataArray.add(game);
-        
-        // Print game data to console
-        System.out.println("Appending game data to JSON: " + game.toString());
+		// Append new game data to array
+		gameDataArray.add(game);
 
-        // Write game data array back to file
-        try {
-            mapper.writerWithDefaultPrettyPrinter().writeValue(file, gameDataArray);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+		// Print game data to console
+		System.out.println("Appending game data to JSON: " + game.toString());
 
+		// Write game data array back to file
+		try {
+			mapper.writerWithDefaultPrettyPrinter().writeValue(file, gameDataArray);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * @return the playTime
@@ -398,14 +433,12 @@ public class GameData {
 		return playTime;
 	}
 
-
 	/**
 	 * @param playTime the playTime to set
 	 */
 	public void setPlayTime(int playTime) {
 		this.playTime = playTime;
 	}
-
 
 	/**
 	 * @return the winner
@@ -414,14 +447,11 @@ public class GameData {
 		return winner;
 	}
 
-
 	/**
 	 * @param winner the winner to set
 	 */
 	public void setWinner(String winner) {
 		this.winner = winner;
 	}
-
-
 
 }

@@ -7,15 +7,8 @@ import model.SoundManager;
 import model.Tile;
 import model.cpu_Player;
 
-import java.awt.BasicStroke;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -30,7 +23,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import Intrefaces.GameEventObserver;
 import Intrefaces.GameEventSubject;
-import enums.Colors;
 import enums.GameEvent;
 import javafx.geometry.Pos;
 
@@ -41,49 +33,26 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
+import javafx.scene.layout.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
-import javafx.scene.shape.CubicCurve;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Polyline;
-import javafx.scene.shape.QuadCurve;
-import javafx.scene.shape.QuadCurveTo;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-import javafx.scene.transform.Rotate;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 import model.Board;
 import model.GameData;
 import model.Ladder;
@@ -97,6 +66,7 @@ import javafx.util.Duration;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.ObservableMap;
 
 public class BoardControl implements GameEventSubject {
 
@@ -139,6 +109,11 @@ public class BoardControl implements GameEventSubject {
 	@FXML
 	private ImageView pTurn_image;
 
+	@FXML
+	private CheckBox check_Sound;
+
+	@FXML
+	private Button pause_Btn;
 	// Create a HashMap to store the rectangles
 //	private HashMap<Integer, Rectangle> tile_Map;
 
@@ -147,8 +122,6 @@ public class BoardControl implements GameEventSubject {
 	private Timeline timer;
 
 	private GridPane grid; // The grid that will contain the tiles
-
-	private Group group;
 
 	private ArrayList<VBox> players_VBox_Container_list;
 
@@ -159,9 +132,18 @@ public class BoardControl implements GameEventSubject {
 	// Set Count down of each turn
 	int set_turn_time = 45;
 
-	private int flagSong = 0;
+	private PauseTransition pause_for_turn;
 
-	private Clip boardSongClip;
+	private AnimationTimer diceRollAnimation;
+
+	private boolean paused = false;
+//	private int flagSong = 0;
+//
+//	private Clip boardSongClip;
+
+	private ObservableMap<String, Duration> time_stopped_on;
+
+	private Label pauseLabel;
 
 	// OBSERVER METHODS
 	@Override
@@ -184,13 +166,6 @@ public class BoardControl implements GameEventSubject {
 
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 	void initialize() {
-		// Create Board - getNumOfTiles() X getNumOfTiles() = Board
-		// the Board constractor gets in Row and calculate the size
-
-		// Set Players
-//		for (Player player : GameData.getInstance().getplayer_list()) {
-//			System.out.println(player.toString());
-//		}
 		// STOP THEME SONG
 		MenuScreenControl.stopThemeSong();
 //		themeSong();
@@ -200,20 +175,22 @@ public class BoardControl implements GameEventSubject {
 		canvas = new Pane();// Snake and ladders are drawn here separately
 //		canvas.opacityProperty().set(0.85);
 		counter = new SimpleIntegerProperty(set_turn_time);
-		/**********************/
 
+		/**********************/
 		createCountDown();
 		startCountDown();
 		createTimer();
 		/**********************/
 
-//		grid = (GridPane) mainPain.lookup("#grid");
+		check_Sound.setSelected(true);
+		check_Sound.selectedProperty().addListener((obs, oldVal, newVal) -> {
+			GameData.getInstance().setSoundFX(newVal);
+			// Your code here
+		});
 
 		// Add a listener to the width and height properties of the scene
 		mainPain.widthProperty().addListener((observable, oldValue, newValue) -> {
 			if (oldValue.intValue() != 0) {
-//				System.out.println("widthProperty : observable " + observable.toString() + " oldValue " + oldValue
-//						+ " newValue " + newValue);
 				canvas.getChildren().clear();
 				mainPain.getChildren().remove(canvas);
 				redrawLines();
@@ -224,8 +201,6 @@ public class BoardControl implements GameEventSubject {
 
 		mainPain.heightProperty().addListener((observable, oldValue, newValue) -> {
 			if (oldValue.intValue() != 0) {
-//				System.out.println("heightProperty : observable " + observable.toString() + " oldValue " + oldValue
-//						+ " newValue " + newValue);
 				canvas.getChildren().clear();
 				mainPain.getChildren().remove(canvas);
 				drawBoardObjectsInSeparateThread();
@@ -255,6 +230,7 @@ public class BoardControl implements GameEventSubject {
 		rollButton.setOnAction(event -> roll(board.get_Dice_Result(),
 				GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn())));
 
+		pause_Btn.setOnAction(event -> pause());
 		GameData.getInstance().init_board();
 		board = GameData.getInstance().getBoard();
 		board.generate_board_Objects();
@@ -264,6 +240,36 @@ public class BoardControl implements GameEventSubject {
 		SoundManager soundManager = new SoundManager();
 		board.attach(soundManager);
 
+	}
+
+	private void pause() {
+		if (!paused) {
+			if (timer != null)
+				timer.pause();
+			if (timeline != null)
+				timeline.pause();
+			rollButton.setDisable(true);
+			pause_Btn.setText("Continue Game");
+			pauseLabel = new Label("Game is paused");
+			pauseLabel.setFont(new Font(50));
+			pauseLabel.setLayoutX(10);
+			pauseLabel.setLayoutY(300);
+			
+			// Add the label to the pane
+			canvas.getChildren().add(pauseLabel);
+
+			paused = true;
+		} else {
+			if (timer != null)
+				timer.play();
+			if (timeline != null)
+				timeline.play();
+			rollButton.setDisable(false);
+			pause_Btn.setText("Pause Game");
+			canvas.getChildren().remove(pauseLabel);
+			paused = false;
+
+		}
 	}
 
 	// Create the gridpane of the board with the initialized tiles and thiers id
@@ -326,7 +332,7 @@ public class BoardControl implements GameEventSubject {
 
 				// Create a new StackPane to hold the square and the label
 				Pane stackPane = new StackPane();
-				stackPane.setPadding(new Insets(10,10,10,10));
+				stackPane.setPadding(new Insets(10, 10, 10, 10));
 				stackPane.getChildren().addAll(tile, label);
 				GridPane.setRowIndex(stackPane, numTiles - 1 - i);
 				GridPane.setColumnIndex(stackPane, column);
@@ -340,10 +346,54 @@ public class BoardControl implements GameEventSubject {
 
 				count++;
 			}
-
 		}
 		return grid;
 
+	}
+
+	private void createCountDown() {
+		// Bind the time_Label to the counter property
+		countDown_Label.textProperty().bind(counter.asString());
+		// Create a timeline for the countdown
+		timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+			counter.set(counter.get() - 1);
+			if (counter.get() == 0) {// Skip player
+				rollButton.setDisable(true);
+				turn_Lable.setText("Missed your turn!!");
+				turn_Lable.setTextFill(Color.RED);
+				next_Turn();
+
+			}
+			if (counter.get() < 0) {
+				counter.set(0);
+			}
+
+		}));
+		timer.setCycleCount(Timeline.INDEFINITE); // Repeat indefinitely
+	}
+
+	private void createTimer() {
+		timeline = new Timeline();
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				timeSeconds++;
+				// update timerLabel
+				timer_Label.setText(timeSeconds.toString());
+			}
+		}));
+		timeline.playFromStart();
+
+	}
+
+	public void startCountDown() {
+		counter.set(set_turn_time);
+		timer.play();
+	}
+
+	private void stopTimer() {
+		timer.stop();
 	}
 
 	// add all special tiles (Surprise, question and red snake)
@@ -367,150 +417,34 @@ public class BoardControl implements GameEventSubject {
 		}
 	}
 
-	private void checktile_type(int tile_num, Player p) {
-		// Check if the tile is adding more steps to the players
-		Tile tile = board.getTile(tile_num);
-		if (tile.getType() != 0 && tile.getType() != 4) {
-			board.activateTile(tile_num, p);
-			move_Player(-5, p);
-		}
-		if (tile.getType() == 4) {
-//			System.out.println("check_Question " + curr_Tile);
-			Tile quetion_tile = board.is_question(tile_num);
-			if (quetion_tile != null) {
-				showQuestion(board.getTile(tile_num).getQuestion(), p);
-			}
-		}
-		if(checkwin(GameData.getInstance().getBoard().getGameEnd())) {
-			return;
-		}
+	public void drawBoardObjectsInSeparateThread() {
 
-		if (tile.getType() == 0) {
-			next_Turn();
-		}
-	}
+		Thread thread = new Thread(() -> {
+			Platform.runLater(() -> {
+				for (Player p : GameData.getInstance().getplayer_list()) {
+//					System.out.println("Adding:" + p.toString());
+					initiate_Players(p);
+				}
 
-	// move player
-	public void move_Player(int dice, Player p) {
+				for (Ladder l : GameData.getInstance().getLadders()) {
+//					System.out.println("l.getStart() " + l.getStart() + " l.getEnd() " + l.getEnd());
+					add_GameElement(l.getStart(), l.getEnd(), l);
+				}
 
-//		board.notifyObservers(GameEvent.PLAYER_HIT_LADDER);//check observer
+				for (Snake s : GameData.getInstance().getSnake_list()) {
+//			System.out.println("l.getStart() " + l.getStart() + " l.getEnd() " + l.getEnd());
+					add_GameElement(s.getStart(), s.getEnd(), s);
+				}
+				add_SpecialTiles();
 
-		if (dice != 0 && dice != -5) {
-//			System.out.println(dice);
-			GameData.getInstance().getBoard().move(dice, p);
-		}
-//		System.out.println("Boarcontrol move_Player " + p.toString());
-//		System.out.println(p.getPlacment_history());
-
-//		if(checkwin(GameData.getInstance().getBoard().getGameEnd())) {
-//			return;
-//		}
-//		checkwin(GameData.getInstance().getBoard().getGameEnd());
-		if (p.getCurrentP() == p.getPreviousStep()) {
-//			GameData.getInstance().next_turn();
-//			turn_Lable.setTextFill(Color.web(GameData.getInstance().getplayer_list()
-//					.get(GameData.getInstance().getPlayerTurn()).getColor()));
-//			turn_Lable.setText(GameData.getInstance().getplayer_list()
-//					.get(GameData.getInstance().getPlayerTurn()).getName() + "'s turn");
-//			Image token = new Image(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getToken());
-//			pTurn_image.setImage(token);
-			next_Turn();
-			return;
-		}
-		Pane curr_Tile = (Pane) grid.lookup("#" + p.getCurrentP());
-		Pane prev_tile = (Pane) grid.lookup("#" + p.getPreviousStep());
-		VBox playerbox = players_VBox_Container_list.get(p.getID() - 1);
-		if (dice != 0) {
-			animate(playerbox, prev_tile, curr_Tile, p);
-		} else {
-			next_Turn();
-		}
-	}
-
-	private void next_Turn() {
-		
-		PauseTransition pause = new PauseTransition(Duration.seconds(2));
-		pause.setOnFinished(event -> {
-			GameData.getInstance().next_turn();
-			turn_Lable.setTextFill(Color.web(
-					GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getColor()));
-			turn_Lable.setText(
-					GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getName()
-							+ "'s turn");
-			Image token = new Image(
-					GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getToken());
-			pTurn_image.setImage(token);
-			PauseTransition pauseForCPUCheck = new PauseTransition(Duration.millis(500));
-			pauseForCPUCheck.setOnFinished(eventForCPUCheck -> {
-				
-				checkCPU(); // Call the checkCPU function here
+				for (VBox playerbox : players_VBox_Container_list) {
+					Pane new_pos_pane = (Pane) grid.lookup("#" + playerbox.getId());
+					playerbox.prefHeightProperty().bind(new_pos_pane.heightProperty().multiply(0.8));
+					playerbox.prefWidthProperty().bind(new_pos_pane.widthProperty().multiply(0.8));
+				}
 			});
-			pauseForCPUCheck.play();
-			startCountDown();
-			board.notifyObservers(GameEvent.PLAYER_TURN);//check observer
-
 		});
-		pause.play();
-
-	}
-
-	private void checkCPU() {
-		// TODO Auto-generated method stub
-		System.out.println("checkCPU"
-				+ GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getClass()
-						.getName()
-				+ "Name: "
-				+ GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getName());
-		if (GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getClass().getName()
-				.equals("model.cpu_Player")) {
-			cpu_Player cpu_p = (cpu_Player) GameData.getInstance().getplayer_list()
-					.get(GameData.getInstance().getPlayerTurn());
-			if(GameData.getInstance().getBoard().getGameEnd() != 1) {
-				CommandInvoker invoker = new CommandInvoker();
-//				invoker.addCommand(new DelayCommand(2));
-				invoker.addCommand(new RollDiceCommand((cpu_Player) cpu_p));
-				invoker.executeCommands();
-			}
-		} else {
-			rollButton.setDisable(false);
-		}
-	}
-
-	private void animate(VBox playerbox, Pane start, Pane end, Player p) {
-		board.notifyObservers(GameEvent.PLAYER_MOVE);// check observer
-
-		if (gameEnd_var != 1)
-//			startCountDown();
-
-			if (playerbox == null || start == null || end == null || p == null) {
-				return;
-			}
-//		if(p.getCurrentP() == Integer.valueOf(end.getId())) {
-//			return;
-//		}
-		Point2D tileEnd = end.localToScene(end.getWidth() / 2, end.getHeight() / 2);
-		Point2D prevTile = start.localToScene(start.getWidth() / 2, start.getHeight() / 2);
-		double startX = tileEnd.getX();
-		double startY = tileEnd.getY();
-		double startX_prev = prevTile.getX();
-		double startY_prev = prevTile.getY();
-		int curr_P = p.getCurrentP();
-
-		TranslateTransition tt = new TranslateTransition(Duration.seconds(0.5), playerbox);
-
-		// Set the end position (the new tile)
-		tt.setToX(startX - startX_prev);
-		tt.setToY(startY - startY_prev);
-		// Play Animation
-		tt.play();
-		tt.setOnFinished(event -> {
-			System.out.println(end.getId());
-			System.out.println("prev_tile" + start.getId());
-			playerbox.setTranslateX(0);
-			playerbox.setTranslateY(0);
-			end.getChildren().addAll(playerbox);
-			checktile_type(p.getCurrentP(), p);
-		});
+		thread.start();
 	}
 
 	// initiate the players tokens
@@ -565,7 +499,7 @@ public class BoardControl implements GameEventSubject {
 //			System.out.println("null on one of tiles???");
 			return;
 		}
-		
+
 		// Grab the exact point of the tiles local to the grid, basically grabs the
 		// exact point from the board
 		Point2D tileStart = startTile.localToScene(startTile.getWidth() / 2, startTile.getHeight() / 2);
@@ -601,121 +535,15 @@ public class BoardControl implements GameEventSubject {
 		}
 
 	}
-
-	public void redrawLines() {
-		for (Ladder l : GameData.getInstance().getLadders()) {
-//			System.out.println("l.getStart() " + l.getStart() + " l.getEnd() " + l.getEnd());
-//			add_Ladders(l.getStart(), l.getEnd());
-			add_GameElement(l.getStart(), l.getEnd(), l);
-		}
-		for (Snake s : GameData.getInstance().getSnake_list()) {
-//			System.out.println("l.getStart() " + s.getStart() + " l.getEnd() " + s.getEnd());
-//			add_Snakes(s.getStart(), s.getEnd(), s.getColor());
-			add_GameElement(s.getStart(), s.getEnd(), s);
-		}
-//		add_SpecialTiles();
-	}
-
-	public void drawBoardObjectsInSeparateThread() {
-
-		Thread thread = new Thread(() -> {
-			Platform.runLater(() -> {
-				for (Player p : GameData.getInstance().getplayer_list()) {
-//					System.out.println("Adding:" + p.toString());
-					initiate_Players(p);
-				}
-
-				for (Ladder l : GameData.getInstance().getLadders()) {
-//					System.out.println("l.getStart() " + l.getStart() + " l.getEnd() " + l.getEnd());
-					add_GameElement(l.getStart(), l.getEnd(), l);
-				}
-
-				for (Snake s : GameData.getInstance().getSnake_list()) {
-//			System.out.println("l.getStart() " + l.getStart() + " l.getEnd() " + l.getEnd());
-					add_GameElement(s.getStart(), s.getEnd(), s);
-				}
-				add_SpecialTiles();
-
-				for (VBox playerbox : players_VBox_Container_list) {
-					Pane new_pos_pane = (Pane) grid.lookup("#" + playerbox.getId());
-					playerbox.prefHeightProperty().bind(new_pos_pane.heightProperty().multiply(0.8));
-					playerbox.prefWidthProperty().bind(new_pos_pane.widthProperty().multiply(0.8));
-				}
-			});
-		});
-		thread.start();
-	}
-
-	private void createCountDown() {
-		// Bind the time_Label to the counter property
-		countDown_Label.textProperty().bind(counter.asString());
-		// Create a timeline for the countdown
-		timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-			counter.set(counter.get() - 1);
-			if (counter.get() == 0) {// Skip player
-//				roll(board.get_Dice_Result(),
-//						GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()));
-				rollButton.setDisable(true);
-//				board.notifyObservers(GameEvent.PLAYER_MISSES_TURN);// obserevr for missed turn
-				turn_Lable.setText("Missed your turn!!");
-				turn_Lable.setTextFill(Color.RED);
-				next_Turn();
-//				turn_Lable.setTextFill(null);
-
-			}
-			if (counter.get() < 0) {
-				counter.set(0);
-			}
-//			if (counter.get() == 40) {//In the mean time this is what makes the CPU run, we should do a better job with that
-//				
-////				System.out.println(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn())
-////						.getClass().getName());
-//				
-//				if (GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getClass()
-//						.getName().equals("model.cpu_Player")) {
-//					cpu_Player cpu_p = (cpu_Player) GameData.getInstance().getplayer_list()
-//							.get(GameData.getInstance().getPlayerTurn());
-//					CommandInvoker invoker = new CommandInvoker();
-//					invoker.addCommand(new RollDiceCommand((cpu_Player) cpu_p));
-//					invoker.executeCommands();
-//				}
-////				timer.stop();
-//			}
-
-		}));
-		timer.setCycleCount(Timeline.INDEFINITE); // Repeat indefinitely
-	}
-
-	private void createTimer() {
-		timeline = new Timeline();
-		timeline.setCycleCount(Timeline.INDEFINITE);
-		timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				timeSeconds++;
-				// update timerLabel
-				timer_Label.setText(timeSeconds.toString());
-			}
-		}));
-		timeline.playFromStart();
-
-	}
-
-	public void startCountDown() {
-		counter.set(set_turn_time);
-		timer.play();
-	}
-
-	private void stopTimer() {
-		timer.stop();
-	}
-
+	
+	
 	public void roll(int dice, Player player) {
+		pause_Btn.setVisible(false);
 		board.notifyObservers(GameEvent.DICE_ROLL);// obserevr for roll dice
 		rollButton.setDisable(true);
 		final long[] frameCounter = { 0 };
 		final Random random = new Random();
-		AnimationTimer animationTimer = new AnimationTimer() {
+		diceRollAnimation = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
 				String path = "view/Images/dice/";
@@ -736,12 +564,11 @@ public class BoardControl implements GameEventSubject {
 //						rollButton.setDisable(false);
 						this.stop();
 						if (dice == 7 || dice == 8 || dice == 9) {
-							
+							if (GameData.getInstance().get_Question(dice) == null)
+								return;
 							Question q = GameData.getInstance().get_Question(dice);
 							showQuestion(q, player);
-							
 //							move_Player(dice, player);
-
 						} else {
 //							GameData.getInstance().getBoard().move(dice, player);
 							move_Player(dice, player);
@@ -751,25 +578,214 @@ public class BoardControl implements GameEventSubject {
 				}
 			}
 		};
-		animationTimer.start();
+		diceRollAnimation.start();
 //		startCountDown();
 	}
 
-	// Method to navigate to another screen
-//	private void navigateTo(String fxmlFile) {
-//		try {
-//			Stage stage = (Stage) return_btn.getScene().getWindow();
-//			double width = stage.getScene().getWidth();
-//			double height = stage.getScene().getHeight();
-//			System.out.print(GameData.getInstance().toString());
-//			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
-//			mainPain.getChildren().clear();
-//
-//			stage.setScene(scene);
-//		} catch (IOException e) {
-//			e.printStackTrace();
+	// move player
+	public void move_Player(int dice, Player p) {
+
+//		board.notifyObservers(GameEvent.PLAYER_HIT_LADDER);//check observer
+
+		if (dice != 0 && dice != -5) {
+//			System.out.println(dice);
+			GameData.getInstance().getBoard().move(dice, p);
+		}
+//		System.out.println("Boarcontrol move_Player " + p.toString());
+//		System.out.println(p.getPlacment_history());
+
+//		if(checkwin(GameData.getInstance().getBoard().getGameEnd())) {
+//			return;
 //		}
-//	}
+//		checkwin(GameData.getInstance().getBoard().getGameEnd());
+		if (p.getCurrentP() == p.getPreviousStep()) {
+//			GameData.getInstance().next_turn();
+//			turn_Lable.setTextFill(Color.web(GameData.getInstance().getplayer_list()
+//					.get(GameData.getInstance().getPlayerTurn()).getColor()));
+//			turn_Lable.setText(GameData.getInstance().getplayer_list()
+//					.get(GameData.getInstance().getPlayerTurn()).getName() + "'s turn");
+//			Image token = new Image(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getToken());
+//			pTurn_image.setImage(token);
+			next_Turn();
+			return;
+		}
+		Pane curr_Tile = (Pane) grid.lookup("#" + p.getCurrentP());
+		Pane prev_tile = (Pane) grid.lookup("#" + p.getPreviousStep());
+		VBox playerbox = players_VBox_Container_list.get(p.getID() - 1);
+		if (dice != 0) {
+			animate(playerbox, prev_tile, curr_Tile, p);
+		} else {
+			next_Turn();
+		}
+	}
+
+	private void animate(VBox playerbox, Pane start, Pane end, Player p) {
+		board.notifyObservers(GameEvent.PLAYER_MOVE);// check observer
+
+		if (gameEnd_var != 1)
+//			startCountDown();
+
+			if (playerbox == null || start == null || end == null || p == null) {
+				return;
+			}
+//		if(p.getCurrentP() == Integer.valueOf(end.getId())) {
+//			return;
+//		}
+		Point2D tileEnd = end.localToScene(end.getWidth() / 2, end.getHeight() / 2);
+		Point2D prevTile = start.localToScene(start.getWidth() / 2, start.getHeight() / 2);
+		double startX = tileEnd.getX();
+		double startY = tileEnd.getY();
+		double startX_prev = prevTile.getX();
+		double startY_prev = prevTile.getY();
+		int curr_P = p.getCurrentP();
+
+		TranslateTransition tt = new TranslateTransition(Duration.seconds(0.5), playerbox);
+
+		// Set the end position (the new tile)
+		tt.setToX(startX - startX_prev);
+		tt.setToY(startY - startY_prev);
+		// Play Animation
+		tt.play();
+		tt.setOnFinished(event -> {
+			playerbox.setTranslateX(0);
+			playerbox.setTranslateY(0);
+			end.getChildren().addAll(playerbox);
+			checktile_type(p.getCurrentP(), p);
+//			pause_Btn.setVisible(true);
+		});
+	}
+
+	private void checktile_type(int tile_num, Player p) {
+		// Check if the tile is adding more steps to the players
+		Tile tile = board.getTile(tile_num);
+		if (tile.getType() != 0 && tile.getType() != 4) {
+			board.activateTile(tile_num, p);
+			move_Player(-5, p);
+		}
+		if (tile.getType() == 4) {
+//			System.out.println("check_Question " + curr_Tile);
+			Tile quetion_tile = board.is_question(tile_num);
+			if (quetion_tile != null) {
+				showQuestion(board.getTile(tile_num).getQuestion(), p);
+			}
+		}
+		if (checkwin(GameData.getInstance().getBoard().getGameEnd())) {
+			return;
+		}
+
+		if (tile.getType() == 0) {
+			next_Turn();
+		}
+
+	}
+
+	private void next_Turn() {
+
+		pause_for_turn = new PauseTransition(Duration.seconds(2));
+		pause_for_turn.setOnFinished(event -> {
+			if (GameData.getInstance().getplayer_list().size() == 0)
+				return;
+			GameData.getInstance().next_turn();
+			turn_Lable.setTextFill(Color.web(
+					GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getColor()));
+			turn_Lable.setText(
+					GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getName()
+							+ "'s turn");
+			Image token = new Image(
+					GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getToken());
+			pTurn_image.setImage(token);
+			PauseTransition pauseForCPUCheck = new PauseTransition(Duration.millis(500));
+			pauseForCPUCheck.setOnFinished(eventForCPUCheck -> {
+				checkCPU(); // Call the checkCPU function here
+			});
+			pauseForCPUCheck.play();
+			startCountDown();
+			board.notifyObservers(GameEvent.PLAYER_TURN);// check observer
+		});
+		pause_for_turn.play();
+
+	}
+
+	private void checkCPU() {
+		// TODO Auto-generated method stub
+//		System.out.println("checkCPU"
+//				+ GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getClass()
+//						.getName()
+//				+ "Name: "
+//				+ GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getName());
+		if (GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getClass().getName()
+				.equals("model.cpu_Player")) {
+			cpu_Player cpu_p = (cpu_Player) GameData.getInstance().getplayer_list()
+					.get(GameData.getInstance().getPlayerTurn());
+			if (GameData.getInstance().getBoard().getGameEnd() != 1) {
+				pause_Btn.setVisible(false);
+
+				CommandInvoker invoker = new CommandInvoker();
+//				invoker.addCommand(new DelayCommand(2));
+				invoker.addCommand(new RollDiceCommand((cpu_Player) cpu_p));
+				invoker.executeCommands();
+			}
+		} else {
+			rollButton.setDisable(false);
+			pause_Btn.setVisible(true);
+		}
+	}
+
+	public void redrawLines() {
+		for (Ladder l : GameData.getInstance().getLadders()) {
+//			System.out.println("l.getStart() " + l.getStart() + " l.getEnd() " + l.getEnd());
+//			add_Ladders(l.getStart(), l.getEnd());
+			add_GameElement(l.getStart(), l.getEnd(), l);
+		}
+		for (Snake s : GameData.getInstance().getSnake_list()) {
+//			System.out.println("l.getStart() " + s.getStart() + " l.getEnd() " + s.getEnd());
+//			add_Snakes(s.getStart(), s.getEnd(), s.getColor());
+			add_GameElement(s.getStart(), s.getEnd(), s);
+		}
+//		add_SpecialTiles();
+	}
+
+
+	private void showQuestion(Question q, Player p) {
+		stopTimer();
+		board.notifyObservers(GameEvent.QUESTION_POP);// obserevr for QUESTION_POP
+
+		if (q == null) {
+			System.out.println("No question");
+			return;
+		}
+		popupStage = new Stage();
+
+		try {
+			popupStage.initOwner((return_btn).getScene().getWindow());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return;
+		}
+		popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
+		popupStage.setAlwaysOnTop(true); // Set always on top
+		popupStage.setResizable(false);
+		popupStage.getStyle();
+		popupStage.initStyle(StageStyle.UNDECORATED);
+
+		// Load the FXML file for the pop-up
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/GameQuestion.fxml"));
+		Parent root = null;
+		try {
+			root = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		QuestionPopControl questionPopControl = loader.getController();
+		// Set the scene and show the stage
+		questionPopControl.set_question(q);
+		questionPopControl.prev_window(this);
+		questionPopControl.set_player(p);
+		Scene scene = new Scene(root);
+		popupStage.setScene(scene);
+		popupStage.show();
+	}
 
 	private boolean checkwin(int gameEnd) {
 		gameEnd_var = gameEnd;
@@ -779,7 +795,7 @@ public class BoardControl implements GameEventSubject {
 //			stopThemeSong();
 			rollButton.setDisable(true);
 			timeline.stop();
-			timer.stop();
+			stopTimer();
 			popupStage = new Stage();
 			popupStage.initOwner((grid).getScene().getWindow());
 			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
@@ -813,56 +829,19 @@ public class BoardControl implements GameEventSubject {
 		return false;
 	}
 
-	private void showQuestion(Question q, Player p) {
-		timer.stop();
-		board.notifyObservers(GameEvent.QUESTION_POP);// obserevr for QUESTION_POP
-
-//		Question q = board.getTile(tile_num).getQuestion();
-		if (q == null) {
-			System.out.println("No question");
-			return;
-		}
-//		timer.stop();
-		popupStage = new Stage();
-		popupStage.initOwner((return_btn).getScene().getWindow());
-		popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
-		popupStage.setAlwaysOnTop(true); // Set always on top
-		popupStage.setResizable(false);
-		popupStage.getStyle();
-		popupStage.initStyle(StageStyle.UNDECORATED);
-		// Load the FXML file for the pop-up
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/GameQuestion.fxml"));
-		Parent root = null;
-		try {
-			root = loader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		QuestionPopControl questionPopControl = loader.getController();
-		// Set the scene and show the stage
-		questionPopControl.set_question(q);
-		questionPopControl.prev_window(this);
-		questionPopControl.set_player(p);
-		Scene scene = new Scene(root);
-//		popupStage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> {
-//			System.out.println("WINDOW_CLOSE_REQUEST");
-//			startCountDown();
-//		});
-		popupStage.setScene(scene);
-		popupStage.show();
-	}
-
 	private void clear_all() {
-		// "/view/MenuScreenView.fxml"
+
 		try {
 //			stopThemeSong();
+			if (diceRollAnimation != null)
+				diceRollAnimation.stop();
+			if (pause_for_turn != null)
+				pause_for_turn.stop();
 			GameData.getInstance().reset();
 			Stage stage = (Stage) return_btn.getScene().getWindow();
 			mainPain.getChildren().clear();
 			grid.getChildren().clear();
 			timer.stop();
-			
 			double width = stage.getScene().getWidth();
 			double height = stage.getScene().getHeight();
 			System.out.print(GameData.getInstance().toString());
@@ -884,8 +863,23 @@ public class BoardControl implements GameEventSubject {
 	public BoardControl getControlBoardControl() {
 		return this;
 	}
-	
-	
+
+	// Method to navigate to another screen
+//	private void navigateTo(String fxmlFile) {
+//		try {
+//			Stage stage = (Stage) return_btn.getScene().getWindow();
+//			double width = stage.getScene().getWidth();
+//			double height = stage.getScene().getHeight();
+//			System.out.print(GameData.getInstance().toString());
+//			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
+//			mainPain.getChildren().clear();
+//
+//			stage.setScene(scene);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
+
 //	private void themeSong() {
 //	    try {
 //			flagSong=1;
