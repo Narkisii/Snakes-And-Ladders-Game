@@ -577,14 +577,14 @@ public class BoardControl implements GameEventSubject {
 							if (GameData.getInstance().get_Question(dice) == null)
 								return;
 
-							//For QA purposes to not show question window comment this:
+							// For QA purposes to not show question window comment this:
 
 							Question q = GameData.getInstance().get_Question(dice);
 							showQuestion(q, player);
 
 							/*****/
 
-							//For QA purposes to not show question window uncomment this:
+							// For QA purposes to not show question window uncomment this:
 
 //							move_Player(dice, player);
 
@@ -854,28 +854,32 @@ public class BoardControl implements GameEventSubject {
 
 	void clear_all() {
 
-		try {
-//			stopThemeSong();
-			if (diceRollAnimation != null)
-				diceRollAnimation.stop();
-			if (pause_for_turn != null)
-				pause_for_turn.stop();
-			GameData.getInstance().reset();
-			Stage stage = (Stage) return_btn.getScene().getWindow();
-			mainPain.getChildren().clear();
-			grid.getChildren().clear();
-			timer.stop();
-			double width = stage.getScene().getWidth();
-			double height = stage.getScene().getHeight();
-			System.out.print(GameData.getInstance().toString());
-			Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/view/MenuScreenView.fxml")), width,
-					height);
-			stage.setScene(scene);
+		// stopThemeSong();
+		if (diceRollAnimation != null)
+			diceRollAnimation.stop();
+		if (pause_for_turn != null)
+			pause_for_turn.stop();
+		GameData.getInstance().reset();
+		Stage stage = (Stage) return_btn.getScene().getWindow();
+		mainPain.getChildren().clear();
+		grid.getChildren().clear();
+		timer.stop();
+		double width = stage.getScene().getWidth();
+		double height = stage.getScene().getHeight();
+		System.out.print(GameData.getInstance().toString());
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		PauseTransition delay = new PauseTransition(Duration.millis(500));
+		delay.setOnFinished(event -> {
+			try {
+				// Load the main menu after the delay
+				Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/view/MenuScreenView.fxml")), width,
+						height);
+				stage.setScene(scene);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
+		delay.play(); // Start the delay
 
 	}
 
