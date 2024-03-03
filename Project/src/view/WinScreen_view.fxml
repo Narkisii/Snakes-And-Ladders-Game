@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="winner" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="control.winScreen_Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.winScreen_Controller">
    <center>
-      <Pane fx:id="main_pane" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="main_pane" styleClass="winner" stylesheets="@resources/Css/popUpStyle.css">
          <children>
-            <VBox prefHeight="400.0" prefWidth="600.0">
+            <Pane fx:id="party_pane" prefHeight="305.0" prefWidth="600.0" />
+            <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0">
                <children>
-                  <Label fx:id="winner_label" alignment="CENTER" prefHeight="402.0" prefWidth="599.0" styleClass="title" stylesheets="@resources/Css/all_Style.css" text="You win" wrapText="true" />
+                  <Label fx:id="winner_label" alignment="CENTER" prefHeight="402.0" prefWidth="599.0" styleClass="winner_font" stylesheets="@resources/Css/popUpStyle.css" text="You win" wrapText="true" />
+                  <ImageView fx:id="winner_img" fitHeight="150.0" fitWidth="158.0" pickOnBounds="true" preserveRatio="true" />
+                  <Button fx:id="back_toMenu_Btn" alignment="CENTER" mnemonicParsing="false" styleClass="winnerButton" stylesheets="@resources/Css/Buttons.css" text="Return to menu" />
                </children>
             </VBox>
          </children>
-      </Pane>
+      </AnchorPane>
    </center>
 </BorderPane>

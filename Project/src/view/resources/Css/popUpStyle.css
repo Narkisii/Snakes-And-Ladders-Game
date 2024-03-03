@@ -1,18 +1,23 @@
 @font-face {
     src: url('/view/resources/Fonts/JejuHallasan-Regular.ttf');
 }
-
+/* 
 .bodybg{
-	/*-fx-background-image: url("/view/Images/yellow.jpg"); */
+	/*-fx-background-image: url("/view/Images/yellow.jpg"); 
 	-fx-background-image: url("/view/Images/BackGround/popBackground.png");
 	-fx-background-size: 100.0% 100.0%;
 	-fx-font-family: 'JejuHallasan';
 }
+*/
 .winner{
-	/*-fx-background-image: url("/Snakes_And_Ladders/src/view/Images/BackGround/winner.png"); */
-	-fx-background-image: url("/view/Images/BackGround/BackGround/winner.png");
+	-fx-background-image: url("/view/Images/BackGround/winner.png");
 	-fx-background-size: 100.0% 100.0%;
-	-fx-font-family: 'JejuHallasan';
+	-fx-font-family: 'JejuHallasan';	
+}
+
+.winner_font{
+	-fx-font-size: 50.0px;
+	-fx-effect: dropshadow(three-pass-box, black, 5.0, 5.0, 0.0, 0.0);
 }
 .title {
 	-fx-text-fill: #7EFF5E;
@@ -109,7 +114,7 @@
 }
 
 .question_Text {
-	-fx-font-size: 15pt;
+	-fx-font-size: 15.0pt;
 }
 
 

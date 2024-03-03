@@ -573,28 +573,26 @@ public class BoardControl implements GameEventSubject {
 						diceImage.setImage(img);
 //						rollButton.setDisable(false);
 						this.stop();
-						if (dice == 7 || dice == 8 || dice == 9) {
-							if (GameData.getInstance().get_Question(dice) == null)
-								return;
-
-							// For QA purposes to not show question window comment this:
-
-							Question q = GameData.getInstance().get_Question(dice);
-							showQuestion(q, player);
-
-							/*****/
-
-							// For QA purposes to not show question window uncomment this:
-
+//						if (dice == 7 || dice == 8 || dice == 9) {
+//							if (GameData.getInstance().get_Question(dice) == null)
+//								return;
+//
+//							// For QA purposes to not show question window comment this:
+////
+////							Question q = GameData.getInstance().get_Question(dice);
+////							showQuestion(q, player);
+//
+//							/*****/
+//							// For QA purposes to not show question window uncomment this:
+////							move_Player(dice, player);
+//							/*****/
 //							move_Player(dice, player);
-
-							/*****/
+//						}
+//						else {
+////							GameData.getInstance().getBoard().move(dice, player);
 //							move_Player(dice, player);
-						}
-						else {
-//							GameData.getInstance().getBoard().move(dice, player);
-							move_Player(dice, player);
-						}
+//						}
+						move_Player(40, player);
 
 					}
 				}
@@ -825,6 +823,7 @@ public class BoardControl implements GameEventSubject {
 			popupStage.setAlwaysOnTop(true); // Set always on top
 			popupStage.setResizable(false);
 			popupStage.getStyle();
+			popupStage.initStyle(StageStyle.UNDECORATED);
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/WinScreen_view.fxml"));
 			Parent root = null;
@@ -841,6 +840,7 @@ public class BoardControl implements GameEventSubject {
 			GameData.getInstance().setPlayTime(timeSeconds);
 			GameData.getInstance().appendGameToJson();
 			controller.setWinner(Player_won);
+			controller.setPreviousWindow(this);
 
 			Scene scene = new Scene(root);
 //			controller.setPreviousWindow(this);
@@ -868,7 +868,7 @@ public class BoardControl implements GameEventSubject {
 		double height = stage.getScene().getHeight();
 		System.out.print(GameData.getInstance().toString());
 
-		PauseTransition delay = new PauseTransition(Duration.millis(500));
+		PauseTransition delay = new PauseTransition(Duration.millis(100));
 		delay.setOnFinished(event -> {
 			try {
 				// Load the main menu after the delay
@@ -880,7 +880,6 @@ public class BoardControl implements GameEventSubject {
 			}
 		});
 		delay.play(); // Start the delay
-
 	}
 
 	public void setExitScreen() {
