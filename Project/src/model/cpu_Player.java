@@ -65,7 +65,7 @@ public class cpu_Player extends Player {
      * @param questionPopControl The board controller to be set.
      */
 	
-	public void set_board_controll(BoardControl questionPopControl) {
+	public void set_board_control(BoardControl questionPopControl) {
 		board_Controll = questionPopControl;
 	}
 

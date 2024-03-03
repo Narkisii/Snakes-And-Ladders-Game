@@ -11,41 +11,61 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Controller class for handling the exit confirmation pop-up in the game.
+ */
 public class ExitGameControl {
 
-	@FXML
-	private Button exitButton, noExitButton;
+    @FXML
+    private Button exitButton, noExitButton;
 
-	@FXML
-	private AnchorPane exitPop_Pane;
-		
-	private BoardControl previousWindow; // hold board control
-	
-	@FXML
-	void initialize() {
-		setButtons();
-	}
+    @FXML
+    private AnchorPane exitPop_Pane;
 
-	public void setButtons() {
-		exitButton.setOnAction(event -> {
-			// Create animation event to close the screen after waiting
-			PauseTransition delay = new PauseTransition(Duration.millis(500));
-			delay.setOnFinished(event_2 -> {
-				Stage stage = (Stage) exitPop_Pane.getScene().getWindow();
-				stage.close();
-			});
-			delay.play();
-			
-			previousWindow.clear_all();
-		});
+    /**
+     * Reference to the previous window (BoardControl) that triggered the exit pop-up.
+     */
+    private BoardControl previousWindow;
 
-		noExitButton.setOnAction(event -> {
-			((Stage)noExitButton.getScene().getWindow()).close();
-		});
-	}
-	
-	public void setPreviousWindow(BoardControl boardControl) {
-		// TODO Auto-generated method stub
-		this.previousWindow = boardControl;
-	}
+    /**
+     * Initializes the controller and sets up button event handlers.
+     */
+    @FXML
+    void initialize() {
+        setButtons();
+    }
+
+    /**
+     * Sets up event handlers for the exit and "no exit" buttons.
+     */
+    private void setButtons() {
+        exitButton.setOnAction(event -> {
+            // Close the pop-up window after a short delay for visual feedback
+            PauseTransition delay = new PauseTransition(Duration.millis(500));
+            delay.setOnFinished(event_2 -> {
+                Stage stage = (Stage) exitButton.getScene().getWindow();
+                stage.close();
+
+                // Call the previous window's clear_all method (assuming it exists)
+                if (previousWindow != null) {
+                    previousWindow.clear_all();
+                }
+            });
+            delay.play();
+        });
+
+        noExitButton.setOnAction(event -> {
+            // Close the pop-up window directly on "no exit" click
+            ((Stage) noExitButton.getScene().getWindow()).close();
+        });
+    }
+
+    /**
+     * Sets the reference to the previous window (BoardControl) associated with this pop-up.
+     *
+     * @param boardControl The BoardControl object representing the previous window.
+     */
+    public void setPreviousWindow(BoardControl boardControl) {
+        this.previousWindow = boardControl;
+    }
 }

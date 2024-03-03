@@ -68,6 +68,12 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableMap;
 
+/**
+ * This class controls the board functionality for the board game application.
+ * It handles initialization, gameplay mechanics, and visual updates for the
+ * board.
+ */
+
 public class BoardControl implements GameEventSubject {
 
 	private Stage popupStage;
@@ -89,8 +95,6 @@ public class BoardControl implements GameEventSubject {
 
 	@FXML
 	private Label timer_Label;
-
-	private Integer timeSeconds = 0;
 
 	private Timeline timeline;
 
@@ -115,37 +119,70 @@ public class BoardControl implements GameEventSubject {
 	@FXML
 	private Button pause_Btn;
 
-	// private MenuScreenControl menuControl;
-
-	// Create a HashMap to store the rectangles
-//	private HashMap<Integer, Rectangle> tile_Map;
-
 	// Initialize the timer properties
-	private IntegerProperty counter; // Initial time in seconds
+	/**
+	 * Property representing the game timer counter.
+	 */
+	private IntegerProperty counter;
+
+	/**
+	 * Timeline for the game timer.
+	 */
 	private Timeline timer;
 
-	private GridPane grid; // The grid that will contain the tiles
+	/**
+	 * Integer representing the time in seconds for the game timer.
+	 */
+	private Integer timeSeconds = 0;
 
+	/**
+	 * Grid pane containing the game tiles.
+	 */
+	private GridPane grid;
+
+	/**
+	 * List of containers for player tokens and name in a vbox.
+	 */
 	private ArrayList<VBox> players_VBox_Container_list;
 
+	/**
+	 * Variable representing the end of the game.
+	 */
 	private int gameEnd_var;
 
-	private List<GameEventObserver> observers = new ArrayList<>(); // observer list
+	/**
+	 * List of observers for game events.
+	 */
+	private List<GameEventObserver> observers = new ArrayList<>();
 
-	// Set Count down of each turn
-	int set_turn_time = 45;
+	/**
+	 * Duration for each turn.
+	 */
+	private int set_turn_time = 45;
 
+	/**
+	 * Pause transition for turn pauses.
+	 */
 	private PauseTransition pause_for_turn;
 
+	/**
+	 * Animation timer for dice rolling animation.
+	 */
 	private AnimationTimer diceRollAnimation;
 
+	/**
+	 * Boolean indicating whether the game is paused.
+	 */
 	private boolean paused = false;
-//	private int flagSong = 0;
-//
-//	private Clip boardSongClip;
 
+	/**
+	 * Map storing the time stopped on each turn.
+	 */
 	private ObservableMap<String, Duration> time_stopped_on;
 
+	/**
+	 * Label for pausing the game.
+	 */
 	private Label pauseLabel;
 
 	// OBSERVER METHODS
@@ -165,34 +202,42 @@ public class BoardControl implements GameEventSubject {
 			observer.onEventTriggered(event);
 		}
 	}
+
 	// END
+	/**
+	 * Initializes the FXML components and creates the board grid with tiles and
+	 * players.
+	 */
 
 	@FXML // This method is called by the FXMLLoader when initialization is complete
-	void initialize() {
-		// STOP THEME SONG
+	/**
+	 * This method is called when the FXML scene is loaded and initializes the
+	 * various components of the board game application.
+	 */
+	public void initialize() {
+
+		// Stop theme song and set flag (likely to prevent restarting)
 		MenuScreenControl.stopThemeSong();
 		MenuScreenControl.setFlagSong(0);
-//		themeSong();
-		/**********************/
-		players_VBox_Container_list = new ArrayList<VBox>();// VBoxes of the player tokens
-//		tile_Map = new HashMap<>();
-		canvas = new Pane();// Snake and ladders are drawn here separately
-//		canvas.opacityProperty().set(0.85);
-		counter = new SimpleIntegerProperty(set_turn_time);
 
-		/**********************/
+		// Initialize variables
+		players_VBox_Container_list = new ArrayList<VBox>(); // VBoxes of the player tokens
+		canvas = new Pane(); // Snake and ladders are drawn here separately
+		counter = new SimpleIntegerProperty(set_turn_time); // Turn timer property
+
+		// Create and start timers
 		createCountDown();
 		startCountDown();
 		createTimer();
-		/**********************/
 
+		// Set initial state and listener for sound effects toggle
 		check_Sound.setSelected(true);
 		check_Sound.selectedProperty().addListener((obs, oldVal, newVal) -> {
 			GameData.getInstance().setSoundFX(newVal);
 			// Your code here
 		});
 
-		// Add a listener to the width and height properties of the scene
+		// Add listeners for window resize events
 		mainPain.widthProperty().addListener((observable, oldValue, newValue) -> {
 			if (oldValue.intValue() != 0) {
 				canvas.getChildren().clear();
@@ -210,22 +255,19 @@ public class BoardControl implements GameEventSubject {
 				drawBoardObjectsInSeparateThread();
 				mainPain.getChildren().add(canvas);
 				add_SpecialTiles();
-
 			}
 		});
 
-//		}
+		// Create and add board grid
 		grid = createBoard(GameData.getInstance().getNumOfTiles());
-
 		boardpane.getChildren().add(grid);
 		drawBoardObjectsInSeparateThread();
 
+		// Add canvas and set action for buttons
 		mainPain.getChildren().add(canvas);
-		// Set the action for the return button
-		return_btn.setOnAction(event -> {
-			setExitScreen();
-		});
+		return_btn.setOnAction(event -> setExitScreen());
 
+		// Update turn label and image
 		turn_Lable.setTextFill(Color
 				.web(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getColor()));
 		turn_Lable.setText(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getName()
@@ -235,51 +277,71 @@ public class BoardControl implements GameEventSubject {
 		pTurn_image.setImage(img);
 		rollButton.setOnAction(event -> roll(board.get_Dice_Result(),
 				GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn())));
-
 		pause_Btn.setOnAction(event -> pause());
+
+		// Initialize and attach observer to board
 		GameData.getInstance().init_board();
 		board = GameData.getInstance().getBoard();
 		board.generate_board_Objects();
-//		add_SpecialTiles();
-
-		// attaching observer
 		SoundManager soundManager = new SoundManager();
 		board.attach(soundManager);
-
 	}
 
+	/**
+	 * Pauses or resumes the game based on the current state.
+	 *
+	 * This method handles pausing and resuming the game by: - Pausing/playing
+	 * timers and the animation timeline (if they exist). - Disabling/enabling the
+	 * "roll dice" button. - Updating the pause button text ("Pause Game" or
+	 * "Continue Game"). - Displaying/hiding a "Game is paused" label on the canvas.
+	 */
 	private void pause() {
 		if (!paused) {
-			if (timer != null)
+			// Game is not paused, so pause it
+			if (timer != null) {
 				timer.pause();
-			if (timeline != null)
+			}
+			if (timeline != null) {
 				timeline.pause();
-			rollButton.setDisable(true);
-			pause_Btn.setText("Continue Game");
-			pauseLabel = new Label("Game is paused");
-			pauseLabel.setFont(new Font(50));
-			pauseLabel.setLayoutX(10);
-			pauseLabel.setLayoutY(300);
+			}
+			rollButton.setDisable(true); // Disable roll button
+			pause_Btn.setText("Continue Game"); // Update button text
+			pauseLabel = new Label("Game is paused"); // Create pause label
+			pauseLabel.setFont(new Font(50)); // Set label font
+			pauseLabel.setLayoutX(10); // Set label position
+			pauseLabel.setLayoutY(300); // Set label position
 
-			// Add the label to the pane
+			// Add the label to the canvas
 			canvas.getChildren().add(pauseLabel);
 
-			paused = true;
-		}
-		else {
-			if (timer != null)
+			paused = true; // Set game state to paused
+		} else {
+			// Game is paused, so resume it
+			if (timer != null) {
 				timer.play();
-			if (timeline != null)
+			}
+			if (timeline != null) {
 				timeline.play();
-			rollButton.setDisable(false);
-			pause_Btn.setText("Pause Game");
-			canvas.getChildren().remove(pauseLabel);
-			paused = false;
+			}
+			rollButton.setDisable(false); // Enable roll button
+			pause_Btn.setText("Pause Game"); // Update button text
+			canvas.getChildren().remove(pauseLabel); // Remove pause label
 
+			paused = false; // Set game state to playing
 		}
 	}
 
-	// Create the gridpane of the board with the initialized tiles and thiers id
+	/**
+	 * Creates the visual board grid with tiles and their IDs.
+	 *
+	 * This method constructs the GridPane representing the game board and populates
+	 * it with tiles, labels, and StackPanes. It adjusts tile and label sizes based
+	 * on the board size and binds them to grid dimensions for dynamic resizing.
+	 * Tiles are given alternating colors for visual clarity.
+	 * 
+	 * @param numTiles The number of tiles per side of the square board.
+	 * @return The generated GridPane representing the visual board.
+	 */
 	private GridPane createBoard(int numTiles) {
 		grid = new GridPane(); // Initialize the grid
 		grid.setId("grid");
@@ -379,71 +441,105 @@ public class BoardControl implements GameEventSubject {
 		timer.setCycleCount(Timeline.INDEFINITE); // Repeat indefinitely
 	}
 
+	// Method to create the overall game timer
 	private void createTimer() {
+		// Initialize the timeline
 		timeline = new Timeline();
 		timeline.setCycleCount(Timeline.INDEFINITE);
+		// Add a key frame to update the timer label every second
 		timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				timeSeconds++;
-				// update timerLabel
-				timer_Label.setText(timeSeconds.toString());
+				timeSeconds++; // Increment timeSeconds by 1 every second
+				int hours = timeSeconds / 3600;
+				int minutes = (timeSeconds % 3600) / 60;
+				int seconds = timeSeconds % 60;
+				// Format the time as HH:MM:SS
+				String formattedTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+				// Update timerLabel
+				timer_Label.setText(formattedTime);
 			}
 		}));
 		timeline.playFromStart();
-
 	}
 
+	// Start the countdown timer
 	public void startCountDown() {
 		counter.set(set_turn_time);
 		timer.play();
 	}
 
+	// Stop the countdown timer
 	private void stopTimer() {
 		timer.stop();
 	}
 
-	// add all special tiles (Surprise, question and red snake)
+	/**
+	 * Adds visual representations of special tiles to the board.
+	 *
+	 * This method retrieves a list of special tiles from GameData, looks up their
+	 * corresponding Pane elements on the grid, and adds ImageViews with appropriate
+	 * images and bindings for dynamic resizing.
+	 */
 	private void add_SpecialTiles() {
+		// Get a list of special tiles
 		LinkedList<Tile> specialTiles = GameData.getInstance().getspecialTiles_list();
+
+		// Iterate through each special tile
 		for (Tile tile : specialTiles) {
+			// Find the corresponding Pane on the grid
 			Pane startTile = (Pane) grid.lookup("#" + tile.getId());
+
+			// Check if an ImageView for this tile already exists
 			ImageView tile_img = (ImageView) startTile.lookup("#image" + tile.getId());
+
+			// If the ImageView doesn't exist, create it
 			if (tile_img == null) {
-				Image img = new Image(tile.get_Image());
-				tile_img = new ImageView(img);
-				tile_img.setId("image" + tile.getId());
-				tile_img.setPreserveRatio(true);
-				tile_img.opacityProperty().set(0.8);
-				tile_img.fitHeightProperty().bind(startTile.heightProperty().multiply(0.8));
+				Image img = new Image(tile.get_Image()); // Load the tile image
+				tile_img = new ImageView(img); // Create the ImageView
+				tile_img.setId("image" + tile.getId()); // Set unique ID for future lookups
+				tile_img.setPreserveRatio(true); // Maintain aspect ratio
+				tile_img.opacityProperty().set(0.8); // Set initial opacity
+				tile_img.fitHeightProperty().bind(startTile.heightProperty().multiply(0.8)); // Bind size for dynamic
+																								// resizing
 				tile_img.fitWidthProperty().bind(startTile.widthProperty().multiply(0.8));
-				startTile.getChildren().add(tile_img);
+				startTile.getChildren().add(tile_img); // Add the ImageView to the Pane
 			}
+
+			// Ensure size bindings are always applied, even if the ImageView already
+			// existed
 			tile_img.fitHeightProperty().bind(startTile.heightProperty().multiply(0.8));
 			tile_img.fitWidthProperty().bind(startTile.widthProperty().multiply(0.8));
 		}
 	}
 
+	/**
+	 * Draws board objects in a separate thread. This method ensures that the board
+	 * is fully initialized before drawing the objects on it. It creates a new
+	 * thread to execute the drawing operations.
+	 */
 	public void drawBoardObjectsInSeparateThread() {
 
 		Thread thread = new Thread(() -> {
+			// Run the drawing operations on the JavaFX application thread
+
 			Platform.runLater(() -> {
+				// Iterate over each player in the player list and initialize their tokens
 				for (Player p : GameData.getInstance().getplayer_list()) {
-//					System.out.println("Adding:" + p.toString());
 					initiate_Players(p);
 				}
-
+				// Iterate over each ladder and add it to the game board
 				for (Ladder l : GameData.getInstance().getLadders()) {
-//					System.out.println("l.getStart() " + l.getStart() + " l.getEnd() " + l.getEnd());
 					add_GameElement(l.getStart(), l.getEnd(), l);
 				}
-
+				// Iterate over each snake and add it to the game board
 				for (Snake s : GameData.getInstance().getSnake_list()) {
-//			System.out.println("l.getStart() " + l.getStart() + " l.getEnd() " + l.getEnd());
 					add_GameElement(s.getStart(), s.getEnd(), s);
 				}
+				// Add special tiles (e.g., surprise, question, and red snake tiles) to the game
+				// board
 				add_SpecialTiles();
-
+				// Resize player token containers based on the size of their respective tiles
 				for (VBox playerbox : players_VBox_Container_list) {
 					Pane new_pos_pane = (Pane) grid.lookup("#" + playerbox.getId());
 					playerbox.prefHeightProperty().bind(new_pos_pane.heightProperty().multiply(0.8));
@@ -451,94 +547,122 @@ public class BoardControl implements GameEventSubject {
 				}
 			});
 		});
+		// Start the thread to execute the drawing operations
 		thread.start();
 	}
 
-	// initiate the players tokens
+	/**
+	 * Initializes the player tokens. This method creates and configures tokens for
+	 * each player on the game board.
+	 * 
+	 * @param p The player for which the token is being initialized.
+	 */
 	private void initiate_Players(Player p) {
-//		p.addStep(1);
+		// Find the pane corresponding to the player's current position on the game
+		// board
 		Pane new_pos_pane = (Pane) grid.lookup("#" + p.getCurrentP());
+		// Find the VBox container for the player's token
 		VBox playerbox = (VBox) new_pos_pane.lookup("#VBox" + p.getID());
 
 		Label playerName = null;
 		ImageView img = null;
+		// If the player's token container doesn't exist yet
 		if (playerbox == null) {
 			playerbox = new VBox();
 			playerbox.setId("VBox" + p.getID());
+			// Create a label for the player's name
 			playerName = new Label(p.getName());
 			playerName.setTextFill(Color.web(p.getColor()));
 			playerName.setId(String.valueOf(p.getID()) + p.getName());
 			playerName.getStylesheets().add("/view/resources/Css/all_Style.css");
 			playerName.getStyleClass().add("player_font");
+			// Load the player's token image
 			Image img_file = new Image(p.getToken());
 			img = new ImageView(img_file);
 			img.setId("Image" + p.getID());
-//			img.setFitHeight(image_size);
-//			img.setFitWidth(image_size);
 			img.setPreserveRatio(true);
+			// Add the player's name and token to the token container
+			// Because of the small tile size of the hardest difficulty board we won't add
+			// the players name
 			if (GameData.getInstance().getDifficulty().equals("Hard")) {
 				playerbox.getChildren().addAll(img);
-			}
-			else {
+			} else {
 				playerbox.getChildren().addAll(playerName, img);
 			}
+			// Add the token container to the list of player token containers
 			players_VBox_Container_list.add(playerbox);
 			new_pos_pane.getChildren().addAll(playerbox);
+
+			// If the player is a CPU player, set the game board control for it
 			if (p instanceof model.cpu_Player) {
-				((cpu_Player) p).set_board_controll(this);
+				((cpu_Player) p).set_board_control(this);
 			}
-		}
-		else {
+		} else {
+			// If the player's token container already exists, retrieve the player's name
+			// label and token image
 			playerName = (Label) playerbox.lookup("#" + p.getID() + p.getName());
 			img = (ImageView) playerbox.lookup("#Image" + p.getID());
 		}
+		// Adjust the size of the player's token based on the size of the tile it
+		// occupies
 		img.fitHeightProperty().bind(new_pos_pane.heightProperty().multiply(0.7));
 		img.fitWidthProperty().bind(new_pos_pane.widthProperty().multiply(0.7));
 
 	}
 
+	/**
+	 * Adds a game element (snake or ladder) to the game board. This method creates
+	 * and adds visual representations of snakes or ladders on the game board
+	 * canvas.
+	 * 
+	 * @param start   The starting position of the game element.
+	 * @param end     The ending position of the game element.
+	 * @param element The game element (snake or ladder) to be added.
+	 */
 	public void add_GameElement(int start, int end, Object element) {
+		// Create a factory to generate game elements
 		GameElementFactory factory = new GameElementFactory(canvas);
+		// Disable picking on bounds for the canvas
 		canvas.setPickOnBounds(false);
-//		System.out.println("add_GameElement: " + element.getClass().getName() + " Start: " + start + " End" + end);
 
+		// Find the pane corresponding to the start and end positions of the game
+		// element
 		Pane startTile = (Pane) grid.lookup("#" + start);
 		Pane endTile = (Pane) grid.lookup("#" + end);
+		// If either the start or end tile is not found, return without adding the game
+		// element
 		if (startTile == null || endTile == null) {
-//			System.out.println("null on one of tiles???");
 			return;
 		}
 
-		// Grab the exact point of the tiles local to the grid, basically grabs the
-		// exact point from the board
+		// Get the exact point of the start and end tiles local to the grid
 		Point2D tileStart = startTile.localToScene(startTile.getWidth() / 2, startTile.getHeight() / 2);
 		Point2D tileEnd = endTile.localToScene(endTile.getWidth() / 2, endTile.getHeight() / 2);
 
-		// distance between tiles
+		// Calculate the distance between the start and end tiles
 		double distance = tileStart.distance(tileEnd);
 
-		// Check what kind of Object we have, is it a snake or a ladder and use factory
-		// to create the object to draw
+		// Check the type of game element and use the factory to create and draw it
 		if (element instanceof Snake) { // Add the snake to the game
 			// Get the start x and y of the tile, get the end tile x and y
 			double startX = tileEnd.getX();
 			double startY = tileEnd.getY();
 			double endX = tileStart.getX();
 			double endY = tileStart.getY();
+			// Create a snake game element
 			GameElement snake = factory.getGameElement("SNAKE");
 			snake.set_Color(((Snake) element).getColor());
 
 			snake.add(startX, startY, endX, endY, distance);
 
-		}
-		else if (element instanceof Ladder) { // Add the ladder to the game
+		} else if (element instanceof Ladder) { // Add the ladder to the game
 			// Get the start x and y of the tile, get the end tile x and y
 			System.out.println("tileStart " + start + "tileEnd " + end);
 			double startX = tileStart.getX();
 			double startY = tileStart.getY();
 			double endX = tileEnd.getX();
 			double endY = tileEnd.getY();
-
+			// Create a ladder game element
 			GameElement ladder = factory.getGameElement("LADDER");
 			ladder.set_Tile(startTile);
 			ladder.add(startX, startY, endX, endY, distance);
@@ -546,19 +670,32 @@ public class BoardControl implements GameEventSubject {
 
 	}
 
+	/**
+	 * Initiates a dice roll for the specified player. This method handles the
+	 * animation and outcome of the dice roll, updating the UI accordingly.
+	 * 
+	 * @param dice   The number of dice to roll.
+	 * @param player The player rolling the dice.
+	 */
 	public void roll(int dice, Player player) {
+		// Hide the pause button during dice rolling
 		pause_Btn.setVisible(false);
-		board.notifyObservers(GameEvent.DICE_ROLL);// obserevr for roll dice
+		// Notify observers about the dice roll event
+		board.notifyObservers(GameEvent.DICE_ROLL);
+		// Disable the roll button to prevent multiple rolls
 		rollButton.setDisable(true);
-		final long[] frameCounter = { 0 };
-		final Random random = new Random();
+		final long[] frameCounter = { 0 }; // Counter for animation frames
+		final Random random = new Random(); // Random number generator for dice animation
+		// Animation timer for dice rolling
 		diceRollAnimation = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
-				String path = "view/Images/dice/";
-				if (frameCounter[0]++ % 3 == 0) { // adjust the 6 to control the speed of the animation
+				String path = "view/Images/dice/"; // Path to dice images
+				// Check if it's time to update the dice image
+				if (frameCounter[0]++ % 3 == 0) { // adjust to control the speed of the animation
 					if (frameCounter[0] < 50) { // adjust the 90 to control the duration of the animation
 						try {
+							// Generate a random dice image
 							Image img = new Image(path + (random.nextInt(10)) + ".png");
 							diceImage.setImage(img);
 						} catch (Exception e) {
@@ -567,91 +704,87 @@ public class BoardControl implements GameEventSubject {
 							Image img = new Image(path + (random.nextInt(10)) + ".png");
 							diceImage.setImage(img);
 						}
-					}
-					else {
+					} else {
+						// Show the actual dice result image
 						Image img = new Image(path + dice + ".png");
 						diceImage.setImage(img);
-//						rollButton.setDisable(false);
-						this.stop();
+						this.stop(); // Stop the animation
+						// Check if the dice result triggers a special action (question or movement)
 						if (dice == 7 || dice == 8 || dice == 9) {
+							// Check if there is a question associated with the dice result
 							if (GameData.getInstance().get_Question(dice) == null)
 								return;
-
-							// For QA purposes to not show question window comment this:
-//
+							// Get the question associated with the dice result
 							Question q = GameData.getInstance().get_Question(dice);
+							// Display the question
 							showQuestion(q, player);
-
-							/*****/
-							// For QA purposes to not show question window uncomment this:
-//							move_Player(dice, player);
-							/*****/
-//							move_Player(dice, player);
-						}
-						else {
-//							GameData.getInstance().getBoard().move(dice, player);
+						} else {// 1-6
+							// Move the player according to the dice result
 							move_Player(dice, player);
 						}
-//						move_Player(40, player);
-
 					}
 				}
 			}
 		};
+		// Start the dice rolling animation
 		diceRollAnimation.start();
-//		startCountDown();
 	}
 
-	// move player
+	/**
+	 * Moves the player according to the dice roll result. This method updates the
+	 * player's position on the board and triggers animations if necessary.
+	 * 
+	 * @param dice The number rolled on the dice.
+	 * @param p    The player to move.
+	 */
 	public void move_Player(int dice, Player p) {
-
-//		board.notifyObservers(GameEvent.PLAYER_HIT_LADDER);//check observer
-
+		// Move the player on the board based on the dice roll result
 		if (dice != 0 && dice != -5) {
-//			System.out.println(dice);
 			GameData.getInstance().getBoard().move(dice, p);
 		}
-//		System.out.println("Boarcontrol move_Player " + p.toString());
-//		System.out.println(p.getPlacment_history());
-
-//		if(checkwin(GameData.getInstance().getBoard().getGameEnd())) {
-//			return;
-//		}
-//		checkwin(GameData.getInstance().getBoard().getGameEnd());
+		// Check if the player remains on the same position after moving
 		if (p.getCurrentP() == p.getPreviousStep()) {
-//			GameData.getInstance().next_turn();
-//			turn_Lable.setTextFill(Color.web(GameData.getInstance().getplayer_list()
-//					.get(GameData.getInstance().getPlayerTurn()).getColor()));
-//			turn_Lable.setText(GameData.getInstance().getplayer_list()
-//					.get(GameData.getInstance().getPlayerTurn()).getName() + "'s turn");
-//			Image token = new Image(GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getToken());
-//			pTurn_image.setImage(token);
+			// Proceed to the next turn if the player stays on the same position
 			next_Turn();
 			return;
 		}
+		// Retrieve the current and previous tiles where the player was and will be
 		Pane curr_Tile = (Pane) grid.lookup("#" + p.getCurrentP());
 		Pane prev_tile = (Pane) grid.lookup("#" + p.getPreviousStep());
+		// Retrieve the player's VBox container
 		VBox playerbox = players_VBox_Container_list.get(p.getID() - 1);
+		// Animate the player's movement if the dice roll was not zero
 		if (dice != 0) {
 			animate(playerbox, prev_tile, curr_Tile, p);
-		}
-		else {
+		} else {
+			// Proceed to the next turn if the dice roll was zero
 			next_Turn();
 		}
 	}
 
+	/**
+	 * Animates the movement of the player token from one tile to another. This
+	 * method moves the player's VBox container from the start tile to the end tile
+	 * on the game board.
+	 * 
+	 * @param playerbox The VBox container representing the player token.
+	 * @param start     The starting tile from which the player moves.
+	 * @param end       The destination tile where the player will land.
+	 * @param p         The player whose token is being moved.
+	 */
 	private void animate(VBox playerbox, Pane start, Pane end, Player p) {
-		board.notifyObservers(GameEvent.PLAYER_MOVE);// check observer
+		// Notify observers about player movement
+		board.notifyObservers(GameEvent.PLAYER_MOVE);
 
-		if (gameEnd_var != 1)
-//			startCountDown();
-
+		// Check if the game has ended before proceeding with animation
+		if (gameEnd_var != 1) {
+			// Check if any necessary objects are null before proceeding
 			if (playerbox == null || start == null || end == null || p == null) {
 				return;
 			}
-//		if(p.getCurrentP() == Integer.valueOf(end.getId())) {
-//			return;
-//		}
+		}
+
+		// Calculate the exact coordinates of the end and start tiles
 		Point2D tileEnd = end.localToScene(end.getWidth() / 2, end.getHeight() / 2);
 		Point2D prevTile = start.localToScene(start.getWidth() / 2, start.getHeight() / 2);
 		double startX = tileEnd.getX();
@@ -660,125 +793,181 @@ public class BoardControl implements GameEventSubject {
 		double startY_prev = prevTile.getY();
 		int curr_P = p.getCurrentP();
 
+		// Create a TranslateTransition for smooth animation
 		TranslateTransition tt = new TranslateTransition(Duration.seconds(0.5), playerbox);
 
 		// Set the end position (the new tile)
 		tt.setToX(startX - startX_prev);
 		tt.setToY(startY - startY_prev);
+
 		// Play Animation
 		tt.play();
+
+		// Event handler for when the animation finishes
 		tt.setOnFinished(event -> {
+			// Reset translation values
 			playerbox.setTranslateX(0);
 			playerbox.setTranslateY(0);
+			// Add player token to the new tile
 			end.getChildren().addAll(playerbox);
+			// Check the type of the new tile (e.g., if it's a special tile)
 			checktile_type(p.getCurrentP(), p);
-//			pause_Btn.setVisible(true);
 		});
 	}
 
+	/**
+	 * Checks the type of the tile the player has landed on and performs appropriate
+	 * actions. This method determines the behavior of the player based on the type
+	 * of tile landed on.
+	 * 
+	 * @param tile_num The number representing the tile on the game board.
+	 * @param p        The player whose turn it is.
+	 */
 	private void checktile_type(int tile_num, Player p) {
-		// Check if the tile is adding more steps to the players
+		// Get the tile object from the board
 		Tile tile = board.getTile(tile_num);
-		if (tile.getType() != 0 && tile.getType() != 4) {
+
+		// Check if the tile adds more steps to the player
+		if (tile.getType() != 0 && tile.getType() != 4) {// 0 is regular tile, 4 is question tile
+			// Activate the tile effect and keep the player in place without adding an extra
+			// step
 			board.activateTile(tile_num, p);
-			move_Player(-5, p);
+			move_Player(-5, p);// -5 is basically a flag to keep the player in place and not add an extra step
 		}
-		if (tile.getType() == 4) {
-//			System.out.println("check_Question " + curr_Tile);
-			Tile quetion_tile = board.is_question(tile_num);
-			if (quetion_tile != null) {
+
+		if (tile.getType() == 4) {// is a question tile
+			// Check if there is a question associated with the tile
+			Tile question_tile = board.is_question(tile_num);
+			if (question_tile != null) {
+				// Display the question to the player
 				showQuestion(board.getTile(tile_num).getQuestion(), p);
 			}
 		}
+
+		// Check if the game has ended
 		if (checkwin(GameData.getInstance().getBoard().getGameEnd())) {
 			return;
 		}
 
-		if (tile.getType() == 0) {
+		// Check if the tile is a regular tile
+		if (tile.getType() == 0) {// regular tile
+			// Proceed to the next player's turn
 			next_Turn();
 		}
-
 	}
 
+	/**
+	 * Proceeds to the next player's turn after a specified duration. This method
+	 * updates the game state to the next player's turn and displays relevant
+	 * information.
+	 */
 	private void next_Turn() {
-
+		// Pause for a brief duration before proceeding to the next turn
 		pause_for_turn = new PauseTransition(Duration.seconds(2));
 		pause_for_turn.setOnFinished(event -> {
+			// Ensure there are players in the game
 			if (GameData.getInstance().getplayer_list().size() == 0)
 				return;
+			// Move to the next turn in the game data
 			GameData.getInstance().next_turn();
+
+			// Update turn label with current player's information
 			turn_Lable.setTextFill(Color.web(
 					GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getColor()));
 			turn_Lable.setText(
 					GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getName()
 							+ "'s turn");
+
+			// Set the image of the current player's token
 			Image token = new Image(
 					GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getToken());
 			pTurn_image.setImage(token);
+
+			// Pause briefly to check if it's a CPU player's turn
 			PauseTransition pauseForCPUCheck = new PauseTransition(Duration.millis(500));
 			pauseForCPUCheck.setOnFinished(eventForCPUCheck -> {
-				checkCPU(); // Call the checkCPU function here
+				checkCPU();
 			});
 			pauseForCPUCheck.play();
+
+			// Start countdown for the current player's turn
 			startCountDown();
+			// Notify observers about the player's turn
 			board.notifyObservers(GameEvent.PLAYER_TURN);// check observer
 		});
+
+		// Start the turn transition
 		pause_for_turn.play();
 
 	}
 
+	/**
+	 * Checks if the current player is a CPU player and performs the corresponding
+	 * actions. If the current player is a CPU player, it automatically rolls the
+	 * dice for them. Otherwise, it enables the roll button and makes the pause
+	 * button visible for manual control.
+	 */
 	private void checkCPU() {
-		// TODO Auto-generated method stub
-//		System.out.println("checkCPU"
-//				+ GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getClass()
-//						.getName()
-//				+ "Name: "
-//				+ GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getName());
+		// Check if the current player is a CPU player
 		if (GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getClass().getName()
 				.equals("model.cpu_Player")) {
 			cpu_Player cpu_p = (cpu_Player) GameData.getInstance().getplayer_list()
 					.get(GameData.getInstance().getPlayerTurn());
+			// If the game is not over, hide the pause button and roll the dice for the CPU
+			// player
 			if (GameData.getInstance().getBoard().getGameEnd() != 1) {
 				pause_Btn.setVisible(false);
-
+				// Create a CommandInvoker to execute the RollDiceCommand for the current CPU
+				// player
 				CommandInvoker invoker = new CommandInvoker();
-//				invoker.addCommand(new DelayCommand(2));
-				invoker.addCommand(new RollDiceCommand((cpu_Player) cpu_p));
+				// Add a RollDiceCommand to the invoker with the current CPU player as the
+				// target
+				invoker.addCommand(new RollDiceCommand((cpu_Player) GameData.getInstance().getplayer_list()
+						.get(GameData.getInstance().getPlayerTurn())));
+				// Execute the commands added to the invoker
 				invoker.executeCommands();
 			}
-		}
-		else {
+		} else {
+			// If the current player is not a CPU player, enable the roll button and make
+			// the pause button visible
 			rollButton.setDisable(false);
 			pause_Btn.setVisible(true);
 		}
 	}
 
+	/**
+	 * Redraws the lines representing ladders and snakes on the game board.
+	 */
 	public void redrawLines() {
 		for (Ladder l : GameData.getInstance().getLadders()) {
-//			System.out.println("l.getStart() " + l.getStart() + " l.getEnd() " + l.getEnd());
-//			add_Ladders(l.getStart(), l.getEnd());
 			add_GameElement(l.getStart(), l.getEnd(), l);
 		}
 		for (Snake s : GameData.getInstance().getSnake_list()) {
-//			System.out.println("l.getStart() " + s.getStart() + " l.getEnd() " + s.getEnd());
-//			add_Snakes(s.getStart(), s.getEnd(), s.getColor());
 			add_GameElement(s.getStart(), s.getEnd(), s);
 		}
-//		add_SpecialTiles();
 	}
 
+	/**
+	 * Displays a question pop-up window. This method stops the timer, notifies
+	 * observers about the question pop-up event, and initializes and displays the
+	 * question pop-up stage.
+	 *
+	 * @param q The Question object representing the question to be displayed.
+	 * @param p The Player object associated with the question.
+	 */
+
 	private void showQuestion(Question q, Player p) {
-		stopTimer();
-		board.notifyObservers(GameEvent.QUESTION_POP);// obserevr for QUESTION_POP
+		stopTimer(); // Stop the timer
+		board.notifyObservers(GameEvent.QUESTION_POP); // Notify observers about the question pop-up event
 
 		if (q == null) {
 			System.out.println("No question");
 			return;
 		}
-		popupStage = new Stage();
+		popupStage = new Stage(); // Create a new stage for the question pop-up window
 
 		try {
-			popupStage.initOwner((return_btn).getScene().getWindow());
+			popupStage.initOwner((return_btn).getScene().getWindow()); // Initialize the owner of the pop-up stage
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			return;
@@ -799,7 +988,7 @@ public class BoardControl implements GameEventSubject {
 		}
 
 		QuestionPopControl questionPopControl = loader.getController();
-		// Set the scene and show the stage
+		// Set the question, previous window, and player for the question pop-up control
 		questionPopControl.set_question(q);
 		questionPopControl.prev_window(this);
 		questionPopControl.set_player(p);
@@ -808,23 +997,31 @@ public class BoardControl implements GameEventSubject {
 		popupStage.show();
 	}
 
+	/**
+	 * Checks if the game has ended based on the provided gameEnd variable. If the
+	 * game has ended, disables the roll button, stops the timer, and displays the
+	 * win screen.
+	 * 
+	 * @param gameEnd The variable indicating whether the game has ended (1 for game
+	 *                over, 0 otherwise).
+	 * @return True if the game has ended, false otherwise.
+	 */
 	private boolean checkwin(int gameEnd) {
 		gameEnd_var = gameEnd;
-		// TODO Auto-generated method stub
-		if (gameEnd == 1) {
-//			stopTimer();
-//			stopThemeSong();
-			rollButton.setDisable(true);
-			timeline.stop();
-			stopTimer();
-			popupStage = new Stage();
-			popupStage.initOwner((grid).getScene().getWindow());
+		if (gameEnd == 1) { // Check if the game has ended
+			rollButton.setDisable(true); // Disable the roll button
+			timeline.stop(); // Stop the timer
+			stopTimer(); // Stop the timer
+
+			popupStage = new Stage(); // Create a new stage for the win screen
+			popupStage.initOwner((grid).getScene().getWindow()); // Initialize the owner of the win screen stage
 			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
 			popupStage.setAlwaysOnTop(true); // Set always on top
 			popupStage.setResizable(false);
 			popupStage.getStyle();
-			popupStage.initStyle(StageStyle.UNDECORATED);
+			popupStage.initStyle(StageStyle.UNDECORATED); // Initialize the style of the stage
 
+			// Load the FXML file for the win screen
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/WinScreen_view.fxml"));
 			Parent root = null;
 			try {
@@ -833,7 +1030,7 @@ public class BoardControl implements GameEventSubject {
 				e.printStackTrace();
 			}
 
-			// Load the FXML file for the pop-up
+			// Initialize the controller for the win screen
 			winScreen_Controller controller = loader.getController();
 			Player Player_won = GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn());
 			GameData.getInstance().setWinner(Player_won.getName());
@@ -843,7 +1040,6 @@ public class BoardControl implements GameEventSubject {
 			controller.setPreviousWindow(this);
 
 			Scene scene = new Scene(root);
-//			controller.setPreviousWindow(this);
 			// Set the scene and show the stage
 			popupStage.setScene(scene);
 			popupStage.show();
@@ -852,23 +1048,33 @@ public class BoardControl implements GameEventSubject {
 		return false;
 	}
 
+	/**
+	 * Clears all game-related data and resets the game to its initial state. Stops
+	 * any ongoing animations, resets game data, and clears the game interface.
+	 * 
+	 * If the game was initiated from a menu screen, returns to the menu screen
+	 * after a delay.
+	 */
 	void clear_all() {
-
-		// stopThemeSong();
 		if (diceRollAnimation != null)
-			diceRollAnimation.stop();
+			diceRollAnimation.stop(); // Stop the dice roll animation if it's running
 		if (pause_for_turn != null)
-			pause_for_turn.stop();
-		GameData.getInstance().reset();
-		Stage stage = (Stage) return_btn.getScene().getWindow();
+			pause_for_turn.stop(); // Stop the pause for turn if it's running
+
+		GameData.getInstance().reset(); // Reset the game data
+
+		Stage stage = (Stage) return_btn.getScene().getWindow(); // Get the current stage
+
+		// Clear all nodes from the main pane and grid
 		mainPain.getChildren().clear();
 		grid.getChildren().clear();
-		timer.stop();
-		double width = stage.getScene().getWidth();
-		double height = stage.getScene().getHeight();
-		System.out.print(GameData.getInstance().toString());
 
-		PauseTransition delay = new PauseTransition(Duration.millis(100));
+		timer.stop(); // Stop the timer
+
+		double width = stage.getScene().getWidth(); // Get the width of the current scene
+		double height = stage.getScene().getHeight(); // Get the height of the current scene
+
+		PauseTransition delay = new PauseTransition(Duration.millis(500));
 		delay.setOnFinished(event -> {
 			try {
 				// Load the main menu after the delay
@@ -882,6 +1088,10 @@ public class BoardControl implements GameEventSubject {
 		delay.play(); // Start the delay
 	}
 
+	/**
+	 * Sets up the exit game confirmation screen. Creates a new stage for the pop-up
+	 * if it's not already open.
+	 */
 	public void setExitScreen() {
 		// this method only need to set the screen and wait for the exit buttons event
 		setPopUpStage();
@@ -894,8 +1104,10 @@ public class BoardControl implements GameEventSubject {
 			e.printStackTrace();
 		}
 
+		// Get the controller for the exit game pop-up
 		ExitGameControl exitControl = loader.getController();
-		exitControl.setPreviousWindow(this);
+		exitControl.setPreviousWindow(this); // Set the previous window in the exit screen to get to diffrent board
+												// methods
 
 		// Set the scene and show the stage
 		Scene scene = new Scene(root);
@@ -903,14 +1115,22 @@ public class BoardControl implements GameEventSubject {
 		popupStage.show();
 	}
 
+	/**
+	 * Sets up the pop-up stage for the exit game confirmation screen. If the pop-up
+	 * is already open, does nothing. Otherwise, creates a new stage for the pop-up.
+	 */
 	public void setPopUpStage() {
 		// if the pop up is already open - do nothing
 		if (popupStage != null && popupStage.isShowing()) {
 			return;
-		}
-		else { // Create a new Stage for the pop-up
+		} else { // Create a new Stage for the pop-up
 			popupStage = new Stage();
 			popupStage.setResizable(false);
+			popupStage.initOwner((grid).getScene().getWindow());
+			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
+			popupStage.setAlwaysOnTop(true); // Set always on top
+			popupStage.setResizable(false);
+
 		}
 	}
 
@@ -922,57 +1142,4 @@ public class BoardControl implements GameEventSubject {
 		return this;
 	}
 
-//	public void setMenuControl(MenuScreenControl msControl) {
-//		this.menuControl = msControl;
-//	}
-//
-//	public MenuScreenControl getMenuControl() {
-//		return menuControl;
-//	}
-
-	// Method to navigate to another screen
-//	private void navigateTo(String fxmlFile) {
-//		try {
-//			Stage stage = (Stage) return_btn.getScene().getWindow();
-//			double width = stage.getScene().getWidth();
-//			double height = stage.getScene().getHeight();
-//			System.out.print(GameData.getInstance().toString());
-//			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
-//			mainPain.getChildren().clear();
-//
-//			stage.setScene(scene);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
-
-//	private void themeSong() {
-//	    try {
-//			flagSong=1;
-//
-//	        // Adjust the path to where your sound file is located
-//	        URL soundFile = this.getClass().getResource("/sounds/BOARD_JUNGLE_SONG.wav");
-//	        AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
-//	        boardSongClip = AudioSystem.getClip();
-//	        boardSongClip.open(audioIn);
-//
-//	        // Check if the Clip supports volume control
-//	        if (boardSongClip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-//	            FloatControl gainControl = (FloatControl) boardSongClip.getControl(FloatControl.Type.MASTER_GAIN);
-//	            float dB = (float) (Math.log(0.05) / Math.log(10.0) * 20.0);
-//	            gainControl.setValue(dB); // Reduce volume by a calculated dB value
-//	        }
-//	        boardSongClip.loop(Clip.LOOP_CONTINUOUSLY); // loop the sound
-//
-////	        boardSongClip.start();
-//	    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-//	        e.printStackTrace();
-//	    }
-//	}
-//	public void stopThemeSong() {
-//	    if (boardSongClip != null) {
-//	    	boardSongClip.stop(); // Stop the clip
-//	    	boardSongClip.close(); // Close the clip to release resources
-//	    }
-//	}
 }

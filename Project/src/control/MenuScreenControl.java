@@ -30,6 +30,11 @@ import javafx.application.Application;
 
 import javafx.util.Duration;
 
+/**
+ * Controller class for the menu screen of the game. This class handles user
+ * interaction with the menu elements and plays/stops background music and
+ * splash screen sound.
+ */
 public class MenuScreenControl {
 
 	@FXML
@@ -64,6 +69,10 @@ public class MenuScreenControl {
 	private String pathSoundON = "/view/Images/sound-on.png";
 	private String pathSoundOFF = "/view/Images/sound-off.png";
 
+	/**
+	 * Initializes the controller. - Sets up the sound button event handler. -
+	 * Displays the splash screen if it's the first time the game is launched.
+	 */
 	@FXML
 	public void initialize() {
 		System.out.println("initialize " + flagSong);
@@ -71,27 +80,25 @@ public class MenuScreenControl {
 		splash_Screen();
 	}
 
+	/**
+	 * Initializes the menu screen after the splash screen fades out. - Plays theme
+	 * music if sound is enabled. - Sets the sound icon based on the current sound
+	 * state. - Attaches event handlers to menu buttons.
+	 */
 	private void init() {
 		System.out.println("INIT " + flagSong);
-//		isSoundOn = true;
 		if (flagSong == 0) {
-			System.out.println("testtest init flagSong == 0");
 			stopThemeSong();
 			if (first_start) {
 				themeSong();
 				flagSong = 1;
 				first_start = false;
 			}
-		} else {
-			System.out.println("testtest init flagSong != 0");
 		}
-		System.out.println("INIT2 " + flagSong);
+
 		if (flagSong == 1) {
-			System.out.println("testtest initialize flagSong == 1 ");
 			sound_Icon.setImage(new Image(pathSoundON));
 		} else {
-			System.out.println("testtest initialize flagSong != 1");
-
 			sound_Icon.setImage(new Image(pathSoundOFF));
 		}
 
@@ -103,20 +110,17 @@ public class MenuScreenControl {
 		Menu_Pane.getChildren().remove(splash_screen_AnchorPane);
 	}
 
+	/**
+	 * Navigates to a different view based on the provided FXML file path.
+	 * 
+	 * @param fxmlFile The path to the FXML file of the target view.
+	 */
 	private void navigateTo(String fxmlFile) {
 
 		try {
 			Stage stage = (Stage) button_start.getScene().getWindow();
 			double width = stage.getScene().getWidth();
 			double height = stage.getScene().getHeight();
-//			if (!GameData.getInstance().get_isIngame()) {
-//				Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
-//				stage.setScene(scene);
-//			} else {
-//				Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/view/BoardView.fxml")), width,
-//						height);
-//				stage.setScene(scene);
-//			}
 			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
 
 			stage.setScene(scene);
@@ -127,15 +131,25 @@ public class MenuScreenControl {
 		}
 	}
 
+	/**
+	 * Plays the splash screen sound effect.
+	 */
 	private void spalshScreenSound() {
 		try {
 			System.out.println("sound1");
 
-			// Adjust the path to where your sound file is located
 			URL soundFile = this.getClass().getResource("/sounds/splashSound.wav");
 			AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
 			splashScreenClip = AudioSystem.getClip();
 			splashScreenClip.open(audioIn);
+
+			// Volume control
+			double volume = 0.15;
+			if (splashScreenClip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+				FloatControl gainControl = (FloatControl) splashScreenClip.getControl(FloatControl.Type.MASTER_GAIN);
+				float dB = (float) (Math.log(volume) / Math.log(10.0) * 20.0);
+				gainControl.setValue(dB); // Reduce volume by a calculated dB value
+			}
 			splashScreenClip.loop(Clip.LOOP_CONTINUOUSLY); // loop the sound
 			splashScreenClip.start();
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -143,31 +157,35 @@ public class MenuScreenControl {
 		}
 	}
 
+	/**
+	 * Plays the theme song in a loop with adjusted volume for a quieter experience.
+	 */
+
 	void themeSong() {
 		try {
-//			setFlagSong(1);
-//			flagSong = 1;
 
-			// Adjust the path to where your sound file is located
 			URL soundFile = this.getClass().getResource("/sounds/themeSong.wav");
 			AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
 			themeSongClip = AudioSystem.getClip();
 			themeSongClip.open(audioIn);
 
-			// Check if the Clip supports volume control
+			// Volume control
+			double volume = 0.15;
 			if (themeSongClip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
 				FloatControl gainControl = (FloatControl) themeSongClip.getControl(FloatControl.Type.MASTER_GAIN);
-				float dB = (float) (Math.log(0.15) / Math.log(10.0) * 20.0);
+				float dB = (float) (Math.log(volume) / Math.log(10.0) * 20.0);
 				gainControl.setValue(dB); // Reduce volume by a calculated dB value
 			}
 			themeSongClip.loop(Clip.LOOP_CONTINUOUSLY); // loop the sound
-
 			themeSongClip.start();
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Stops the splash screen sound effect if it's playing.
+	 */
 	private void stopSplashScreenSound() {
 		if (splashScreenClip != null) {
 			splashScreenClip.stop(); // Stop the clip
@@ -175,6 +193,10 @@ public class MenuScreenControl {
 		}
 	}
 
+	/**
+	 * Stops the theme song if it's playing and updates the flag indicating sound
+	 * state.
+	 */
 	public static void stopThemeSong() {
 		if (themeSongClip != null) {
 			themeSongClip.stop(); // Stop the clip
@@ -183,8 +205,12 @@ public class MenuScreenControl {
 		}
 	}
 
+	/**
+	 * Displays and animates the splash screen if it's the first time the game is
+	 * launched.
+	 */
 	private void splash_Screen() {
-		if (first_start) {
+		if (first_start) {//If first launch. show splash screen
 			spalshScreenSound();
 			Image image = new Image("/view/Images/BackGround/Scorpion_SplashScreen.png");
 			ImageView imageView = new ImageView(image);
@@ -213,13 +239,6 @@ public class MenuScreenControl {
 
 			pt.setOnFinished(event -> ft.play());
 
-			/*
-			 * // After the fade out is finished, load your menu ft.setOnFinished(event ->
-			 * init());
-			 * 
-			 * root.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ft.play());
-			 */
-
 			// Stop the sound and then load your menu after the fade out is finished
 			ft.setOnFinished(event -> {
 				stopSplashScreenSound();
@@ -229,16 +248,17 @@ public class MenuScreenControl {
 			splash_screen_AnchorPane.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 				stopSplashScreenSound(); // Ensure sound is stopped when splash screen is clicked
 				ft.play();
-//				soundOn_Icon.setVisible(true);
 			});
-//			first_start = false;
-		} else {
+		} else {//Just initiate without splash screen
 			init();
 		}
 	}
 
+	/**
+	 * Sets up the event handler for the sound button. Toggles sound on/off and
+	 * updates the sound icon accordingly.
+	 */
 	public void setSoundButtonEvent() {
-//		soundOn_Icon.setVisible(false);
 		sound_Icon.setOnMouseClicked(event -> {
 			if (flagSong == 1) {
 				sound_Icon.setImage(new Image(pathSoundOFF));
@@ -251,7 +271,6 @@ public class MenuScreenControl {
 			}
 		});
 	}
-
 
 	public static int getFlagSong() {
 		return flagSong;
