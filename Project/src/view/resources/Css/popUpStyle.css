@@ -112,6 +112,19 @@
 	-fx-font-weight: bold;
 }
 
+.login_button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #AFCBFF;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, black, 3.0, 3.0, 0.0, 0.0);
+    -fx-font-size: 30pt;
+}
+
+.login_button:hover {
+    -fx-effect: dropshadow(three-pass-box, #0F4D00, 4.0, 4.0, 0.0, 0.0);
+}
+
 .question_Text {
 	-fx-font-size: 15.0pt;
 }

@@ -25,10 +25,7 @@ import javafx.util.Duration;
 public class LoginController {
 
 	@FXML
-	private HBox buttonHBox;
-
-	@FXML
-	private Button loginButton, cancelButton;
+	private Button loginButton;
 
 	@FXML
 	private VBox formVBox;
@@ -57,9 +54,10 @@ public class LoginController {
 		checkUserInput();
 		setLoginEvent();
 		showLoginMessage(status);
-		if (status) {
-			approveLogin();
-		}
+		
+//		if (status) {
+//			approveLogin();
+//		}
 	}
 
 	public void checkUserInput() {
@@ -114,15 +112,15 @@ public class LoginController {
 			statusLbl.setStyle("-fx-text-fill: #367E18");
 		}
 		else { // login details incorrect
-			statusLbl.setText("Incorrect username or password");
-			statusLbl.setStyle("-fx-text-fill: #C21010;");
+			statusLbl.setText("Login failed!");
+			statusLbl.setStyle("-fx-text-fill: #C21010; -fx-font-size: 20pt");
+			statusLbl.setWrapText(true);
 		}
 	}
 
 	public void approveLogin() {
 		// Approve the user is admin and give permissions
-		previousWindow.setAdmin(status);
-		previousWindow.disableAdminControls(false);
+		previousWindow.enableAdminControls();
 
 		// Create animation event to close the screen after 5 seconds
 		PauseTransition delay = new PauseTransition(Duration.seconds(1));

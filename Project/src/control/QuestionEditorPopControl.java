@@ -246,7 +246,7 @@ public class QuestionEditorPopControl {
 		// import difficulty
 		difficulty_ComBox.setValue(String.valueOf(question.getDifficulty()));
 
-		if(previousWindow.isAdmin()) {
+		if(previousWindow.isAdmin == true) {
 			// Get answers and show on screen
 			List<String> answers = question.getAnswers();
 

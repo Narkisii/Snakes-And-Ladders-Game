@@ -126,10 +126,10 @@ public class QuestionWizControl {
 		rm_button.setDisable(true);
 		if (!isAdmin) {
 			// rm_button.setDisable(true);
-			disableAdminControls(true);
+			disableAdminControls();
 		}
 		else {
-			setAdmin(true);
+			enableAdminControls();
 		}
 		update_table();
 
@@ -214,7 +214,7 @@ public class QuestionWizControl {
 			Question selectedQuestion = qTable.getSelectionModel().getSelectedItem();
 			if (selectedQuestion != null) {
 				controller.setQuestionToDelete(selectedQuestion);
-				
+
 			}
 			controller.setPreviousWindow(this);
 
@@ -306,52 +306,40 @@ public class QuestionWizControl {
 		});
 	}
 
-	public void setAdmin(boolean status) {
-		isAdmin = status;
-		LogIn_Btn.setVisible(false);
-		Logout_Btn.setVisible(true);
+	public void enableAdminControls() {
+		isAdmin = true;
 
-		Logout_Btn.setOnAction(event -> {
-			setPopUpStage();
+		setLogoutButton();
+		swapLogButtons("log in");
+		add_button.setDisable(false);
+		messageLbl.setText("Double click on question to edit");
+	}
 
-			// Load the FXML file for the pop-up
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Logout.fxml"));
-			Parent root = null;
-			try {
-				root = loader.load();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			LogoutControl logoutControl = loader.getController();
-			logoutControl.setPreviousWindow(this);
-
-			// Set the scene and show the stage
-			Scene scene = new Scene(root);
-			popupStage.setScene(scene);
-			popupStage.show();
-		});
-
-		// setRemoveButton();
+	public void disableAdminControls() {
+		isAdmin = false;
+		
+		swapLogButtons("log out");
+		add_button.setDisable(true);
+		messageLbl.setText("You must log in to edit questions");
 	}
 
 	public boolean isAdmin() {
-		if (isAdmin) {
+		if (isAdmin)
 			return true;
-		}
 		return false;
 	}
 
-	public void disableAdminControls(boolean toDisable) {
-		add_button.setDisable(toDisable);
-		// rm_button.setDisable(toDisable);
-		LogIn_Btn.setDisable(!toDisable);
+	public void swapLogButtons(String type) {
+		switch (type) {
+		case "log in":
+			LogIn_Btn.setVisible(false);
+			Logout_Btn.setVisible(true);
+			break;
 
-		if (toDisable) {
-			messageLbl.setText("You must log in to edit questions");
-		}
-		else {
-			messageLbl.setText("Double click on question to edit");
+		case "log out":
+			LogIn_Btn.setVisible(true);
+			Logout_Btn.setVisible(false);
+			break;
 		}
 	}
 
@@ -467,6 +455,29 @@ public class QuestionWizControl {
 			popupStage = new Stage();
 			popupStage.setResizable(false);
 		}
+	}
+
+	public void setLogoutButton() {
+		Logout_Btn.setOnAction(event -> {
+			setPopUpStage();
+
+			// Load the FXML file for the pop-up
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Logout.fxml"));
+			Parent root = null;
+			try {
+				root = loader.load();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			LogoutControl logoutControl = loader.getController();
+			logoutControl.setPreviousWindow(this);
+
+			// Set the scene and show the stage
+			Scene scene = new Scene(root);
+			popupStage.setScene(scene);
+			popupStage.show();
+		});
 	}
 
 	private void navigateTo(String fxmlFile) {

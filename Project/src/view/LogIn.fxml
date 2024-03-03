@@ -29,9 +29,8 @@
                         <Label fx:id="statusLbl" alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="315.0" visible="false" />
                      </children>
                   </Pane>
-                      <HBox fx:id="buttonHBox" alignment="CENTER" prefHeight="82.0" prefWidth="482.0" spacing="10.0">
-                          <Button fx:id="loginButton" styleClass="finish_button" stylesheets="@resources/Css/popUpStyle.css" text="Log in" />
-                          <Button fx:id="cancelButton" styleClass="finish_button" stylesheets="@resources/Css/popUpStyle.css" text="Cancel" />
+                      <HBox fx:id="buttonHBox" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="57.0" prefWidth="314.0" spacing="10.0">
+                          <Button fx:id="loginButton" prefHeight="26.0" prefWidth="341.0" styleClass="login_button" stylesheets="@resources/Css/popUpStyle.css" text="Log in" />
                      <VBox.margin>
                         <Insets top="30.0" />
                      </VBox.margin>

@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -20,8 +22,18 @@
             </Label>
             <HBox alignment="CENTER" prefHeight="150.0" prefWidth="450.0" spacing="20.0">
                <children>
+                  <ImageView fitHeight="58.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/ok-icon.png" />
+                     </image>
+                  </ImageView>
                   <Button fx:id="yesButton" styleClass="finish_button" text="Yes" />
                   <Button fx:id="noButton" styleClass="finish_button" text="No" />
+                  <ImageView fitHeight="58.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/cancel-icon.png" />
+                     </image>
+                  </ImageView>
                </children>
             </HBox>
          </children>
