@@ -26,23 +26,28 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import control.HistoryControl;
 import exceptions.HandleExceptions;
+/**
+ * The GameData class manages the data related to the game, including players, questions, snakes, ladders, and special tiles.
+ * It provides methods for initialization, resetting, and accessing game data, as well as handling game progression.
+ * Write to Json and save the game history
+ */
 
 public class GameData {
-	private int numberOfPlayers;
-	private String difficulty;
-	private HashMap<Integer, List<Question>> questions_Map;
-	private LinkedList<Player> player_list;
-	private LinkedList<Snake> snake_list;
-	private LinkedList<Ladder> ladders;
-	private LinkedList<Tile> specialTiles_list;
-	private HistoryControl History;
-	private int playerTurn;
-	private Board board;
-	QuestionsFromJson questionData;
-	private int playTime;
-	private String winner;
-	private Boolean soundFX = true;
-	Map<Integer, Set<Question>> askedQuestionsMap = new HashMap<>();
+    private int numberOfPlayers; // The number of players in the game
+    private String difficulty; // The difficulty level of the game
+    private HashMap<Integer, List<Question>> questions_Map; // Map containing questions categorized by difficulty level
+    private LinkedList<Player> player_list; // List of players in the game
+    private LinkedList<Snake> snake_list; // List of snakes on the game board
+    private LinkedList<Ladder> ladders; // List of ladders on the game board
+    private LinkedList<Tile> specialTiles_list; // List of special tiles on the game board
+    private HistoryControl History; // Control object for managing game history
+    private int playerTurn; // Index of the current player's turn
+    private Board board; // Game board object
+    private QuestionsFromJson questionData; // Object for reading questions from JSON
+    private int playTime; // Total play time of the game
+    private String winner; // Name of the winner of the game
+    private Boolean soundFX = true; // Flag for enabling/disabling sound effects
+    private Map<Integer, Set<Question>> askedQuestionsMap = new HashMap<>(); // Map to track asked questions
 
 	// Singleton instance
 	private static GameData instance = null;
@@ -111,7 +116,6 @@ public class GameData {
 	 * Advances to the next turn. If the current player is the last in the list, the turn goes back to the first player.
 	 */
 	public void next_turn() {
-		System.out.println("getplayer_list().size()" + getplayer_list().size());
 		if (playerTurn < player_list.size() - 1) {
 			playerTurn++;
 		} else {
@@ -120,6 +124,7 @@ public class GameData {
 
 	}
 
+	//Initiate the board with the updated player list, used to init from the player_control to prepare the board.
 	public void init_board() {
 		this.board = new Board(player_list);
 	}
@@ -392,13 +397,13 @@ public class GameData {
 		this.soundFX = soundFX;
 	}
 
-	public void to_json() {
-	}
-
-	public Question getRandQuestion(int diff) {
-		return null;
-
-	}
+//	public void to_json() {
+//	}
+//
+//	public Question getRandQuestion(int diff) {
+//		return null;
+//
+//	}
 
 	/**
 	 * @return the board

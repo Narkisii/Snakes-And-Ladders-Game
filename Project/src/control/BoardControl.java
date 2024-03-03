@@ -573,26 +573,26 @@ public class BoardControl implements GameEventSubject {
 						diceImage.setImage(img);
 //						rollButton.setDisable(false);
 						this.stop();
-//						if (dice == 7 || dice == 8 || dice == 9) {
-//							if (GameData.getInstance().get_Question(dice) == null)
-//								return;
+						if (dice == 7 || dice == 8 || dice == 9) {
+							if (GameData.getInstance().get_Question(dice) == null)
+								return;
+
+							// For QA purposes to not show question window comment this:
 //
-//							// For QA purposes to not show question window comment this:
-////
-////							Question q = GameData.getInstance().get_Question(dice);
-////							showQuestion(q, player);
-//
-//							/*****/
-//							// For QA purposes to not show question window uncomment this:
-////							move_Player(dice, player);
-//							/*****/
+							Question q = GameData.getInstance().get_Question(dice);
+							showQuestion(q, player);
+
+							/*****/
+							// For QA purposes to not show question window uncomment this:
 //							move_Player(dice, player);
-//						}
-//						else {
-////							GameData.getInstance().getBoard().move(dice, player);
+							/*****/
 //							move_Player(dice, player);
-//						}
-						move_Player(40, player);
+						}
+						else {
+//							GameData.getInstance().getBoard().move(dice, player);
+							move_Player(dice, player);
+						}
+//						move_Player(40, player);
 
 					}
 				}

@@ -1,14 +1,13 @@
 @font-face {
     src: url('/view/resources/Fonts/JejuHallasan-Regular.ttf');
 }
-/* 
+
 .bodybg{
-	/*-fx-background-image: url("/view/Images/yellow.jpg"); 
 	-fx-background-image: url("/view/Images/BackGround/popBackground.png");
 	-fx-background-size: 100.0% 100.0%;
 	-fx-font-family: 'JejuHallasan';
 }
-*/
+
 .winner{
 	-fx-background-image: url("/view/Images/BackGround/winner.png");
 	-fx-background-size: 100.0% 100.0%;
