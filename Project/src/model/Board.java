@@ -58,8 +58,6 @@ public class Board implements GameEventSubject {
 		this.tile_is_question = false;
 		usedNumbers = new HashSet<>();
 		
-		
-
 	}
 	
 	//OBSERVER METHODS
@@ -67,7 +65,6 @@ public class Board implements GameEventSubject {
 	    public void attach(GameEventObserver observer) {
 	        observers.add(observer);
 	    	System.out.println("attached");
-
 	    }
 
 	    @Override
