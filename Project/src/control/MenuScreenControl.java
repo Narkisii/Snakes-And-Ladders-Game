@@ -52,7 +52,7 @@ public class MenuScreenControl {
 
 	private static boolean first_start = true;
 
-	private static boolean isSoundOn;
+//	private static boolean isSoundOn;
 
 	private Clip splashScreenClip;
 
@@ -61,12 +61,13 @@ public class MenuScreenControl {
 	private static int flagSong;
 
 	public void initialize() {
-		isSoundOn = true;
 		setSoundButtonEvent();
 		splash_Screen();
+		
 	}
 
 	private void init() {
+//		isSoundOn = true;
 
 		if (getFlagSong() == 0) {
 			stopThemeSong();
@@ -123,7 +124,8 @@ public class MenuScreenControl {
 
 	private void themeSong() {
 		try {
-			setFlagSong(1);
+//			setFlagSong(1);
+			flagSong = 1;
 
 			// Adjust the path to where your sound file is located
 			URL soundFile = this.getClass().getResource("/sounds/themeSong.wav");
@@ -205,6 +207,7 @@ public class MenuScreenControl {
 			root.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 				stopSplashScreenSound(); // Ensure sound is stopped when splash screen is clicked
 				ft.play();
+				soundOn_Icon.setVisible(true);
 			});
 			first_start = false;
 		} else {
@@ -213,29 +216,34 @@ public class MenuScreenControl {
 	}
 
 	public void setSoundButtonEvent() {
+		soundOn_Icon.setVisible(false);
 		soundOn_Icon.setOnMouseClicked(event -> {
-			setSoundIcon(isSoundOn);
+//			setSoundIcon(isSoundOn);
 			stopSplashScreenSound();
 			stopThemeSong();
-			flagSong = 0;
+			soundOn_Icon.setVisible(false);
+			soundOff_Icon.setVisible(true);
+			flagSong = 1;
 		});
 		soundOff_Icon.setOnMouseClicked(event -> {
-			setSoundIcon(isSoundOn);
+//			setSoundIcon(isSoundOn);
+			soundOn_Icon.setVisible(true);
+			soundOff_Icon.setVisible(false);
 			themeSong();
-			flagSong = 1;
+			flagSong = 0;
 		});
 	}
 
-	private void setSoundIcon(Boolean isAllowed) {
-		isSoundOn = !isAllowed;
-		if (isAllowed) {
-			soundOn_Icon.setVisible(false);
-			soundOff_Icon.setVisible(true);
-		} else {
-			soundOn_Icon.setVisible(true);
-			soundOff_Icon.setVisible(false);
-		}
-	}
+//	private void setSoundIcon(Boolean isAllowed) {
+//		isSoundOn = !isAllowed;
+//		if (isAllowed) {
+//			soundOn_Icon.setVisible(false);
+//			soundOff_Icon.setVisible(true);
+//		} else {
+//			soundOn_Icon.setVisible(true);
+//			soundOff_Icon.setVisible(false);
+//		}
+//	}
 
 	public static int getFlagSong() {
 		return flagSong;
