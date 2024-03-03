@@ -44,16 +44,19 @@ public class GameData {
 	private Boolean soundFX = true;
 	Map<Integer, Set<Question>> askedQuestionsMap = new HashMap<>();
 
-//    private static Dice dice;
-
 	// Singleton instance
 	private static GameData instance = null;
 
-	// Private constructor
+	/**
+	 * Private constructor that initializes the game data.
+	 */
 	private GameData() {
 		init();
 	}
 
+	/**
+	 * Initializes the game data by reading questions from JSON, setting up the game elements, and setting the default values.
+	 */
 	public void init() {
 		try {
 //	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
@@ -77,6 +80,9 @@ public class GameData {
 
 	}
 
+	/**
+	 * Resets the game data by clearing the game elements and setting the default values.
+	 */
 	public void reset() {
 		this.player_list.clear();
 		this.snake_list.clear();
@@ -87,7 +93,12 @@ public class GameData {
 		this.playerTurn = 0;
 		this.numberOfPlayers = 1;
 	}
-
+	
+	/**
+	 * Static method to get the singleton instance of GameData. If the instance is null, a new GameData is created.
+	 *
+	 * @return The singleton instance of GameData.
+	 */
 	// Static method to get the singleton instance
 	public static GameData getInstance() {
 		if (instance == null) {
@@ -96,6 +107,9 @@ public class GameData {
 		return instance;
 	}
 
+	/**
+	 * Advances to the next turn. If the current player is the last in the list, the turn goes back to the first player.
+	 */
 	public void next_turn() {
 		System.out.println("getplayer_list().size()" + getplayer_list().size());
 		if (playerTurn < player_list.size() - 1) {
@@ -148,6 +162,13 @@ public class GameData {
 		}
 	}
 
+	/**
+	 * Retrieves a question of a specified difficulty level.
+	 * If all questions of the specified difficulty have been asked, it resets and starts from the beginning.
+	 *
+	 * @param diff The difficulty level of the question (7-easy, 8-medium, 9-hard).
+	 * @return A question of the specified difficulty.
+	 */
 	public Question get_Question(int diff) {// 7-easy, 8- med, 9 - hard
 		List<Question> q_list = questions_Map.get(diff);
 	    Set<Question> askedQuestions = askedQuestionsMap.getOrDefault(diff, new HashSet<>());
@@ -165,13 +186,6 @@ public class GameData {
 	    // Add the selected question to the set of asked questions
 	    askedQuestions.add(question);
 	    askedQuestionsMap.put(diff, askedQuestions);
-//
-//		System.out.println(q_list);
-//		Random rand = new Random();
-//		int generator = rand.nextInt(q_list.size());
-
-//		return q_list.get(generator);
-		
 		return question;
 	}
 
@@ -245,6 +259,12 @@ public class GameData {
 		player_list = p;
 	}
 
+	/**
+	 * Adds a player to the game if the player is not null.
+	 *
+	 * @param player The player to be added.
+	 * @return True if the player was added, false otherwise.
+	 */
 	public boolean addPlayer(Player player) {
 		if (player != null) {
 			player_list.add(player);
@@ -254,6 +274,12 @@ public class GameData {
 		}
 	}
 
+	/**
+	 * Retrieves a player from the game.
+	 *
+	 * @param player The player to be retrieved.
+	 * @return The player if found, null otherwise.
+	 */
 	public Player getPlayer(Player player) {
 		for (Player p : player_list) {
 			if (p.equals(player)) {
@@ -313,9 +339,14 @@ public class GameData {
 		ladders = l;
 	}
 
+	/**
+	 * Adds a ladder to the game if the ladder is not null.
+	 *
+	 * @param l The ladder to be added.
+	 * @return True if the ladder was added, false otherwise.
+	 */
 	public boolean addLadders(Ladder l) {
 		if (l != null) {
-//			System.out.println("Added ladder:" + l.toString());
 			ladders.add(l);
 			return true;
 		}
@@ -391,10 +422,12 @@ public class GameData {
 				+ ", board=" + board + "]";
 	}
 
+	/**
+	 * Appends the current game data to a JSON file.
+	 * The game data includes the date, players, difficulty, play time, and winner.
+	 */
 	public void appendGameToJson() {
 		ObjectMapper mapper = new ObjectMapper();
-//        File file = new File("gameData.json");
-		// Load existing game data
 		File file = new File("src/Json/History.txt");
 		ArrayNode gameDataArray;
 		try {

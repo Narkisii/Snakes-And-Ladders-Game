@@ -14,27 +14,33 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+/**
+ * Class for handling questions from a JSON file.
+ */
 public class QuestionsFromJson {
 	private static QuestionsFromJson instance;
 	private HashMap<Integer, List<Question>> questionMap;
-	/**
-	 * 
-	 */
 
 	@JsonProperty("questions")
 	private List<Question> questions;
-//	private String path = "src/Json/Questions.txt";
 
 	private String path;
 	File file;
 
+	/**
+	 * Constructor that initializes the question map and file.
+	 */
 	public QuestionsFromJson() {
 		super();
 		this.file = returnFile();
 		questionMap = new HashMap<Integer, List<Question>>();
-
 	}
 
+	/**
+	 * Static method to get the singleton instance of QuestionsFromJson. If the instance is null, a new QuestionsFromJson is created.
+	 *
+	 * @return The singleton instance of QuestionsFromJson.
+	 */
 	public static QuestionsFromJson getInstance() {
 		if (instance == null) {
 			instance = new QuestionsFromJson();
@@ -42,38 +48,44 @@ public class QuestionsFromJson {
 		return instance;
 	}
 
-//	// Private constructor
-//	private get_QuestionsFromJson(List<Question> questions) {
-//		this.questions = questions;
-//	}
-//
-//	private set_QuestionsFromJson() {
-//		this.questions = new ArrayList<>();
-//	}
-
 	/**
-	 * @return the questions
+	 * Gets the list of questions.
+	 *
+	 * @return The list of questions.
 	 */
 	public List<Question> getQuestions() {
 		return questions;
 	}
 
-	
+	/**
+	 * Initializes the question map with questions of different difficulties.
+	 *
+	 * @return The question map.
+	 */
 	public HashMap<Integer, List<Question>> init_QuestionMap(){
 		questionMap.put(7, getQuestionsByDifficulty(1));
 		questionMap.put(8, getQuestionsByDifficulty(2));
 		questionMap.put(9, getQuestionsByDifficulty(3));
 
 		return questionMap;
-		
 	}
+
 	/**
-	 * @param questions the questions to set
+	 * Sets the list of questions.
+	 *
+	 * @param questions The list of questions.
 	 */
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
 	}
 
+	/**
+	 * Reads questions from a JSON file.
+	 *
+	 * @return The QuestionsFromJson instance.
+	 * @throws IOException If an I/O error occurs.
+	 * @throws NoJsonFileFound If the JSON file is not found.
+	 */
 	public QuestionsFromJson readQuestionsFromJson() throws IOException, NoJsonFileFound {
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -84,19 +96,22 @@ public class QuestionsFromJson {
 			return questions_class;
 
 		} catch (Exception e) {
-			// TODO: handle exception
 			try {
 				this.path = "Json/Questions.txt";
 				this.file = new File(path);
 				QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
 				return questions_class;
 			} catch (Exception e1) {
-				// TODO: handle exception
 				throw new NoJsonFileFound();
 			}
 		}
 	}
 
+	/**
+	 * Returns the file from which the questions are read.
+	 *
+	 * @return The file.
+	 */
 	public File returnFile() {
 		ObjectMapper mapper = new ObjectMapper();
 		file = null;
@@ -107,42 +122,40 @@ public class QuestionsFromJson {
 			return file;
 
 		} catch (Exception e) {
-			// TODO: handle exception
 			try {
 				this.path = "Json/Questions.txt";
 				this.file = new File(path);
 				QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
 				return file;
 			} catch (Exception e1) {
-				// TODO: handle exception
 			}
 		}
 		return file;
-
-		// List<Question> questions = new
-//		QuestionsFromJson questions_class = mapper.readValue(new File(path), QuestionsFromJson.class);
-//		QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
-
-//        questions_class.questions = questions_class.getQuestions();
-//		return questions_class;
 	}
 
+	/**
+	 * Removes a question from the list of questions.
+	 *
+	 * @param question The question to be removed.
+	 */
 	public void removeQuestion(Question question) {
-		System.out.println("questions.size() " + questions.size());
 		int index = -1;
 		for (int i = 0; i < questions.size(); i++) {
 			if (question.equals(questions.get(i))) {
-				System.out.println(i);
 				index = i;
 			}
 		}
 		if (index != -1) {
 			this.questions.remove(index);
-		} else {
-			return;
 		}
 	}
 
+	/**
+	 * Adds a question to the list of questions.
+	 *
+	 * @param question The question to be added.
+	 * @throws DuplicateError If the question is a duplicate.
+	 */
 	public void addQuestion(Question question) throws DuplicateError {
 		for (Question q : this.questions) {
 			if (q.equals(question)) {
@@ -150,17 +163,17 @@ public class QuestionsFromJson {
 			}
 		}
 		questions.add(question);
-
 	}
 
-	// The Idea is to sort the Questions by dif and then change the id of the
-	// original Question
-	// to a counter start from 1
+	/**
+	 * Gets the questions of a specific difficulty.
+	 *
+	 * @param difficulty The difficulty of the questions.
+	 * @return The list of questions of the specified difficulty.
+	 */
 	public List<Question> getQuestionsByDifficulty(int difficulty) {
-//		AtomicInteger counter = new AtomicInteger(1);
 		return this.questions.stream().filter(q -> q.getDifficulty() == difficulty).map(q -> {
 			Question newQuestion = new Question();
-			// newQuestion.setId(counter.getAndIncrement());
 			newQuestion.setQuestion(q.getQuestion());
 			newQuestion.setAnswers(q.getAnswers());
 			newQuestion.setCorrectAnswer(q.getCorrectAnswer());
@@ -168,17 +181,18 @@ public class QuestionsFromJson {
 			return newQuestion;
 		}).collect(Collectors.toList());
 	}
-
+	
+	/**
+	 * Edits a question in the list of questions.
+	 *
+	 * @param beforeChange The question to be edited.
+	 * @param newQuestion The new question to replace the old one.
+	 */
 	public void editQuestion(Question beforeChange, Question newQuestion) {
 		try {
-			// Read existing questions from JSON file
 			ObjectMapper objectMapper = new ObjectMapper();
-//			List<Question> questions = objectMapper.readValue(new File(path),
-//					new TypeReference<List<Question>>() {
-//					});
-			List<Question> questions = objectMapper.readValue(file, new TypeReference<List<Question>>() {
-			});
-			// Find the question to be edited and replace it with the new question
+
+			List<Question> questions = objectMapper.readValue(file, new TypeReference<List<Question>>() {});
 			for (int i = 0; i < questions.size(); i++) {
 				Question q = questions.get(i);
 				if (q.equals(beforeChange)) {
@@ -186,9 +200,6 @@ public class QuestionsFromJson {
 					break;
 				}
 			}
-
-			// Write the updated questions back to the JSON file
-//			objectMapper.writeValue(new File(path), questions);
 			objectMapper.writeValue(file, questions);
 
 		} catch (IOException e) {
@@ -196,23 +207,19 @@ public class QuestionsFromJson {
 		}
 	}
 
-//    public static void writeQuestionsToJson() {
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        objectMapper.enable(SerializationFeature.INDENT_OUTPUT); // Enable pretty printing
-//        try {
-//            objectMapper.writeValue(new File(path), getInstance());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
+	/**
+	 * Writes the current instance of QuestionsFromJson to a JSON file.
+	 *
+	 * @throws IOException If an I/O error occurs.
+	 */
 	public void toJson() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.enable(SerializationFeature.INDENT_OUTPUT); // Enable pretty printing
 
 		mapper.writeValue(file, this);
-
-//		mapper.writeValue(new File(path), this);
 	}
 
 }
+
+
+

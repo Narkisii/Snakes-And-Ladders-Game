@@ -6,12 +6,19 @@ import javax.sound.sampled.*;
 import java.io.IOException;
 import java.net.URL;
 
+/**
+ * Class for managing sound effects in the game. Implements the GameEventObserver interface for the observer pattern.
+ */
 public class SoundManager implements GameEventObserver {
 
     private double gain = 0.75; // 0.75 = 75%
     float dB = (float)(Math.log(gain)/Math.log(10.0)*20.0);
 
-	// A single method to play sounds, given a URL
+    /**
+     * Plays a sound given a sound file name.
+     *
+     * @param soundFileName The name of the sound file.
+     */
     private void playSound(String soundFileName) {
     	if(!GameData.getInstance().getSoundFX())
     		return;
@@ -31,6 +38,11 @@ public class SoundManager implements GameEventObserver {
         }
     }
 
+    /**
+     * Plays a sound based on the triggered game event.
+     *
+     * @param event The game event.
+     */
     @Override
     public void onEventTriggered(GameEvent event) {
         switch (event) {

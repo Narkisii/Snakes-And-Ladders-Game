@@ -49,191 +49,286 @@ public class Board implements GameEventSubject {
 	/**
 	 * @param type
 	 */
+	/**
+	 * Constructor for the Board class.
+	 * Initializes the game board and sets the game end condition to 0.
+	 * Also initializes each Tile object and a set of used numbers.
+	 *
+	 * @param players A LinkedList of Player objects participating in the game.
+	 */
 	public Board(LinkedList<Player> players) {
-		this.players = players;
-		this.gameboard = initGameBoard();
-		this.gameEnd = 0;
-//		this.difficulty = difficulty;
-		// Initialize each Tile object
-		this.tile_is_question = false;
-		usedNumbers = new HashSet<>();
-		
+	    this.players = players;
+	    this.gameboard = initGameBoard();
+	    this.gameEnd = 0;
+
+	    // Initialize each Tile object
+	    this.tile_is_question = false;
+	    usedNumbers = new HashSet<>();
 	}
-	
-	//OBSERVER METHODS
-		@Override
-	    public void attach(GameEventObserver observer) {
-	        observers.add(observer);
-	    	System.out.println("attached");
+
+	// OBSERVER METHODS
+
+	/**
+	 * Attaches an observer to the list of observers.
+	 *
+	 * @param observer The GameEventObserver to be attached.
+	 */
+	@Override
+	public void attach(GameEventObserver observer) {
+	    observers.add(observer);
+	    System.out.println("attached");
+	}
+
+	/**
+	 * Detaches an observer from the list of observers.
+	 *
+	 * @param observer The GameEventObserver to be detached.
+	 */
+	@Override
+	public void detach(GameEventObserver observer) {
+	    observers.remove(observer);
+	}
+
+	/**
+	 * Notifies all observers of a specific event.
+	 *
+	 * @param event The GameEvent that has been triggered.
+	 */
+	@Override
+	public void notifyObservers(GameEvent event) {
+	    for (GameEventObserver observer : observers) {
+	        observer.onEventTriggered(event);
 	    }
-
-	    @Override
-	    public void detach(GameEventObserver observer) {
-	        observers.remove(observer);
-	    }
-
-	    @Override
-	    public void notifyObservers(GameEvent event) {
-	        for (GameEventObserver observer : observers) {
-	            observer.onEventTriggered(event);
-	        }}
-	    //END
+	}
 
 
-
-//	public Board(int numTilesInARow, LinkedList<Player> players2) {
-//		// TODO Auto-generated constructor stub
-//		this.numTiles = numTilesInARow;
-//		this.players = players2;
-//	}
-
+	/**
+	 * Activates a tile on the game board. This method handles the logic for when a player lands on a tile.
+	 * It checks if the tile has a snake, a ladder, or a special effect, and updates the player's position accordingly.
+	 * It also notifies the observers of the event that occurred.
+	 *
+	 * @param tilenum The number of the tile to be activated.
+	 * @param player The player who landed on the tile.
+	 * @return The number of steps the player should move as a result of landing on the tile.
+	 */
 	public int activateTile(int tilenum, Player player) {
-		int[] pos = calculatePosition(tilenum);
-		int x = pos[0];
-		int y = pos[1];
+	    // Calculate the position of the tile
+	    int[] pos = calculatePosition(tilenum);
+	    int x = pos[0];
+	    int y = pos[1];
 
-		Tile tile = GameData.getInstance().getBoard().getGameboard()[x][y];
-		SoundManager soundManager = new SoundManager();
-		tile.attach(soundManager);
-		Snake snake = tile.getSnake();
-		Ladder ladder = tile.getLadder();
-//		Question question = tile.getQuestion();
-		int speical = tile.getType();
-		int steps = 0;
-		int answer;
-		//Here the player can hit a snake
-		if (snake != null) {
-			tile.notifyObservers(GameEvent.PLAYER_HIT_SNAKE);// obserevr for snake
-			steps = snake.getEnd() - player.getCurrentP();
-			player.setCurrentP(snake.getEnd());
-			GameData.getInstance().getPlayer(player).addStep(snake.getEnd());
-		}
-		
-		//Here the player can hit a ladded
-		if (ladder != null) {
-			tile.notifyObservers(GameEvent.PLAYER_HIT_LADDER);// obserevr for ladder
-			steps = ladder.getEnd() - player.getCurrentP();
-			player.setCurrentP(ladder.getEnd());
-			GameData.getInstance().getPlayer(player).addStep(ladder.getEnd());
-		}
+	    // Get the tile from the game board
+	    Tile tile = GameData.getInstance().getBoard().getGameboard()[x][y];
 
-//		if (question != null) {
-//			this.tile_is_question = true;
-//		}
-		if (speical != 0) {
-			switch (speical) {
-			case (10)://Suprise add 10 steps ENUM GOOD_SURPRISE
-				tile.notifyObservers(GameEvent.GOOD_SURPRISE);// obserevr for good surprise
-				player.setCurrentP(speical);
-				GameData.getInstance().getPlayer(player).addStep(speical);
+	    // Attach a sound manager to the tile
+	    SoundManager soundManager = new SoundManager();
+	    tile.attach(soundManager);
 
-				break;
+	    // Check if the tile has a snake or a ladder
+	    Snake snake = tile.getSnake();
+	    Ladder ladder = tile.getLadder();
 
-			case (-10)://Suprise subtract 10 steps ENUM BAD_URPRISE
-				tile.notifyObservers(GameEvent.BAD_URPRISE);// obserevr for bad surprise
-				player.setCurrentP(speical);
-				GameData.getInstance().getPlayer(player).addStep(speical);
+	    // Get the type of the tile
+	    int speical = tile.getType();
+	    int steps = 0;
 
-				break;
-			case (1)://Red snake -> go to the first tile
-				tile.notifyObservers(GameEvent.RED_SNAKE);// obserevr for red snake
-				player.setCurrentP(speical);
-				GameData.getInstance().getPlayer(player).addStep(speical);
-				break;
-			}
-			steps = speical;
-		}
-		return steps;
+	    // If the tile has a snake, move the player to the end of the snake
+	    if (snake != null) {
+	        tile.notifyObservers(GameEvent.PLAYER_HIT_SNAKE); // Notify observers that the player hit a snake
+	        steps = snake.getEnd() - player.getCurrentP();
+	        player.setCurrentP(snake.getEnd());
+	        GameData.getInstance().getPlayer(player).addStep(snake.getEnd());
+	    }
+
+	    // If the tile has a ladder, move the player to the end of the ladder
+	    if (ladder != null) {
+	        tile.notifyObservers(GameEvent.PLAYER_HIT_LADDER); // Notify observers that the player hit a ladder
+	        steps = ladder.getEnd() - player.getCurrentP();
+	        player.setCurrentP(ladder.getEnd());
+	        GameData.getInstance().getPlayer(player).addStep(ladder.getEnd());
+	    }
+
+	    // If the tile has a special effect, apply the effect
+	    if (speical != 0) {
+	        switch (speical) {
+	            case (10): // Surprise: add 10 steps
+	                tile.notifyObservers(GameEvent.GOOD_SURPRISE); // Notify observers of the good surprise
+	                player.setCurrentP(speical);
+	                GameData.getInstance().getPlayer(player).addStep(speical);
+	                break;
+
+	            case (-10): // Surprise: subtract 10 steps
+	                tile.notifyObservers(GameEvent.BAD_URPRISE); // Notify observers of the bad surprise
+	                player.setCurrentP(speical);
+	                GameData.getInstance().getPlayer(player).addStep(speical);
+	                break;
+
+	            case (1): // Red snake: go to the first tile
+	                tile.notifyObservers(GameEvent.RED_SNAKE); // Notify observers that the player hit a red snake
+	                player.setCurrentP(speical);
+	                GameData.getInstance().getPlayer(player).addStep(speical);
+	                break;
+	        }
+	        steps = speical;
+	    }
+
+	    // Return the number of steps the player should move
+	    return steps;
 	}
 
+	/**
+	 * Initializes the game board with a specified number of tiles.
+	 * Each tile is created using a TileBuilder.
+	 *
+	 * @return A 2D array representing the game board, with each element being a Tile object.
+	 */
 	private Tile[][] initGameBoard() {
-		int numTiles = GameData.getInstance().getNumOfTiles();
-		Tile[][] gameboard = new Tile[numTiles][numTiles];
-		for (int i = 0; i < numTiles; i++) {
-			for (int j = 0; j < numTiles; j++) {
-				gameboard[i][j] = new TileBuilder().build();
-			}
-		}
-		return gameboard;
+	    // Get the number of tiles from the game data
+	    int numTiles = GameData.getInstance().getNumOfTiles();
+
+	    // Initialize the game board as a 2D array of Tiles
+	    Tile[][] gameboard = new Tile[numTiles][numTiles];
+
+	    // Loop through each position in the game board
+	    for (int i = 0; i < numTiles; i++) {
+	        for (int j = 0; j < numTiles; j++) {
+	            // Create a new Tile using a TileBuilder and assign it to the current position
+	            gameboard[i][j] = new TileBuilder().build();
+	        }
+	    }
+
+	    // Return the initialized game board
+	    return gameboard;
 	}
 
+	/**
+	 * Moves a player on the game board based on the result of a dice roll.
+	 * The method checks if the player has won the game or if the new position is valid.
+	 * It then updates the player's position and notifies the observers of the move.
+	 *
+	 * @param diceResult The result of the dice roll.
+	 * @param player The player who is moving.
+	 * @return A boolean indicating whether the move was successful. Returns false if the player has won the game, true otherwise.
+	 */
 	public boolean move(int diceResult, Player player) {
-		int numTiles = GameData.getInstance().getNumOfTiles();
-		int newPosition = player.getCurrentP();
-		if (newPosition != (numTiles * numTiles))
-			newPosition = newPosition + diceResult;
-		// This if is check if the player as moved so much that he won
-		if (newPosition >= (numTiles * numTiles)) {
-			newPosition = numTiles * numTiles;
-			gameEnd = 1;
-			player.setCurrentP((numTiles * numTiles));
-			return false;
-		}
-		if (newPosition <= 0) {
-			newPosition = 1;
-			player.setCurrentP(1);
-		}
-		int[] pos = calculatePosition(newPosition);
-		int x = pos[0];
-		int y = pos[1];
-		System.out.println(
-				"Player name : " + player.getName() + " + " + diceResult + " and now he is in X " + x + " Y " + y);
-//		System.out.println("Tile number " + newPosition);
-//		System.out.println("");
-		if (newPosition != player.getPreviousStep() || player.getCurrentP() != 1
-				|| player.getCurrentP() != (numTiles * numTiles)) {
-			GameData.getInstance().getPlayer(player).setCurrentP(newPosition);// update player's position
-			GameData.getInstance().getPlayer(player).addStep(newPosition);
-		}
-//		System.out.println("Test " + player.getCurrentP());
+	    // Get the number of tiles from the game data
+	    int numTiles = GameData.getInstance().getNumOfTiles();
 
-//		GameData.getInstance().getPlayer(player).setCurrentP(newPosition);// update player's position
-//		GameData.getInstance().getPlayer(player).addStep(newPosition);
+	    // Calculate the new position of the player
+	    int newPosition = player.getCurrentP();
+	    if (newPosition != (numTiles * numTiles))
+	        newPosition = newPosition + diceResult;
 
-//		activateTile(x, y, player); // if ther's a special object - Snake Ladder or question it will update the
-		// location of the player
+	    // Check if the player has won the game
+	    if (newPosition >= (numTiles * numTiles)) {
+	        newPosition = numTiles * numTiles;
+	        gameEnd = 1;
+	        player.setCurrentP((numTiles * numTiles));
+	        return false; // The player has won the game, return false
+	    }
 
-		return true; // move successful, return true
+	    // Check if the new position is valid
+	    if (newPosition <= 0) {
+	        newPosition = 1;
+	        player.setCurrentP(1);
+	    }
+
+	    // Calculate the x and y coordinates of the new position
+	    int[] pos = calculatePosition(newPosition);
+	    int x = pos[0];
+	    int y = pos[1];
+
+	    // Print the player's name, the dice result, and the new position
+	    System.out.println("Player name : " + player.getName() + " + " + diceResult + " and now he is in X " + x + " Y " + y);
+
+	    // Update the player's position if it is different from the previous step
+	    if (newPosition != player.getPreviousStep() || player.getCurrentP() != 1 || player.getCurrentP() != (numTiles * numTiles)) {
+	        GameData.getInstance().getPlayer(player).setCurrentP(newPosition); // Update player's position
+	        GameData.getInstance().getPlayer(player).addStep(newPosition); // Add the new position to the player's steps
+	    }
+
+	    return true; // The move was successful, return true
 	}
 
+	/**
+	 * Retrieves a tile from the game board based on its number.
+	 * The method calculates the position of the tile and returns the Tile object at that position.
+	 *
+	 * @param tile_num The number of the tile to be retrieved.
+	 * @return The Tile object at the specified position. If no tile exists at that position, returns null.
+	 */
 	public Tile getTile(int tile_num) {
-		int[] pos = calculatePosition(tile_num);
-		int x = pos[0];
-		int y = pos[1];
+	    // Calculate the position of the tile
+	    int[] pos = calculatePosition(tile_num);
+	    int x = pos[0];
+	    int y = pos[1];
 
-		Tile tile = gameboard[x][y];
-		if (tile != null) {
-			return tile;
-		}
-		return null;
+	    // Get the tile from the game board
+	    Tile tile = gameboard[x][y];
+
+	    // Check if the tile exists
+	    if (tile != null) {
+	        return tile; // If the tile exists, return it
+	    }
+
+	    // If no tile exists at the specified position, return null
+	    return null;
 	}
 
+
+	/**
+	 * Checks if a tile on the game board is a question tile based on its number.
+	 * The method calculates the position of the tile and checks the type of the Tile object at that position.
+	 *
+	 * @param tile_num The number of the tile to be checked.
+	 * @return The Tile object if it is a question tile. If it is not a question tile, returns null.
+	 */
 	public Tile is_question(int tile_num) {
-		int[] pos = calculatePosition(tile_num);
-		int x = pos[0];
-		int y = pos[1];
+	    // Calculate the position of the tile
+	    int[] pos = calculatePosition(tile_num);
+	    int x = pos[0];
+	    int y = pos[1];
 
-		Tile tile = gameboard[x][y];
-		if (tile.getType() == 4) {
-			return tile;
-		}
-		return null;
+	    // Get the tile from the game board
+	    Tile tile = gameboard[x][y];
+
+	    // Check if the tile is a question tile
+	    if (tile.getType() == 4) {
+	        return tile; // If the tile is a question tile, return it
+	    }
+
+	    // If the tile is not a question tile, return null
+	    return null;
 	}
 
+
+	/**
+	 * Calculates the position of a tile on the game board based on its number.
+	 * The method calculates the row and column of the tile, adjusting for a zigzag pattern.
+	 *
+	 * @param newPosition The number of the tile.
+	 * @return An array of two integers representing the row and column of the tile.
+	 */
 	private int[] calculatePosition(int newPosition) {
-		int[] position = new int[2];
-		int numTiles = GameData.getInstance().getNumOfTiles();
+	    // Initialize an array to hold the position
+	    int[] position = new int[2];
 
-		// calculate the new row and column
-		position[1] = (newPosition - 1) / numTiles; // y
-		position[0] = (newPosition - 1) % numTiles; // x
+	    // Get the number of tiles from the game data
+	    int numTiles = GameData.getInstance().getNumOfTiles();
 
-		// Adjust x if y is odd (for zigzag pattern)
-		if (position[1] % 2 == 1) {
-			position[0] = numTiles - 1 - position[0];
-		}
-		return position;
+	    // Calculate the row (y-coordinate) and column (x-coordinate) of the tile
+	    position[1] = (newPosition - 1) / numTiles; // y
+	    position[0] = (newPosition - 1) % numTiles; // x
+
+	    // Adjust the x-coordinate if the y-coordinate is odd, accounting for the zigzag pattern
+	    if (position[1] % 2 == 1) {
+	        position[0] = numTiles - 1 - position[0];
+	    }
+
+	    // Return the calculated position
+	    return position;
 	}
+
 
 	public int getGameEnd() {
 		return gameEnd;
@@ -261,18 +356,28 @@ public class Board implements GameEventSubject {
 		}
 	}
 
+	/**
+	 * Adds a Ladder object to a specific tile on the game board.
+	 *
+	 * @param tile_num The number of the tile where the ladder will be added.
+	 * @param l The Ladder object to be added to the tile.
+	 */
 	public void add_LadderToTile(int tile_num, Ladder l) {
 		int[] pos = calculatePosition(tile_num);
 		int x = pos[0];
 		int y = pos[1];
-//		System.out.println(
-//				"Ladder start " + l.getStart() + " ladder end " + l.getEnd() + " x " + pos[0] + " y " + pos[1]);
-
+		
 		Tile tile = gameboard[x][y];
 		tile.setLadder(l);
 		tile.setType(5);
 	}
 
+	/**
+	 * Adds a Snake object to a specific tile on the game board.
+	 *
+	 * @param tile_num The number of the tile where the snake will be added.
+	 * @param s The Snake object to be added to the tile.
+	 */
 	public void add_SnakeToTile(int tile_num, Snake s) {
 		int[] pos = calculatePosition(tile_num);
 		int x = pos[0];
@@ -283,6 +388,12 @@ public class Board implements GameEventSubject {
 
 	}
 
+	/**
+	 * Adds a question to a specific tile on the game board.
+	 *
+	 * @param tile_num The number of the tile where the question will be added.
+	 * @param difficulty The difficulty level of the question.
+	 */
 	public void add_QuestionToTile(int tile_num, int difficulty) {
 		int[] pos = calculatePosition(tile_num);
 		int x = pos[0];
@@ -294,6 +405,12 @@ public class Board implements GameEventSubject {
 		GameData.getInstance().addspecialTiles_list(tile);
 	}
 
+	/**
+	 * Adds a special effect to a specific tile on the game board.
+	 *
+	 * @param tile_num The number of the tile where the special effect will be added.
+	 * @param Type The type of the special effect. 10 = special 10 step forward, -10 = special 10 steps backward, 1 = red snake.
+	 */
 	public void add_specialToTile(int tile_num, int Type) {// 10 = special 10 step forward, -10 - special 10 steps
 															// backward, 1 = red snake
 		int[] pos = calculatePosition(tile_num);
@@ -305,6 +422,11 @@ public class Board implements GameEventSubject {
 		GameData.getInstance().addspecialTiles_list(tile);
 	}
 
+	/**
+	 * Generates a dice result based on the game's difficulty level.
+	 *
+	 * @return The result of the dice roll.
+	 */
 	public int get_Dice_Result() {
 		Random rand = new Random();
 		int randomNumber;
@@ -359,7 +481,11 @@ public class Board implements GameEventSubject {
 			}
 		}
 	}
-
+	
+	/**
+	 * Generates red snakes and surprise tiles on the game board.
+	 * The method randomly selects tiles for these objects, ensuring that each tile is unique.
+	 */
 	private void generate_RedSnake_and_Surprize() {
 		Random rand = new Random();
 		int num_of_tiles = GameData.getInstance().getNumOfTiles();
@@ -393,11 +519,14 @@ public class Board implements GameEventSubject {
 		}
 	}
 
+	/**
+	 * Generates ladders on the game board.
+	 * The method randomly selects start and end tiles for each ladder, ensuring that each tile is unique.
+	 */
 	private void generate_Ladders() {
 		Random rand = new Random();
 		String gameDiff = GameData.getInstance().getDifficulty();
 
-//		Set<Integer> usedNumbers = new HashSet<>();
 		for (int i : laddersizes) {
 			int num_of_tiles = GameData.getInstance().getNumOfTiles();
 			int startRand;
@@ -409,7 +538,6 @@ public class Board implements GameEventSubject {
 					|| usedNumbers.contains(endRand)); // Ensure endRand doesn't exceed 49 and numbers are unique
 			usedNumbers.add(startRand);
 			usedNumbers.add(endRand);
-//			System.out.println("ladder start: " + startRand + " ladder end: " + endRand);
 			Ladder l = new Ladder(startRand, endRand, i);
 			GameData.getInstance().addLadders(l);
 			add_LadderToTile(startRand, l);
@@ -417,6 +545,10 @@ public class Board implements GameEventSubject {
 
 	}
 
+	/**
+	 * Generates snakes on the game board.
+	 * The method randomly selects start and end tiles for each snake, ensuring that each tile is unique.
+	 */
 	private void generate_Snakes() {
 		Random rand = new Random();
 
@@ -440,6 +572,11 @@ public class Board implements GameEventSubject {
 		}
 	}
 
+	/**
+	 * Generates all objects on the game board.
+	 * The method sets the sizes of ladders and snakes, and the number of red snakes, question tiles, maximum steps, and surprise tiles based on the game's difficulty level.
+	 * It then calls the methods to generate ladders, snakes, red snakes, and surprise tiles.
+	 */
 	public void generate_board_Objects() {
 		int num_of_tiles = GameData.getInstance().getNumOfTiles();
 		String gameDiff = GameData.getInstance().getDifficulty();
