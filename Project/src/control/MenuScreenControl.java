@@ -38,8 +38,9 @@ public class MenuScreenControl {
 	@FXML
 	private Button button_start, button_questionWizard, button_History, quit, button_instructions;
 
+//	private ImageView soundOff_Icon, soundOn_Icon;\
 	@FXML
-	private ImageView soundOff_Icon, soundOn_Icon;
+	private ImageView sound_Icon;
 
 	@FXML
 	private StackPane soundPane;
@@ -47,7 +48,7 @@ public class MenuScreenControl {
 	@FXML
 	private AnchorPane Menu_Pane;
 
-	private AnchorPane root;
+	private AnchorPane splash_screen_AnchorPane;
 	@FXML
 
 	private static boolean first_start = true;
@@ -60,26 +61,46 @@ public class MenuScreenControl {
 
 	private static int flagSong;
 
+	private String pathSoundON = "/view/Images/sound-on.png";
+	private String pathSoundOFF = "/view/Images/sound-off.png";
+
+	@FXML
 	public void initialize() {
+		System.out.println("initialize " + flagSong);
 		setSoundButtonEvent();
 		splash_Screen();
-		
 	}
 
 	private void init() {
+		System.out.println("INIT " + flagSong);
 //		isSoundOn = true;
-
-		if (getFlagSong() == 0) {
+		if (flagSong == 0) {
+			System.out.println("testtest init flagSong == 0");
 			stopThemeSong();
-			themeSong();
-			flagSong =1;
+			if (first_start) {
+				themeSong();
+				flagSong = 1;
+				first_start = false;
+			}
+		} else {
+			System.out.println("testtest init flagSong != 0");
 		}
+		System.out.println("INIT2 " + flagSong);
+		if (flagSong == 1) {
+			System.out.println("testtest initialize flagSong == 1 ");
+			sound_Icon.setImage(new Image(pathSoundON));
+		} else {
+			System.out.println("testtest initialize flagSong != 1");
+
+			sound_Icon.setImage(new Image(pathSoundOFF));
+		}
+
 		button_start.setOnAction(event -> navigateTo("/view/SettingsView.fxml"));
 		button_questionWizard.setOnAction(event -> navigateTo("/view/QuestionWizView.fxml"));
 		button_History.setOnAction(event -> navigateTo("/view/HistoryView.fxml"));
 		button_instructions.setOnAction(event -> navigateTo("/view/Instructions.fxml"));
 		quit.setOnAction(event -> ((Stage) quit.getScene().getWindow()).close());
-		Menu_Pane.getChildren().remove(root);
+		Menu_Pane.getChildren().remove(splash_screen_AnchorPane);
 	}
 
 	private void navigateTo(String fxmlFile) {
@@ -122,10 +143,10 @@ public class MenuScreenControl {
 		}
 	}
 
-	private void themeSong() {
+	void themeSong() {
 		try {
 //			setFlagSong(1);
-			flagSong = 1;
+//			flagSong = 1;
 
 			// Adjust the path to where your sound file is located
 			URL soundFile = this.getClass().getResource("/sounds/themeSong.wav");
@@ -158,6 +179,7 @@ public class MenuScreenControl {
 		if (themeSongClip != null) {
 			themeSongClip.stop(); // Stop the clip
 			themeSongClip.close(); // Close the clip to release resources
+			flagSong = 0;
 		}
 	}
 
@@ -168,20 +190,20 @@ public class MenuScreenControl {
 			ImageView imageView = new ImageView(image);
 
 			// Create a StackPane to hold the image
-			root = new AnchorPane();
-			root.getChildren().add(imageView);
-			root.setPickOnBounds(false);
-			root.prefWidthProperty().bind(Menu_Pane.widthProperty());
-			root.prefHeightProperty().bind(Menu_Pane.heightProperty());
+			splash_screen_AnchorPane = new AnchorPane();
+			splash_screen_AnchorPane.getChildren().add(imageView);
+			splash_screen_AnchorPane.setPickOnBounds(false);
+			splash_screen_AnchorPane.prefWidthProperty().bind(Menu_Pane.widthProperty());
+			splash_screen_AnchorPane.prefHeightProperty().bind(Menu_Pane.heightProperty());
 
-			imageView.fitWidthProperty().bind(root.widthProperty());
-			imageView.fitHeightProperty().bind(root.heightProperty());
+			imageView.fitWidthProperty().bind(splash_screen_AnchorPane.widthProperty());
+			imageView.fitHeightProperty().bind(splash_screen_AnchorPane.heightProperty());
 
-			Menu_Pane.getChildren().add(root);
-			AnchorPane.setTopAnchor(root, 0.0);
-			AnchorPane.setBottomAnchor(root, 0.0);
-			AnchorPane.setLeftAnchor(root, 0.0);
-			AnchorPane.setRightAnchor(root, 0.0);
+			Menu_Pane.getChildren().add(splash_screen_AnchorPane);
+			AnchorPane.setTopAnchor(splash_screen_AnchorPane, 0.0);
+			AnchorPane.setBottomAnchor(splash_screen_AnchorPane, 0.0);
+			AnchorPane.setLeftAnchor(splash_screen_AnchorPane, 0.0);
+			AnchorPane.setRightAnchor(splash_screen_AnchorPane, 0.0);
 
 			PauseTransition pt = new PauseTransition(Duration.millis(10));
 
@@ -204,46 +226,32 @@ public class MenuScreenControl {
 				init();
 			});
 
-			root.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			splash_screen_AnchorPane.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 				stopSplashScreenSound(); // Ensure sound is stopped when splash screen is clicked
 				ft.play();
-				soundOn_Icon.setVisible(true);
+//				soundOn_Icon.setVisible(true);
 			});
-			first_start = false;
+//			first_start = false;
 		} else {
 			init();
 		}
 	}
 
 	public void setSoundButtonEvent() {
-		soundOn_Icon.setVisible(false);
-		soundOn_Icon.setOnMouseClicked(event -> {
-//			setSoundIcon(isSoundOn);
-			stopSplashScreenSound();
-			stopThemeSong();
-			soundOn_Icon.setVisible(false);
-			soundOff_Icon.setVisible(true);
-			flagSong = 1;
-		});
-		soundOff_Icon.setOnMouseClicked(event -> {
-//			setSoundIcon(isSoundOn);
-			soundOn_Icon.setVisible(true);
-			soundOff_Icon.setVisible(false);
-			themeSong();
-			flagSong = 0;
+//		soundOn_Icon.setVisible(false);
+		sound_Icon.setOnMouseClicked(event -> {
+			if (flagSong == 1) {
+				sound_Icon.setImage(new Image(pathSoundOFF));
+				stopThemeSong();
+				flagSong = 0;
+			} else {
+				sound_Icon.setImage(new Image(pathSoundON));
+				flagSong = 1;
+				themeSong();
+			}
 		});
 	}
 
-//	private void setSoundIcon(Boolean isAllowed) {
-//		isSoundOn = !isAllowed;
-//		if (isAllowed) {
-//			soundOn_Icon.setVisible(false);
-//			soundOff_Icon.setVisible(true);
-//		} else {
-//			soundOn_Icon.setVisible(true);
-//			soundOff_Icon.setVisible(false);
-//		}
-//	}
 
 	public static int getFlagSong() {
 		return flagSong;
