@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -31,6 +33,21 @@
                   <Insets left="100.0" />
                </HBox.margin>
             </Button>
+            <Pane prefHeight="109.0" prefWidth="470.0" />
+            <Pane prefHeight="109.0" prefWidth="100.0">
+               <children>
+                  <ImageView fx:id="soundOn_Icon" fitHeight="99.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="sound_Button">
+                     <image>
+                        <Image url="@Images/sound-on.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="soundOff_Icon" fitHeight="88.0" fitWidth="79.0" pickOnBounds="true" preserveRatio="true" styleClass="sound_Button" visible="false">
+                     <image>
+                        <Image url="@Images/sound-off.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
          </children>
       </HBox>
    </bottom>

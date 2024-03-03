@@ -97,3 +97,6 @@
 	 -fx-effect: dropshadow(three-pass-box, #FF8911, 3.0, 3.0, 0.0, 0.0);
 }
 
+.sound_Button:hover {
+	-fx-effect: dropshadow(three-pass-box, #F6F5F5, 3.0, 3.0, 0.0, 0.0);
+}

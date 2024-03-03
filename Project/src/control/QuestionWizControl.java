@@ -145,26 +145,7 @@ public class QuestionWizControl {
 			disableAdminControls(true);
 		}
 		else {
-			LogIn_Btn.setVisible(false);
-			Logout_Btn.setVisible(true);
-
-			Logout_Btn.setOnAction(event -> {
-				setPopUpStage();
-
-				// Load the FXML file for the pop-up
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Logout.fxml"));
-				Parent root = null;
-				try {
-					root = loader.load();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-				// Set the scene and show the stage
-				Scene scene = new Scene(root);
-				popupStage.setScene(scene);
-				popupStage.show();
-			});
+			setAdmin(true);
 		}
 
 		update_table();
@@ -342,6 +323,27 @@ public class QuestionWizControl {
 
 	public void setAdmin(boolean status) {
 		isAdmin = status;
+		
+		LogIn_Btn.setVisible(false);
+		Logout_Btn.setVisible(true);
+		
+		Logout_Btn.setOnAction(event -> {
+			setPopUpStage();
+
+			// Load the FXML file for the pop-up
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Logout.fxml"));
+			Parent root = null;
+			try {
+				root = loader.load();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			// Set the scene and show the stage
+			Scene scene = new Scene(root);
+			popupStage.setScene(scene);
+			popupStage.show();
+		});
 	}
 
 	public boolean isAdmin() {
