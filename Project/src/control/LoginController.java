@@ -144,32 +144,4 @@ public class LoginController {
 		return status;
 	}
 
-	/*
-	 * // Method to initialize the controller public void initialize() { assert
-	 * mainPane != null :
-	 * "fx:id=\"mainPane\" was not injected: check your FXML file 'Login.fxml'.";
-	 * 
-	 * // Load the image for moving around Image movingImageSrc = new
-	 * Image(getClass().getResourceAsStream("/view/Images/BackGround/1.png"));
-	 * movingImage.setImage(movingImageSrc);
-	 * 
-	 * // Load the image for moving around Image movingImageSrc1 = new
-	 * Image(getClass().getResourceAsStream("/view/Images/BackGround/2.png"));
-	 * movingImage.setImage(movingImageSrc1);
-	 * 
-	 * // Call method to animate the movement of both images
-	 * animateMovingImage(movingImage, 300, 200); // animate movingImage
-	 * animateMovingImage(movingImage1, -300, -200); // animate movingImage1 in
-	 * mirrored way }
-	 * 
-	 * // Method to animate the movement of an image private void
-	 * animateMovingImage(ImageView imageView, double toX, double toY) {
-	 * TranslateTransition transition = new TranslateTransition(Duration.seconds(3),
-	 * imageView); transition.setFromX(0); transition.setFromY(0);
-	 * transition.setToX(toX); // Destination X coordinate transition.setToY(toY);
-	 * // Destination Y coordinate
-	 * transition.setCycleCount(TranslateTransition.INDEFINITE); // Repeat
-	 * indefinitely transition.setAutoReverse(true); // Reverse direction on
-	 * completion transition.play(); // Start the animation }
-	 */
 }
