@@ -56,6 +56,7 @@ public class ExitGameControl {
 
         noExitButton.setOnAction(event -> {
             // Close the pop-up window directly on "no exit" click
+        	previousWindow.pause();
             ((Stage) noExitButton.getScene().getWindow()).close();
         });
     }

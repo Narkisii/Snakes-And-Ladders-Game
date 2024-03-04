@@ -295,7 +295,7 @@ public class BoardControl implements GameEventSubject {
 	 * "roll dice" button. - Updating the pause button text ("Pause Game" or
 	 * "Continue Game"). - Displaying/hiding a "Game is paused" label on the canvas.
 	 */
-	private void pause() {
+	public void pause() {
 		if (!paused) {
 			// Game is not paused, so pause it
 			if (timer != null) {
@@ -1097,6 +1097,7 @@ public class BoardControl implements GameEventSubject {
 	 * if it's not already open.
 	 */
 	public void setExitScreen() {
+		pause();
 		// this method only need to set the screen and wait for the exit buttons event
 		setPopUpStage();
 
@@ -1117,6 +1118,7 @@ public class BoardControl implements GameEventSubject {
 		Scene scene = new Scene(root);
 		popupStage.setScene(scene);
 		popupStage.show();
+
 	}
 
 	/**
@@ -1134,6 +1136,8 @@ public class BoardControl implements GameEventSubject {
 			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
 			popupStage.setAlwaysOnTop(true); // Set always on top
 			popupStage.setResizable(false);
+			popupStage.getStyle();
+			popupStage.initStyle(StageStyle.UNDECORATED); // Initialize the style of the stage
 
 		}
 	}
