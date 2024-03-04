@@ -1138,7 +1138,6 @@ public class BoardControl implements GameEventSubject {
 			popupStage.setResizable(false);
 			popupStage.getStyle();
 			popupStage.initStyle(StageStyle.UNDECORATED); // Initialize the style of the stage
-
 		}
 	}
 
