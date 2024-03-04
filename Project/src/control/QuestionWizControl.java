@@ -44,6 +44,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.NoJsonFileFound;
@@ -221,6 +222,10 @@ public class QuestionWizControl {
 			// Set the scene and show the stage
 			Scene scene = new Scene(root);
 			popupStage.setScene(scene);
+			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
+			popupStage.setAlwaysOnTop(true); // Set always on top
+			popupStage.setResizable(false);
+
 			popupStage.show();
 		});
 
@@ -249,6 +254,10 @@ public class QuestionWizControl {
 			// Set the scene and show the stage
 			Scene scene = new Scene(root);
 			popupStage.setScene(scene);
+			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
+			popupStage.setAlwaysOnTop(true); // Set always on top
+			popupStage.setResizable(false);
+
 			popupStage.show();
 		});
 
@@ -274,6 +283,10 @@ public class QuestionWizControl {
 			// Set the scene and show the stage
 			Scene scene = new Scene(root);
 			popupStage.setScene(scene);
+			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
+			popupStage.setAlwaysOnTop(true); // Set always on top
+			popupStage.setResizable(false);
+
 			popupStage.show();
 		});
 
@@ -325,6 +338,10 @@ public class QuestionWizControl {
 						// Set the scene and show the stage
 						Scene scene = new Scene(root);
 						popupStage.setScene(scene);
+						popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
+						popupStage.setAlwaysOnTop(true); // Set always on top
+						popupStage.setResizable(false);
+
 						popupStage.show();
 
 						// Reset click count
@@ -473,6 +490,9 @@ public class QuestionWizControl {
 		else { // Create a new Stage for the pop-up
 			popupStage = new Stage();
 			popupStage.setResizable(false);
+			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
+			popupStage.setAlwaysOnTop(true); // Set always on top
+
 		}
 	}
 
@@ -499,6 +519,10 @@ public class QuestionWizControl {
 			// Set the scene and show the stage
 			Scene scene = new Scene(root);
 			popupStage.setScene(scene);
+			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
+			popupStage.setAlwaysOnTop(true); // Set always on top
+			popupStage.setResizable(false);
+
 			popupStage.show();
 		});
 	}
