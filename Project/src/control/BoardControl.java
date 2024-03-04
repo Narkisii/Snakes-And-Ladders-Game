@@ -185,6 +185,10 @@ public class BoardControl implements GameEventSubject {
 	 */
 	private Label pauseLabel;
 
+	private boolean first_run1;
+
+	private boolean first_run2;
+
 	// OBSERVER METHODS
 	@Override
 	public void attach(GameEventObserver observer) {
@@ -236,27 +240,8 @@ public class BoardControl implements GameEventSubject {
 			GameData.getInstance().setSoundFX(newVal);
 			// Your code here
 		});
-
-		// Add listeners for window resize events
-		mainPain.widthProperty().addListener((observable, oldValue, newValue) -> {
-			if (oldValue.intValue() != 0) {
-				canvas.getChildren().clear();
-				mainPain.getChildren().remove(canvas);
-				redrawLines();
-				mainPain.getChildren().add(canvas);
-				add_SpecialTiles();
-			}
-		});
-
-		mainPain.heightProperty().addListener((observable, oldValue, newValue) -> {
-			if (oldValue.intValue() != 0) {
-				canvas.getChildren().clear();
-				mainPain.getChildren().remove(canvas);
-				drawBoardObjectsInSeparateThread();
-				mainPain.getChildren().add(canvas);
-				add_SpecialTiles();
-			}
-		});
+		first_run1 = true;
+		first_run2 = true;
 
 		// Create and add board grid
 		grid = createBoard(GameData.getInstance().getNumOfTiles());
@@ -285,6 +270,40 @@ public class BoardControl implements GameEventSubject {
 		board.generate_board_Objects();
 		SoundManager soundManager = new SoundManager();
 		board.attach(soundManager);
+		
+		// Add listeners for window resize events
+		grid.widthProperty().addListener((observable, oldValue, newValue) -> {
+			if (oldValue.intValue() != 0 || newValue.intValue() != 0) {
+				if(first_run1) {
+					first_run1 = false;
+					return;
+				}
+				System.out.println("mainPain.widthProperty()");
+				canvas.getChildren().clear();
+				mainPain.getChildren().remove(canvas);
+				redrawLines();
+				mainPain.getChildren().add(canvas);
+				add_SpecialTiles();
+			}
+		});
+
+		grid.heightProperty().addListener((observable, oldValue, newValue) -> {
+			if (oldValue.intValue() != 0 || newValue.intValue() != 0 ) {
+				if(first_run2) {
+					first_run2 = false;
+					return;
+				}
+				System.out.println("mainPain.heightProperty()");
+				canvas.getChildren().clear();
+				mainPain.getChildren().remove(canvas);
+				drawBoardObjectsInSeparateThread();
+//				redrawLines();
+				mainPain.getChildren().add(canvas);
+				add_SpecialTiles();
+			}
+		});
+
+
 	}
 
 	/**
@@ -519,7 +538,8 @@ public class BoardControl implements GameEventSubject {
 	 * thread to execute the drawing operations.
 	 */
 	public void drawBoardObjectsInSeparateThread() {
-
+		
+		System.out.println("drawBoardObjectsInSeparateThread");
 		Thread thread = new Thread(() -> {
 			// Run the drawing operations on the JavaFX application thread
 
@@ -943,6 +963,8 @@ public class BoardControl implements GameEventSubject {
 	 * Redraws the lines representing ladders and snakes on the game board.
 	 */
 	public void redrawLines() {
+		System.out.println("redrawLines");
+
 		for (Ladder l : GameData.getInstance().getLadders()) {
 			add_GameElement(l.getStart(), l.getEnd(), l);
 		}
