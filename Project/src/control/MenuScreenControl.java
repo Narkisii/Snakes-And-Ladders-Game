@@ -119,10 +119,10 @@ public class MenuScreenControl {
 
 		try {
 			Stage stage = (Stage) button_start.getScene().getWindow();
-			double width = stage.getScene().getWidth();
-			double height = stage.getScene().getHeight();
+			double width = stage.getScene().getWidth()-20;
+			double height = stage.getScene().getHeight()-20;
 			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
-
+			stage.setAlwaysOnTop(true);
 			stage.setScene(scene);
 
 		} catch (IOException e) {

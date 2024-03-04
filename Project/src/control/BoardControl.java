@@ -270,11 +270,11 @@ public class BoardControl implements GameEventSubject {
 		board.generate_board_Objects();
 		SoundManager soundManager = new SoundManager();
 		board.attach(soundManager);
-		
+
 		// Add listeners for window resize events
 		grid.widthProperty().addListener((observable, oldValue, newValue) -> {
 			if (oldValue.intValue() != 0 || newValue.intValue() != 0) {
-				if(first_run1) {
+				if (first_run1) {
 					first_run1 = false;
 					return;
 				}
@@ -288,8 +288,8 @@ public class BoardControl implements GameEventSubject {
 		});
 
 		grid.heightProperty().addListener((observable, oldValue, newValue) -> {
-			if (oldValue.intValue() != 0 || newValue.intValue() != 0 ) {
-				if(first_run2) {
+			if (oldValue.intValue() != 0 || newValue.intValue() != 0) {
+				if (first_run2) {
 					first_run2 = false;
 					return;
 				}
@@ -302,7 +302,6 @@ public class BoardControl implements GameEventSubject {
 				add_SpecialTiles();
 			}
 		});
-
 
 	}
 
@@ -383,8 +382,8 @@ public class BoardControl implements GameEventSubject {
 				// Create a new square (Rectangle)
 
 				Rectangle tile = new Rectangle();
-				tile.setWidth(grid.widthProperty().divide(numTiles).doubleValue());
-				tile.setHeight(grid.heightProperty().divide(numTiles).doubleValue());
+//				tile.setWidth(grid.widthProperty().divide(numTiles).doubleValue());
+//				tile.setHeight(grid.heightProperty().divide(numTiles).doubleValue());
 //				System.out.println(grid.widthProperty().doubleValue());
 
 				tile.widthProperty().bind(grid.widthProperty().divide(numTiles));
@@ -427,7 +426,6 @@ public class BoardControl implements GameEventSubject {
 				stackPane.setId(String.valueOf(count));
 				// Add the StackPane to the grid
 				stackPane.setMinSize(0, 0);
-
 				grid.add(stackPane, column, numTiles - 1 - i);
 				stackPane.toBack();
 				// Increment the count
@@ -538,7 +536,7 @@ public class BoardControl implements GameEventSubject {
 	 * thread to execute the drawing operations.
 	 */
 	public void drawBoardObjectsInSeparateThread() {
-		
+
 		System.out.println("drawBoardObjectsInSeparateThread");
 		Thread thread = new Thread(() -> {
 			// Run the drawing operations on the JavaFX application thread
@@ -564,6 +562,25 @@ public class BoardControl implements GameEventSubject {
 					Pane new_pos_pane = (Pane) grid.lookup("#" + playerbox.getId());
 					playerbox.prefHeightProperty().bind(new_pos_pane.heightProperty().multiply(0.8));
 					playerbox.prefWidthProperty().bind(new_pos_pane.widthProperty().multiply(0.8));
+					playerbox.setOnMouseClicked(event -> {
+						return_btn.setDisable(true);
+						pause_Btn.setDisable(true);
+						Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), e -> {
+							canvas.getChildren().clear();
+							mainPain.getChildren().remove(canvas);
+							redrawLines();
+							mainPain.getChildren().add(canvas);
+							add_SpecialTiles();
+						}));
+						timeline.setCycleCount(20); // set the number of cycles
+						timeline.play();
+						timeline.setOnFinished(event2 -> {
+							return_btn.setDisable(false);
+							pause_Btn.setDisable(false);
+
+						});
+
+					});
 				}
 			});
 		});

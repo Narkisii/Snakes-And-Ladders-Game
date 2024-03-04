@@ -111,6 +111,7 @@ public class SettingsControl {
             // Create a new scene with the specified FXML file
 			double width = stage.getScene().getWidth();
 			double height = stage.getScene().getHeight();
+			stage.setAlwaysOnTop(true);
 
 			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
             // Set the stage with the new scene
