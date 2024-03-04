@@ -105,6 +105,6 @@
       </AnchorPane>
    </left>
    <center>
-      <AnchorPane fx:id="boardpane" maxHeight = "700" maxWidth="1200" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <AnchorPane fx:id="boardpane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

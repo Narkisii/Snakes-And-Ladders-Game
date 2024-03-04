@@ -662,8 +662,8 @@ public class PlayersControl {
 			double height = stage.getScene().getHeight();
 
 			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
-			stage.setMinWidth(width); // Minimum width: 300 pixels
-			stage.setMinHeight(height); // Minimum height: 200 pixels
+			stage.setMinWidth(width+10); // Minimum width: 300 pixels
+			stage.setMinHeight(height+10); // Minimum height: 200 pixels
 			stage.setAlwaysOnTop(true);
 			stage.setScene(scene);
 		} catch (IOException e) {
