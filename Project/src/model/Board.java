@@ -503,7 +503,7 @@ public class Board implements GameEventSubject {
 		// Add red snake
 		for (int i = 0; i < red_snakes; i++) {
 			do {
-				randNum = rand.nextInt(num_of_tiles * num_of_tiles - 12) + 1;
+				randNum = rand.nextInt(num_of_tiles * num_of_tiles - (num_of_tiles*2))+(num_of_tiles*2) + 1;
 			} while (usedNumbers.contains(randNum)); // Ensure endRand doesn't exceed 49 and numbers are unique
 			usedNumbers.add(randNum);
 			add_specialToTile(randNum, 1);// add red snake
@@ -512,7 +512,7 @@ public class Board implements GameEventSubject {
 		// Add question tile
 		for (int i = 0; i < question_tiles; i++) {
 			do {
-				randNum = rand.nextInt(num_of_tiles * num_of_tiles - 12) + 1;
+				randNum = rand.nextInt(num_of_tiles * num_of_tiles - (num_of_tiles*2))+(num_of_tiles*2) + 1;
 			} while (usedNumbers.contains(randNum)); // Ensure endRand doesn't exceed 49 and numbers are unique
 			usedNumbers.add(randNum);
 			add_QuestionToTile(randNum, 7 + i);// add question
@@ -523,34 +523,52 @@ public class Board implements GameEventSubject {
 	 * Generates ladders on the game board.
 	 * The method randomly selects start and end tiles for each ladder, ensuring that each tile is unique.
 	 */
+
 	private void generate_Ladders() {
-		Random rand = new Random();
-		String gameDiff = GameData.getInstance().getDifficulty();
+	    Random rand = new Random();
+	    String gameDiff = GameData.getInstance().getDifficulty();
+	    Set<Integer> usedXValues = new HashSet<>(); // to store used x values
+	    Set<Integer> usedYValues = new HashSet<>(); // to store used x values
 
-		for (int i : laddersizes) {
-			int num_of_tiles = GameData.getInstance().getNumOfTiles();
-			int startRand;
-			int endRand;
-			do {
-				startRand = rand.nextInt(num_of_tiles * (num_of_tiles - i)) + 1; // Random tile in the first (7-i) rows
-				endRand = startRand + (num_of_tiles * (i)); // Tile in a row that is (i+1) rows down
-			} while (endRand > (num_of_tiles * num_of_tiles) || usedNumbers.contains(startRand)
-					|| usedNumbers.contains(endRand)); // Ensure endRand doesn't exceed 49 and numbers are unique
-			usedNumbers.add(startRand);
-			usedNumbers.add(endRand);
-			Ladder l = new Ladder(startRand, endRand, i);
-			GameData.getInstance().addLadders(l);
-			add_LadderToTile(startRand, l);
-		}
+	    for (int i : laddersizes) {
+	        int num_of_tiles = GameData.getInstance().getNumOfTiles();
+	        int startRand;
+	        int endRand;
+	        int startX;
+	        int endX;
+	        int startY;
+	        int endY;
 
+	        do {
+	            startRand = rand.nextInt(num_of_tiles * (num_of_tiles - i)) + 1; // Random tile in the first (7-i) rows
+	            endRand = startRand + (num_of_tiles * (i)); // Tile in a row that is (i+1) rows down
+	            startX = calculatePosition(startRand)[0]; // calculate x value of startRand
+	            endX = calculatePosition(endRand)[0]; // calculate x value of endRand
+	            startY = calculatePosition(startRand)[1]; // calculate x value of startRand
+	            endY = calculatePosition(endRand)[1]; // calculate x value of endRand
+
+	        } while (endRand > (num_of_tiles * num_of_tiles) || usedNumbers.contains(startRand)
+	                || usedNumbers.contains(endRand) || usedXValues.contains(startX) || usedXValues.contains(endX) || (usedYValues.contains(startY) && usedYValues.contains(endY))); // Ensure endRand doesn't exceed 49 and numbers are unique and x values are unique
+	        usedNumbers.add(startRand);
+	        usedNumbers.add(endRand);
+	        //Make sure the ladders won't overlap
+	        usedXValues.add(startX);
+	        usedXValues.add(endX);
+	        usedYValues.add(startY);
+	        usedYValues.add(endY);
+
+	        Ladder l = new Ladder(startRand, endRand, i);
+	        GameData.getInstance().addLadders(l);
+	        add_LadderToTile(startRand, l);
+	    }
 	}
-
 	/**
 	 * Generates snakes on the game board.
 	 * The method randomly selects start and end tiles for each snake, ensuring that each tile is unique.
 	 */
 	private void generate_Snakes() {
 		Random rand = new Random();
+	    Set<Integer> usedYValues = new HashSet<>(); // to store used x values
 
 		Color[] snake_color = { Color.YELLOW, Color.GREEN, Color.BLUE };
 
@@ -558,13 +576,23 @@ public class Board implements GameEventSubject {
 			int num_of_tiles = GameData.getInstance().getNumOfTiles();
 			int startRand;
 			int endRand;
+	        int startY;
+	        int endY;
+
 			do {
 				endRand = rand.nextInt(num_of_tiles * (num_of_tiles - i)) + 1; // Random tile in the first (7-i) rows
 				startRand = endRand + (num_of_tiles * (i)); // Tile in a row that is (i+1) rows down
+	            startY = calculatePosition(startRand)[1]; // calculate x value of startRand
+	            endY = calculatePosition(endRand)[1]; // calculate x value of endRand
+	            
 			} while (startRand > (num_of_tiles * num_of_tiles) || usedNumbers.contains(startRand)
-					|| usedNumbers.contains(endRand)); // Ensure startRand doesn't exceed 49 and numbers are unique
+					|| usedNumbers.contains(endRand)||  (usedYValues.contains(startY) && usedYValues.contains(endY))); // Ensure startRand doesn't exceed 49 and numbers are unique
+			System.out.println("startY " + startY + "endY " + endY);
 			usedNumbers.add(startRand);
 			usedNumbers.add(endRand);
+	        //Make sure the ladders won't overlap
+	        usedYValues.add(startY);
+	        usedYValues.add(endY);
 
 			Snake s = new Snake(startRand, endRand, snake_color[i - 1]);
 			GameData.getInstance().addSnake(s);

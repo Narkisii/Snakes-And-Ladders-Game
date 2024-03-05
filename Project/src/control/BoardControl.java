@@ -49,6 +49,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -398,6 +399,13 @@ public class BoardControl implements GameEventSubject {
 				else
 					tile.setFill(Color.web("#65B741")); // Change this to the color you want
 
+				if(count == numTiles*numTiles) {
+					tile.setFill(Color.web("#d4ff00")); // Winner tile
+					tile.setStrokeType(StrokeType.INSIDE);
+					tile.setStroke(Color.web("#0a5200"));
+					tile.setStrokeWidth(5);
+				}
+				
 				// Set the position of the square
 				tile.setX(column * tile.getWidth());
 				tile.setY((numTiles - 1 - i) * tile.getHeight());
@@ -864,33 +872,28 @@ public class BoardControl implements GameEventSubject {
 	private void checktile_type(int tile_num, Player p) {
 		// Get the tile object from the board
 		Tile tile = board.getTile(tile_num);
-
-		// Check if the tile adds more steps to the player
-		if (tile.getType() != 0 && tile.getType() != 4) {// 0 is regular tile, 4 is question tile
-			// Activate the tile effect and keep the player in place without adding an extra
-			// step
-			board.activateTile(tile_num, p);
-			move_Player(-5, p);// -5 is basically a flag to keep the player in place and not add an extra step
-		}
-
-		if (tile.getType() == 4) {// is a question tile
-			// Check if there is a question associated with the tile
+		// Check the tile type
+		switch (tile.getType()) {
+		case 0: // regular tile
+			// Proceed to the next player's turn
+			next_Turn();
+			break;
+		case 4: // question tile
 			Tile question_tile = board.is_question(tile_num);
 			if (question_tile != null) {
-				// Display the question to the player
 				showQuestion(board.getTile(tile_num).getQuestion(), p);
 			}
+			break;
+			//Add more tile types if needed
+		default: // other tile types
+			board.activateTile(tile_num, p);
+			move_Player(-5, p);
+			break;
 		}
 
 		// Check if the game has ended
 		if (checkwin(GameData.getInstance().getBoard().getGameEnd())) {
 			return;
-		}
-
-		// Check if the tile is a regular tile
-		if (tile.getType() == 0) {// regular tile
-			// Proceed to the next player's turn
-			next_Turn();
 		}
 	}
 
