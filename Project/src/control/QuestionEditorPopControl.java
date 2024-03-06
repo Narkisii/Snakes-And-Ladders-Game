@@ -23,6 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.DuplicateError;
 import model.InputIsEmpty;
@@ -34,19 +35,19 @@ import model.QuestionsFromJson;
 public class QuestionEditorPopControl {
 	@FXML
 	private TextField ans1, ans2, ans3, ans4;
-	
+
 	@FXML
 	private TextArea question_TextArea;
-	
+
 	@FXML
 	private Label main_Label, answerOpt_lbl, correctAnswer_lbl;
-	
+
 	@FXML
 	private ComboBox<String> difficulty_ComBox, correctAns_ComBox;
-	
+
 	@FXML
 	private HBox ans_1_HBox, ans_2_HBox, ans_3_HBox, ans_4_HBox;
-	
+
 	@FXML
 	private VBox q_Vbox;
 
@@ -57,10 +58,10 @@ public class QuestionEditorPopControl {
 
 	@FXML
 	private ImageView clearButton;
-	
+
 	@FXML
 	private ScrollPane qScroll_Pane;
-	
+
 	@FXML
 	private AnchorPane center_Pane;
 
@@ -75,7 +76,7 @@ public class QuestionEditorPopControl {
 
 		textFieldList = new ArrayList<>();
 		// textFieldList.add(question_TextArea);
-		
+
 		textFieldList.add(ans1);
 		textFieldList.add(ans2);
 		textFieldList.add(ans3);
@@ -105,6 +106,15 @@ public class QuestionEditorPopControl {
 				alert.setTitle("Save Question");
 				alert.setHeaderText(null);
 				alert.setContentText("Saved Question");
+				alert.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
+
+				try {
+					alert.initOwner((clearButton).getScene().getWindow()); // Initialize the owner of the pop-up stage
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					return false;
+				}
+
 
 				questionsFromJson = QuestionsFromJson.getInstance().readQuestionsFromJson();
 
@@ -122,12 +132,12 @@ public class QuestionEditorPopControl {
 					previousWindow.re_init(newQuestion.getDifficulty());
 					clear_text();
 					alert.showAndWait();
-					
+
 					return true;
 				}
 			} catch (InputIsEmpty | DuplicateError | IOException | InputIsNotUnique | NoJsonFileFound e) {
 				// TODO Auto-generated catch block
-				HandleExceptions.showException(e,this,main_Label.getScene().getWindow() );
+				HandleExceptions.showException(e, this, main_Label.getScene().getWindow());
 			}
 
 		} else
@@ -137,6 +147,16 @@ public class QuestionEditorPopControl {
 			alert.setTitle("Save Question");
 			alert.setHeaderText(null);
 			alert.setContentText("Saved Edit");
+			alert.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
+
+			try {
+				alert.initOwner((clearButton).getScene().getWindow()); // Initialize the owner of the pop-up stage
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				return false;
+			}
+
+
 			try {
 				/// edit question
 				QuestionsFromJson questionsFromJson = QuestionsFromJson.getInstance().readQuestionsFromJson();
@@ -147,7 +167,7 @@ public class QuestionEditorPopControl {
 
 					// Get the updated answers
 					LinkedList<String> updatedAnswers = new LinkedList<>();
-					updatedAnswers.add(question_TextArea.getText());
+//					updatedAnswers.add(question_TextArea.getText());
 					updatedAnswers.add(ans1.getText());
 					updatedAnswers.add(ans2.getText());
 					updatedAnswers.add(ans3.getText());
@@ -181,7 +201,7 @@ public class QuestionEditorPopControl {
 				}
 			} catch (DuplicateError | IOException | InputIsEmpty | InputIsNotUnique | NoJsonFileFound e) {
 				// TODO: handle exception
-				HandleExceptions.showException(e,this,main_Label.getScene().getWindow() );
+				HandleExceptions.showException(e, this, main_Label.getScene().getWindow());
 
 			}
 		}
@@ -189,9 +209,9 @@ public class QuestionEditorPopControl {
 
 	}
 
-
 	// Clear all text fields
 	public void clear_text() {
+		question_TextArea.clear();
 		for (TextField f : textFieldList) {
 			f.clear();
 		}
@@ -211,17 +231,22 @@ public class QuestionEditorPopControl {
 //		return true;
 //	}
 	public boolean checkEmpty() throws InputIsEmpty, InputIsNotUnique {
-	    Set<String> inputs = new HashSet<>();
-	    for (TextField f : textFieldList) {
-	        String input = f.getText().toLowerCase();
-	        input = input.replaceAll("\\p{Punct}", "").replaceAll("\\s", "");
-	        if (input.isEmpty()) {
-	            throw new InputIsEmpty(f.getId());
-	        } else if (!inputs.add(input)) {
-	            throw new InputIsNotUnique(f.getId() + " " + f.getText());
-	        }
-	    }
-	    return true;
+		Set<String> inputs = new HashSet<>();
+		String temp = question_TextArea.getText().replaceAll("\\p{Punct}", "").replaceAll("\\s", "");
+		if (temp.isEmpty()) {
+			throw new InputIsEmpty(question_TextArea.getId());
+		}
+
+		for (TextField f : textFieldList) {
+			String input = f.getText().toLowerCase();
+			input = input.replaceAll("\\p{Punct}", "").replaceAll("\\s", "");
+			if (input.isEmpty()) {
+				throw new InputIsEmpty(f.getId());
+			} else if (!inputs.add(input)) {
+				throw new InputIsNotUnique(f.getId() + " " + f.getText());
+			}
+		}
+		return true;
 	}
 
 	public void setPreviousWindow(QuestionWizControl questionWizControl2) {
@@ -252,7 +277,7 @@ public class QuestionEditorPopControl {
 		// TODO Auto-generated method stub
 		this.question = question;
 		this.questionAfterChange = new Question();
-		
+
 		// import question
 		String theQ = question.getQuestion();
 		question_TextArea.setText(theQ);
@@ -260,7 +285,7 @@ public class QuestionEditorPopControl {
 		// import difficulty
 		difficulty_ComBox.setValue(String.valueOf(question.getDifficulty()));
 
-		if(previousWindow.isAdmin == true) {
+		if (previousWindow.isAdmin == true) {
 			// Get answers and show on screen
 			List<String> answers = question.getAnswers();
 
@@ -270,27 +295,26 @@ public class QuestionEditorPopControl {
 			ans3.setText(answers.get(2));
 			ans4.setText(answers.get(3));
 			correctAns_ComBox.setValue(String.valueOf(question.getCorrectAnswer()));
-		}
-		else {
+		} else {
 			question_TextArea.setEditable(false);
 			question_TextArea.setDisable(true);
-			
+
 			// hide correct answer
 			correctAns_ComBox.setVisible(false);
 			correctAnswer_lbl.setVisible(false);
-			
+
 			// disable the difficulty choose
 			difficulty_ComBox.setDisable(true);
-			
+
 			// hide answers
 			answerOpt_lbl.setVisible(false);
 			ans_1_HBox.setVisible(false);
 			ans_2_HBox.setVisible(false);
 			ans_3_HBox.setVisible(false);
 			ans_4_HBox.setVisible(false);
-			
+
 			saveButton.setDisable(true);
 		}
 	}
-	
+
 }

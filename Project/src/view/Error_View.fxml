@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 
-<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="252.0" prefWidth="519.0" styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.Error_Handler_Control">
+<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="252.0" prefWidth="519.0" styleClass="ErrBodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.Error_Handler_Control">
     <center>
         <AnchorPane fx:id="mainPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="171.0" prefWidth="482.0" stylesheets="@resources/Css/popUpStyle.css">
          <children>
-            <Label fx:id="error_msg" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="18.0" prefHeight="122.0" prefWidth="481.0" styleClass="pop_font" text="Label" />
+            <Label fx:id="error_msg" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="18.0" prefHeight="122.0" prefWidth="481.0" styleClass="pop_font" text="Label" wrapText="true" />
          </children>
         </AnchorPane>
     </center>
