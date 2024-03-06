@@ -122,7 +122,7 @@ public class MenuScreenControl {
 			double width = stage.getScene().getWidth();
 			double height = stage.getScene().getHeight();
 			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
-			stage.setAlwaysOnTop(true);
+//			stage.setAlwaysOnTop(true);
 			stage.setScene(scene);
 
 		} catch (IOException e) {

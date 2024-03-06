@@ -127,7 +127,7 @@ public class QuestionEditorPopControl {
 				}
 			} catch (InputIsEmpty | DuplicateError | IOException | InputIsNotUnique | NoJsonFileFound e) {
 				// TODO Auto-generated catch block
-				HandleExceptions.showException(e);
+				HandleExceptions.showException(e,this,main_Label.getScene().getWindow() );
 			}
 
 		} else
@@ -147,6 +147,7 @@ public class QuestionEditorPopControl {
 
 					// Get the updated answers
 					LinkedList<String> updatedAnswers = new LinkedList<>();
+					updatedAnswers.add(question_TextArea.getText());
 					updatedAnswers.add(ans1.getText());
 					updatedAnswers.add(ans2.getText());
 					updatedAnswers.add(ans3.getText());
@@ -180,7 +181,7 @@ public class QuestionEditorPopControl {
 				}
 			} catch (DuplicateError | IOException | InputIsEmpty | InputIsNotUnique | NoJsonFileFound e) {
 				// TODO: handle exception
-				HandleExceptions.showException(e);
+				HandleExceptions.showException(e,this,main_Label.getScene().getWindow() );
 
 			}
 		}
@@ -196,18 +197,31 @@ public class QuestionEditorPopControl {
 		}
 	}
 
-	// Check if any imput is empty
+//	// Check if any input is empty
+//	public boolean checkEmpty() throws InputIsEmpty, InputIsNotUnique {
+//		Set<String> inputs = new HashSet<>();
+//		for (TextField f : textFieldList) {
+//			String input = f.getText().toLowerCase();
+//			if (input.isEmpty()) {
+//				throw new InputIsEmpty(f.getId());
+//			} else if (!inputs.add(input.toLowerCase())) {
+//				throw new InputIsNotUnique(f.getId() + " " + f.getText());
+//			}
+//		}
+//		return true;
+//	}
 	public boolean checkEmpty() throws InputIsEmpty, InputIsNotUnique {
-		Set<String> inputs = new HashSet<>();
-		for (TextField f : textFieldList) {
-			String input = f.getText();
-			if (input.isEmpty()) {
-				throw new InputIsEmpty(f.getId());
-			} else if (!inputs.add(input.toLowerCase())) {
-				throw new InputIsNotUnique(f.getId() + " " + f.getText());
-			}
-		}
-		return true;
+	    Set<String> inputs = new HashSet<>();
+	    for (TextField f : textFieldList) {
+	        String input = f.getText().toLowerCase();
+	        input = input.replaceAll("\\p{Punct}", "").replaceAll("\\s", "");
+	        if (input.isEmpty()) {
+	            throw new InputIsEmpty(f.getId());
+	        } else if (!inputs.add(input)) {
+	            throw new InputIsNotUnique(f.getId() + " " + f.getText());
+	        }
+	    }
+	    return true;
 	}
 
 	public void setPreviousWindow(QuestionWizControl questionWizControl2) {

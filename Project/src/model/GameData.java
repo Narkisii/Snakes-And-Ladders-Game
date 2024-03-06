@@ -67,7 +67,7 @@ public class GameData {
 //	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
 			questionData = QuestionsFromJson.getInstance().readQuestionsFromJson();
 		} catch (IOException | NoJsonFileFound e) {
-			HandleExceptions.showException(e);
+			HandleExceptions.showException(e,this,null);
 			return;
 		}
 

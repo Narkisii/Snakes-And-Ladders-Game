@@ -14,7 +14,7 @@ public class Main extends Application {
 		Scene scene = new Scene(root);
 		
 	    primaryStage.getIcons().add(new Image("/view/Images/icon/icon.png"));
-	    primaryStage.setAlwaysOnTop(true);
+//	    primaryStage.setAlwaysOnTop(true);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}

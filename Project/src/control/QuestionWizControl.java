@@ -138,8 +138,7 @@ public class QuestionWizControl {
 		if (!isAdmin) {
 			// If not an admin, disable admin controls
 			disableAdminControls();
-		}
-		else {
+		} else {
 			// If an admin, enable admin controls
 			enableAdminControls();
 		}
@@ -223,7 +222,7 @@ public class QuestionWizControl {
 			Scene scene = new Scene(root);
 			popupStage.setScene(scene);
 			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
-			popupStage.setAlwaysOnTop(true); // Set always on top
+//			popupStage.setAlwaysOnTop(true); // Set always on top
 			popupStage.setResizable(false);
 
 			popupStage.show();
@@ -410,7 +409,7 @@ public class QuestionWizControl {
 		try { // Read the questions from JSON
 			questionData = QuestionsFromJson.getInstance().readQuestionsFromJson();
 		} catch (IOException | NoJsonFileFound e) {
-			HandleExceptions.showException(e); // Handle exceptions
+			HandleExceptions.showException(e, this, LogIn_Btn.getScene().getWindow()); // Handle exceptions
 			return;
 		}
 
@@ -444,7 +443,7 @@ public class QuestionWizControl {
 		try {
 			questionData = QuestionsFromJson.getInstance().readQuestionsFromJson(); // Read the questions from JSON
 		} catch (IOException | NoJsonFileFound e) {
-			HandleExceptions.showException(e); // Handle exceptions
+			HandleExceptions.showException(e, this, leftPane.getScene().getWindow()); // Handle exceptions
 			return;
 		}
 
@@ -486,12 +485,11 @@ public class QuestionWizControl {
 		// If a pop-up is already open, do nothing
 		if (popupStage != null && popupStage.isShowing()) {
 			return;
-		}
-		else { // Create a new Stage for the pop-up
+		} else { // Create a new Stage for the pop-up
 			popupStage = new Stage();
 			popupStage.setResizable(false);
 			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
-			popupStage.setAlwaysOnTop(true); // Set always on top
+//			popupStage.setAlwaysOnTop(true); // Set always on top
 
 		}
 	}

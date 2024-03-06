@@ -97,7 +97,7 @@ public class HistoryControl {
         try {
             historyData = readHistoryFromJson(path);
         } catch (IOException | NoJsonFileFound e) {
-        	HandleExceptions.showException(e);
+        	HandleExceptions.showException(e,this,returnBtn.getScene().getWindow());
 //            e.printStackTrace();
             return;
         }
@@ -138,7 +138,7 @@ public class HistoryControl {
 
 			} catch (Exception e2) {
 				// TODO: handle exception
-				System.out.println(e2.getMessage());
+//				System.out.println(e2.getMessage());
 				throw new NoJsonFileFound();
 			}
 		}
