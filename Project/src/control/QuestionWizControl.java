@@ -167,12 +167,13 @@ public class QuestionWizControl {
 			 * When the easy button is clicked, set the current filtered data to the easy
 			 * questions
 			 */
+			re_init(1);
+
 			currentFilteredData = easyFilteredData;
 			update_table();
 			updateFilter();
 			qTable.setItems(currentFilteredData);
 			q_col.setText("Easy Questions");
-			re_init(1);
 		});
 
 		med_button.setOnAction(event -> {
@@ -180,12 +181,14 @@ public class QuestionWizControl {
 			 * When the medium button is clicked, set the current filtered data to the
 			 * medium questions
 			 */
+			re_init(2);
+			
 			currentFilteredData = medFilteredData;
 			update_table();
 			updateFilter();
 			qTable.setItems(currentFilteredData);
 			q_col.setText("Medium Questions");
-			re_init(2);
+//			re_init(2);
 		});
 
 		hard_button.setOnAction(event -> {
@@ -193,12 +196,14 @@ public class QuestionWizControl {
 			 * When the hard button is clicked, set the current filtered data to the hard
 			 * questions
 			 */
+			re_init(3);
+
 			currentFilteredData = hardFilteredData;
 			update_table();
 			updateFilter();
 			qTable.setItems(currentFilteredData);
 			q_col.setText("Hard Questions");
-			re_init(3);
+//			re_init(3);
 		});
 
 		// Set the action for the login button
@@ -418,6 +423,7 @@ public class QuestionWizControl {
 		med_questionList = questionData.getQuestionsByDifficulty(2);
 		hard_questionList = questionData.getQuestionsByDifficulty(3);
 
+
 		// Update the question column
 		q_col.setCellValueFactory(new PropertyValueFactory<>("question"));
 	}
@@ -461,23 +467,29 @@ public class QuestionWizControl {
 		ObservableList<Question> data = FXCollections.observableArrayList(easy_questionList);
 		qTable.setItems(data);
 		q_col.setText("Easy Questions");
-
 		// Set the table data based on the difficulty level
 		if (q_diff == 1) {
 			data = FXCollections.observableArrayList(easy_questionList);
 			qTable.setItems(data);
 			q_col.setText("Easy Questions");
+			easyFilteredData = new FilteredList<>(data, p -> true);
+
 		}
 		if (q_diff == 2) {
 			data = FXCollections.observableArrayList(med_questionList);
 			qTable.setItems(data);
 			q_col.setText("Medium Questions");
+			medFilteredData = new FilteredList<>(data, p -> true);
+
 		}
 		if (q_diff == 3) {
 			data = FXCollections.observableArrayList(hard_questionList);
 			qTable.setItems(data);
 			q_col.setText("Hard Questions");
+			hardFilteredData = new FilteredList<>(data, p -> true);
+
 		}
+		
 	}
 
 	// This method sets the stage for the pop-up
