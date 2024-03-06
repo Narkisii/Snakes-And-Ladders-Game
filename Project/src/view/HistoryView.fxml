@@ -11,15 +11,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@resources/Css/all_Style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="control.HistoryControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="bodybg" stylesheets="@resources/Css/all_Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.HistoryControl">
    <top>
-      <Pane fx:id="topPane" minWidth="-Infinity" prefHeight="85.0" prefWidth="85.0" BorderPane.alignment="CENTER" />
+      <Pane fx:id="topPane" minWidth="-Infinity" prefHeight="60.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
    </top>
    <right>
-      <Pane fx:id="rightPane" prefHeight="100.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+      <Pane fx:id="rightPane" prefHeight="100.0" prefWidth="60.0" BorderPane.alignment="CENTER" />
    </right>
    <bottom>
-      <Pane fx:id="bottomPane" prefHeight="85.0" prefWidth="85.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="bottomPane" prefHeight="60.0" prefWidth="85.0" BorderPane.alignment="CENTER">
          <children>
             <Button id="returnBtn" fx:id="returnBtn" mnemonicParsing="false" stylesheets="@resources/Css/Buttons.css" text="Return">
                <font>
@@ -33,7 +33,7 @@
       </Pane>
    </bottom>
    <left>
-      <Pane fx:id="leftPane" prefHeight="100.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+      <Pane fx:id="leftPane" prefHeight="100.0" prefWidth="60.0" BorderPane.alignment="CENTER" />
    </left>
    <center>
       <VBox fx:id="vBoxHistory" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" BorderPane.alignment="CENTER">
@@ -46,7 +46,7 @@
                   <Insets />
                </VBox.margin>
             </Label>
-           <TableView fx:id="historyTable" prefHeight="440.0" prefWidth="702.0" stylesheets="@resources/Css/table_Css.css">
+           <TableView fx:id="historyTable" prefHeight="440.0" prefWidth="702.0" styleClass="root" stylesheets="@resources/Css/table_Css.css">
     <columns>
         <TableColumn fx:id="dateCol" minWidth="-1.0" prefWidth="116.0" text="Date" />
         <TableColumn fx:id="playersCol" minWidth="-1.0" prefWidth="175.2000274658203" text="Players" />
