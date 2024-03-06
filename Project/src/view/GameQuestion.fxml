@@ -17,42 +17,50 @@
          <children>
             <VBox alignment="CENTER_LEFT" prefHeight="413.0" prefWidth="650.0" spacing="15.0" stylesheets="@resources/Css/popUpStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <HBox prefHeight="171.0" prefWidth="652.0">
+                  <HBox prefHeight="229.0" prefWidth="652.0">
                      <children>
-                        <Label fx:id="questionTextBox" alignment="CENTER" prefHeight="145.0" prefWidth="558.0" style="-fx-opacity: 1;" styleClass="radioAnswers" text="Label" wrapText="true" />
-                        <VBox prefHeight="147.0" prefWidth="183.0" styleClass="qWizFont" stylesheets="@resources/Css/all_Style.css">
+                        <Label fx:id="questionTextBox" alignment="CENTER" prefHeight="166.0" prefWidth="386.0" styleClass="question_Text" text="Label" wrapText="true" />
+                        <VBox alignment="CENTER" prefHeight="137.0" prefWidth="278.0" styleClass="qWizFont" stylesheets="@resources/Css/all_Style.css">
                            <children>
-                              <Label fx:id="p_name_label" prefHeight="27.0" prefWidth="128.0" text="Answering:" wrapText="true" />
-                              <ImageView fx:id="p_image_viewr" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                              <Label fx:id="p_name_label" alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="266.0" text="Answering:" wrapText="true" />
+                              <ImageView fx:id="p_image_viewr" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </VBox>
                      </children>
                   </HBox>
-                  <Label fx:id="chooseAnswerTitle" styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" text="choose answer:">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Label>
-                  <RadioButton fx:id="answerOne" mnemonicParsing="false" styleClass="radioAnswers" text="Hello I'm number 1">
-                     <VBox.margin>
-                        <Insets left="5.0" />
-                     </VBox.margin></RadioButton>
-                  <RadioButton fx:id="answerTwo" mnemonicParsing="false" styleClass="radioAnswers" text="Hello I'm number 2">
-                     <VBox.margin>
-                        <Insets left="5.0" />
-                     </VBox.margin></RadioButton>
-                  <RadioButton fx:id="answerThree" mnemonicParsing="false" styleClass="radioAnswers" text="Hello I'm number 3">
-                     <VBox.margin>
-                        <Insets left="5.0" />
-                     </VBox.margin></RadioButton>
-                  <RadioButton fx:id="answerFour" mnemonicParsing="false" styleClass="radioAnswers" text="Hello I'm number 4">
-                     <VBox.margin>
-                        <Insets left="5.0" />
-                     </VBox.margin></RadioButton>
+                  <VBox prefHeight="261.0" prefWidth="652.0">
+                     <children>
+                        <Label fx:id="chooseAnswerTitle" styleClass="secondary_Text" text="choose answer:">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <RadioButton fx:id="answerOne" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="400.0" styleClass="radioAnswers" text="Hello I'm number 1" wrapText="true">
+                           <VBox.margin>
+                              <Insets left="5.0" />
+                           </VBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="answerTwo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="400.0" styleClass="radioAnswers" text="Hello I'm number 2" wrapText="true">
+                           <VBox.margin>
+                              <Insets left="5.0" />
+                           </VBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="answerThree" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="400.0" styleClass="radioAnswers" text="Hello I'm number 3" wrapText="true">
+                           <VBox.margin>
+                              <Insets left="5.0" />
+                           </VBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="answerFour" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="400.0" styleClass="radioAnswers" text="Hello I'm number 4" wrapText="true">
+                           <VBox.margin>
+                              <Insets left="5.0" />
+                           </VBox.margin>
+                        </RadioButton>
+                     </children>
+                  </VBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                      <children>
                         <Button fx:id="checkAnswerButton" prefHeight="49.0" prefWidth="630.0" styleClass="checkButton" stylesheets="@resources/Css/Buttons.css" text="check answer" />
-                        <Label fx:id="check_Answer_label" alignment="CENTER" prefHeight="48.0" prefWidth="478.0" style="-fx-background-color: white; -fx-background-radius: 5;" styleClass="radioAnswers" text="Label" />
+                        <Label fx:id="check_Answer_label" alignment="CENTER" prefHeight="48.0" prefWidth="478.0" style="-fx-background-color: white; -fx-background-radius: 5;" styleClass="radioAnswers" />
                      </children>
                      <padding>
                         <Insets top="10.0" />

@@ -315,14 +315,14 @@ public class QuestionPopControl implements GameEventSubject {
 			invoker.addCommand(new PressButtonCommand((cpu_Player) player));
 			invoker.executeCommands();
 			checkAnswerButton.setVisible(false);
-			p_name_label.setText("Answering: " + player.getName() + "CPU PLAYER");
+			p_name_label.setText("CPU:\n"+player.getName());
 			p_name_label.setTextFill(Color.web(player.getColor()));
 			for (RadioButton rb : radioButtons) {
 				rb.setMouseTransparent(true);
 			}
 
 		} else {
-			p_name_label.setText("Answering: " + player.getName());
+			p_name_label.setText("Answering:\n" + player.getName());
 			p_name_label.setTextFill(Color.web(player.getColor()));
 		}
 		Image img = new Image(player.getToken());

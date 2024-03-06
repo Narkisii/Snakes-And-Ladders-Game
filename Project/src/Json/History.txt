@@ -2,13 +2,13 @@
   "date" : "2024-02-08",
   "players" : [ "Player1", "Player2" ],
   "difficulty" : "Hard",
-  "playTime" : "30 minutes",
+  "playTime" : "30",
   "winner" : "Player1"
 }, {
   "date" : "2024-02-07",
   "players" : [ "Player3", "Player4" ],
   "difficulty" : "Easy",
-  "playTime" : "15 minutes",
+  "playTime" : "15",
   "winner" : "Player4"
 }, {
   "date" : "2024-02-28",

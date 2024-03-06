@@ -86,7 +86,7 @@ public class Ladder_Object implements GameElement {
 				rectangle.setX(endX + (rect_width / 2) - startTile.getWidth() / 2); // Adjust for start tile width
 				rectangle.setY(((startY + endY) / 2) - (rect_width / 2));
 			} else {
-				rectangle.setX(startX + (rect_width / 2) - startTile.getWidth() / 2); // Adjust for start tile width
+				rectangle.setX(startX + (rect_width / (angle/10)) - startTile.getWidth() / 2); // Adjust for start tile width
 				rectangle.setY(((startY + endY) / 2) - (rect_width / 2));
 			}
 			rectangle.setWidth(distance);

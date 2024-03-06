@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -97,13 +98,32 @@ public class HistoryControl {
 			return;
 		}
 
-
+		PropertyValueFactory<History, String> test = new PropertyValueFactory<>("playTime");
+		System.out.println(test);
 		// Initialize the TableView with the history data
 		dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
 		playersCol.setCellValueFactory(new PropertyValueFactory<>("players"));
 		difficultyCol.setCellValueFactory(new PropertyValueFactory<>("difficulty"));
 		timeCol.setCellValueFactory(new PropertyValueFactory<>("playTime"));
-		winnerCol.setCellValueFactory(new PropertyValueFactory<>("winner"));
+		timeCol.setCellFactory(column -> {
+		    return new TableCell<History, String>() {
+		        @Override
+		        protected void updateItem(String item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		                setText(null);
+		            } else {
+		                int timeSeconds = Integer.parseInt(item);
+						int hours = timeSeconds / 3600;
+						int minutes = (timeSeconds % 3600) / 60;
+						int seconds = timeSeconds % 60;
+
+		                setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+		            }
+		        }
+		    };
+		});		winnerCol.setCellValueFactory(new PropertyValueFactory<>("winner"));
 
 		// Convert the List to an ObservableList
 		ObservableList<History> observableList = FXCollections.observableArrayList(historyData);

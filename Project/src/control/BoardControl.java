@@ -1012,7 +1012,7 @@ public class BoardControl implements GameEventSubject {
 			return;
 		}
 		popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
-		popupStage.setAlwaysOnTop(true); // Set always on top
+//		popupStage.setAlwaysOnTop(true); // Set always on top
 		popupStage.setResizable(false);
 		popupStage.getStyle();
 		popupStage.initStyle(StageStyle.UNDECORATED);

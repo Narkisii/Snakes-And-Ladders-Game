@@ -130,8 +130,14 @@
 }
 
 .question_Text {
-	-fx-font-size: 15.0pt;
+	-fx-font-size: 20pt;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, #ffffff, 2.0, 2.0, 0.0, 0.0);
 }
 
+.secondary_Text {
+	-fx-font-size: 20pt;
+    -fx-font-weight: bold;
+}
 
 
