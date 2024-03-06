@@ -8,7 +8,7 @@ public class History {
 	private String difficulty;
 	private String playTime;
 	private String winner;
-	
+
 	public History() {
 	}
 
@@ -97,7 +97,7 @@ public class History {
 	public void setWinner(String winner) {
 		this.winner = winner;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "History [date=" + date + ", players=" + players + ", difficulty=" + difficulty + ", playTime="

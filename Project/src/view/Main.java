@@ -12,9 +12,9 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		Parent root = FXMLLoader.load(getClass().getResource("MenuScreenView.fxml"));
 		Scene scene = new Scene(root);
-		
-	    primaryStage.getIcons().add(new Image("/view/Images/icon/icon.png"));
-//	    primaryStage.setAlwaysOnTop(true);
+
+		primaryStage.getIcons().add(new Image("/view/Images/icon/icon.png"));
+		//	    primaryStage.setAlwaysOnTop(true);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}

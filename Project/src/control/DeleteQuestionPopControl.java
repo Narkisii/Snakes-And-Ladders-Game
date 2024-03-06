@@ -24,14 +24,14 @@ public class DeleteQuestionPopControl {
 	private Question questionToDelete;
 
 	private QuestionWizControl previousWindow;
-    /**
-     * Sets the question to be deleted.
-     * 
-     * @param question The question to be deleted
-     */
+	/**
+	 * Sets the question to be deleted.
+	 * 
+	 * @param question The question to be deleted
+	 */
 
 	public void setQuestionToDelete(Question question) {
-		this.questionToDelete = question;
+		questionToDelete = question;
 	}
 
 	@FXML
@@ -53,25 +53,25 @@ public class DeleteQuestionPopControl {
 
 		noButton.setOnAction(event -> closeWindow());
 	}
-	
-    /**
-     * Closes the current window.
-     */
+
+	/**
+	 * Closes the current window.
+	 */
 	private void closeWindow() {
 		Stage stage = (Stage) yesButton.getScene().getWindow();
 		stage.close();
 	}
-	
-    /**
-     * Sets the previous window.
-     * 
-     * @param questionWizControl2 The previous window controller
-     */
+
+	/**
+	 * Sets the previous window.
+	 * 
+	 * @param questionWizControl2 The previous window controller
+	 */
 
 	public void setPreviousWindow(QuestionWizControl questionWizControl2) {
 		// TODO Auto-generated method stub
 
-		this.previousWindow = questionWizControl2;
+		previousWindow = questionWizControl2;
 
 	}
 }

@@ -6,9 +6,9 @@ package control;
  * parameterize clients with queues, requests, and operations.
  */
 public interface Command {
-    /**
-     * The execute method is used to apply the command.
-     * 
-     */
-    void execute();
+	/**
+	 * The execute method is used to apply the command.
+	 * 
+	 */
+	void execute();
 }//

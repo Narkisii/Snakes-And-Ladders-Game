@@ -1,7 +1,5 @@
 package control;
 
-import java.io.IOException;
-import java.util.EventListener;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
@@ -9,19 +7,13 @@ import exceptions.HandleExceptions;
 import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -53,7 +45,7 @@ public class LoginController {
 	private QuestionWizControl previousWindow; // hold questionWiz control
 
 	private static boolean status; // login status
-	
+
 	Pattern pattern = Pattern.compile("[a-zA-Z0-9]{0,10}");
 
 	public void initialize() {
@@ -61,10 +53,10 @@ public class LoginController {
 		checkUserInput();
 		setLoginEvent();
 		showLoginMessage(status);
-		
-//		if (status) {
-//			approveLogin();
-//		}
+
+		//		if (status) {
+		//			approveLogin();
+		//		}
 	}
 
 	public void checkUserInput() {
@@ -86,17 +78,17 @@ public class LoginController {
 	public void setTextFields(ChangeListener<String> listener) {
 		usernameField.textProperty().addListener(listener);
 		passwordField.textProperty().addListener(listener);
-	    usernameField.setOnKeyPressed(event -> {
-	        if (event.getCode() == KeyCode.ENTER) {
-	            loginButton.fire();
-	        }
-	    });
+		usernameField.setOnKeyPressed(event -> {
+			if (event.getCode() == KeyCode.ENTER) {
+				loginButton.fire();
+			}
+		});
 
-	    passwordField.setOnKeyPressed(event -> {
-	        if (event.getCode() == KeyCode.ENTER) {
-	            loginButton.fire();
-	        }
-	    });
+		passwordField.setOnKeyPressed(event -> {
+			if (event.getCode() == KeyCode.ENTER) {
+				loginButton.fire();
+			}
+		});
 
 		UnaryOperator<TextFormatter.Change> filter = change -> {
 			try {
@@ -169,7 +161,7 @@ public class LoginController {
 
 	public void setPreviousWindow(QuestionWizControl questionWizControl2) {
 		// TODO Auto-generated method stub
-		this.previousWindow = questionWizControl2;
+		previousWindow = questionWizControl2;
 	}
 
 	public QuestionWizControl getPreviousWindow() {

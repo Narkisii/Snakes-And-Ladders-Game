@@ -1,12 +1,5 @@
 package control;
 
-import model.Player;
-import model.Question;
-import model.Snake;
-import model.SoundManager;
-import model.Tile;
-import model.cpu_Player;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -14,25 +7,25 @@ import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
 import Intrefaces.GameEventObserver;
 import Intrefaces.GameEventSubject;
 import enums.GameEvent;
-import javafx.geometry.Pos;
-
+import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.ObservableMap;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -40,7 +33,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -54,20 +47,16 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import model.Board;
 import model.GameData;
 import model.Ladder;
-import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-
-import javafx.util.Duration;
-
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.collections.ObservableMap;
+import model.Player;
+import model.Question;
+import model.Snake;
+import model.SoundManager;
+import model.Tile;
+import model.cpu_Player;
 
 /**
  * This class controls the board functionality for the board game application.
@@ -298,7 +287,7 @@ public class BoardControl implements GameEventSubject {
 				canvas.getChildren().clear();
 				mainPain.getChildren().remove(canvas);
 				drawBoardObjectsInSeparateThread();
-//				redrawLines();
+				//				redrawLines();
 				mainPain.getChildren().add(canvas);
 				add_SpecialTiles();
 			}
@@ -383,9 +372,9 @@ public class BoardControl implements GameEventSubject {
 				// Create a new square (Rectangle)
 
 				Rectangle tile = new Rectangle();
-//				tile.setWidth(grid.widthProperty().divide(numTiles).doubleValue());
-//				tile.setHeight(grid.heightProperty().divide(numTiles).doubleValue());
-//				System.out.println(grid.widthProperty().doubleValue());
+				//				tile.setWidth(grid.widthProperty().divide(numTiles).doubleValue());
+				//				tile.setHeight(grid.heightProperty().divide(numTiles).doubleValue());
+				//				System.out.println(grid.widthProperty().doubleValue());
 
 				tile.widthProperty().bind(grid.widthProperty().divide(numTiles));
 				tile.heightProperty().bind(grid.heightProperty().divide(numTiles));
@@ -394,10 +383,12 @@ public class BoardControl implements GameEventSubject {
 				tile.minHeight(0);
 				tile.minWidth(0);
 				// Set the color of the square
-				if (count % 2 == 0)
+				if (count % 2 == 0) {
 					tile.setFill(Color.web("#C1F2B0")); // Change this to the color you want
-				else
+				}
+				else {
 					tile.setFill(Color.web("#65B741")); // Change this to the color you want
+				}
 
 				if(count == numTiles*numTiles) {
 					tile.setFill(Color.web("#d4ff00")); // Winner tile
@@ -405,14 +396,14 @@ public class BoardControl implements GameEventSubject {
 					tile.setStroke(Color.web("#0a5200"));
 					tile.setStrokeWidth(5);
 				}
-				
+
 				// Set the position of the square
 				tile.setX(column * tile.getWidth());
 				tile.setY((numTiles - 1 - i) * tile.getHeight());
 
 				// Add the square to the HashMap
-//				tile_Map.put(count, tile);
-//				tile.setId(String.valueOf(count));
+				//				tile_Map.put(count, tile);
+				//				tile.setId(String.valueOf(count));
 
 				// Create a new label with the current count
 				Label label = new Label(String.valueOf(count));
@@ -420,7 +411,7 @@ public class BoardControl implements GameEventSubject {
 				label.getStyleClass().add("tile_Font");
 				label.prefWidthProperty().bind(grid.widthProperty().divide(numTiles));
 				label.prefHeightProperty().bind(grid.heightProperty().divide(numTiles));
-//				label.setAlignment(Pos.CENTER);
+				//				label.setAlignment(Pos.CENTER);
 				label.minHeight(0);
 				label.minWidth(0);
 				label.setAlignment(Pos.TOP_LEFT);
@@ -526,7 +517,7 @@ public class BoardControl implements GameEventSubject {
 				tile_img.setPreserveRatio(true); // Maintain aspect ratio
 				tile_img.opacityProperty().set(0.8); // Set initial opacity
 				tile_img.fitHeightProperty().bind(startTile.heightProperty().multiply(0.8)); // Bind size for dynamic
-																								// resizing
+				// resizing
 				tile_img.fitWidthProperty().bind(startTile.widthProperty().multiply(0.8));
 				startTile.getChildren().add(tile_img); // Add the ImageView to the Pane
 			}
@@ -754,12 +745,13 @@ public class BoardControl implements GameEventSubject {
 						// Show the actual dice result image
 						Image img = new Image(path + dice + ".png");
 						diceImage.setImage(img);
-						this.stop(); // Stop the animation
+						stop(); // Stop the animation
 						// Check if the dice result triggers a special action (question or movement)
 						if (dice == 7 || dice == 8 || dice == 9) {
 							// Check if there is a question associated with the dice result
-							if (GameData.getInstance().get_Question(dice) == null)
+							if (GameData.getInstance().get_Question(dice) == null) {
 								return;
+							}
 							// Get the question associated with the dice result
 							Question q = GameData.getInstance().get_Question(dice);
 							// Display the question
@@ -907,8 +899,9 @@ public class BoardControl implements GameEventSubject {
 		pause_for_turn = new PauseTransition(Duration.seconds(2));
 		pause_for_turn.setOnFinished(event -> {
 			// Ensure there are players in the game
-			if (GameData.getInstance().getplayer_list().size() == 0)
+			if (GameData.getInstance().getplayer_list().size() == 0) {
 				return;
+			}
 			// Move to the next turn in the game data
 			GameData.getInstance().next_turn();
 
@@ -917,7 +910,7 @@ public class BoardControl implements GameEventSubject {
 					GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getColor()));
 			turn_Lable.setText(
 					GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getName()
-							+ "'s turn");
+					+ "'s turn");
 
 			// Set the image of the current player's token
 			Image token = new Image(
@@ -1103,9 +1096,13 @@ public class BoardControl implements GameEventSubject {
 	 */
 	void clear_all() {
 		if (diceRollAnimation != null)
+		{
 			diceRollAnimation.stop(); // Stop the dice roll animation if it's running
+		}
 		if (pause_for_turn != null)
+		{
 			pause_for_turn.stop(); // Stop the pause for turn if it's running
+		}
 
 		GameData.getInstance().reset(); // Reset the game data
 
@@ -1154,7 +1151,7 @@ public class BoardControl implements GameEventSubject {
 		// Get the controller for the exit game pop-up
 		ExitGameControl exitControl = loader.getController();
 		exitControl.setPreviousWindow(this); // Set the previous window in the exit screen to get to diffrent board
-												// methods
+		// methods
 
 		// Set the scene and show the stage
 		Scene scene = new Scene(root);

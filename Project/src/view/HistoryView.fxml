@@ -46,7 +46,7 @@
                   <Insets />
                </VBox.margin>
             </Label>
-           <TableView fx:id="historyTable" prefHeight="440.0" prefWidth="702.0" styleClass="root" stylesheets="@resources/Css/table_Css.css">
+           <TableView fx:id="historyTable" prefHeight="440.0" prefWidth="702.0" styleClass="root" stylesheets="@resources/Css/table_Css.css" VBox.vgrow="ALWAYS">
     <columns>
         <TableColumn fx:id="dateCol" minWidth="-1.0" prefWidth="116.0" text="Date" />
         <TableColumn fx:id="playersCol" minWidth="-1.0" prefWidth="175.2000274658203" text="Players" />

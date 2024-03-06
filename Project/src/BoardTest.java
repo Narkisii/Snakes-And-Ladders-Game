@@ -1,7 +1,7 @@
 
+import org.junit.Assert;
 import org.junit.Test;
 
-import control.BoardControl;
 import javafx.scene.paint.Color;
 import model.Board;
 import model.GameData;
@@ -10,14 +10,6 @@ import model.Player;
 import model.Snake;
 import model.Tile;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
-
-import org.junit.Assert;
-
 public class BoardTest {
 
 	// ID: EGT 001
@@ -25,7 +17,7 @@ public class BoardTest {
 	@Test
 	public void end_Game_Test() {
 		int numTilesInARow = 15; // As it is an "Easy" board, it's size is 7*7, we will move the player beyond
-									// the end tile to see result
+		// the end tile to see result
 		Player player = new Player(1, "Yellow", "ItayIsKing!", "Hat");
 		GameData.getInstance().setDifficulty("Easy");// Set board difficulty
 		GameData.getInstance().addPlayer(player);// Add player to player list
@@ -74,8 +66,8 @@ public class BoardTest {
 		if(tile.getLadder() != null) {
 			player.setCurrentP(tile.getLadder().getEnd());
 		}
-		
-		
+
+
 
 		// Check if player went down snake
 		Assert.assertEquals(11, player.getCurrentP());

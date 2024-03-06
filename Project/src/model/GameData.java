@@ -2,10 +2,7 @@ package model;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -13,13 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -33,21 +25,21 @@ import exceptions.HandleExceptions;
  */
 
 public class GameData {
-    private int numberOfPlayers; // The number of players in the game
-    private String difficulty; // The difficulty level of the game
-    private HashMap<Integer, List<Question>> questions_Map; // Map containing questions categorized by difficulty level
-    private LinkedList<Player> player_list; // List of players in the game
-    private LinkedList<Snake> snake_list; // List of snakes on the game board
-    private LinkedList<Ladder> ladders; // List of ladders on the game board
-    private LinkedList<Tile> specialTiles_list; // List of special tiles on the game board
-    private HistoryControl History; // Control object for managing game history
-    private int playerTurn; // Index of the current player's turn
-    private Board board; // Game board object
-    private QuestionsFromJson questionData; // Object for reading questions from JSON
-    private int playTime; // Total play time of the game
-    private String winner; // Name of the winner of the game
-    private Boolean soundFX = true; // Flag for enabling/disabling sound effects
-    private Map<Integer, Set<Question>> askedQuestionsMap = new HashMap<>(); // Map to track asked questions
+	private int numberOfPlayers; // The number of players in the game
+	private String difficulty; // The difficulty level of the game
+	private HashMap<Integer, List<Question>> questions_Map; // Map containing questions categorized by difficulty level
+	private LinkedList<Player> player_list; // List of players in the game
+	private LinkedList<Snake> snake_list; // List of snakes on the game board
+	private LinkedList<Ladder> ladders; // List of ladders on the game board
+	private LinkedList<Tile> specialTiles_list; // List of special tiles on the game board
+	private HistoryControl History; // Control object for managing game history
+	private int playerTurn; // Index of the current player's turn
+	private Board board; // Game board object
+	private QuestionsFromJson questionData; // Object for reading questions from JSON
+	private int playTime; // Total play time of the game
+	private String winner; // Name of the winner of the game
+	private Boolean soundFX = true; // Flag for enabling/disabling sound effects
+	private Map<Integer, Set<Question>> askedQuestionsMap = new HashMap<>(); // Map to track asked questions
 
 	// Singleton instance
 	private static GameData instance = null;
@@ -64,7 +56,7 @@ public class GameData {
 	 */
 	public void init() {
 		try {
-//	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
+			//	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
 			questionData = QuestionsFromJson.getInstance().readQuestionsFromJson();
 		} catch (IOException | NoJsonFileFound e) {
 			HandleExceptions.showException(e,this,null);
@@ -72,16 +64,16 @@ public class GameData {
 		}
 
 		// Initialization code here
-//		this.questions = new HashMap<Integer, Question>();
-		this.player_list = new LinkedList<Player>();
-		this.snake_list = new LinkedList<Snake>();
-		this.ladders = new LinkedList<Ladder>();
-		this.specialTiles_list = new LinkedList<Tile>();
-		this.questions_Map = questionData.init_QuestionMap();
-		this.difficulty = "Easy";
-		this.playerTurn = 0;
-		this.numberOfPlayers = 1;
-//		this.board = new Board(player_list);
+		//		this.questions = new HashMap<Integer, Question>();
+		player_list = new LinkedList<Player>();
+		snake_list = new LinkedList<Snake>();
+		ladders = new LinkedList<Ladder>();
+		specialTiles_list = new LinkedList<Tile>();
+		questions_Map = questionData.init_QuestionMap();
+		difficulty = "Easy";
+		playerTurn = 0;
+		numberOfPlayers = 1;
+		//		this.board = new Board(player_list);
 
 	}
 
@@ -89,16 +81,16 @@ public class GameData {
 	 * Resets the game data by clearing the game elements and setting the default values.
 	 */
 	public void reset() {
-		this.player_list.clear();
-		this.snake_list.clear();
-		this.ladders.clear();
-		this.specialTiles_list.clear();
-		this.questions_Map.clear();
-		this.difficulty = "Easy";
-		this.playerTurn = 0;
-		this.numberOfPlayers = 1;
+		player_list.clear();
+		snake_list.clear();
+		ladders.clear();
+		specialTiles_list.clear();
+		questions_Map.clear();
+		difficulty = "Easy";
+		playerTurn = 0;
+		numberOfPlayers = 1;
 	}
-	
+
 	/**
 	 * Static method to get the singleton instance of GameData. If the instance is null, a new GameData is created.
 	 *
@@ -126,7 +118,7 @@ public class GameData {
 
 	//Initiate the board with the updated player list, used to init from the player_control to prepare the board.
 	public void init_board() {
-		this.board = new Board(player_list);
+		board = new Board(player_list);
 	}
 
 	/**
@@ -176,21 +168,21 @@ public class GameData {
 	 */
 	public Question get_Question(int diff) {// 7-easy, 8- med, 9 - hard
 		List<Question> q_list = questions_Map.get(diff);
-	    Set<Question> askedQuestions = askedQuestionsMap.getOrDefault(diff, new HashSet<>());
-	    if (askedQuestions.size() == q_list.size()) {
-	        // All questions have been asked, clear the set
-	        askedQuestions.clear();
-	    }
-	    Question question;
-	    do {
-	        Random rand = new Random();
-	        int generator = rand.nextInt(q_list.size());
-	        question = q_list.get(generator);
-	    } while (askedQuestions.contains(question));
+		Set<Question> askedQuestions = askedQuestionsMap.getOrDefault(diff, new HashSet<>());
+		if (askedQuestions.size() == q_list.size()) {
+			// All questions have been asked, clear the set
+			askedQuestions.clear();
+		}
+		Question question;
+		do {
+			Random rand = new Random();
+			int generator = rand.nextInt(q_list.size());
+			question = q_list.get(generator);
+		} while (askedQuestions.contains(question));
 
-	    // Add the selected question to the set of asked questions
-	    askedQuestions.add(question);
-	    askedQuestionsMap.put(diff, askedQuestions);
+		// Add the selected question to the set of asked questions
+		askedQuestions.add(question);
+		askedQuestionsMap.put(diff, askedQuestions);
 		return question;
 	}
 
@@ -226,7 +218,7 @@ public class GameData {
 	 * @param questions the questions to set
 	 */
 	public void setQuestions(HashMap<Integer, List<Question>> questions) {
-		this.questions_Map = questions;
+		questions_Map = questions;
 	}
 
 	/**
@@ -397,13 +389,13 @@ public class GameData {
 		this.soundFX = soundFX;
 	}
 
-//	public void to_json() {
-//	}
-//
-//	public Question getRandQuestion(int diff) {
-//		return null;
-//
-//	}
+	//	public void to_json() {
+	//	}
+	//
+	//	public Question getRandQuestion(int diff) {
+	//		return null;
+	//
+	//	}
 
 	/**
 	 * @return the board

@@ -1,21 +1,10 @@
 package control;
 
-import javafx.scene.control.TextField;
-
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
-import javafx.scene.control.Label;
-
-//import org.jcp.xml.dsig.internal.dom.DOMSubTreeData;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.validator.PublicClassValidator;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import exceptions.HandleExceptions;
 import javafx.animation.KeyFrame;
@@ -25,24 +14,21 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -182,13 +168,13 @@ public class QuestionWizControl {
 			 * medium questions
 			 */
 			re_init(2);
-			
+
 			currentFilteredData = medFilteredData;
 			update_table();
 			updateFilter();
 			qTable.setItems(currentFilteredData);
 			q_col.setText("Medium Questions");
-//			re_init(2);
+			//			re_init(2);
 		});
 
 		hard_button.setOnAction(event -> {
@@ -203,7 +189,7 @@ public class QuestionWizControl {
 			updateFilter();
 			qTable.setItems(currentFilteredData);
 			q_col.setText("Hard Questions");
-//			re_init(3);
+			//			re_init(3);
 		});
 
 		// Set the action for the login button
@@ -227,7 +213,7 @@ public class QuestionWizControl {
 			Scene scene = new Scene(root);
 			popupStage.setScene(scene);
 			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
-//			popupStage.setAlwaysOnTop(true); // Set always on top
+			//			popupStage.setAlwaysOnTop(true); // Set always on top
 			popupStage.setResizable(false);
 
 			popupStage.show();
@@ -336,8 +322,9 @@ public class QuestionWizControl {
 						QuestionEditorPopControl controller = loader.getController();
 						controller.setPreviousWindow(this);
 						controller.setType("edit");
-						if (row.getItem() != null)
+						if (row.getItem() != null) {
 							controller.init_edit(row.getItem());
+						}
 
 						// Set the scene and show the stage
 						Scene scene = new Scene(root);
@@ -388,8 +375,9 @@ public class QuestionWizControl {
 
 	// This method checks if the user is an admin
 	public boolean isAdmin() {
-		if (isAdmin)
+		if (isAdmin) {
 			return true;
+		}
 		return false;
 	}
 
@@ -489,7 +477,7 @@ public class QuestionWizControl {
 			hardFilteredData = new FilteredList<>(data, p -> true);
 
 		}
-		
+
 	}
 
 	// This method sets the stage for the pop-up
@@ -501,7 +489,7 @@ public class QuestionWizControl {
 			popupStage = new Stage();
 			popupStage.setResizable(false);
 			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
-//			popupStage.setAlwaysOnTop(true); // Set always on top
+			//			popupStage.setAlwaysOnTop(true); // Set always on top
 
 		}
 	}

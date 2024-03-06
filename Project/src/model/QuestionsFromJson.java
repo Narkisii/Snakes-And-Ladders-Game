@@ -1,7 +1,7 @@
 package model;
 
-import java.io.IOException;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +29,7 @@ public class QuestionsFromJson {
 	 */
 	public QuestionsFromJson() {
 		super();
-		this.file = returnFile();
+		file = returnFile();
 		questionMap = new HashMap<Integer, List<Question>>();
 	}
 
@@ -88,14 +88,14 @@ public class QuestionsFromJson {
 
 		try {
 			path = "src/Json/Questions.txt";
-			this.file = new File(path);
+			file = new File(path);
 			QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
 			return questions_class;
 
 		} catch (Exception e) {
 			try {
-				this.path = "Json/Questions.txt";
-				this.file = new File(path);
+				path = "Json/Questions.txt";
+				file = new File(path);
 				QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
 				return questions_class;
 			} catch (Exception e1) {
@@ -114,14 +114,14 @@ public class QuestionsFromJson {
 		file = null;
 		try {
 			path = "src/Json/Questions.txt";
-			this.file = new File(path);
+			file = new File(path);
 			QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
 			return file;
 
 		} catch (Exception e) {
 			try {
-				this.path = "Json/Questions.txt";
-				this.file = new File(path);
+				path = "Json/Questions.txt";
+				file = new File(path);
 				QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
 				return file;
 			} catch (Exception e1) {
@@ -143,7 +143,7 @@ public class QuestionsFromJson {
 			}
 		}
 		if (index != -1) {
-			this.questions.remove(index);
+			questions.remove(index);
 		}
 	}
 
@@ -154,7 +154,7 @@ public class QuestionsFromJson {
 	 * @throws DuplicateError If the question is a duplicate.
 	 */
 	public void addQuestion(Question question) throws DuplicateError {
-		for (Question q : this.questions) {
+		for (Question q : questions) {
 			if (q.equals(question)) {
 				throw new DuplicateError();
 			}
@@ -169,7 +169,7 @@ public class QuestionsFromJson {
 	 * @return The list of questions of the specified difficulty.
 	 */
 	public List<Question> getQuestionsByDifficulty(int difficulty) {
-		return this.questions.stream().filter(q -> q.getDifficulty() == difficulty).map(q -> {
+		return questions.stream().filter(q -> q.getDifficulty() == difficulty).map(q -> {
 			Question newQuestion = new Question();
 			newQuestion.setQuestion(q.getQuestion());
 			newQuestion.setAnswers(q.getAnswers());
@@ -178,7 +178,7 @@ public class QuestionsFromJson {
 			return newQuestion;
 		}).collect(Collectors.toList());
 	}
-	
+
 	/**
 	 * Edits a question in the list of questions.
 	 *

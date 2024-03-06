@@ -1,7 +1,5 @@
 package control;
 
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.control.TextArea;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,8 +17,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -99,7 +99,7 @@ public class QuestionEditorPopControl {
 
 	private boolean save_Question() {
 		if (type == "add") {
-//      QuestionsFromJson questionsFromJson = QuestionsFromJson.getInstance();
+			//      QuestionsFromJson questionsFromJson = QuestionsFromJson.getInstance();
 			QuestionsFromJson questionsFromJson = null;
 			try {
 				Alert alert = new Alert(AlertType.INFORMATION);
@@ -167,7 +167,7 @@ public class QuestionEditorPopControl {
 
 					// Get the updated answers
 					LinkedList<String> updatedAnswers = new LinkedList<>();
-//					updatedAnswers.add(question_TextArea.getText());
+					//					updatedAnswers.add(question_TextArea.getText());
 					updatedAnswers.add(ans1.getText());
 					updatedAnswers.add(ans2.getText());
 					updatedAnswers.add(ans3.getText());
@@ -185,7 +185,7 @@ public class QuestionEditorPopControl {
 					questionAfterChange.setCorrectAnswer(selectedCorrectAnswer);
 					questionAfterChange.setDifficulty(Integer.parseInt(selectedDifficulty));
 
-//					check_duplicates(questionAfterChange);
+					//					check_duplicates(questionAfterChange);
 					// Update the question list
 					questionsFromJson.removeQuestion(question);
 					questionsFromJson.addQuestion(questionAfterChange);
@@ -217,19 +217,19 @@ public class QuestionEditorPopControl {
 		}
 	}
 
-//	// Check if any input is empty
-//	public boolean checkEmpty() throws InputIsEmpty, InputIsNotUnique {
-//		Set<String> inputs = new HashSet<>();
-//		for (TextField f : textFieldList) {
-//			String input = f.getText().toLowerCase();
-//			if (input.isEmpty()) {
-//				throw new InputIsEmpty(f.getId());
-//			} else if (!inputs.add(input.toLowerCase())) {
-//				throw new InputIsNotUnique(f.getId() + " " + f.getText());
-//			}
-//		}
-//		return true;
-//	}
+	//	// Check if any input is empty
+	//	public boolean checkEmpty() throws InputIsEmpty, InputIsNotUnique {
+	//		Set<String> inputs = new HashSet<>();
+	//		for (TextField f : textFieldList) {
+	//			String input = f.getText().toLowerCase();
+	//			if (input.isEmpty()) {
+	//				throw new InputIsEmpty(f.getId());
+	//			} else if (!inputs.add(input.toLowerCase())) {
+	//				throw new InputIsNotUnique(f.getId() + " " + f.getText());
+	//			}
+	//		}
+	//		return true;
+	//	}
 	public boolean checkEmpty() throws InputIsEmpty, InputIsNotUnique {
 		Set<String> inputs = new HashSet<>();
 		String temp = question_TextArea.getText().replaceAll("\\p{Punct}", "").replaceAll("\\s", "");
@@ -251,7 +251,7 @@ public class QuestionEditorPopControl {
 
 	public void setPreviousWindow(QuestionWizControl questionWizControl2) {
 		// TODO Auto-generated method stub
-		this.previousWindow = questionWizControl2;
+		previousWindow = questionWizControl2;
 
 	}
 
@@ -268,7 +268,7 @@ public class QuestionEditorPopControl {
 		if (type == "edit") {
 			main_Label.setText("Edit Question");
 			clearButton.setVisible(false);
-//			init_edit();
+			//			init_edit();
 		}
 		this.type = type;
 	}
@@ -276,7 +276,7 @@ public class QuestionEditorPopControl {
 	public void init_edit(Question question) {
 		// TODO Auto-generated method stub
 		this.question = question;
-		this.questionAfterChange = new Question();
+		questionAfterChange = new Question();
 
 		// import question
 		String theQ = question.getQuestion();
@@ -285,7 +285,7 @@ public class QuestionEditorPopControl {
 		// import difficulty
 		difficulty_ComBox.setValue(String.valueOf(question.getDifficulty()));
 
-		if (previousWindow.isAdmin == true) {
+		if (previousWindow.isAdmin) {
 			// Get answers and show on screen
 			List<String> answers = question.getAnswers();
 

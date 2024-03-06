@@ -3,10 +3,7 @@
  */
 package model;
 
-import java.util.HashMap;
 import java.util.LinkedList;
-
-import enums.Colors;
 
 /**
  * @author liorf
@@ -18,7 +15,7 @@ public class Player {
 	private String name; // the name of the player
 	private int currentP; // Current position of the player start from tile num 1
 	private String token; // **Object type is a temp type** the token of the player
-							// (i.e a circle, square, etc...)
+	// (i.e a circle, square, etc...)
 	private int ID;
 
 	private LinkedList<Integer> placment_history;
@@ -30,12 +27,12 @@ public class Player {
 	 */
 	public Player(int ID, String color, String name, String token) {
 		super();
-		this.setID(ID);
+		setID(ID);
 		this.color = color;
 		this.name = name;
 		this.token = "/view/Images/tokens/" + token + ".png";
-		this.placment_history = new LinkedList<Integer>();
-		this.currentP = 1;
+		placment_history = new LinkedList<Integer>();
+		currentP = 1;
 		placment_history.add(1);
 		System.out.println(token);
 	}

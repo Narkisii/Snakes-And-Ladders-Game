@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -33,9 +32,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Board;
 import model.GameData;
-import model.InputIsEmpty;
 import model.InputIsNotUnique;
 import model.Player;
 import model.cpu_Player;
@@ -87,7 +84,7 @@ public class PlayersControl {
 
 	private Set<String> usedCPUNames = new HashSet<String>();
 
-//	private LinkedList <Player> players = new LinkedList<Player>();
+	//	private LinkedList <Player> players = new LinkedList<Player>();
 	/**
 	 * List of all token options.
 	 */
@@ -142,7 +139,7 @@ public class PlayersControl {
 			addCpu();
 			remove_Cpu.setDisable(true);
 
-//			numberOfPlayers++;
+			//			numberOfPlayers++;
 		}
 	}
 
@@ -176,9 +173,9 @@ public class PlayersControl {
 			HBox lastRow = (HBox) playerContainer.getChildren().get(playerContainer.getChildren().size() - 1);
 			// Get the color and token ComboBoxes from the last row
 			ComboBox<String> colorComboBox = (ComboBox<String>) lastRow.getChildren().get(2);// get color Combo box from
-																								// row
+			// row
 			ComboBox<String> tokenComboBox = (ComboBox<String>) lastRow.getChildren().get(3);// get token Combo box from
-																								// row
+			// row
 			String playerName = ((TextField) lastRow.getChildren().get(1)).getText(); // get player name from text field
 			usedCPUNames.remove(((TextField) lastRow.getChildren().get(1)).getText());
 
@@ -195,9 +192,9 @@ public class PlayersControl {
 					HBox row = (HBox) node;
 					// Get the color, and token comboboxes from the row
 					ComboBox<String> rowColorComboBox = (ComboBox<String>) row.getChildren().get(2); // get color Combo
-																										// box from row
+					// box from row
 					ComboBox<String> rowTokenComboBox = (ComboBox<String>) row.getChildren().get(3);// get token Combo
-																									// box from row
+					// box from row
 
 					if (!rowColorComboBox.getItems().contains(color)) {
 						rowColorComboBox.getItems().add(color);
@@ -368,7 +365,7 @@ public class PlayersControl {
 
 		playerName.setTextFormatter(new TextFormatter<>(filter));
 
-//	    playerName.setId("playerName" + (index + 1)); // unique id
+		//	    playerName.setId("playerName" + (index + 1)); // unique id
 		playerName.setId("playerName " + (index + 1)); // unique id
 		playerName.setPromptText("playerName" + (index + 1));
 		playerName.setPrefHeight(65.0);
@@ -380,7 +377,7 @@ public class PlayersControl {
 
 		ComboBox<String> color = new ComboBox<>(); // Create a new color for the player's color
 		color.setId("color"); // unique id
-//	    color.setId("color" + (index + 1)); // unique id
+		//	    color.setId("color" + (index + 1)); // unique id
 
 		color.setPrefHeight(65.0);
 		color.setPrefWidth(300.0);
@@ -438,7 +435,7 @@ public class PlayersControl {
 		});
 
 		ComboBox<String> token = new ComboBox<>(); // Create a new token for the player's token
-//	    token.setId("token" + (index + 1)); // unique id
+		//	    token.setId("token" + (index + 1)); // unique id
 		token.setId("token"); // unique id
 
 		token.setPrefHeight(65.0);
@@ -505,7 +502,7 @@ public class PlayersControl {
 
 		// Add color options
 		color.getItems().addAll(colors);
-//	    "Red", "Blue", "Green", "Yellow", "Purple"
+		//	    "Red", "Blue", "Green", "Yellow", "Purple"
 		color.setPromptText("Pick Color");
 		token.setPromptText("Pick Token");
 
@@ -539,7 +536,7 @@ public class PlayersControl {
 
 		TextField playerName = new TextField(); // Create a new playerName for the player's name
 		playerName.setId("cpu_playerName " + (index + 1)); // unique id
-//	    playerName.setId("playerName"); // unique id
+		//	    playerName.setId("playerName"); // unique id
 
 		playerName.setPrefHeight(65.0);
 		playerName.setPrefWidth(191.0);
@@ -551,7 +548,7 @@ public class PlayersControl {
 		HBox.setHgrow(playerName, Priority.ALWAYS); // Make 'playerName' expand to fill available horizontal space
 
 		ComboBox<String> color = new ComboBox<>(); // Create a new color for the player's color
-//	    color.setId("color" + (index + 1)); // unique id
+		//	    color.setId("color" + (index + 1)); // unique id
 		color.setId("color"); // unique id
 
 		color.setPrefHeight(65.0);
@@ -564,7 +561,7 @@ public class PlayersControl {
 		HBox.setHgrow(color, Priority.ALWAYS); // Make 'color' expand to fill available horizontal space
 
 		ComboBox<String> token = new ComboBox<>(); // Create a new token for the player's token
-//	    token.setId("token" + (index + 1)); // unique id
+		//	    token.setId("token" + (index + 1)); // unique id
 		token.setId("token"); // unique id
 		token.setPrefHeight(65.0);
 		token.setPrefWidth(300.0);
@@ -693,7 +690,7 @@ public class PlayersControl {
 			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
 			stage.setMinWidth(width + 10); // Minimum width: 300 pixels
 			stage.setMinHeight(height + 10); // Minimum height: 200 pixels
-//			stage.setAlwaysOnTop(true);
+			//			stage.setAlwaysOnTop(true);
 			stage.setScene(scene);
 		} catch (IOException e) {
 			e.printStackTrace();

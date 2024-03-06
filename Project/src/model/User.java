@@ -22,7 +22,7 @@ public class User {
 		this.username = username;
 		this.password = password;
 	}
-	
+
 	/**
 	 * Gets the username of the user.
 	 *
@@ -31,7 +31,7 @@ public class User {
 	public String getUsername() {
 		return username;
 	}
-	
+
 	/**
 	 * Sets the username of the user.
 	 *
@@ -40,7 +40,7 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
+
 	/**
 	 * Gets the password of the user.
 	 *
@@ -49,7 +49,7 @@ public class User {
 	public char[] getPassword() {
 		return password;
 	}
-	
+
 	/**
 	 * Sets the password of the user.
 	 *
@@ -67,12 +67,12 @@ public class User {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if ((obj == null) || (getClass() != obj.getClass())) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		User other = (User) obj;
 		return Arrays.equals(password, other.password) && Objects.equals(username, other.username);
 	}

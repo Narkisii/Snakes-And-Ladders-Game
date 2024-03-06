@@ -17,45 +17,45 @@ import model.GameData;
  * update these settings across the application.
  */
 public class SettingsControl {
-    // ComboBox for selecting the game's difficulty level
+	// ComboBox for selecting the game's difficulty level
 	@FXML
 	private ComboBox<String> difficulty;
-    // ComboBox for selecting the number of players
+	// ComboBox for selecting the number of players
 	@FXML
 	private ComboBox<Integer> number_of_players;
-    // Button to confirm the selection of players
+	// Button to confirm the selection of players
 	@FXML
 	private Button set_players_btn;
-    // Button to return to the previous menu
+	// Button to return to the previous menu
 	@FXML
 	private Button return_Btn;
-	
+
 	/**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded. It sets up the UI components and
-     * initializes the GameData with default or existing selections.
-     */
-	
+	 * Initializes the controller class. This method is automatically called
+	 * after the fxml file has been loaded. It sets up the UI components and
+	 * initializes the GameData with default or existing selections.
+	 */
+
 	@FXML
 	public void initialize() {
-        // Initialize game data instance
+		// Initialize game data instance
 		GameData.getInstance().init();
-		
-        // Retrieve current settings from GameData
+
+		// Retrieve current settings from GameData
 		String diff = GameData.getInstance().getDifficulty();
 		int num_Players = GameData.getInstance().getNumberOfPlayers();
-		
-        // Initialize the difficulty ComboBox with options and set the current selection
+
+		// Initialize the difficulty ComboBox with options and set the current selection
 		difficulty.setItems(FXCollections.observableArrayList("Easy", "Medium", "Hard"));
 		if (diff != "Easy") {
 			difficulty.getSelectionModel().select(diff);
-			; // Set default value
+			// Set default value
 		} else {
 			difficulty.getSelectionModel().select("Easy");
-			; // Set default value
+			// Set default value
 		}
-		
-        // Initialize the number_of_players ComboBox with options and set the current selection
+
+		// Initialize the number_of_players ComboBox with options and set the current selection
 		number_of_players.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5));
 		if (num_Players != 1) {
 			number_of_players.getSelectionModel().select(Integer.valueOf(num_Players)); // Set default value
@@ -72,49 +72,49 @@ public class SettingsControl {
 			GameData.getInstance().setDifficulty(newVal);
 		});
 
-        // Set up button actions to navigate to different views
+		// Set up button actions to navigate to different views
 		set_players_btn.setOnAction(event -> navigateTo("/view/PlayersView.fxml"));
 		return_Btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
 	}
-	
+
 	/**
-     * Gets the selected number of players from the ComboBox.
-     * 
-     * @return The number of players selected.
-     */
+	 * Gets the selected number of players from the ComboBox.
+	 * 
+	 * @return The number of players selected.
+	 */
 
 	public int getNumberOfPlayers() {
 		return number_of_players.getSelectionModel().getSelectedItem();
 	}
-	
+
 	/**
-     * Gets the selected game difficulty from the ComboBox.
-     * 
-     * @return The game difficulty selected.
-     */
+	 * Gets the selected game difficulty from the ComboBox.
+	 * 
+	 * @return The game difficulty selected.
+	 */
 
 	public String getGameDifficulty() {
 		return difficulty.getSelectionModel().getSelectedItem();
 	}
-	
+
 	/**
-     * Navigates to a different view specified by the fxmlFile parameter.
-     * 
-     * @param fxmlFile The path to the FXML file that describes the next view.
-     */
+	 * Navigates to a different view specified by the fxmlFile parameter.
+	 * 
+	 * @param fxmlFile The path to the FXML file that describes the next view.
+	 */
 
 	private void navigateTo(String fxmlFile) {
 		System.out.println(GameData.getInstance().toString());
 		try {
-            // Get the current stage from the set_players_btn's scene
+			// Get the current stage from the set_players_btn's scene
 			Stage stage = (Stage) set_players_btn.getScene().getWindow();
-            // Create a new scene with the specified FXML file
+			// Create a new scene with the specified FXML file
 			double width = stage.getScene().getWidth();
 			double height = stage.getScene().getHeight();
-//			stage.setAlwaysOnTop(true);
+			//			stage.setAlwaysOnTop(true);
 
 			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
-            // Set the stage with the new scene
+			// Set the stage with the new scene
 			stage.setScene(scene);
 		} catch (IOException e) {
 			e.printStackTrace();

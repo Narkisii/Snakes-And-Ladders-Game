@@ -1,5 +1,5 @@
 ///**
-// * 
+// *
 // */
 //package exceptions;
 //
@@ -10,12 +10,12 @@
 //public class ErrorException extends Exception {
 //
 //	/**
-//	 * 
+//	 *
 //	 */
 //	private static final long serialVersionUID = 4385096748564085719L;
 //
 //	/**
-//	 * 
+//	 *
 //	 */
 //	public ErrorException() {
 //		// TODO Auto-generated constructor stub

@@ -1,5 +1,13 @@
 package control;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import Intrefaces.GameEventObserver;
+import Intrefaces.GameEventSubject;
+import enums.GameEvent;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -7,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,16 +28,6 @@ import model.Player;
 import model.Question;
 import model.SoundManager;
 import model.cpu_Player;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import Intrefaces.GameEventObserver;
-import Intrefaces.GameEventSubject;
-import enums.GameEvent;
 
 /**
  * Controller class for the question pop-up window.
@@ -90,39 +87,37 @@ public class QuestionPopControl implements GameEventSubject {
 	private Player player;
 
 	private int time = 30;
-	
+
 	private List<GameEventObserver> observers = new ArrayList<>(); //observer list
 
 	private Timeline countdown;
 	ArrayList<RadioButton> radioButtons;
 
-	private int steps;
-	
 	//OBSERVER METHODS
-		@Override
-	    public void attach(GameEventObserver observer) {
-	        observers.add(observer);
-	    	System.out.println("attached");
+	@Override
+	public void attach(GameEventObserver observer) {
+		observers.add(observer);
+		System.out.println("attached");
 
-	    }
+	}
 
-	    @Override
-	    public void detach(GameEventObserver observer) {
-	        observers.remove(observer);
-	    }
+	@Override
+	public void detach(GameEventObserver observer) {
+		observers.remove(observer);
+	}
 
-	    @Override
-	    public void notifyObservers(GameEvent event) {
-	        for (GameEventObserver observer : observers) {
-	            observer.onEventTriggered(event);
-	        }}
-	    //END
-	    
-	    
-	    /**
-	     * Initializes the controller.
-	     * This method sets up the radio buttons, toggle group, and action listeners for the check answer button.
-	     */
+	@Override
+	public void notifyObservers(GameEvent event) {
+		for (GameEventObserver observer : observers) {
+			observer.onEventTriggered(event);
+		}}
+	//END
+
+
+	/**
+	 * Initializes the controller.
+	 * This method sets up the radio buttons, toggle group, and action listeners for the check answer button.
+	 */
 	public void initialize() {
 		radioButtons = new ArrayList<RadioButton>();
 		createTimer();
@@ -162,10 +157,10 @@ public class QuestionPopControl implements GameEventSubject {
 		});
 
 	}
-	
-    /**
-     * Creates and starts the countdown timer.
-     */
+
+	/**
+	 * Creates and starts the countdown timer.
+	 */
 	private void createTimer() {
 		// Create a 30 seconds duration
 		AtomicInteger duration = new AtomicInteger(time);
@@ -197,7 +192,7 @@ public class QuestionPopControl implements GameEventSubject {
 		// Start the timeline
 		countdown.play();
 	}
-	
+
 	/**
 	 * Checks the selected answer against the correct answer and handles the outcome.
 	 * 
@@ -208,9 +203,9 @@ public class QuestionPopControl implements GameEventSubject {
 		SoundManager soundManager = new SoundManager();
 		// Attach the sound manager to the question
 		question.attach(soundManager);
-		
+
 		// Initialize steps variable
-		steps = 0;
+		int steps = 0;
 		// Determine steps based on question difficulty
 		if (question.getDifficulty() == 1) {
 			steps = -1;
@@ -219,7 +214,7 @@ public class QuestionPopControl implements GameEventSubject {
 		} else if (question.getDifficulty() == 3) {
 			steps = -3;
 		}
-		
+
 		// Handle different cases based on selected answer
 		if (selectedAnswer.equals("Time up!")) {
 			// Notify observers about incorrect answer (time's up)
@@ -265,15 +260,15 @@ public class QuestionPopControl implements GameEventSubject {
 		});
 		delay.play();
 	}
-	
-	
+
+
 	/**
 	 * Sets the question and updates the UI elements with question details.
 	 * 
 	 * @param q The question object to be set.
 	 */
 	public void set_question(Question q) {
-		this.question = q;
+		question = q;
 		String theQ = question.getQuestion();
 		corr_answer = Integer.valueOf(question.getCorrectAnswer());
 		// Get the answers from the question
@@ -300,9 +295,9 @@ public class QuestionPopControl implements GameEventSubject {
 	}
 
 	public void prev_window(BoardControl boardControl) {
-		this.prev_control = boardControl;
+		prev_control = boardControl;
 	}
-	
+
 	/**
 	 * Sets the player for answering the question and updates the UI accordingly.
 	 * 
@@ -310,7 +305,7 @@ public class QuestionPopControl implements GameEventSubject {
 	 */
 	public void set_player(Player p) {
 		// TODO Auto-generated method stub
-		this.player = p;
+		player = p;
 		if (player.getClass().getName() == "model.cpu_Player") {
 			cpu_Player cpu_Player = ((cpu_Player) player);
 			cpu_Player.set_question_controll(this);

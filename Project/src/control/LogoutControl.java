@@ -78,6 +78,6 @@ public class LogoutControl {
 	 */
 	public void setPreviousWindow(QuestionWizControl questionWizControl) {
 		// TODO Auto-generated method stub
-		this.previousWindow = questionWizControl;
+		previousWindow = questionWizControl;
 	}
 }

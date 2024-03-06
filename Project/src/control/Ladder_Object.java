@@ -3,7 +3,6 @@ package control;
 import java.util.Random;
 
 import enums.Colors;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -29,8 +28,9 @@ public class Ladder_Object implements GameElement {
 	 *
 	 * @param tile The Pane object representing the starting tile.
 	 */
+	@Override
 	public void set_Tile(Pane tile) {
-		this.startTile = tile;
+		startTile = tile;
 	}
 
 	@Override

@@ -15,10 +15,10 @@ public class HistoryFromJson {
 	 */
 	public HistoryFromJson(String path) {
 		super();
-		this.historyList = new HashMap<Integer, History>();
+		historyList = new HashMap<Integer, History>();
 		// implement json import method
 	}
-	
+
 	/**
 	 * Retrieves the history data from JSON.
 	 *
