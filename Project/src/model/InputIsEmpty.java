@@ -16,7 +16,7 @@ public class InputIsEmpty extends Exception{
 	 * @param str The name of the field that is empty.
 	 */
 	public InputIsEmpty (String str) {
-		super(str + " field is empty");
+		super("Error on " +str + " field is empty,or illegal character");
 	}
 
 }

@@ -232,7 +232,8 @@ public class QuestionEditorPopControl {
 	//	}
 	public boolean checkEmpty() throws InputIsEmpty, InputIsNotUnique {
 		Set<String> inputs = new HashSet<>();
-		String temp = question_TextArea.getText().replaceAll("\\p{Punct}", "").replaceAll("\\s", "");
+		String temp = question_TextArea.getText().replaceAll("\\p{Punct}", "").replaceAll("\\s", "").replaceAll("\\d", "");
+		
 		if (temp.isEmpty()) {
 			throw new InputIsEmpty(question_TextArea.getId());
 		}
