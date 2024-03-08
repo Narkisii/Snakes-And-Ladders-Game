@@ -94,8 +94,8 @@
 	-fx-font-size: 30.0px;
 }
 
-.search_Icon:hover {
-	 -fx-effect: dropshadow(three-pass-box,#c4c2c2, 10.0, 0.0, 0.0, 0.0);
+.adminIcon:hover {
+	 -fx-effect: dropshadow(three-pass-box,#c4c2c2, 5.0, 5.0, 0.0, 0.0);
 }
 
 .addQuestion_Button {
@@ -116,4 +116,20 @@
 
 .sound_Button:hover {
 	-fx-effect: dropshadow(three-pass-box, #F6F5F5, 3.0, 3.0, 0.0, 0.0);
+}
+
+.difficultyButton { 
+	-fx-background-color: #BBE2EC;
+    -fx-border-color: transparent;
+    -fx-text-fill: #000000;
+    -fx-font-size: 14pt;
+    -fx-font-weight: bold;
+}
+
+.difficultyButton_pressed { 
+	-fx-background-color: #40A2E3;
+    -fx-border-color: transparent;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14pt;
+    -fx-font-weight: bold;
 }

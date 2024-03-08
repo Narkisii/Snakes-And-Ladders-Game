@@ -57,9 +57,14 @@
             </Pane>
          </bottom>
          <top>
-            <Pane fx:id="topPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="126.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+            <Pane fx:id="topPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="126.0" prefWidth="1280.0" stylesheets="@resources/Css/Buttons.css" BorderPane.alignment="CENTER">
                <children>
                   <Label fx:id="qWiz_title" alignment="CENTER" contentDisplay="CENTER" prefHeight="127.0" prefWidth="1280.0" styleClass="GameName_font" stylesheets="@resources/Css/all_Style.css" text="Question wizard" />
+                  <ImageView fx:id="adminSettings_Icon" fitHeight="105.0" fitWidth="117.0" pickOnBounds="true" preserveRatio="true" styleClass="adminIcon">
+                     <image>
+                        <Image url="@Images/icon/profile-icon.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
          </top>
@@ -68,27 +73,27 @@
                <children>
                   <VBox>
                      <children>
-                        <HBox prefHeight="33.0" prefWidth="1246.0" spacing="5.0">
+                        <HBox prefHeight="33.0" prefWidth="1246.0" spacing="5.0" stylesheets="@resources/Css/Buttons.css">
                            <children>
-                              <Button fx:id="easy_button" mnemonicParsing="false" prefHeight="26.0" prefWidth="83.0" text="Easy" />
-                              <Button fx:id="med_button" mnemonicParsing="false" prefHeight="26.0" prefWidth="95.0" text="Medium" />
-                              <Button fx:id="hard_button" mnemonicParsing="false" prefHeight="26.0" prefWidth="83.0" text="Hard" />
+                              <Button fx:id="easy_button" mnemonicParsing="false" prefWidth="118.0" styleClass="difficultyButton" text="Easy" />
+                              <Button fx:id="med_button" mnemonicParsing="false" prefHeight="42.0" prefWidth="118.0" styleClass="difficultyButton" text="Medium" />
+                              <Button fx:id="hard_button" mnemonicParsing="false" prefWidth="118.0" styleClass="difficultyButton" text="Hard" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="63.0" prefWidth="1246.0" spacing="10.0" stylesheets="@resources/Css/Buttons.css">
                            <children>
-                              <Label contentDisplay="CENTER" prefHeight="32.0" prefWidth="103.0" styleClass="cpu_Font" text="Search">
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="103.0" styleClass="cpu_Font" text="Search">
                                  <stylesheets>
                                     <URL value="@resources/Css/all_Style.css" />
                                     <URL value="@resources/Css/Buttons.css" />
                                  </stylesheets>
                               </Label>
-                              <TextField fx:id="searchField" prefHeight="31.0" prefWidth="265.0" promptText="search questions..." />
-                              <ImageView fitHeight="29.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true" styleClass="search_Icon">
+                              <ImageView fitHeight="29.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@Images/search-icon.png" />
                                  </image>
                               </ImageView>
+                              <TextField fx:id="searchField" prefHeight="31.0" prefWidth="265.0" promptText="search questions..." />
                               <Pane fx:id="messagePane" prefHeight="56.0" prefWidth="330.0">
                                  <children>
                                     <Label fx:id="messageLbl" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="12.0" prefHeight="32.0" prefWidth="328.0" styleClass="qWizFont" stylesheets="@resources/Css/popUpStyle.css" />

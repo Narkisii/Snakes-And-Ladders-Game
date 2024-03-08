@@ -24,6 +24,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -98,6 +99,9 @@ public class QuestionWizControl {
 
 	@FXML
 	private AnchorPane centerPane; // Center pane for main content
+	
+	@FXML
+	private ImageView adminSettings_Icon;
 
 	private Stage popupStage; // Stage for pop-up windows
 
@@ -160,6 +164,7 @@ public class QuestionWizControl {
 			updateFilter();
 			qTable.setItems(currentFilteredData);
 			q_col.setText("Easy Questions");
+			
 		});
 
 		med_button.setOnAction(event -> {
@@ -215,7 +220,6 @@ public class QuestionWizControl {
 			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
 			//			popupStage.setAlwaysOnTop(true); // Set always on top
 			popupStage.setResizable(false);
-
 			popupStage.show();
 		});
 
@@ -348,6 +352,30 @@ public class QuestionWizControl {
 
 		// Set the action for the return button
 		Return_Btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
+		
+		adminSettings_Icon.setOnMouseClicked(event -> {
+			setPopUpStage();
+
+			// Load the FXML file for the pop-up
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/adminSettings.fxml"));
+			Parent root = null;
+			try {
+				root = loader.load();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			// import login controller and set this as previous window
+			AdminSettingsControl controller = loader.getController();
+			controller.setPreviousWindow(this);
+
+			// Set the scene and show the stage
+			Scene scene = new Scene(root);
+			popupStage.setScene(scene);
+			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
+			popupStage.setAlwaysOnTop(true); // Set always on top
+			popupStage.setResizable(false);
+			popupStage.show();
+		});
 
 		// Add a listener to the search field that updates the filter whenever the text
 		// changes
@@ -363,6 +391,8 @@ public class QuestionWizControl {
 		swapLogButtons("log in"); // Swap the login button to a logout button
 		add_button.setDisable(false); // Enable the add button
 		messageLbl.setText("Double click on question to edit"); // Set the message label
+		
+		adminSettings_Icon.setVisible(isAdmin);
 	}
 
 	// This method disables admin controls
@@ -371,6 +401,8 @@ public class QuestionWizControl {
 		swapLogButtons("log out"); // Swap the logout button to a login button
 		add_button.setDisable(true); // Disable the add button
 		messageLbl.setText("You must log in to edit questions"); // Set the message label
+		
+		adminSettings_Icon.setVisible(false);
 	}
 
 	// This method checks if the user is an admin

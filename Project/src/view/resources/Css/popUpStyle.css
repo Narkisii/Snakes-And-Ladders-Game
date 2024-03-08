@@ -43,7 +43,7 @@
     -fx-effect: dropshadow(three-pass-box, black, 3.0, 3.0, 0.0, 0.0);
 	-fx-font-family: 'JejuHallasan';
 }
-.instruction_Font{
+.instruction_Font {
     -fx-font-size: 20.0px;
     -fx-font-weight: bold;
     -fx-effect: dropshadow(three-pass-box, black, 3.0, 3.0, 0.0, 0.0);
@@ -51,7 +51,9 @@
 }
 
 .pop_font {
-    -fx-font-size: 20.0px;
+    -fx-font-size: 18pt;
+    -fx-font-weight: normal;
+    -fx-font-family: 'JejuHallasan';
 }
 
 
@@ -111,6 +113,36 @@
 	-fx-effect: dropshadow(three-pass-box,#EFECEC, 5.0, 5.0, 0.0, 0.0);
 }
 
+.cancelButton {
+	-fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #EA907A;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, #3E3232, 3, 3, 0.0, 0.0);
+    -fx-font-size: 30pt;
+}
+
+.cancelButton:hover {
+	 -fx-text-fill: #BD574E;
+	 -fx-effect: dropshadow(three-pass-box, black, 3.5, 3.5, 0.0, 0.0);
+}
+
+.saveButton {
+	-fx-background-color: #387ADF;
+    -fx-border-color: transparent;
+    -fx-text-fill: #EEEDEB;
+    -fx-font-size: 20.0px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 60.0 60.0 60.0 60.0;
+ 	-fx-background-radius: 60.0 60.0 60.0 60.0;
+}
+
+.saveButton:hover {
+	 -fx-text-fill: #FFFFFF;
+	 -fx-background-color: #2A26AC;
+	 -fx-effect: dropshadow(three-pass-box,#267085, 4.0, 4.0, 0.0, 0.0);
+}
+
 .loginMsg {
 	-fx-font-size: 20.0pt;
 	-fx-font-weight: bold;
@@ -138,6 +170,14 @@
 .secondary_Text {
 	-fx-font-size: 20pt;
     -fx-font-weight: bold;
+}
+
+.settings_Header {
+	-fx-text-fill: #7EFF5E;
+    -fx-font-size: 50pt;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, #0F4D00, 2.0, 2.0, 0.0, 0.0);
+    -fx-font-family: 'JejuHallasan';
 }
 
 
