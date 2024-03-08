@@ -19,7 +19,7 @@
                <children>
                   <HBox prefHeight="229.0" prefWidth="652.0">
                      <children>
-                        <Label fx:id="questionTextBox" alignment="CENTER" prefHeight="166.0" prefWidth="386.0" styleClass="question_Text" text="Label" wrapText="true" />
+                        <Label fx:id="questionTextBox" alignment="CENTER" prefHeight="166.0" prefWidth="386.0" styleClass="question_Text" wrapText="true" />
                         <VBox alignment="CENTER" prefHeight="137.0" prefWidth="278.0" styleClass="qWizFont" stylesheets="@resources/Css/all_Style.css">
                            <children>
                               <Label fx:id="p_name_label" alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="266.0" text="Answering:" wrapText="true" />
@@ -35,22 +35,22 @@
                               <Insets />
                            </VBox.margin>
                         </Label>
-                        <RadioButton fx:id="answerOne" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="400.0" styleClass="radioAnswers" text="Hello I'm number 1" wrapText="true">
+                        <RadioButton fx:id="answerOne" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="647.0" styleClass="radioAnswers" wrapText="true">
                            <VBox.margin>
                               <Insets left="5.0" />
                            </VBox.margin>
                         </RadioButton>
-                        <RadioButton fx:id="answerTwo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="400.0" styleClass="radioAnswers" text="Hello I'm number 2" wrapText="true">
+                        <RadioButton fx:id="answerTwo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="647.0" styleClass="radioAnswers" wrapText="true">
                            <VBox.margin>
                               <Insets left="5.0" />
                            </VBox.margin>
                         </RadioButton>
-                        <RadioButton fx:id="answerThree" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="400.0" styleClass="radioAnswers" text="Hello I'm number 3" wrapText="true">
+                        <RadioButton fx:id="answerThree" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="647.0" styleClass="radioAnswers" wrapText="true">
                            <VBox.margin>
                               <Insets left="5.0" />
                            </VBox.margin>
                         </RadioButton>
-                        <RadioButton fx:id="answerFour" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="400.0" styleClass="radioAnswers" text="Hello I'm number 4" wrapText="true">
+                        <RadioButton fx:id="answerFour" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="647.0" styleClass="radioAnswers" wrapText="true">
                            <VBox.margin>
                               <Insets left="5.0" />
                            </VBox.margin>
@@ -74,7 +74,7 @@
    <top>
       <Pane prefHeight="59.0" prefWidth="690.0">
          <children>
-            <Label fx:id="QuestionTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="2.0" prefHeight="61.0" prefWidth="690.0" styleClass="title" stylesheets="@resources/Css/popUpStyle.css" text="Easy Question:" />
+            <Label fx:id="QuestionTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="2.0" prefHeight="61.0" prefWidth="690.0" styleClass="title" stylesheets="@resources/Css/popUpStyle.css" />
             <Pane layoutX="14.0" prefHeight="59.0" prefWidth="140.0">
                <children>
                   <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="111.0" text="Timer:" />
