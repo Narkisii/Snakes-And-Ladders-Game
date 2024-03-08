@@ -27,9 +27,9 @@ public class QuestionsFromJson {
 	/**
 	 * Constructor that initializes the question map and file.
 	 */
-	public QuestionsFromJson() {
+	private QuestionsFromJson() {
 		super();
-		file = returnFile();
+		file = null ;
 		questionMap = new HashMap<Integer, List<Question>>();
 	}
 
