@@ -1,6 +1,8 @@
 package control;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -89,14 +91,7 @@ public class HistoryControl {
 		returnBtn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
 
 		// Read the history data from the JSON file
-		List<History> historyData;
-		try {
-			historyData = readHistoryFromJson(path);
-		} catch (IOException | NoJsonFileFound e) {
-			HandleExceptions.showException(e,this,returnBtn.getScene().getWindow());
-			//            e.printStackTrace();
-			return;
-		}
+		List<History> historyData = readHistoryFromJson(path);
 
 		PropertyValueFactory<History, String> test = new PropertyValueFactory<>("playTime");
 		System.out.println(test);
@@ -133,6 +128,33 @@ public class HistoryControl {
 		// Add action for your button here
 	}
 
+//	/**
+//	 * Reads history data from a specified JSON file.
+//	 * 
+//	 * @param filePath The file path of the JSON file.
+//	 * @return A list of History objects.
+//	 * @throws IOException If an I/O error occurs.
+//	 * @throws NoJsonFileFound If the JSON file is not found.
+//	 */
+//	private List<History> readHistoryFromJson(String filePath) throws IOException, NoJsonFileFound {
+//		ObjectMapper mapper = new ObjectMapper();
+//		try {
+//			System.out.println(Paths.get(filePath).toFile().length());
+//			return mapper.readValue(Paths.get(filePath).toFile(), new TypeReference<List<History>>() {});
+//		} catch (Exception e) {
+//			// Attempt to use a default path if the initial read fails
+//			try {
+//				filePath = "src/Json/History.txt";
+//				System.out.println(Paths.get(filePath).toFile().length());
+//				return mapper.readValue(Paths.get(filePath).toFile(), new TypeReference<List<History>>() {});
+//
+//			} catch (Exception e2) {
+//				// TODO: handle exception
+//				//				System.out.println(e2.getMessage());
+//				throw new NoJsonFileFound();
+//			}
+//		}
+//	}
 	/**
 	 * Reads history data from a specified JSON file.
 	 * 
@@ -141,22 +163,27 @@ public class HistoryControl {
 	 * @throws IOException If an I/O error occurs.
 	 * @throws NoJsonFileFound If the JSON file is not found.
 	 */
-	private List<History> readHistoryFromJson(String filePath) throws IOException, NoJsonFileFound {
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			return mapper.readValue(Paths.get(filePath).toFile(), new TypeReference<List<History>>() {});
-		} catch (Exception e) {
-			// Attempt to use a default path if the initial read fails
-			try {
-				filePath = "src/Json/History.txt";
-				return mapper.readValue(Paths.get(filePath).toFile(), new TypeReference<List<History>>() {});
-
-			} catch (Exception e2) {
-				// TODO: handle exception
-				//				System.out.println(e2.getMessage());
-				throw new NoJsonFileFound();
-			}
-		}
+	private List<History> readHistoryFromJson(String filePath) {
+	    ObjectMapper mapper = new ObjectMapper();
+	    try {
+	        File file = Paths.get(filePath).toFile();
+	        if (file.length() == 0) {
+	            return new ArrayList<>();
+	        }
+	        return mapper.readValue(file, new TypeReference<List<History>>() {});
+	    } catch (Exception e) {
+	        // Attempt to use a default path if the initial read fails
+	        try {
+	            filePath = "src/Json/History.txt";
+	            File file = Paths.get(filePath).toFile();
+	            if (file.length() == 0) {
+	                return new ArrayList<>();
+	            }
+	            return mapper.readValue(file, new TypeReference<List<History>>() {});
+	        } catch (Exception e2) {
+	        }
+	    }
+        return new ArrayList<>();
 	}
 
 

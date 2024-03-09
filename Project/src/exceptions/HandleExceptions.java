@@ -30,7 +30,7 @@ public class HandleExceptions {
 		setPopUpStage();
 
 		// Load the FXML file for the pop-up
-		FXMLLoader loader = new FXMLLoader(o.getClass().getResource("/view/Error_view.fxml"));
+		FXMLLoader loader = new FXMLLoader(o.getClass().getResource("/view/Error_View.fxml"));
 		Parent root = null;
 		try {
 			root = loader.load(); // Load the FXML file
@@ -61,6 +61,7 @@ public class HandleExceptions {
 		} else { // Create a new Stage for the pop-up
 			popupStage = new Stage();
 			popupStage.setResizable(false);
+			popupStage.setAlwaysOnTop(true);
 			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
 			//			popupStage.setAlwaysOnTop(true); // Set always on top
 			popupStage.initStyle(StageStyle.UNDECORATED);

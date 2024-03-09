@@ -1,5 +1,8 @@
 package control;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 
@@ -10,6 +13,9 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import exceptions.HandleExceptions;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
@@ -24,6 +30,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.NoJsonFileFound;
+import model.QuestionsFromJson;
 
 /**
  * Controller class for the menu screen of the game. This class handles user
@@ -38,7 +46,7 @@ public class MenuScreenControl {
 	@FXML
 	private Button button_start, button_questionWizard, button_History, quit, button_instructions;
 
-	//	private ImageView soundOff_Icon, soundOn_Icon;\
+	// private ImageView soundOff_Icon, soundOn_Icon;\
 	@FXML
 	private ImageView sound_Icon;
 
@@ -53,7 +61,7 @@ public class MenuScreenControl {
 
 	private static boolean first_start = true;
 
-	//	private static boolean isSoundOn;
+	// private static boolean isSoundOn;
 
 	private Clip splashScreenClip;
 
@@ -64,15 +72,17 @@ public class MenuScreenControl {
 	private String pathSoundON = "/view/Images/sound-on.png";
 	private String pathSoundOFF = "/view/Images/sound-off.png";
 
+	private String path;
+
 	/**
 	 * Initializes the controller. - Sets up the sound button event handler. -
 	 * Displays the splash screen if it's the first time the game is launched.
 	 */
 	@FXML
 	public void initialize() {
-		System.out.println("initialize " + flagSong);
 		setSoundButtonEvent();
 		splash_Screen();
+
 	}
 
 	/**
@@ -81,7 +91,6 @@ public class MenuScreenControl {
 	 * state. - Attaches event handlers to menu buttons.
 	 */
 	private void init() {
-		System.out.println("INIT " + flagSong);
 		if (flagSong == 0) {
 			stopThemeSong();
 			if (first_start) {
@@ -103,6 +112,7 @@ public class MenuScreenControl {
 		button_instructions.setOnAction(event -> navigateTo("/view/Instructions.fxml"));
 		quit.setOnAction(event -> ((Stage) quit.getScene().getWindow()).close());
 		Menu_Pane.getChildren().remove(splash_screen_AnchorPane);
+
 	}
 
 	/**
@@ -111,13 +121,16 @@ public class MenuScreenControl {
 	 * @param fxmlFile The path to the FXML file of the target view.
 	 */
 	private void navigateTo(String fxmlFile) {
+		if (!createJsonFilesIfMissing()) {
+			return;
+		}
 
 		try {
 			Stage stage = (Stage) button_start.getScene().getWindow();
 			double width = stage.getScene().getWidth();
 			double height = stage.getScene().getHeight();
 			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
-			//			stage.setAlwaysOnTop(true);
+			// stage.setAlwaysOnTop(true);
 			stage.setScene(scene);
 
 		} catch (IOException e) {
@@ -205,7 +218,7 @@ public class MenuScreenControl {
 	 * launched.
 	 */
 	private void splash_Screen() {
-		if (first_start) {//If first launch. show splash screen
+		if (first_start) {// If first launch. show splash screen
 			spalshScreenSound();
 			Image image = new Image("/view/Images/BackGround/Scorpion_SplashScreen.png");
 			ImageView imageView = new ImageView(image);
@@ -244,7 +257,7 @@ public class MenuScreenControl {
 				stopSplashScreenSound(); // Ensure sound is stopped when splash screen is clicked
 				ft.play();
 			});
-		} else {//Just initiate without splash screen
+		} else {// Just initiate without splash screen
 			init();
 		}
 	}
@@ -265,6 +278,62 @@ public class MenuScreenControl {
 				themeSong();
 			}
 		});
+	}
+
+	/**
+	 * This method checks for the existence of necessary JSON files and creates them
+	 * if they are missing. It also populates the "Questions.txt" file with some
+	 * initial content if it's newly created.
+	 *
+	 * @return true if files are successfully checked or created, false otherwise
+	 */
+	private boolean createJsonFilesIfMissing() {
+		try {
+			/**
+			 * An array of File objects representing the paths to the JSON files.
+			 */
+			File[] jsonFiles = { new File("src/Json/Questions.txt"), new File("Json/Questions.txt"), // Duplicate path
+																										// likely
+																										// unintentional
+					new File("src/Json/History.txt"), new File("Json/History.txt") // Duplicate path likely
+																					// unintentional
+			};
+
+			for (File jsonFile : jsonFiles) {
+				// Ensure the parent directory of the JSON file exists.
+				jsonFile.getParentFile().mkdirs();
+
+				// Check if the JSON file already exists.
+				if (!jsonFile.exists()) {
+					// Create a new empty file.
+					jsonFile.createNewFile();
+
+					if (jsonFile.getName().equals("Questions.txt")) {
+						// This block only executes if the newly created file is Questions.txt
+						String jsonContent = "{\n" + "  \"questions\": [\n" + "    {\n"
+								+ "      \"question\": \"Filler question, Add more questions please\",\n"
+								+ "      \"answers\": [\"ans1\", \"ans2\", \"ans3\", \"ans4\"],\n"
+								+ "      \"correct_ans\": \"1\",\n" + "      \"difficulty\": 1\n" + "    }\n" + "  ]\n"
+								+ "}";
+
+						/**
+						 * Writes the initial JSON content to the newly created Questions.txt file using
+						 * a try-with-resources block for automatic resource management.
+						 */
+						try (BufferedWriter writer = new BufferedWriter(new FileWriter(jsonFile))) {
+							writer.write(jsonContent);
+						}
+					}
+				}
+			}
+			// If no exceptions occurred, return true indicating successful file operations.
+			return true;
+		} catch (IOException e) {
+			// Handle any IOException that might occur during file operations.
+			HandleExceptions.showException(new NoJsonFileFound(), this, button_start.getScene().getWindow());
+			// Return false to indicate an error occurred.
+			return false;
+		}
 	}
 
 	public static int getFlagSong() {

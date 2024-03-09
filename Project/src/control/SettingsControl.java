@@ -2,6 +2,7 @@ package control;
 
 import java.io.IOException;
 
+import exceptions.HandleExceptions;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import model.GameData;
+
+import exceptions.Questions_empty;
+
 /**
  * The SettingsControl class is responsible for handling the user interactions
  * with the settings UI, allowing the user to select the difficulty level and
@@ -40,6 +44,12 @@ public class SettingsControl {
 	public void initialize() {
 		// Initialize game data instance
 		GameData.getInstance().init();
+		try {
+			GameData.getInstance().areListsEmpty();
+		} catch (Questions_empty e) {
+			// TODO Auto-generated catch block
+			HandleExceptions.showException(e, this, null);
+		}
 
 		// Retrieve current settings from GameData
 		String diff = GameData.getInstance().getDifficulty();
@@ -104,6 +114,14 @@ public class SettingsControl {
 	 */
 
 	private void navigateTo(String fxmlFile) {
+		if(fxmlFile.equals("/view/PlayersView.fxml"))
+		try {
+			GameData.getInstance().areListsEmpty();
+		} catch (Questions_empty e) {
+			// TODO Auto-generated catch block
+			HandleExceptions.showException(e, this, (Stage) set_players_btn.getScene().getWindow());
+			return;
+		}
 		System.out.println(GameData.getInstance().toString());
 		try {
 			// Get the current stage from the set_players_btn's scene

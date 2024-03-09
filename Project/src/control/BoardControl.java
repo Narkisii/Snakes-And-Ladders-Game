@@ -257,6 +257,7 @@ public class BoardControl implements GameEventSubject {
 		// Initialize and attach observer to board
 		GameData.getInstance().init_board();
 		board = GameData.getInstance().getBoard();
+		
 		board.generate_board_Objects();
 		SoundManager soundManager = new SoundManager();
 		board.attach(soundManager);

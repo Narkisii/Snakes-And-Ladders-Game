@@ -29,7 +29,7 @@ public class QuestionsFromJson {
 	 */
 	private QuestionsFromJson() {
 		super();
-		file = null ;
+		file = returnFile() ;
 		questionMap = new HashMap<Integer, List<Question>>();
 	}
 
@@ -83,9 +83,8 @@ public class QuestionsFromJson {
 	 * @throws IOException If an I/O error occurs.
 	 * @throws NoJsonFileFound If the JSON file is not found.
 	 */
-	public QuestionsFromJson readQuestionsFromJson() throws IOException, NoJsonFileFound {
+	public QuestionsFromJson readQuestionsFromJson() throws NoJsonFileFound  {
 		ObjectMapper mapper = new ObjectMapper();
-
 		try {
 			path = "src/Json/Questions.txt";
 			file = new File(path);
@@ -110,19 +109,17 @@ public class QuestionsFromJson {
 	 * @return The file.
 	 */
 	public File returnFile() {
-		ObjectMapper mapper = new ObjectMapper();
+//		ObjectMapper mapper = new ObjectMapper();
 		file = null;
 		try {
 			path = "src/Json/Questions.txt";
 			file = new File(path);
-			QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
 			return file;
 
 		} catch (Exception e) {
 			try {
 				path = "Json/Questions.txt";
 				file = new File(path);
-				QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
 				return file;
 			} catch (Exception e1) {
 			}

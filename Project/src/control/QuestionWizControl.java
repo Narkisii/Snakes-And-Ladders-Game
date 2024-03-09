@@ -433,7 +433,7 @@ public class QuestionWizControl {
 		QuestionsFromJson questionData;
 		try { // Read the questions from JSON
 			questionData = QuestionsFromJson.getInstance().readQuestionsFromJson();
-		} catch (IOException | NoJsonFileFound e) {
+		} catch (NoJsonFileFound e) {
 			HandleExceptions.showException(e, this, LogIn_Btn.getScene().getWindow()); // Handle exceptions
 			return;
 		}
@@ -468,7 +468,7 @@ public class QuestionWizControl {
 		QuestionsFromJson questionData;
 		try {
 			questionData = QuestionsFromJson.getInstance().readQuestionsFromJson(); // Read the questions from JSON
-		} catch (IOException | NoJsonFileFound e) {
+		} catch (NoJsonFileFound e) {
 			HandleExceptions.showException(e, this, leftPane.getScene().getWindow()); // Handle exceptions
 			return;
 		}

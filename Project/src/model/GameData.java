@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import control.HistoryControl;
 import exceptions.HandleExceptions;
+import exceptions.Questions_empty;
 /**
  * The GameData class manages the data related to the game, including players, questions, snakes, ladders, and special tiles.
  * It provides methods for initialization, resetting, and accessing game data, as well as handling game progression.
@@ -58,7 +59,7 @@ public class GameData {
 		try {
 			//	        questionData = readQuestionFromJson("src\\Json\\Questions.txt");
 			questionData = QuestionsFromJson.getInstance().readQuestionsFromJson();
-		} catch (IOException | NoJsonFileFound e) {
+		} catch (NoJsonFileFound e) {
 			HandleExceptions.showException(e,this,null);
 			return;
 		}
@@ -211,7 +212,16 @@ public class GameData {
 	 * @return the questions
 	 */
 	public HashMap<Integer, List<Question>> getQuestions() {
+		
 		return questions_Map;
+	}
+	public boolean areListsEmpty() throws Questions_empty {
+	    for (List<Question> list : questions_Map.values()) {
+	        if (list.isEmpty()) {
+	        	throw new Questions_empty();
+	        }
+	    }
+	    return false;
 	}
 
 	/**
