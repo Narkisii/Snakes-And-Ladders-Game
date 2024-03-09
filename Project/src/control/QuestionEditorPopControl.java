@@ -34,7 +34,7 @@ import model.QuestionsFromJson;
 
 public class QuestionEditorPopControl {
 	@FXML
-	private TextField ans1, ans2, ans3, ans4;
+	private TextArea ans1, ans2, ans3, ans4;
 
 	@FXML
 	private TextArea question_TextArea;
@@ -65,7 +65,7 @@ public class QuestionEditorPopControl {
 	@FXML
 	private AnchorPane center_Pane;
 
-	List<TextField> textFieldList;
+	List<TextArea> textAreaList;
 	private Question question;
 	private Question questionAfterChange;
 
@@ -74,13 +74,12 @@ public class QuestionEditorPopControl {
 	@FXML
 	public void initialize() {
 
-		textFieldList = new ArrayList<>();
-		// textFieldList.add(question_TextArea);
+		textAreaList = new ArrayList<>();
 
-		textFieldList.add(ans1);
-		textFieldList.add(ans2);
-		textFieldList.add(ans3);
-		textFieldList.add(ans4);
+		textAreaList.add(ans1);
+		textAreaList.add(ans2);
+		textAreaList.add(ans3);
+		textAreaList.add(ans4);
 
 		clearButton.setOnMouseClicked(event -> {
 			clear_text();
@@ -212,7 +211,7 @@ public class QuestionEditorPopControl {
 	// Clear all text fields
 	public void clear_text() {
 		question_TextArea.clear();
-		for (TextField f : textFieldList) {
+		for (TextArea f : textAreaList) {
 			f.clear();
 		}
 	}
@@ -238,7 +237,7 @@ public class QuestionEditorPopControl {
 			throw new InputIsEmpty(question_TextArea.getId());
 		}
 
-		for (TextField f : textFieldList) {
+		for (TextArea f : textAreaList) {
 			String input = f.getText().toLowerCase();
 			input = input.replaceAll("\\p{Punct}", "").replaceAll("\\s", "");
 			if (input.isEmpty()) {
@@ -290,7 +289,7 @@ public class QuestionEditorPopControl {
 			// Get answers and show on screen
 			List<String> answers = question.getAnswers();
 
-			// Populate the TextFields with the answers
+			// Populate the TextAreas with the answers
 			ans1.setText(answers.get(0));
 			ans2.setText(answers.get(1));
 			ans3.setText(answers.get(2));

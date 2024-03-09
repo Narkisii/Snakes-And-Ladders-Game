@@ -12,6 +12,13 @@
 	-fx-background-size: 100.0% 100.0%;
 	-fx-font-family: 'JejuHallasan';
 }
+
+.qSaved_Bodybg {
+	-fx-background-image: url("/view/Images/BackGround/dialogBackground.png");
+	-fx-background-size: 100.0% 100.0%;
+	-fx-font-family: 'JejuHallasan';
+}
+
 .winner{
 	-fx-background-image: url("/view/Images/BackGround/winner.png");
 	-fx-background-size: 100.0% 100.0%;
@@ -56,6 +63,11 @@
     -fx-font-family: 'JejuHallasan';
 }
 
+.answer_font {
+    -fx-font-size: 18pt;
+    -fx-font-weight: normal;
+    -fx-font-family: 'JejuHallasan';
+}
 
 .header_font {
 	-fx-text-fill: #7EFF5E;
@@ -162,7 +174,7 @@
 }
 
 .question_Text {
-	-fx-font-size: 20pt;
+	-fx-font-size: 18pt;
     -fx-font-weight: bold;
     -fx-effect: dropshadow(three-pass-box, #ffffff, 2.0, 2.0, 0.0, 0.0);
 }
@@ -179,5 +191,16 @@
     -fx-effect: dropshadow(gaussian, #0F4D00, 2.0, 2.0, 0.0, 0.0);
     -fx-font-family: 'JejuHallasan';
 }
+
+.ok_button {
+	-fx-background-color: #387ADF;
+    -fx-border-color: transparent;
+    -fx-text-fill: #EEEDEB;
+    -fx-font-size: 20.0px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 60.0 60.0 60.0 60.0;
+ 	-fx-background-radius: 60.0 60.0 60.0 60.0;
+}
+
 
 
