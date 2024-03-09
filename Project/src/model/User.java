@@ -21,7 +21,7 @@ public class User {
     @JsonProperty("password")
 	private String password;
 
-	private String path = "/Json/Admin.txt";
+	private String path = "Json/Admin.txt";
     
     public User() {
 	

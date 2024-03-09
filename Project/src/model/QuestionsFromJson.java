@@ -86,22 +86,33 @@ public class QuestionsFromJson {
 	 */
 	public QuestionsFromJson readQuestionsFromJson() throws NoJsonFileFound  {
 		ObjectMapper mapper = new ObjectMapper();
+//		path = "Json/Questions.txt";
+//		file = new File(path);
+		QuestionsFromJson questions_class = null;
 		try {
-			path = "src/Json/Questions.txt";
-			file = new File(path);
-			QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
-			return questions_class;
-
-		} catch (Exception e) {
-			try {
-				path = "Json/Questions.txt";
-				file = new File(path);
-				QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
-				return questions_class;
-			} catch (Exception e1) {
-				throw new NoJsonFileFound();
-			}
+			questions_class = mapper.readValue(file, QuestionsFromJson.class);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return questions_class;
+
+//		try {
+//			path = "src/Json/Questions.txt";
+//			file = new File(path);
+//			QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
+//			return questions_class;
+//
+//		} catch (Exception e) {
+//			try {
+//				path = "Json/Questions.txt";
+//				file = new File(path);
+//				QuestionsFromJson questions_class = mapper.readValue(file, QuestionsFromJson.class);
+//				return questions_class;
+//			} catch (Exception e1) {
+//				throw new NoJsonFileFound();
+//			}
+//		}
 	}
 
 	/**
@@ -111,21 +122,25 @@ public class QuestionsFromJson {
 	 */
 	public File returnFile() {
 //		ObjectMapper mapper = new ObjectMapper();
-		file = null;
-		try {
-			path = "src/Json/Questions.txt";
-			file = new File(path);
-			return file;
-
-		} catch (Exception e) {
-			try {
-				path = "Json/Questions.txt";
-				file = new File(path);
-				return file;
-			} catch (Exception e1) {
-			}
-		}
+		path = "Json/Questions.txt";
+		file = new File(path);
 		return file;
+
+//		file = null;
+//		try {
+//			path = "src/Json/Questions.txt";
+//			file = new File(path);
+//			return file;
+//
+//		} catch (Exception e) {
+//			try {
+//				path = "Json/Questions.txt";
+//				file = new File(path);
+//				return file;
+//			} catch (Exception e1) {
+//			}
+//		}
+//		return file;
 	}
 
 	/**

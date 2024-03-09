@@ -38,7 +38,7 @@ public class AdminSettingsControl {
 	    @FXML
 	    private TextField username_text;
     
-	private String path = "/Json/Admin.txt";
+	private String path = "Json/Admin.txt";
 	private File file;
 	private User admin;
 	

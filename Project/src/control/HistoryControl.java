@@ -78,7 +78,7 @@ public class HistoryControl {
 	private TableColumn<History, String> winnerCol;
 
 	// Path to the JSON file containing history data
-	private String path = "/Json/History.txt";
+	private String path = "Json/History.txt";
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -174,7 +174,7 @@ public class HistoryControl {
 	    } catch (Exception e) {
 	        // Attempt to use a default path if the initial read fails
 	        try {
-	            filePath = "src/Json/History.txt";
+	            filePath = "Json/History.txt";
 	            File file = Paths.get(filePath).toFile();
 	            if (file.length() == 0) {
 	                return new ArrayList<>();
