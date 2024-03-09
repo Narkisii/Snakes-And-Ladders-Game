@@ -292,10 +292,7 @@ public class MenuScreenControl {
 			/**
 			 * An array of File objects representing the paths to the JSON files.
 			 */
-			File[] jsonFiles = { new File("src/Json/Questions.txt"), new File("Json/Questions.txt"), // Duplicate path
-																										// likely
-																										// unintentional
-					new File("src/Json/History.txt"), new File("Json/History.txt") // Duplicate path likely
+			File[] jsonFiles = { new File("Json/Questions.txt"), new File("Json/History.txt") // Duplicate path likely
 																					// unintentional
 			};
 
