@@ -119,15 +119,15 @@
 }
 
 .difficultyButton { 
-	-fx-background-color: #BBE2EC;
+	-fx-background-color: #ffffb0;
     -fx-border-color: transparent;
     -fx-text-fill: #000000;
     -fx-font-size: 14pt;
     -fx-font-weight: bold;
 }
 
-.difficultyButton_pressed { 
-	-fx-background-color: #40A2E3;
+.difficultyButton_enabled { 
+	-fx-background-color: linear-gradient(#F3B95F 0.0%, #FF7F3F 100.0%);
     -fx-border-color: transparent;
     -fx-text-fill: #FFFFFF;
     -fx-font-size: 14pt;

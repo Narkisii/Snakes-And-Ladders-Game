@@ -34,20 +34,19 @@
 
 .table-row-cell{
 	
-    -fx-background-color: -fx-table-cell-border-color, #84fc79;
+    -fx-background-color: -fx-table-cell-border-color, #FBFFDC;
     -fx-background-insets: 0.0, 0.0 0.0 1.0 0.0;
     -fx-padding: 0.0em; 
 } 
 
 .table-row-cell:odd{	
-    -fx-background-color: -fx-table-cell-border-color, #1C791D;
+    -fx-background-color: -fx-table-cell-border-color, #D0F5BE;
     -fx-background-insets: 0.0, 0.0 0.0 1.0 0.0;
     -fx-padding: 0.0em;
 }
 
 .table-row-cell:selected {
-	
-    -fx-background-color: #005797;
+    -fx-background-color: #14C38E;
     -fx-background-insets: 0.0;
     -fx-background-radius: 1.0;
 } 
@@ -70,4 +69,5 @@
     -fx-font-size: 22.0px;
     -fx-font-weight: bold;
 }
+
 /*https://copyprogramming.com/howto/styling-a-tableview-in-css-javafx */

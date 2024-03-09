@@ -13,6 +13,9 @@ import exceptions.InputIsEmpty;
 import exceptions.InputIsNotUnique;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -64,6 +67,8 @@ public class QuestionEditorPopControl {
 
 	@FXML
 	private AnchorPane center_Pane;
+	
+	private Stage savePopUp;
 
 	List<TextArea> textAreaList;
 	private Question question;
@@ -93,6 +98,7 @@ public class QuestionEditorPopControl {
 
 		saveButton.setOnAction(event -> {
 			save_Question();
+			//showQSavePop();
 		});
 	}
 
@@ -131,7 +137,9 @@ public class QuestionEditorPopControl {
 					previousWindow.re_init(newQuestion.getDifficulty());
 					clear_text();
 					alert.showAndWait();
-
+					
+					// showQSavePop();
+					
 					return true;
 				}
 			} catch (InputIsEmpty | DuplicateError | IOException | InputIsNotUnique | NoJsonFileFound e) {
@@ -191,6 +199,9 @@ public class QuestionEditorPopControl {
 					questionsFromJson.toJson();
 					previousWindow.re_init(questionAfterChange.getDifficulty());
 					alert.showAndWait();
+					
+					// showQSavePop();
+
 
 					// Close the window after saving
 					Stage stage = (Stage) saveButton.getScene().getWindow();
@@ -316,5 +327,38 @@ public class QuestionEditorPopControl {
 			saveButton.setDisable(true);
 		}
 	}
+	
+	public void showQSavePop() {
+		if (savePopUp != null && savePopUp.isShowing()) {
+			return;
+		} else { // Create a new Stage for the pop-up
+			savePopUp = new Stage();
+			savePopUp.setResizable(false);
+			savePopUp.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
+		}
 
+		// Load the FXML file for the pop-up
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/QuestionSavedPop.fxml"));
+		Parent root = null;
+		try {
+			root = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		// import login controller and set this as previous window
+		QuestionSavedControl controller = loader.getController();
+		controller.setPreviousWindow(this);
+
+		// Set the scene and show the stage
+		Scene scene = new Scene(root);
+		savePopUp.setScene(scene);
+		savePopUp.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
+		//			popupStage.setAlwaysOnTop(true); // Set always on top
+		savePopUp.setResizable(false);
+		savePopUp.show();
+	}
+
+	public String getType() {
+		return type;
+	}
 }

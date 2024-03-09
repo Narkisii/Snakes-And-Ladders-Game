@@ -2,9 +2,13 @@ package control;
 
 import java.io.IOException;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import exceptions.NoJsonFileFound;
 import model.Question;
 import model.QuestionsFromJson;
@@ -16,10 +20,10 @@ import model.QuestionsFromJson;
  */
 public class DeleteQuestionPopControl {
 	@FXML
-	private Button yesButton;
-
+	private Button yesButton, noButton;;
+	
 	@FXML
-	private Button noButton;
+	private AnchorPane mainPane;
 
 	private Question questionToDelete;
 
@@ -42,6 +46,7 @@ public class DeleteQuestionPopControl {
 				questionsFromJson = QuestionsFromJson.getInstance().readQuestionsFromJson();
 				questionsFromJson.removeQuestion(questionToDelete);
 				questionsFromJson.toJson();
+				
 				previousWindow.re_init(questionToDelete.getDifficulty());
 				closeWindow();
 			} catch (IOException | NoJsonFileFound e) {

@@ -2,6 +2,8 @@ package control;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -12,6 +14,7 @@ import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.css.Style;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -99,7 +102,7 @@ public class QuestionWizControl {
 
 	@FXML
 	private AnchorPane centerPane; // Center pane for main content
-	
+
 	@FXML
 	private ImageView adminSettings_Icon;
 
@@ -116,6 +119,8 @@ public class QuestionWizControl {
 	// Tracks the currently displayed filtered list
 	private FilteredList<Question> currentFilteredData;
 
+	private static List<Button> diffButtons;
+
 	@FXML
 	void initialize() {
 		/*
@@ -123,12 +128,15 @@ public class QuestionWizControl {
 		 * empty question)
 		 */
 		rm_button.setDisable(true);
+		diffButtons = Arrays.asList(easy_button, med_button, hard_button);
+		enableDiffButton(easy_button);
 
 		// Check if the user is an admin
 		if (!isAdmin) {
 			// If not an admin, disable admin controls
 			disableAdminControls();
-		} else {
+		}
+		else {
 			// If an admin, enable admin controls
 			enableAdminControls();
 		}
@@ -164,7 +172,8 @@ public class QuestionWizControl {
 			updateFilter();
 			qTable.setItems(currentFilteredData);
 			q_col.setText("Easy Questions");
-			
+
+			enableDiffButton(easy_button); // set new style to the show button as pressed
 		});
 
 		med_button.setOnAction(event -> {
@@ -179,7 +188,8 @@ public class QuestionWizControl {
 			updateFilter();
 			qTable.setItems(currentFilteredData);
 			q_col.setText("Medium Questions");
-			//			re_init(2);
+
+			enableDiffButton(med_button); // set new style to the show button as pressed
 		});
 
 		hard_button.setOnAction(event -> {
@@ -194,7 +204,8 @@ public class QuestionWizControl {
 			updateFilter();
 			qTable.setItems(currentFilteredData);
 			q_col.setText("Hard Questions");
-			//			re_init(3);
+
+			enableDiffButton(hard_button); // set new style to the show button as pressed
 		});
 
 		// Set the action for the login button
@@ -218,7 +229,7 @@ public class QuestionWizControl {
 			Scene scene = new Scene(root);
 			popupStage.setScene(scene);
 			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
-			//			popupStage.setAlwaysOnTop(true); // Set always on top
+			// popupStage.setAlwaysOnTop(true); // Set always on top
 			popupStage.setResizable(false);
 			popupStage.show();
 		});
@@ -352,7 +363,7 @@ public class QuestionWizControl {
 
 		// Set the action for the return button
 		Return_Btn.setOnAction(event -> navigateTo("/view/MenuScreenView.fxml"));
-		
+
 		adminSettings_Icon.setOnMouseClicked(event -> {
 			setPopUpStage();
 
@@ -391,7 +402,7 @@ public class QuestionWizControl {
 		swapLogButtons("log in"); // Swap the login button to a logout button
 		add_button.setDisable(false); // Enable the add button
 		messageLbl.setText("Double click on question to edit"); // Set the message label
-		
+
 		adminSettings_Icon.setVisible(isAdmin);
 	}
 
@@ -401,7 +412,7 @@ public class QuestionWizControl {
 		swapLogButtons("log out"); // Swap the logout button to a login button
 		add_button.setDisable(true); // Disable the add button
 		messageLbl.setText("You must log in to edit questions"); // Set the message label
-		
+
 		adminSettings_Icon.setVisible(false);
 	}
 
@@ -442,7 +453,6 @@ public class QuestionWizControl {
 		easy_questionList = questionData.getQuestionsByDifficulty(1);
 		med_questionList = questionData.getQuestionsByDifficulty(2);
 		hard_questionList = questionData.getQuestionsByDifficulty(3);
-
 
 		// Update the question column
 		q_col.setCellValueFactory(new PropertyValueFactory<>("question"));
@@ -493,21 +503,21 @@ public class QuestionWizControl {
 			qTable.setItems(data);
 			q_col.setText("Easy Questions");
 			easyFilteredData = new FilteredList<>(data, p -> true);
-
+			enableDiffButton(easy_button);
 		}
 		if (q_diff == 2) {
 			data = FXCollections.observableArrayList(med_questionList);
 			qTable.setItems(data);
 			q_col.setText("Medium Questions");
 			medFilteredData = new FilteredList<>(data, p -> true);
-
+			enableDiffButton(med_button);
 		}
 		if (q_diff == 3) {
 			data = FXCollections.observableArrayList(hard_questionList);
 			qTable.setItems(data);
 			q_col.setText("Hard Questions");
 			hardFilteredData = new FilteredList<>(data, p -> true);
-
+			enableDiffButton(hard_button);
 		}
 
 	}
@@ -517,11 +527,12 @@ public class QuestionWizControl {
 		// If a pop-up is already open, do nothing
 		if (popupStage != null && popupStage.isShowing()) {
 			return;
-		} else { // Create a new Stage for the pop-up
+		}
+		else { // Create a new Stage for the pop-up
 			popupStage = new Stage();
 			popupStage.setResizable(false);
 			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
-			//			popupStage.setAlwaysOnTop(true); // Set always on top
+			// popupStage.setAlwaysOnTop(true); // Set always on top
 
 		}
 	}
@@ -555,6 +566,22 @@ public class QuestionWizControl {
 
 			popupStage.show();
 		});
+	}
+
+	/*
+	 * This function will set the style of the button pressed
+	 *  to show it on different color
+	 */
+	private void enableDiffButton(Button btnToEnable) {
+		for (Button btn : diffButtons) {
+			if (btn == btnToEnable) { // set design to the button pressed
+				btn.getStyleClass().add("difficultyButton_enabled");
+			}
+			else { // set design to rest of the buttons
+				btn.getStyleClass().remove("difficultyButton_enabled");
+				btn.getStyleClass().add("difficultyButton");
+			}
+		}
 	}
 
 	/*

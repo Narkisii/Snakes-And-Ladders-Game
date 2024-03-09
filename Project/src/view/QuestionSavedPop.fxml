@@ -9,12 +9,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.QuestionSavedControl">
+<fx:root fx:id="pop_anchorPane" type="AnchorPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.QuestionSavedControl">
    <children>
-      <VBox alignment="CENTER" prefHeight="150.0" prefWidth="450.0" spacing="10.0" styleClass="qSaved_Bodybg" stylesheets="@resources/Css/popUpStyle.css">
+      <VBox fx:id="pop_vBox" alignment="CENTER" prefHeight="150.0" prefWidth="450.0" spacing="10.0" styleClass="qSaved_Bodybg" stylesheets="@resources/Css/popUpStyle.css">
          <children>
             <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="450.0" />
-            <Label fx:id="message_Lbl" alignment="CENTER" prefHeight="42.0" prefWidth="462.0" styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" text="Notification text" textAlignment="CENTER" wrapText="true">
+            <Label fx:id="message_Lbl" alignment="CENTER" prefHeight="42.0" prefWidth="462.0" styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" textAlignment="CENTER" wrapText="true">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
