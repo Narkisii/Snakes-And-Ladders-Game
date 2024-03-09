@@ -31,10 +31,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -109,6 +113,8 @@ public class BoardControl implements GameEventSubject {
 	@FXML
 	private Button pause_Btn;
 
+	@FXML
+	private AnchorPane info_pane;
 	// Initialize the timer properties
 	/**
 	 * Property representing the game timer counter.
@@ -257,7 +263,7 @@ public class BoardControl implements GameEventSubject {
 		// Initialize and attach observer to board
 		GameData.getInstance().init_board();
 		board = GameData.getInstance().getBoard();
-		
+
 		board.generate_board_Objects();
 		SoundManager soundManager = new SoundManager();
 		board.attach(soundManager);
@@ -288,7 +294,7 @@ public class BoardControl implements GameEventSubject {
 				canvas.getChildren().clear();
 				mainPain.getChildren().remove(canvas);
 				drawBoardObjectsInSeparateThread();
-				//				redrawLines();
+				// redrawLines();
 				mainPain.getChildren().add(canvas);
 				add_SpecialTiles();
 			}
@@ -316,13 +322,21 @@ public class BoardControl implements GameEventSubject {
 			rollButton.setDisable(true); // Disable roll button
 			pause_Btn.setText("Continue Game"); // Update button text
 			pauseLabel = new Label("Game is paused"); // Create pause label
-			pauseLabel.setFont(new Font(50)); // Set label font
-			pauseLabel.setLayoutX(10); // Set label position
-			pauseLabel.setLayoutY(300); // Set label position
+			pauseLabel.getStylesheets().add("/view/resources/Css/popUpStyle.css");
+			pauseLabel.getStyleClass().add("settings_Header");
+//			pauseLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+
+			pauseLabel.setFont(new Font(500)); // Set label font
+			pauseLabel.setLayoutX((grid.getScene().getWidth() / 4)); // Set label position
+			pauseLabel.setLayoutY((grid.getScene().getHeight() / 2)); // Set label
+																									// position
 
 			// Add the label to the canvas
 			canvas.getChildren().add(pauseLabel);
-
+			GaussianBlur blur = new GaussianBlur(); // Create a new GaussianBlur effect
+			blur.setRadius(10); // Set the radius of the blur. Increase the value for more blur
+			info_pane.setEffect(blur); // Apply the blur effect to the pane
+			grid.setEffect(blur);
 			paused = true; // Set game state to paused
 		} else {
 			// Game is paused, so resume it
@@ -335,6 +349,8 @@ public class BoardControl implements GameEventSubject {
 			rollButton.setDisable(false); // Enable roll button
 			pause_Btn.setText("Pause Game"); // Update button text
 			canvas.getChildren().remove(pauseLabel); // Remove pause label
+			info_pane.setEffect(null);
+			grid.setEffect(null);
 
 			paused = false; // Set game state to playing
 		}
@@ -373,9 +389,9 @@ public class BoardControl implements GameEventSubject {
 				// Create a new square (Rectangle)
 
 				Rectangle tile = new Rectangle();
-				//				tile.setWidth(grid.widthProperty().divide(numTiles).doubleValue());
-				//				tile.setHeight(grid.heightProperty().divide(numTiles).doubleValue());
-				//				System.out.println(grid.widthProperty().doubleValue());
+				// tile.setWidth(grid.widthProperty().divide(numTiles).doubleValue());
+				// tile.setHeight(grid.heightProperty().divide(numTiles).doubleValue());
+				// System.out.println(grid.widthProperty().doubleValue());
 
 				tile.widthProperty().bind(grid.widthProperty().divide(numTiles));
 				tile.heightProperty().bind(grid.heightProperty().divide(numTiles));
@@ -386,12 +402,11 @@ public class BoardControl implements GameEventSubject {
 				// Set the color of the square
 				if (count % 2 == 0) {
 					tile.setFill(Color.web("#C1F2B0")); // Change this to the color you want
-				}
-				else {
+				} else {
 					tile.setFill(Color.web("#65B741")); // Change this to the color you want
 				}
 
-				if(count == numTiles*numTiles) {
+				if (count == numTiles * numTiles) {
 					tile.setFill(Color.web("#d4ff00")); // Winner tile
 					tile.setStrokeType(StrokeType.INSIDE);
 					tile.setStroke(Color.web("#0a5200"));
@@ -403,8 +418,8 @@ public class BoardControl implements GameEventSubject {
 				tile.setY((numTiles - 1 - i) * tile.getHeight());
 
 				// Add the square to the HashMap
-				//				tile_Map.put(count, tile);
-				//				tile.setId(String.valueOf(count));
+				// tile_Map.put(count, tile);
+				// tile.setId(String.valueOf(count));
 
 				// Create a new label with the current count
 				Label label = new Label(String.valueOf(count));
@@ -412,7 +427,7 @@ public class BoardControl implements GameEventSubject {
 				label.getStyleClass().add("tile_Font");
 				label.prefWidthProperty().bind(grid.widthProperty().divide(numTiles));
 				label.prefHeightProperty().bind(grid.heightProperty().divide(numTiles));
-				//				label.setAlignment(Pos.CENTER);
+				// label.setAlignment(Pos.CENTER);
 				label.minHeight(0);
 				label.minWidth(0);
 				label.setAlignment(Pos.TOP_LEFT);
@@ -877,7 +892,7 @@ public class BoardControl implements GameEventSubject {
 				showQuestion(board.getTile(tile_num).getQuestion(), p);
 			}
 			break;
-			//Add more tile types if needed
+		// Add more tile types if needed
 		default: // other tile types
 			board.activateTile(tile_num, p);
 			move_Player(-5, p);
@@ -911,7 +926,7 @@ public class BoardControl implements GameEventSubject {
 					GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getColor()));
 			turn_Lable.setText(
 					GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()).getName()
-					+ "'s turn");
+							+ "'s turn");
 
 			// Set the image of the current player's token
 			Image token = new Image(
@@ -1096,12 +1111,10 @@ public class BoardControl implements GameEventSubject {
 	 * after a delay.
 	 */
 	void clear_all() {
-		if (diceRollAnimation != null)
-		{
+		if (diceRollAnimation != null) {
 			diceRollAnimation.stop(); // Stop the dice roll animation if it's running
 		}
-		if (pause_for_turn != null)
-		{
+		if (pause_for_turn != null) {
 			pause_for_turn.stop(); // Stop the pause for turn if it's running
 		}
 
@@ -1137,6 +1150,9 @@ public class BoardControl implements GameEventSubject {
 	 * if it's not already open.
 	 */
 	public void setExitScreen() {
+		if (paused) {
+			pause();
+		}
 		pause();
 		// this method only need to set the screen and wait for the exit buttons event
 		setPopUpStage();
