@@ -202,5 +202,11 @@
  	-fx-background-radius: 60.0 60.0 60.0 60.0;
 }
 
-
+.pause {
+	-fx-text-fill: #0F4D00;
+    -fx-font-size: 100pt;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, #0F4D00, 5.0, 5.0, 0.0, 0.0);
+    -fx-font-family: 'JejuHallasan';
+}
 
