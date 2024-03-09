@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import model.QuestionsFromJson;
 import model.User;
@@ -21,12 +22,35 @@ public class AdminSettingsControl {
     @FXML
     private TextField password_text;
     
+    @FXML
+    private Button save_password_btn;
+    
+    @FXML
+    private Button save_username_btn;
+    
 	private String path;
 	private File file;
 	private User admin;
 
     public void initialize()  {
-   
+    	
+    	save_username_btn.setOnAction(event -> {
+			try {
+				saveUsername();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+    	save_password_btn.setOnAction(event -> {
+			try {
+				savePassword();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	
     	
     	ObjectMapper mapper = new ObjectMapper();
@@ -52,6 +76,7 @@ public class AdminSettingsControl {
 
     @FXML
     public void saveUsername() throws IOException {
+    	
     	String encryptedUsername = encrypt(username_text.getText());
         admin.setUsername(encryptedUsername);
         writeAdminJson(admin);
@@ -68,10 +93,9 @@ public class AdminSettingsControl {
     
     @FXML
     public void cancel() {
-        // cancel logic here
-    }
-    
 
+    
+    }
     public void writeAdminJson(User user) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
 
