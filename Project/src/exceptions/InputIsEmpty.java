@@ -1,4 +1,4 @@
-package model;
+package exceptions;
 
 /**
  * Exception class for handling cases where an input is empty.

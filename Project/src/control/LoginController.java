@@ -4,6 +4,7 @@ import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 import exceptions.HandleExceptions;
+import exceptions.IllegalCharacter;
 import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;

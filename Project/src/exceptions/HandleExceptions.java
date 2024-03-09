@@ -17,11 +17,6 @@ import javafx.stage.Window;
  */
 public class HandleExceptions {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	public static void showException(Exception e, Object o, Window n) {
 		//		Alert alert = new Alert(AlertType.ERROR);
 		//		alert.setTitle(e.getClass().getName());

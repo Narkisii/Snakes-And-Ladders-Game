@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Set;
 
 import exceptions.HandleExceptions;
+import exceptions.InputIsEmpty;
+import exceptions.InputIsNotUnique;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -26,8 +28,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.DuplicateError;
-import model.InputIsEmpty;
-import model.InputIsNotUnique;
 import model.NoJsonFileFound;
 import model.Question;
 import model.QuestionsFromJson;

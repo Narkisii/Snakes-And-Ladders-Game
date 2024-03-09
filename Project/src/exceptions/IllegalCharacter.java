@@ -1,4 +1,4 @@
-package control;
+package exceptions;
 
 public class IllegalCharacter extends Exception {
 

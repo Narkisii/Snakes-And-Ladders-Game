@@ -15,6 +15,8 @@ import enums.CPUNames;
 import enums.Colors;
 import enums.Tokens;
 import exceptions.HandleExceptions;
+import exceptions.IllegalCharacter;
+import exceptions.InputIsNotUnique;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -33,7 +35,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.GameData;
-import model.InputIsNotUnique;
 import model.Player;
 import model.cpu_Player;
 
