@@ -10,28 +10,40 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import model.QuestionsFromJson;
 import model.User;
 
 public class AdminSettingsControl {
 	   private QuestionWizControl previousWindow;
-	@FXML
-    private TextField username_text;
 
-    @FXML
-    private TextField password_text;
-    
-    @FXML
-    private Button save_password_btn;
-    
-    @FXML
-    private Button save_username_btn;
+	    @FXML
+	    private Button cancel_btn;
+
+	    @FXML
+	    private Label password;
+
+	    @FXML
+	    private TextField password_text;
+
+	    @FXML
+	    private Button save_password_btn;
+
+	    @FXML
+	    private Button save_username_btn;
+
+	    @FXML
+	    private Label username;
+
+	    @FXML
+	    private TextField username_text;
     
 	private String path;
 	private File file;
 	private User admin;
-
+	
     public void initialize()  {
     	
     	save_username_btn.setOnAction(event -> {
@@ -62,10 +74,10 @@ public class AdminSettingsControl {
     	    e.printStackTrace();
     	}
 
-    	
+    	cancel_btn.setOnAction(event -> cancel());
 		//Show as text
-	 	username_text.setText(decrypt(admin.getUsername()));
-    	password_text.setText(decrypt(admin.getPassword()));
+	 	username_text.setText(admin.getUsername());
+    	password_text.setText(admin.getPassword());
 		
 	}
     
@@ -76,48 +88,32 @@ public class AdminSettingsControl {
 
     @FXML
     public void saveUsername() throws IOException {
-    	
-    	String encryptedUsername = encrypt(username_text.getText());
+    	System.out.println("sadfasdfasdfsadf");
+    	String encryptedUsername = admin.encrypt(username_text.getText());
         admin.setUsername(encryptedUsername);
-        writeAdminJson(admin);
+        admin.writeAdminJson(admin);
+//    	String encryptedUsername = admin.encrypt(username_text.getText());
+//      admin.setUsername(username_text.getText());
+//      admin.writeAdminJson(admin);
     }
 
     @FXML
     public void savePassword() throws IOException {
-        String encryptedPassword = encrypt(password_text.getText());
-        admin.setPassword(encryptedPassword);
-        writeAdminJson(admin);
+    	System.out.println("sadfasd34245234fasdfsadf");
 
+        String encryptedPassword = admin.encrypt(password_text.getText());
+        admin.setPassword(encryptedPassword);
+        admin.writeAdminJson(admin);
+//        String encryptedPassword = admin.encrypt(password_text.getText());
+//        admin.setPassword(password_text.getText());
+//        admin.writeAdminJson(admin);
     }
     
     
     @FXML
     public void cancel() {
-
-    
-    }
-    public void writeAdminJson(User user) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-
-        // Convert object to JSON string and save into a file directly
-        try {
-            mapper.writeValue(new File(path), user);
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Handle the IOException
-        }
-    }
-    
-    public String encrypt(String str) {
-        // This is a very basic encryption method known as the Caesar Cipher.
-        // In a production environment, please use a more secure encryption method.
-        String shifted = str.chars().mapToObj(c -> (char)(c + 3)).map(String::valueOf).collect(Collectors.joining());
-        return Base64.getEncoder().encodeToString(shifted.getBytes());
-    }
-    
-    public String decrypt(String str) {
-        String decoded = new String(Base64.getDecoder().decode(str));
-        return decoded.chars().mapToObj(c -> (char)(c - 3)).map(String::valueOf).collect(Collectors.joining());
+    	Stage stage = (Stage)cancel_btn.getScene().getWindow();
+    	stage.close();
     }
 
 

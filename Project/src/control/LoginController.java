@@ -1,7 +1,10 @@
 package control;
 
+import java.io.File;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import exceptions.HandleExceptions;
 import exceptions.IllegalCharacter;
@@ -19,6 +22,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.User;
 
 public class LoginController {
 
@@ -49,6 +53,10 @@ public class LoginController {
 
 	Pattern pattern = Pattern.compile("[a-zA-Z0-9]{0,10}");
 
+	private String path;
+
+	private User admin;
+
 	public void initialize() {
 		status = false;
 		checkUserInput();
@@ -58,6 +66,18 @@ public class LoginController {
 		//		if (status) {
 		//			approveLogin();
 		//		}
+    	ObjectMapper mapper = new ObjectMapper();
+    	try {
+    	    path = "src/Json/Admin.txt";
+    	    File file = new File(path);
+//    	    admin = new User();
+    	    admin = mapper.readValue(file, User.class);
+    	    System.out.println(admin.toString());
+
+    	} catch (Exception e) {
+    	    e.printStackTrace();
+    	}
+
 	}
 
 	public void checkUserInput() {
@@ -116,9 +136,11 @@ public class LoginController {
 			String nameInput = usernameField.getText().toLowerCase();
 			String passInput = passwordField.getText().toLowerCase();
 			setStatusPane();
+			System.out.println("nameInput " + nameInput + " passInput " + passInput);
+			System.out.println("admin.getUsername() " + admin.getDecryptedUsername() + " admin.getPassword() " + admin.getDecryptedPassword());
 
 			// Check login details
-			if (nameInput.equals("admin") && passInput.equals("admin")) {
+			if (nameInput.equals(admin.getDecryptedUsername()) && passInput.equals(admin.getDecryptedPassword())) {
 				// verify login
 				status = true;
 				approveLogin();

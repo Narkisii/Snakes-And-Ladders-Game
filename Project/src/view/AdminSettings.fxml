@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="388.0" prefWidth="663.0" styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.AdminSettingsControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="388.0" prefWidth="663.0" styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.AdminSettingsControl">
    <top>
       <Pane prefHeight="73.0" prefWidth="663.0" styleClass="secondary_Text" BorderPane.alignment="CENTER">
          <children>
@@ -35,7 +35,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-				<Button fx:id="cancel_btn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#cancel" styleClass="cancelButton" text="cancel" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+				<Button fx:id="cancel_btn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="cancelButton" text="cancel" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
    </bottom>

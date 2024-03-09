@@ -150,12 +150,13 @@ public class QuestionEditorPopControl {
 		} else
 
 		{
+			///Snakes_And_Ladders/src/view/QuestionSavedPop.fxml
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Save Question");
 			alert.setHeaderText(null);
 			alert.setContentText("Saved Edit");
 			alert.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
-
+			
 			try {
 				alert.initOwner((clearButton).getScene().getWindow()); // Initialize the owner of the pop-up stage
 			} catch (Exception e) {
