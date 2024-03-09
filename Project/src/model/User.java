@@ -1,15 +1,23 @@
 package model;
 
-import java.util.Arrays;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Class representing a user with a username and password.
  */
 public class User {
 
+    @JsonProperty("username")
 	private String username;
-	private char[] password;
+    
+    @JsonProperty("password")
+	private String password;
+    
+    public User() {
+	
+	}
 
 	/**
 	 * Constructor that initializes the username and password.
@@ -17,8 +25,7 @@ public class User {
 	 * @param username The username of the user.
 	 * @param password The password of the user.
 	 */
-	public User(String username, char[] password) {
-		super();
+	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
 	}
@@ -46,7 +53,7 @@ public class User {
 	 *
 	 * @return The password of the user.
 	 */
-	public char[] getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
@@ -55,7 +62,7 @@ public class User {
 	 *
 	 * @param password The password of the user.
 	 */
-	public void setPassword(char[] password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
@@ -74,7 +81,7 @@ public class User {
 			return false;
 		}
 		User other = (User) obj;
-		return Arrays.equals(password, other.password) && Objects.equals(username, other.username);
+		return Objects.equals(password, other.password) && Objects.equals(username, other.username);
 	}
 
 	/**
@@ -84,6 +91,6 @@ public class User {
 	 */
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", password=" + Arrays.toString(password) + "]";
+		return "User [username=" + username + ", password=" + password + "]";
 	}
 }

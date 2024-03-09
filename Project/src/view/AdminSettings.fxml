@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="388.0" prefWidth="663.0" styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.AdminSettingsControl">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="388.0" prefWidth="663.0" styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.AdminSettingsControl">
    <top>
       <Pane prefHeight="73.0" prefWidth="663.0" styleClass="secondary_Text" BorderPane.alignment="CENTER">
          <children>
@@ -35,7 +35,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="cancelButton" text="cancel" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+				<Button fx:id="cancel_btn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#cancel" styleClass="cancelButton" text="cancel" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
    </bottom>
@@ -51,17 +51,17 @@
                   </Label>
                   <HBox alignment="CENTER" prefHeight="0.0" prefWidth="536.0" spacing="10.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" styleClass="secondary_Text" text="Username" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
-                        <TextField prefHeight="26.0" prefWidth="270.0" />
-                        <Button mnemonicParsing="false" styleClass="saveButton" text="Save username" />
+                        <Label fx:id="username" alignment="CENTER" contentDisplay="CENTER" styleClass="secondary_Text" text="Username" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="username_text" prefHeight="26.0" prefWidth="270.0" />
+                        <Button fx:id="save_username_btn" mnemonicParsing="false" styleClass="saveButton" text="Save username" />
                      </children>
                   </HBox>
                   <Pane prefHeight="49.0" prefWidth="535.0" />
                   <HBox alignment="CENTER" prefHeight="0.0" prefWidth="536.0" spacing="10.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" styleClass="secondary_Text" text="Password" textAlignment="CENTER" />
-                        <TextField prefHeight="26.0" prefWidth="270.0" />
-                        <Button mnemonicParsing="false" styleClass="saveButton" text="Save password" />
+                        <Label fx:id="password" alignment="CENTER" contentDisplay="CENTER" styleClass="secondary_Text" text="Password" textAlignment="CENTER" />
+                        <TextField fx:id="password_text" prefHeight="26.0" prefWidth="270.0" />
+                        <Button fx:id="save_password_btn" mnemonicParsing="false" styleClass="saveButton" text="Save password" />
                      </children>
                   </HBox>
                   <Pane prefHeight="39.0" prefWidth="594.0" />
