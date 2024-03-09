@@ -19,7 +19,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -107,20 +110,6 @@ public class QuestionEditorPopControl {
 			//      QuestionsFromJson questionsFromJson = QuestionsFromJson.getInstance();
 			QuestionsFromJson questionsFromJson = null;
 			try {
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Save Question");
-				alert.setHeaderText(null);
-				alert.setContentText("Saved Question");
-				alert.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
-
-				try {
-					alert.initOwner((clearButton).getScene().getWindow()); // Initialize the owner of the pop-up stage
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					return false;
-				}
-
-
 				questionsFromJson = QuestionsFromJson.getInstance().readQuestionsFromJson();
 
 				// Create a new Question object
@@ -136,10 +125,8 @@ public class QuestionEditorPopControl {
 					questionsFromJson.toJson();
 					previousWindow.re_init(newQuestion.getDifficulty());
 					clear_text();
-					alert.showAndWait();
-					
-					// showQSavePop();
-					
+					showSaveMessage(type);
+						
 					return true;
 				}
 			} catch (InputIsEmpty | DuplicateError | IOException | InputIsNotUnique | NoJsonFileFound e) {
@@ -147,24 +134,8 @@ public class QuestionEditorPopControl {
 				HandleExceptions.showException(e, this, main_Label.getScene().getWindow());
 			}
 
-		} else
-
-		{
-			///Snakes_And_Ladders/src/view/QuestionSavedPop.fxml
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Save Question");
-			alert.setHeaderText(null);
-			alert.setContentText("Saved Edit");
-			alert.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
-			
-			try {
-				alert.initOwner((clearButton).getScene().getWindow()); // Initialize the owner of the pop-up stage
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				return false;
-			}
-
-
+		} 
+		else {
 			try {
 				/// edit question
 				QuestionsFromJson questionsFromJson = QuestionsFromJson.getInstance().readQuestionsFromJson();
@@ -199,10 +170,8 @@ public class QuestionEditorPopControl {
 					questionsFromJson.addQuestion(questionAfterChange);
 					questionsFromJson.toJson();
 					previousWindow.re_init(questionAfterChange.getDifficulty());
-					alert.showAndWait();
 					
-					// showQSavePop();
-
+					showSaveMessage(type);
 
 					// Close the window after saving
 					Stage stage = (Stage) saveButton.getScene().getWindow();
@@ -329,35 +298,34 @@ public class QuestionEditorPopControl {
 		}
 	}
 	
-	public void showQSavePop() {
-		if (savePopUp != null && savePopUp.isShowing()) {
-			return;
-		} else { // Create a new Stage for the pop-up
-			savePopUp = new Stage();
-			savePopUp.setResizable(false);
-			savePopUp.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
-		}
+	public void showSaveMessage(String type) {
+		Stage ownerPopUp = null;
 
-		// Load the FXML file for the pop-up
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/QuestionSavedPop.fxml"));
-		Parent root = null;
+		DialogPane dialogPane = new DialogPane();
+		dialogPane.setHeaderText(null);
+		dialogPane.getButtonTypes().addAll(ButtonType.OK);
+		Dialog<ButtonType> dialog = new Dialog<>();
+		dialog.setDialogPane(dialogPane);
+		dialog.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
+		dialog.setTitle("Save Question");
+
 		try {
-			root = loader.load();
-		} catch (IOException e) {
+			ownerPopUp = (Stage) (clearButton).getScene().getWindow();
+			dialog.initOwner(ownerPopUp); // Initialize the owner of the pop-up stage
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// import login controller and set this as previous window
-		QuestionSavedControl controller = loader.getController();
-		controller.setPreviousWindow(this);
 
-		// Set the scene and show the stage
-		Scene scene = new Scene(root);
-		savePopUp.setScene(scene);
-		savePopUp.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
-		//			popupStage.setAlwaysOnTop(true); // Set always on top
-		savePopUp.setResizable(false);
-		savePopUp.show();
+		if (type.equals("add")) {
+			dialogPane.setContentText("The question has been successfully added");
+		}
+		else {
+			dialogPane.setContentText("The question has been successfully updated");
+		}
+		dialog.showAndWait();
+		ownerPopUp.close();
 	}
+
 
 	public String getType() {
 		return type;
