@@ -28,7 +28,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.DuplicateError;
-import model.NoJsonFileFound;
+import exceptions.NoJsonFileFound;
 import model.Question;
 import model.QuestionsFromJson;
 

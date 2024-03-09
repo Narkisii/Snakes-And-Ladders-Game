@@ -30,7 +30,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.NoJsonFileFound;
+import exceptions.NoJsonFileFound;
 import model.QuestionsFromJson;
 
 /**

@@ -34,7 +34,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.NoJsonFileFound;
+import exceptions.NoJsonFileFound;
 import model.Question;
 import model.QuestionsFromJson;
 

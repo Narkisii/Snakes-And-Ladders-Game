@@ -24,7 +24,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.History;
-import model.NoJsonFileFound;
+import exceptions.NoJsonFileFound;
 /**
  * The HistoryControl class manages the history view of the application,
  * displaying records of past game sessions including information such as date,

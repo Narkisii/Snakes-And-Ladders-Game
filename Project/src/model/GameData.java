@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import control.HistoryControl;
 import exceptions.HandleExceptions;
 import exceptions.Questions_empty;
+import exceptions.NoJsonFileFound;
+
 /**
  * The GameData class manages the data related to the game, including players, questions, snakes, ladders, and special tiles.
  * It provides methods for initialization, resetting, and accessing game data, as well as handling game progression.
