@@ -78,7 +78,7 @@ public class HistoryControl {
 	private TableColumn<History, String> winnerCol;
 
 	// Path to the JSON file containing history data
-	private String path = "src/Json/History.txt";
+	private String path = "/Json/History.txt";
 
 	/**
 	 * Initializes the controller class. This method is automatically called

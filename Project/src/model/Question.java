@@ -170,7 +170,7 @@ public class Question implements GameEventSubject {
 			return false;
 		}
 		Question other = (Question) obj;
-		return Objects.equals(answers, other.answers) && Objects.equals(correctAnswer, other.correctAnswer)
-				&& Objects.equals(difficulty, other.difficulty) && Objects.equals(question, other.question);
+		return Objects.equals(question, other.question) || (Objects.equals(answers, other.answers) && Objects.equals(correctAnswer, other.correctAnswer)
+				&& Objects.equals(difficulty, other.difficulty) && Objects.equals(question, other.question));
 	}
 }

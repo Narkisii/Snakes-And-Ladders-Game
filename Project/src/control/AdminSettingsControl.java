@@ -27,47 +27,35 @@ public class AdminSettingsControl {
 
 	    @FXML
 	    private TextField password_text;
-
+	    
 	    @FXML
-	    private Button save_password_btn;
+	    private Button save_btn;
 
-	    @FXML
-	    private Button save_username_btn;
-
+	    
 	    @FXML
 	    private Label username;
 
 	    @FXML
 	    private TextField username_text;
     
-	private String path;
+	private String path = "/Json/Admin.txt";
 	private File file;
 	private User admin;
 	
     public void initialize()  {
     	
-    	save_username_btn.setOnAction(event -> {
+
+    	save_btn.setOnAction(event -> {
 			try {
-				saveUsername();
-				
+				save();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		});
-    	save_password_btn.setOnAction(event -> {
-			try {
-				savePassword();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
-	
-    	
+
     	ObjectMapper mapper = new ObjectMapper();
     	try {
-    	    path = "src/Json/Admin.txt";
     	    File file = new File(path);
     	    admin = mapper.readValue(file, User.class);
     	} catch (Exception e) {
@@ -76,19 +64,30 @@ public class AdminSettingsControl {
 
     	cancel_btn.setOnAction(event -> cancel());
 		//Show as text
-	 	username_text.setText(admin.getUsername());
-    	password_text.setText(admin.getPassword());
+	 	username_text.setText(admin.getDecryptedUsername());
+    	password_text.setText(admin.getDecryptedPassword());
 		
 	}
     
 
-    public void setPreviousWindow(QuestionWizControl questionWizControl2) {
+    private void save() throws IOException {
+		// TODO Auto-generated method stub
+    	String encryptedUsername = admin.encrypt(username_text.getText());
+        admin.setUsername(encryptedUsername);
+        admin.writeAdminJson(admin);
+        String encryptedPassword = admin.encrypt(password_text.getText());
+        admin.setPassword(encryptedPassword);
+        admin.writeAdminJson(admin);
+
+	}
+
+
+	public void setPreviousWindow(QuestionWizControl questionWizControl2) {
         previousWindow = questionWizControl2;
     }
 
     @FXML
     public void saveUsername() throws IOException {
-    	System.out.println("sadfasdfasdfsadf");
     	String encryptedUsername = admin.encrypt(username_text.getText());
         admin.setUsername(encryptedUsername);
         admin.writeAdminJson(admin);
@@ -99,8 +98,6 @@ public class AdminSettingsControl {
 
     @FXML
     public void savePassword() throws IOException {
-    	System.out.println("sadfasd34245234fasdfsadf");
-
         String encryptedPassword = admin.encrypt(password_text.getText());
         admin.setPassword(encryptedPassword);
         admin.writeAdminJson(admin);

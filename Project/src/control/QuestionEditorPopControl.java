@@ -197,19 +197,7 @@ public class QuestionEditorPopControl {
 		}
 	}
 
-	//	// Check if any input is empty
-	//	public boolean checkEmpty() throws InputIsEmpty, InputIsNotUnique {
-	//		Set<String> inputs = new HashSet<>();
-	//		for (TextField f : textFieldList) {
-	//			String input = f.getText().toLowerCase();
-	//			if (input.isEmpty()) {
-	//				throw new InputIsEmpty(f.getId());
-	//			} else if (!inputs.add(input.toLowerCase())) {
-	//				throw new InputIsNotUnique(f.getId() + " " + f.getText());
-	//			}
-	//		}
-	//		return true;
-	//	}
+
 	public boolean checkEmpty() throws InputIsEmpty, InputIsNotUnique {
 		Set<String> inputs = new HashSet<>();
 		String temp = question_TextArea.getText().replaceAll("\\p{Punct}", "").replaceAll("\\s", "").replaceAll("\\d", "");

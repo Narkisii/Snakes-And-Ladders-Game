@@ -35,7 +35,12 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-				<Button fx:id="cancel_btn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="cancelButton" text="cancel" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+      				<Button fx:id="cancel_btn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="cancelButton" text="cancel" />
+                  <Button fx:id="save_btn" mnemonicParsing="false" style="-fx-text-fill: green;" styleClass="cancelButton" text="Save" />
+               </children>
+            </HBox>
          </children>
       </GridPane>
    </bottom>
@@ -53,7 +58,6 @@
                      <children>
                         <Label fx:id="username" alignment="CENTER" contentDisplay="CENTER" styleClass="secondary_Text" text="Username" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
                         <TextField fx:id="username_text" prefHeight="26.0" prefWidth="270.0" />
-                        <Button fx:id="save_username_btn" mnemonicParsing="false" styleClass="saveButton" text="Save username" />
                      </children>
                   </HBox>
                   <Pane prefHeight="49.0" prefWidth="535.0" />
@@ -61,7 +65,6 @@
                      <children>
                         <Label fx:id="password" alignment="CENTER" contentDisplay="CENTER" styleClass="secondary_Text" text="Password" textAlignment="CENTER" />
                         <TextField fx:id="password_text" prefHeight="26.0" prefWidth="270.0" />
-                        <Button fx:id="save_password_btn" mnemonicParsing="false" styleClass="saveButton" text="Save password" />
                      </children>
                   </HBox>
                   <Pane prefHeight="39.0" prefWidth="594.0" />

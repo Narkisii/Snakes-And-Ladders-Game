@@ -6,6 +6,7 @@ import java.util.Base64;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,22 +21,22 @@ public class User {
     @JsonProperty("password")
 	private String password;
 
-	private String path = "src/Json/Admin.txt";
+	private String path = "/Json/Admin.txt";
     
     public User() {
 	
 	}
 
-//	/**
-//	 * Constructor that initializes the username and password.
-//	 *
-//	 * @param username The username of the user.
-//	 * @param password The password of the user.
-//	 */
-//	public User(String username, String password) {
-//		this.username = username;
-//		this.password = password;
-//	}
+	/**
+	 * Constructor that initializes the username and password.
+	 *
+	 * @param username The username of the user.
+	 * @param password The password of the user.
+	 */
+	public User(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
 
 	/**
 	 * Gets the username of the user.
@@ -49,10 +50,21 @@ public class User {
 	}
 
 	/**
+	 * Sets the username of the user.
+	 *
+	 * @param username The username of the user.
+	 */
+	public void setUsername(String username) {
+		System.out.println("setUsername");
+
+		this.username = username;
+	}
+	/**
 	 * Gets the username of the user.
 	 *
 	 * @return The username of the user.
 	 */
+	@JsonIgnore
 	public String getDecryptedUsername() {
 		System.out.println("getDicryptedUsername");
 		return decrypt(username);
@@ -63,21 +75,12 @@ public class User {
 	 *
 	 * @return The username of the user.
 	 */
+	@JsonIgnore
 	public String getDecryptedPassword() {
 		System.out.println("getDicryptedPassword");
 		return decrypt(password);
 	}
 
-	/**
-	 * Sets the username of the user.
-	 *
-	 * @param username The username of the user.
-	 */
-	public void setUsername(String username) {
-		System.out.println("setUsername");
-
-		this.username = username;
-	}
 
 	/**
 	 * Gets the password of the user.

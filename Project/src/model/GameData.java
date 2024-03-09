@@ -437,7 +437,7 @@ public class GameData {
 	 */
 	public void appendGameToJson() {
 		ObjectMapper mapper = new ObjectMapper();
-		File file = new File("src/Json/History.txt");
+		File file = new File("Json/History.txt");
 		ArrayNode gameDataArray;
 		try {
 			gameDataArray = (ArrayNode) mapper.readTree(file);

@@ -63,20 +63,20 @@ public class LoginController {
 		setLoginEvent();
 		showLoginMessage(status);
 
-		//		if (status) {
-		//			approveLogin();
-		//		}
-    	ObjectMapper mapper = new ObjectMapper();
-    	try {
-    	    path = "src/Json/Admin.txt";
-    	    File file = new File(path);
+		// if (status) {
+		// approveLogin();
+		// }
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			path = "Json/Admin.txt";
+			File file = new File(path);
 //    	    admin = new User();
-    	    admin = mapper.readValue(file, User.class);
-    	    System.out.println(admin.toString());
+			admin = mapper.readValue(file, User.class);
+			System.out.println(admin.toString());
 
-    	} catch (Exception e) {
-    	    e.printStackTrace();
-    	}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -120,7 +120,7 @@ public class LoginController {
 				}
 			} catch (IllegalCharacter e) {
 				// TODO Auto-generated catch block
-				HandleExceptions.showException(e,this, usernameField.getScene().getWindow());
+				HandleExceptions.showException(e, this, usernameField.getScene().getWindow());
 				return null;
 			}
 		};
@@ -137,7 +137,8 @@ public class LoginController {
 			String passInput = passwordField.getText().toLowerCase();
 			setStatusPane();
 			System.out.println("nameInput " + nameInput + " passInput " + passInput);
-			System.out.println("admin.getUsername() " + admin.getDecryptedUsername() + " admin.getPassword() " + admin.getDecryptedPassword());
+			System.out.println("admin.getUsername() " + admin.getDecryptedUsername() + " admin.getPassword() "
+					+ admin.getDecryptedPassword());
 
 			// Check login details
 			if (nameInput.equals(admin.getDecryptedUsername()) && passInput.equals(admin.getDecryptedPassword())) {
@@ -161,8 +162,7 @@ public class LoginController {
 		if (isValid) { // login details are correct
 			statusLbl.setText("Login successful!");
 			statusLbl.setStyle("-fx-text-fill: #367E18");
-		}
-		else { // login details incorrect
+		} else { // login details incorrect
 			statusLbl.setText("Login failed!");
 			statusLbl.setStyle("-fx-text-fill: #C21010; -fx-font-size: 20pt");
 			statusLbl.setWrapText(true);

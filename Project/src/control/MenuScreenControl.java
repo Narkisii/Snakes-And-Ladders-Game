@@ -292,9 +292,8 @@ public class MenuScreenControl {
 			/**
 			 * An array of File objects representing the paths to the JSON files.
 			 */
-			File[] jsonFiles = { new File("Json/Questions.txt"), new File("Json/History.txt") // Duplicate path likely
-																					// unintentional
-			};
+			File[] jsonFiles = { new File("Json/Questions.txt"), new File("Json/History.txt"),
+					new File("Json/Admin.txt") };
 
 			for (File jsonFile : jsonFiles) {
 				// Ensure the parent directory of the JSON file exists.
@@ -302,7 +301,15 @@ public class MenuScreenControl {
 
 				// Check if the JSON file already exists.
 				if (!jsonFile.exists()) {
-					// Create a new empty file.
+//					PauseTransition pause = new PauseTransition(Duration.millis(1000));
+//
+//					// Create a new empty file.
+//					pause.setOnFinished(event -> {
+//					});
+					HandleExceptions.showException(new NoJsonFileFound(), this, null);
+
+//				    pause.play();
+
 					jsonFile.createNewFile();
 
 					if (jsonFile.getName().equals("Questions.txt")) {
@@ -320,7 +327,21 @@ public class MenuScreenControl {
 						try (BufferedWriter writer = new BufferedWriter(new FileWriter(jsonFile))) {
 							writer.write(jsonContent);
 						}
+
 					}
+					if (jsonFile.getName().equals("Admin.txt")) {
+						// This block only executes if the newly created file is Questions.txt
+						String jsonContent = "{\"username\":\"ZGdwbHE=\",\"password\":\"ZGdwbHE=\"}";
+						/**
+						 * Writes the initial JSON content to the newly created Questions.txt file using
+						 * a try-with-resources block for automatic resource management.
+						 */
+						try (BufferedWriter writer = new BufferedWriter(new FileWriter(jsonFile))) {
+							writer.write(jsonContent);
+						}
+
+					}
+
 				}
 			}
 			// If no exceptions occurred, return true indicating successful file operations.

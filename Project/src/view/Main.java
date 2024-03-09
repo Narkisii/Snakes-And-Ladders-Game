@@ -11,11 +11,16 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Parent root = FXMLLoader.load(getClass().getResource("MenuScreenView.fxml"));
+//		Parent root = FXMLLoader.load(getClass().getResource("AdminSettings.fxml"));
+
 		Scene scene = new Scene(root);
 
 		primaryStage.getIcons().add(new Image("/view/Images/icon/icon.png"));
 		//	    primaryStage.setAlwaysOnTop(true);
 		primaryStage.setScene(scene);
+		primaryStage.setMinHeight(720);
+		primaryStage.setMinWidth(1280);
+		primaryStage.setTitle("Snakes And Ladder");
 		primaryStage.show();
 	}
 

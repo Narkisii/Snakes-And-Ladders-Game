@@ -172,7 +172,7 @@ public class QuestionWizControl {
 			qTable.setItems(currentFilteredData);
 			q_col.setText("Easy Questions");
 
-			enableDiffButton(easy_button); // set new style to the show button as pressed
+//			enableDiffButton(easy_button); // set new style to the show button as pressed
 		});
 
 		med_button.setOnAction(event -> {
@@ -188,7 +188,7 @@ public class QuestionWizControl {
 			qTable.setItems(currentFilteredData);
 			q_col.setText("Medium Questions");
 
-			enableDiffButton(med_button); // set new style to the show button as pressed
+//			enableDiffButton(med_button); // set new style to the show button as pressed
 		});
 
 		hard_button.setOnAction(event -> {
@@ -204,7 +204,7 @@ public class QuestionWizControl {
 			qTable.setItems(currentFilteredData);
 			q_col.setText("Hard Questions");
 
-			enableDiffButton(hard_button); // set new style to the show button as pressed
+//			enableDiffButton(hard_button); // set new style to the show button as pressed
 		});
 
 		// Set the action for the login button
@@ -367,7 +367,7 @@ public class QuestionWizControl {
 			setPopUpStage();
 
 			// Load the FXML file for the pop-up
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/adminSettings.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AdminSettings.fxml"));
 			Parent root = null;
 			try {
 				root = loader.load();
@@ -502,6 +502,7 @@ public class QuestionWizControl {
 			qTable.setItems(data);
 			q_col.setText("Easy Questions");
 			easyFilteredData = new FilteredList<>(data, p -> true);
+			
 			enableDiffButton(easy_button);
 		}
 		if (q_diff == 2) {
@@ -544,7 +545,7 @@ public class QuestionWizControl {
 			setPopUpStage();
 
 			// Load the FXML file for the pop-up
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Logout.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/logout.fxml"));
 			Parent root = null;
 			try {
 				root = loader.load(); // Load the FXML file
@@ -574,11 +575,10 @@ public class QuestionWizControl {
 	private void enableDiffButton(Button btnToEnable) {
 		for (Button btn : diffButtons) {
 			if (btn == btnToEnable) { // set design to the button pressed
-				btn.getStyleClass().add("difficultyButton_enabled");
+				btn.getStyleClass().set(1, "difficultyButton_enabled");
 			}
 			else { // set design to rest of the buttons
-				btn.getStyleClass().remove("difficultyButton_enabled");
-				btn.getStyleClass().add("difficultyButton");
+				btn.getStyleClass().set(1, "difficultyButton");
 			}
 		}
 	}

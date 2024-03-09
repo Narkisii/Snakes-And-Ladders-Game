@@ -34,6 +34,8 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -185,6 +187,8 @@ public class BoardControl implements GameEventSubject {
 
 	private boolean first_run2;
 
+	private int cheatMode = 0;
+
 	// OBSERVER METHODS
 	@Override
 	public void attach(GameEventObserver observer) {
@@ -234,7 +238,6 @@ public class BoardControl implements GameEventSubject {
 		check_Sound.setSelected(true);
 		check_Sound.selectedProperty().addListener((obs, oldVal, newVal) -> {
 			GameData.getInstance().setSoundFX(newVal);
-			// Your code here
 		});
 		first_run1 = true;
 		first_run2 = true;
@@ -300,6 +303,12 @@ public class BoardControl implements GameEventSubject {
 			}
 		});
 
+		diceImage.setOnMouseClicked(e -> {
+			if(cheatMode == 3) {
+				roll(30,GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()));
+		        System.out.println("The 'A' key was pressed");
+			}
+		});
 	}
 
 	/**
@@ -338,6 +347,8 @@ public class BoardControl implements GameEventSubject {
 			info_pane.setEffect(blur); // Apply the blur effect to the pane
 			grid.setEffect(blur);
 			paused = true; // Set game state to paused
+			cheatMode++;
+
 		} else {
 			// Game is paused, so resume it
 			if (timer != null) {
@@ -353,6 +364,18 @@ public class BoardControl implements GameEventSubject {
 			grid.setEffect(null);
 
 			paused = false; // Set game state to playing
+		}
+		if(cheatMode == 3) {
+			System.out.println("Cheats on");
+			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), e -> {
+				canvas.getChildren().clear();
+				mainPain.getChildren().remove(canvas);
+				redrawLines();
+				mainPain.getChildren().add(canvas);
+				add_SpecialTiles();
+			}));
+			timeline.setCycleCount(5); // set the number of cycles
+			timeline.play();
 		}
 	}
 
@@ -448,6 +471,7 @@ public class BoardControl implements GameEventSubject {
 				count++;
 			}
 		}
+
 		return grid;
 
 	}
@@ -759,8 +783,9 @@ public class BoardControl implements GameEventSubject {
 						}
 					} else {
 						// Show the actual dice result image
+						if(dice < 9 ) {
 						Image img = new Image(path + dice + ".png");
-						diceImage.setImage(img);
+						diceImage.setImage(img);}
 						stop(); // Stop the animation
 						// Check if the dice result triggers a special action (question or movement)
 						if (dice == 7 || dice == 8 || dice == 9) {
@@ -878,6 +903,10 @@ public class BoardControl implements GameEventSubject {
 	 * @param p        The player whose turn it is.
 	 */
 	private void checktile_type(int tile_num, Player p) {
+		// Check if the game has ended
+		if (checkwin(GameData.getInstance().getBoard().getGameEnd())) {
+			return;
+		}
 		// Get the tile object from the board
 		Tile tile = board.getTile(tile_num);
 		// Check the tile type
@@ -899,10 +928,7 @@ public class BoardControl implements GameEventSubject {
 			break;
 		}
 
-		// Check if the game has ended
-		if (checkwin(GameData.getInstance().getBoard().getGameEnd())) {
-			return;
-		}
+
 	}
 
 	/**
@@ -1067,7 +1093,7 @@ public class BoardControl implements GameEventSubject {
 			rollButton.setDisable(true); // Disable the roll button
 			timeline.stop(); // Stop the timer
 			stopTimer(); // Stop the timer
-
+			timer.stop();
 			popupStage = new Stage(); // Create a new stage for the win screen
 			popupStage.initOwner((grid).getScene().getWindow()); // Initialize the owner of the win screen stage
 			popupStage.initModality(Modality.WINDOW_MODAL); // Set modality to WINDOW_MODAL
