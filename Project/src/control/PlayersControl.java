@@ -85,7 +85,7 @@ public class PlayersControl {
 
 	private Set<String> usedCPUNames = new HashSet<String>();
 
-	//	private LinkedList <Player> players = new LinkedList<Player>();
+	// private LinkedList <Player> players = new LinkedList<Player>();
 	/**
 	 * List of all token options.
 	 */
@@ -113,7 +113,7 @@ public class PlayersControl {
 	 */
 	@FXML
 	public void initialize() {
-		System.out.println(numberOfPlayers);
+//		System.out.println(numberOfPlayers);
 		start_game_Btn.setDisable(true);
 		PlayersPane.setFitToWidth(true);
 		PlayersPane.setFitToHeight(true);
@@ -140,7 +140,7 @@ public class PlayersControl {
 			addCpu();
 			remove_Cpu.setDisable(true);
 
-			//			numberOfPlayers++;
+			// numberOfPlayers++;
 		}
 	}
 
@@ -358,14 +358,14 @@ public class PlayersControl {
 				}
 			} catch (IllegalCharacter e) {
 				// TODO Auto-generated catch block
-				HandleExceptions.showException(e,this, playerName.getScene().getWindow());
+				HandleExceptions.showException(e, this, playerName.getScene().getWindow());
 				return null;
 			}
 		};
 
 		playerName.setTextFormatter(new TextFormatter<>(filter));
 
-		//	    playerName.setId("playerName" + (index + 1)); // unique id
+		// playerName.setId("playerName" + (index + 1)); // unique id
 		playerName.setId("playerName " + (index + 1)); // unique id
 		playerName.setPromptText("playerName" + (index + 1));
 		playerName.setPrefHeight(65.0);
@@ -377,7 +377,7 @@ public class PlayersControl {
 
 		ComboBox<String> color = new ComboBox<>(); // Create a new color for the player's color
 		color.setId("color"); // unique id
-		//	    color.setId("color" + (index + 1)); // unique id
+		// color.setId("color" + (index + 1)); // unique id
 
 		color.setPrefHeight(65.0);
 		color.setPrefWidth(300.0);
@@ -393,24 +393,28 @@ public class PlayersControl {
 					if (node instanceof HBox) {
 						for (Node child : ((HBox) node).getChildren()) {
 							if (child instanceof ComboBox) {
-								ComboBox<String> comboBox = (ComboBox<String>) child;
-								// If the ComboBox isn't the one that triggered the event
-								if (!comboBox.equals(color)) {
-									// Remove the selected item
-									comboBox.getItems().remove(newValue);
-									// If the removed item was the selected item in this ComboBox, clear the
-									// selection
-									if (newValue.equals(comboBox.getValue())) {
-										comboBox.setValue(null);
-									}
-								}
-								// If the old value is not null and not currently selected in any ComboBox, add
-								// it back
-								if (oldValue != null && !isColorSelected(oldValue)) {
+								if (child.getId().equals("color")) {
+									System.out.println("arasdasd");
+									ComboBox<String> comboBox = (ComboBox<String>) child;
+									// If the ComboBox isn't the one that triggered the event
 									if (!comboBox.equals(color)) {
-										comboBox.getItems().add(oldValue);
+										// Remove the selected item
+										comboBox.getItems().remove(newValue);
+										// If the removed item was the selected item in this ComboBox, clear the
+										// selection
+										if (newValue.equals(comboBox.getValue())) {
+											comboBox.setValue(null);
+										}
+									}
+									// If the old value is not null and not currently selected in any ComboBox, add
+									// it back
+									if (oldValue != null && !isColorSelected(oldValue)) {
+										if (!comboBox.equals(color)) {
+											comboBox.getItems().add(oldValue);
+										}
 									}
 								}
+
 							}
 						}
 					}
@@ -435,7 +439,7 @@ public class PlayersControl {
 		});
 
 		ComboBox<String> token = new ComboBox<>(); // Create a new token for the player's token
-		//	    token.setId("token" + (index + 1)); // unique id
+		// token.setId("token" + (index + 1)); // unique id
 		token.setId("token"); // unique id
 
 		token.setPrefHeight(65.0);
@@ -451,23 +455,28 @@ public class PlayersControl {
 				for (Node node : playerContainer.getChildren()) {
 					if (node instanceof HBox) {
 						for (Node child : ((HBox) node).getChildren()) {
-							if (child instanceof ComboBox) {
-								ComboBox<String> comboBox = (ComboBox<String>) child;
-								// If the ComboBox isn't the one that triggered the event
-								if (!comboBox.equals(token)) {
-									// Remove the selected item
-									comboBox.getItems().remove(newValue);
-									// If the removed item was the selected item in this ComboBox, clear the
-									// selection
-									if (newValue.equals(comboBox.getValue())) {
-										comboBox.setValue(null);
-									}
-								}
-								// If the old value is not null and not currently selected in any ComboBox, add
-								// it back
-								if (oldValue != null && !isTokenSelected(oldValue)) {
+							if (child.getId().equals("token")) {
+								if (child instanceof ComboBox) {
+									ComboBox<String> comboBox = (ComboBox<String>) child;
+									// If the ComboBox isn't the one that triggered the event
 									if (!comboBox.equals(token)) {
-										comboBox.getItems().add(oldValue);
+										// Remove the selected item
+										comboBox.getItems().remove(newValue);
+										// If the removed item was the selected item in this ComboBox, clear the
+										// selection
+										if (newValue.equals(comboBox.getValue())) {
+											comboBox.setValue(null);
+										}
+									}
+									// If the old value is not null and not currently selected in any ComboBox, add
+									// it back
+									if (oldValue != null && !isTokenSelected(oldValue)) {
+										if (!comboBox.equals(token)) {
+//										comboBox.getItems().add(oldValue);
+											if (comboBox.getId().contains("token"))
+												comboBox.getItems().add(oldValue);
+
+										}
 									}
 								}
 							}
@@ -502,7 +511,7 @@ public class PlayersControl {
 
 		// Add color options
 		color.getItems().addAll(colors);
-		//	    "Red", "Blue", "Green", "Yellow", "Purple"
+		// "Red", "Blue", "Green", "Yellow", "Purple"
 		color.setPromptText("Pick Color");
 		token.setPromptText("Pick Token");
 
@@ -536,7 +545,7 @@ public class PlayersControl {
 
 		TextField playerName = new TextField(); // Create a new playerName for the player's name
 		playerName.setId("cpu_playerName " + (index + 1)); // unique id
-		//	    playerName.setId("playerName"); // unique id
+		// playerName.setId("playerName"); // unique id
 
 		playerName.setPrefHeight(65.0);
 		playerName.setPrefWidth(191.0);
@@ -548,7 +557,7 @@ public class PlayersControl {
 		HBox.setHgrow(playerName, Priority.ALWAYS); // Make 'playerName' expand to fill available horizontal space
 
 		ComboBox<String> color = new ComboBox<>(); // Create a new color for the player's color
-		//	    color.setId("color" + (index + 1)); // unique id
+		// color.setId("color" + (index + 1)); // unique id
 		color.setId("color"); // unique id
 
 		color.setPrefHeight(65.0);
@@ -561,7 +570,7 @@ public class PlayersControl {
 		HBox.setHgrow(color, Priority.ALWAYS); // Make 'color' expand to fill available horizontal space
 
 		ComboBox<String> token = new ComboBox<>(); // Create a new token for the player's token
-		//	    token.setId("token" + (index + 1)); // unique id
+		// token.setId("token" + (index + 1)); // unique id
 		token.setId("token"); // unique id
 		token.setPrefHeight(65.0);
 		token.setPrefWidth(300.0);
@@ -611,7 +620,7 @@ public class PlayersControl {
 			checkDup();
 		} catch (InputIsNotUnique e) {
 			// TODO Auto-generated catch block
-			HandleExceptions.showException(e,this, return_Btn.getScene().getWindow());
+			HandleExceptions.showException(e, this, return_Btn.getScene().getWindow());
 			return;
 		}
 		for (Node node : playerContainer.getChildren()) {
@@ -666,8 +675,10 @@ public class PlayersControl {
 							comboBox.getItems().remove(newValue);
 							// If the removed item was the selected item in this ComboBox, clear the
 							// selection
-							if (newValue.equals(comboBox.getValue())) {
-								comboBox.setValue(null);
+							if (comboBox.getValue() != null) {
+								if (newValue.equals(comboBox.getValue())) {
+									comboBox.setValue(null);
+								}
 							}
 						}
 					}
@@ -690,7 +701,7 @@ public class PlayersControl {
 			Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlFile)), width, height);
 			stage.setMinWidth(width + 10); // Minimum width: 300 pixels
 			stage.setMinHeight(height + 10); // Minimum height: 200 pixels
-			//			stage.setAlwaysOnTop(true);
+			// stage.setAlwaysOnTop(true);
 			stage.setScene(scene);
 		} catch (IOException e) {
 			e.printStackTrace();
