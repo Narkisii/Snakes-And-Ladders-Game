@@ -53,7 +53,7 @@ public class winScreen_Controller {
 	private Pane party_pane;
 
 	private static final int STAR_COUNT = 20000;
-
+//	refrence code: https://netopyr.com/2012/06/14/using-the-javafx-animationtimer/
 	private final Circle[] nodes1 = new Circle[STAR_COUNT];
 	private final Circle[] nodes2 = new Circle[STAR_COUNT];
 
