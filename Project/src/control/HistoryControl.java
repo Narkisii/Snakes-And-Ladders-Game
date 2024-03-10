@@ -125,6 +125,10 @@ public class HistoryControl {
 
 		// Set the data to the TableView
 		historyTable.setItems(observableList);
+		
+		// define the main sort to the colum of date 
+		historyTable.getSortOrder().add(dateCol);
+		historyTable.sort();
 		// Add action for your button here
 	}
 

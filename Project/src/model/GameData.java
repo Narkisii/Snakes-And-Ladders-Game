@@ -458,7 +458,7 @@ public class GameData {
 		gameDataArray.add(game);
 
 		// Print game data to console
-		System.out.println("Appending game data to JSON: " + game.toString());
+//		System.out.println("Appending game data to JSON: " + game.toString());
 
 		// Write game data array back to file
 		try {

@@ -48,7 +48,7 @@
             </Label>
            <TableView fx:id="historyTable" prefHeight="440.0" prefWidth="702.0" styleClass="root" stylesheets="@resources/Css/table_Css.css" VBox.vgrow="ALWAYS">
     <columns>
-        <TableColumn fx:id="dateCol" minWidth="-1.0" prefWidth="116.0" text="Date" />
+        <TableColumn fx:id="dateCol" minWidth="-1.0" prefWidth="116.0" sortType="DESCENDING" text="Date" />
         <TableColumn fx:id="playersCol" minWidth="-1.0" prefWidth="175.2000274658203" text="Players" />
         <TableColumn fx:id="difficultyCol" minWidth="-1.0" prefWidth="132.800048828125" text="Difficulty" />
         <TableColumn fx:id="timeCol" minWidth="-1.0" prefWidth="129.5999755859375" text="Play Time" />
