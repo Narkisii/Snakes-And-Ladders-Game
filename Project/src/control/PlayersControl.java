@@ -150,13 +150,12 @@ public class PlayersControl {
 	 * tokens for player selection.
 	 */
 	private void remove_CPU_function() {
-		System.out.println("numberOfPlayers " + numberOfPlayers + " num_cpu:" + num_cpu);
-		// TODO Auto-generated method stub
+//		System.out.println("numberOfPlayers " + numberOfPlayers + " num_cpu:" + num_cpu);
 		numberOfPlayers--;
 		num_cpu--;
 		index--;
 
-		System.out.println(numberOfPlayers - num_cpu);
+//		System.out.println(numberOfPlayers - num_cpu);
 		if (num_cpu == 0) {
 			remove_Cpu.setDisable(true);
 		}

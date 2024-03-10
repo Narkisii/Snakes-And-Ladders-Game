@@ -304,9 +304,10 @@ public class BoardControl implements GameEventSubject {
 		});
 
 		diceImage.setOnMouseClicked(e -> {
-			if(cheatMode == 3) {
-				roll(30,GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()));
-		        System.out.println("The 'A' key was pressed");
+			if (cheatMode == 3) {
+				if (!rollButton.isDisabled()) {
+					roll(30, GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()));
+				}
 			}
 		});
 	}
@@ -338,7 +339,7 @@ public class BoardControl implements GameEventSubject {
 			pauseLabel.setFont(new Font(500)); // Set label font
 			pauseLabel.setLayoutX((grid.getScene().getWidth() / 4)); // Set label position
 			pauseLabel.setLayoutY((grid.getScene().getHeight() / 2)); // Set label
-																									// position
+																		// position
 
 			// Add the label to the canvas
 			canvas.getChildren().add(pauseLabel);
@@ -365,7 +366,7 @@ public class BoardControl implements GameEventSubject {
 
 			paused = false; // Set game state to playing
 		}
-		if(cheatMode == 3) {
+		if (cheatMode == 3) {
 			System.out.println("Cheats on");
 			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), e -> {
 				canvas.getChildren().clear();
@@ -783,9 +784,10 @@ public class BoardControl implements GameEventSubject {
 						}
 					} else {
 						// Show the actual dice result image
-						if(dice < 9 ) {
-						Image img = new Image(path + dice + ".png");
-						diceImage.setImage(img);}
+						if (dice < 9) {
+							Image img = new Image(path + dice + ".png");
+							diceImage.setImage(img);
+						}
 						stop(); // Stop the animation
 						// Check if the dice result triggers a special action (question or movement)
 						if (dice == 7 || dice == 8 || dice == 9) {
@@ -927,7 +929,6 @@ public class BoardControl implements GameEventSubject {
 			move_Player(-5, p);
 			break;
 		}
-
 
 	}
 
