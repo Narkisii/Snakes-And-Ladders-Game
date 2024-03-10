@@ -30,11 +30,6 @@
     "correct_ans" : "3",
     "difficulty" : 3
   }, {
-    "question" : "What is requirements engineering?",
-    "answers" : [ "The process of developing software interfaces", "The process of testing and maintaining software systems", "The process of establishing the services required from a system and its constraints", "The process of software coding and implementation" ],
-    "correct_ans" : "3",
-    "difficulty" : 1
-  }, {
     "question" : "What are functional requirements in software engineering?",
     "answers" : [ "Descriptions of the system's hardware components", "Statements of services the system should provide and how it should behave", "Documentation of the software's user interface design", "The financial constraints under which the software must be developed" ],
     "correct_ans" : "2",
@@ -300,7 +295,12 @@
     "correct_ans" : "2",
     "difficulty" : 3
   }, {
-    "question" : "What is software????",
+    "question" : "What's requirements engineering?",
+    "answers" : [ "The process of developing software interfaces", "The process of testing and maintaining software systems", "The process of establishing the services required from a system and its constraints", "The process of software coding and implementation" ],
+    "correct_ans" : "3",
+    "difficulty" : 1
+  }, {
+    "question" : "What is software?",
     "answers" : [ "A set of programming codes", "Computer programs and associated documentation", "Digital tools for solving problems", "Systems for managing hardware" ],
     "correct_ans" : "2",
     "difficulty" : 1

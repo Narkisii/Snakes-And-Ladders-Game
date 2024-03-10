@@ -1,0 +1,72 @@
+[
+  {
+    "date" : "2024-02-01",
+    "players" : [ "Alice", "Bob" ],
+    "difficulty" : "Easy",
+    "playTime" : "15",
+    "winner" : "Alice"
+  },
+  {
+    "date" : "2024-02-05",
+    "players" : [ "Charlie", "David" ],
+    "difficulty" : "Medium",
+    "playTime" : "20",
+    "winner" : "David"
+  },
+  {
+    "date" : "2024-02-10",
+    "players" : [ "Eve", "Frank" ],
+    "difficulty" : "Hard",
+    "playTime" : "30",
+    "winner" : "Frank"
+  },
+  {
+    "date" : "2024-02-15",
+    "players" : [ "Grace", "Heidi" ],
+    "difficulty" : "Easy",
+    "playTime" : "10",
+    "winner" : "Grace"
+  },
+  {
+    "date" : "2024-02-20",
+    "players" : [ "Ivan", "Judy" ],
+    "difficulty" : "Medium",
+    "playTime" : "25",
+    "winner" : "Judy"
+  },
+  {
+    "date" : "2024-02-25",
+    "players" : [ "Mallory", "Ned" ],
+    "difficulty" : "Hard",
+    "playTime" : "35",
+    "winner" : "Ned"
+  },
+  {
+    "date" : "2024-03-01",
+    "players" : [ "Oscar", "Peggy" ],
+    "difficulty" : "Easy",
+    "playTime" : "15",
+    "winner" : "Oscar"
+  },
+  {
+    "date" : "2024-03-03",
+    "players" : [ "Sybil", "Trent" ],
+    "difficulty" : "Medium",
+    "playTime" : "20",
+    "winner" : "Trent"
+  },
+  {
+    "date" : "2024-03-06",
+    "players" : [ "Victor", "Walter" ],
+    "difficulty" : "Hard",
+    "playTime" : "30",
+    "winner" : "Walter"
+  },
+  {
+    "date" : "2024-03-09",
+    "players" : [ "Zoe", "Adam" ],
+    "difficulty" : "Easy",
+    "playTime" : "10",
+    "winner" : "Zoe"
+  }
+]

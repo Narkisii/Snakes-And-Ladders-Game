@@ -86,7 +86,7 @@ public class QuestionPopControl implements GameEventSubject {
 
 	private Player player;
 
-	private int time = 30;
+	private int time = 60;
 
 	private List<GameEventObserver> observers = new ArrayList<>(); //observer list
 

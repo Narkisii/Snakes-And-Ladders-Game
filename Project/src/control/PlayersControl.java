@@ -33,6 +33,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.GameData;
 import model.Player;
@@ -74,6 +75,8 @@ public class PlayersControl {
 	@FXML
 	private Button add_CPU;
 
+	@FXML
+	private Label story_label;
 	/**
 	 * Button to remove a CPU player.
 	 */
@@ -104,6 +107,7 @@ public class PlayersControl {
 	 * Number of players retrieved from GameData.
 	 */
 	int numberOfPlayers = GameData.getInstance().getNumberOfPlayers();
+//	String diff = GameData.getInstance().getDifficulty();
 
 	private ArrayList<TextField> playernames;
 	Pattern pattern = Pattern.compile("[a-zA-Z0-9]{0,10}");
@@ -142,6 +146,36 @@ public class PlayersControl {
 
 			// numberOfPlayers++;
 		}
+
+		addStoryLabel();
+	}
+
+	private void addStoryLabel() {
+		String diff = GameData.getInstance().getDifficulty();
+
+		// TODO Auto-generated method stub
+		switch (diff) {
+		case "Easy":
+			story_label.setText(
+					"Welcome to Easy Mode! The board is a cozy 7x7 grid, and you’ll encounter questions as often as the roll of the dice. Watch out for 3 slippery snakes,but don’t worry—there are 4 ladders to swiftly boost your progress! Oh, and meet our friendly CPU player—it’s like playing against a cheerful neighbor!");
+			story_label.setTextFill(Color.PALEGREEN);
+			break;
+		case "Medium":
+			story_label.setText(
+					"Step into Medium Mode! The board expands to 10x10, and questions await you with every roll. Beware of 4 cunning snakes, but fear not—6 ladders are your secret allies. Plus, our CPU player is no slouch—prepare for a challenge!");
+			story_label.setTextFill(Color.YELLOW.brighter());
+
+			break;
+
+		case "Hard":
+			story_label.setText(
+					"Brace yourself for Hard Mode! The vast 13x13 board beckons, but so do the toughest questions. You’ll find 6 treacherous snakes, yet there are 8 lofty ladders to propel you upward. And our CPU player? A straight A’s student—prepare for a cerebral showdown!");
+			story_label.setTextFill(Color.DARKRED.brighter());
+
+			break;
+
+		}
+
 	}
 
 	/**

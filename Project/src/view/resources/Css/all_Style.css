@@ -32,6 +32,15 @@
     -fx-effect: dropshadow(three-pass-box, black, 3, 3, 0, 0);
 	-fx-font-family: 'JejuHallasan';
 }
+
+.story_font{
+/*	-fx-text-fill: #ffd600;*/
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, black, 3, 3, 0, 0);
+	-fx-font-family: 'JejuHallasan';
+}
+
 .instruction_Font{
     -fx-font-size: 20px;
     -fx-font-weight: bold;

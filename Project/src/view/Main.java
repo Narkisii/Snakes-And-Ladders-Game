@@ -21,6 +21,7 @@ public class Main extends Application {
 		primaryStage.setMinHeight(720);
 		primaryStage.setMinWidth(1280);
 		primaryStage.setTitle("Snakes And Ladder");
+		primaryStage.setResizable(true);
 		primaryStage.show();
 	}
 

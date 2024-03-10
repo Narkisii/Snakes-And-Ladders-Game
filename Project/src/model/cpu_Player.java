@@ -105,7 +105,7 @@ public class cpu_Player extends Player {
 			throw new IllegalArgumentException("Invalid difficulty level");
 		}
 
-		System.out.println(answers + " r " + r);
+//		System.out.println(answers + " r " + r);
 		RadioButton selectedAnswer = answers.get(r-1);
 		selectedAnswer.setSelected(true);
 	}
