@@ -304,7 +304,7 @@ public class BoardControl implements GameEventSubject {
 		});
 
 		diceImage.setOnMouseClicked(e -> {
-			if (cheatMode == 3) {
+			if (cheatMode >= 3) {
 				if (!rollButton.isDisabled()) {
 					roll(30, GameData.getInstance().getplayer_list().get(GameData.getInstance().getPlayerTurn()));
 				}

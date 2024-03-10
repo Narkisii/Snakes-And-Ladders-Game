@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="popUpPane" prefHeight="150.0" prefWidth="450.0" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.ExitGameControl">
-    <VBox alignment="CENTER" prefHeight="150.0" prefWidth="450.0" spacing="15.0" styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane fx:id="popUpPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="245.0" prefWidth="450.0" stylesheets="@resources/Css/popUpStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.ExitGameControl">
+    <VBox alignment="CENTER" prefHeight="225.0" prefWidth="450.0" spacing="15.0" styleClass="bodybg" stylesheets="@resources/Css/popUpStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
          <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="450.0" />
-              <Label alignment="CENTER" prefHeight="42.0" prefWidth="476.0" styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" text="You are about to exit the game, are you sure?" textAlignment="CENTER" wrapText="true">
+              <Label alignment="CENTER" prefHeight="202.0" prefWidth="450.0" styleClass="pop_font" stylesheets="@resources/Css/popUpStyle.css" text="You are about to exit the game, are you sure?" textAlignment="CENTER" wrapText="true">
                   <VBox.margin>
                       <Insets bottom="20.0" />
                   </VBox.margin>
