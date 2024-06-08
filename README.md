@@ -37,12 +37,21 @@
 - **Java**: Primary programming language for project development.
 - **JavaFX**: Utilized for creating rich client applications and animations.
 - **JSON**: Employed for data storage and management.
-Design Patterns:
+- 
+## Design Patterns:
 
 - **Observer Pattern**: Enabled real-time updates to UI components and sound effects based on game events.
 - **Command Pattern**: Allowed separation of request initiation and execution, providing flexibility in command management.
 - **Factory Pattern**: Centralized creation of game components like ladders and snakes, enhancing scalability.
-Algorithms:
+- 
+## Singleton Pattern
+We have implemented the **Singleton** design pattern to manage the game information. This ensures that there is only one instance of the game information class, providing a global point of access to it throughout the application.
+
+## MVC Architecture
+The project is structured using the **MVC** (Model-View-Controller) architecture, which separates the application into three interconnected components. This allows for efficient code organization and easier maintenance.
+
+
+## Algorithms:
 
 Gameplay Mechanics: Custom algorithms ensured fairness and rule adherence in dice rolls and player movements.
 - **Encryption Algorithm**: Secured user data for confidentiality.
