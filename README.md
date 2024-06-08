@@ -32,6 +32,25 @@
 - **White Box Tests**: Verify dice roll range, player position updates, ladder climb, snake slide mechanics, answer validation logic, and game completion conditions.
 - **JUnit Tests**: Assess end-game conditions, snake and ladder interactions, dice roll range, and player movement accuracy.
 
+## Tools Used:
+
+- **Java**: Primary programming language for project development.
+- **JavaFX**: Utilized for creating rich client applications and animations.
+- **JSON**: Employed for data storage and management.
+Design Patterns:
+
+- **Observer Pattern**: Enabled real-time updates to UI components and sound effects based on game events.
+- **Command Pattern**: Allowed separation of request initiation and execution, providing flexibility in command management.
+- **Factory Pattern**: Centralized creation of game components like ladders and snakes, enhancing scalability.
+Algorithms:
+
+Gameplay Mechanics: Custom algorithms ensured fairness and rule adherence in dice rolls and player movements.
+- **Encryption Algorithm**: Secured user data for confidentiality.
+- **JSON Read/Write**: Streamlined game data storage and retrieval.
+- **Input Validation with Regex**: Maintained data integrity and prevented errors.
+- **Bot player**: Simulated intelligent behaviour for CPU player decisions.
+- **Animations Algorithm**: JavaFX AnimationTimer used for dynamic visual effects.
+
 ## System Components
 
 ## Gameplay
