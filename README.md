@@ -1,9 +1,41 @@
 # Snakes and Ladders Board Game
 
+## Team Members
+- Narkis Rosen
+- Itay Olivcovitz
+- Lia Roiyhvarg
+- Lior Fokin
+- Ariel Bubis
+
 ## General Description
-**Snakes and Ladders** is a classic board game that involves navigating a player's piece, based on die rolls, from the start (square 1) to the finish (square 100), while encountering various obstacles such as snakes and ladders.
+**Snakes and Ladders** is a classic board game that can be played by two or more players. The objective of the game is to navigate one's game piece, according to die rolls, from the start (position 1) to the finish, helped or hindered by ladders and snakes respectively.
+
+## Launching the System
+- **JAR File**: Click on the JAR file to start the system.
+- **Eclipse IDE**: Use "Main.java" to launch from Eclipse.
+
+## User Interface
+- **Menu Screen**: Navigate through "Start", "Question Wizard", "History", "Instructions", and "Sound" options.
+- **Settings Screen**: Select difficulty level, number of participants, and configure players.
+- **History Screen**: View previous game records.
+- **Players Screen**: Choose colors, tokens, and input player names. Add or remove CPU players.
+- **Board Screen**: Return to the main menu or roll the dice.
+- **Game Question Screen**: Answer multiple-choice questions during gameplay.
+- **Question Wizard Screen**: Filter, edit, add, or search for questions.
+- **Add/Edit Question Pop-Up**: Input question details and save or delete text.
+
+## Expected Outcomes
+- The system is designed to be robust and adaptable, providing an intuitive and engaging user experience across various scenarios.
+
+## System Testing
+- **Black Box Tests**: Test game initialization, player turn sequence, dice roll functionality, ladder and snake interactions, and winning conditions.
+- **White Box Tests**: Verify dice roll range, player position updates, ladder climb, snake slide mechanics, answer validation logic, and game completion conditions.
+- **JUnit Tests**: Assess end-game conditions, snake and ladder interactions, dice roll range, and player movement accuracy.
 
 ## System Components
+
+## Gameplay
+The game progresses as players answer questions and use ladders to advance while avoiding snakes. If a player rolls a number between 6 and 9, they will receive a question. Answering the question correctly will allow the player to move forward a certain number of squares, while answering incorrectly will cause the player to move backward. The game ends when the first player reaches the last square.
 
 ### Game Board
 - **Easy Level**: 7x7 grid (49 squares)
@@ -36,19 +68,3 @@ Each square is sequentially numbered according to the level's maximum number.
 
 ## Questions
 Questions are structured as multiple-choice and are written by the team members on course topics. There should be at least 30 questions prepared, categorized into easy, medium, and hard levels.
-
-## Gameplay
-The game progresses as players answer questions and use ladders to advance while avoiding snakes. The game ends when the first player reaches the last square.
-
-## Software Structure
-- **Data Management**: A central class named `SysData` will hold game history and question data.
-- **Additional Instructions**: The project must be written in JAVA using Eclipse or IntelliJ. Version control is managed through GitHub, and question data is stored in a JSON file with a fixed schema.
-
-## Setup and Running
-Instructions on how to set up and run the project will be provided here.
-
-## Contributing
-Guidelines for contributing to the project will be outlined here.
-
-## License
-Information about the project's license will be detailed here.
