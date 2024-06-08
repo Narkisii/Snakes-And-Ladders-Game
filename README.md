@@ -19,13 +19,13 @@
 - **Java**: Primary programming language for project development.
 - **JavaFX**: Utilized for creating GUI and animations.
 - **JSON**: Employed for data storage and management.
-- 
+  
 ## Design Patterns:
 
 - **Observer Pattern**: Enabled real-time updates to UI components and sound effects based on game events.
 - **Command Pattern**: Allowed separation of request initiation and execution, providing flexibility in command management.
 - **Factory Pattern**: Centralized creation of game components like ladders and snakes, enhancing scalability.
-- 
+  
 ## Singleton Pattern
 We have implemented the **Singleton** design pattern to manage the game information. This ensures that there is only one instance of the game information class, providing a global point of access to it throughout the application.
 
