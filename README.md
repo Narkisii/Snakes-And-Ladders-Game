@@ -14,28 +14,10 @@
 - **JAR File**: Click on the JAR file to start the system.
 - **Eclipse IDE**: Use "Main.java" to launch from Eclipse.
 
-## User Interface
-- **Menu Screen**: Navigate through "Start", "Question Wizard", "History", "Instructions", and "Sound" options.
-- **Settings Screen**: Select difficulty level, number of participants, and configure players.
-- **History Screen**: View previous game records.
-- **Players Screen**: Choose colors, tokens, and input player names. Add or remove CPU players.
-- **Board Screen**: Return to the main menu or roll the dice.
-- **Game Question Screen**: Answer multiple-choice questions during gameplay.
-- **Question Wizard Screen**: Filter, edit, add, or search for questions.
-- **Add/Edit Question Pop-Up**: Input question details and save or delete text.
-
-## Expected Outcomes
-- The system is designed to be robust and adaptable, providing an intuitive and engaging user experience across various scenarios.
-
-## System Testing
-- **Black Box Tests**: Test game initialization, player turn sequence, dice roll functionality, ladder and snake interactions, and winning conditions.
-- **White Box Tests**: Verify dice roll range, player position updates, ladder climb, snake slide mechanics, answer validation logic, and game completion conditions.
-- **JUnit Tests**: Assess end-game conditions, snake and ladder interactions, dice roll range, and player movement accuracy.
-
 ## Tools Used:
 
 - **Java**: Primary programming language for project development.
-- **JavaFX**: Utilized for creating rich client applications and animations.
+- **JavaFX**: Utilized for creating GUI and animations.
 - **JSON**: Employed for data storage and management.
 - 
 ## Design Patterns:
@@ -60,6 +42,22 @@ Gameplay Mechanics: Custom algorithms ensured fairness and rule adherence in dic
 - **Bot player**: Simulated intelligent behaviour for CPU player decisions.
 - **Animations Algorithm**: JavaFX AnimationTimer used for dynamic visual effects.
 
+## User Interface
+- **Menu Screen**: Navigate through "Start", "Question Wizard", "History", "Instructions", and "Sound" options.
+- **Settings Screen**: Select difficulty level, number of participants, and configure players.
+- **History Screen**: View previous game records.
+- **Players Screen**: Choose colors, tokens, and input player names. Add or remove CPU players.
+- **Board Screen**: Return to the main menu or roll the dice.
+- **Game Question Screen**: Answer multiple-choice questions during gameplay.
+- **Question Wizard Screen**: Filter, edit, add, or search for questions.
+- **Add/Edit Question Pop-Up**: Input question details and save or delete text.
+
+## System Testing
+- **Black Box Tests**: Test game initialization, player turn sequence, dice roll functionality, ladder and snake interactions, and winning conditions.
+- **White Box Tests**: Verify dice roll range, player position updates, ladder climb, snake slide mechanics, answer validation logic, and game completion conditions.
+- **JUnit Tests**: Assess end-game conditions, snake and ladder interactions, dice roll range, and player movement accuracy.
+
+
 ## System Components
 
 ## Gameplay
@@ -81,6 +79,10 @@ Each square is sequentially numbered according to the level's maximum number.
 - **Objective**: Reach the end of the board first
 - **Starting Position**: Square number 1
 - **Number of Players**: At least 2
+
+### Bot Players
+- **Purpose**: Play against the player
+- **Types**: Difficulty (Chance to be correct when answering a question) is depending on the game's difficulty level
 
 ### Ladders
 - **Purpose**: Help players advance faster
